@@ -1,0 +1,37 @@
+import uuid from 'uuid';
+import SHA256 from 'crypto-js/sha256';
+
+export default class Transaction
+{
+    private to: string;
+    private from: string;
+    private amount: number;
+    private id: any;
+    private date: number;
+    private hash: string;
+
+    constructor(to: string, from: string, amount: number)
+    {
+        this.to = to;
+        this.from = from;
+        this.amount = amount;
+        this.id = uuid.v4();
+        this.date = Date.now();
+        this.hash = this.generateHash();
+    }
+
+    private generateHash() : string
+    {
+        return SHA256(`${this.to}${this.from}${this.amount}${this.id}${this.date}`).toString();
+    }
+
+    public getHash() : string
+    {
+        return this.hash;
+    }
+
+    public getKey() : any 
+    {
+        return this.id;
+    }
+}
