@@ -13,20 +13,20 @@ export default class Block
     private date: number;
 
 
-    constructor(transactions: Transaction[], previousHash: string)
+    constructor(id: any, nounce: number, difficulty: number, previousHash: string, transactions: Transaction[])
     {
-        this.transactions = transactions;
-        this.id = uuid.v4();
-        this.nounce = 0;
-        this.difficulty = 10;
+        this.id = id;
+        this.nounce = nounce;
+        this.difficulty = difficulty;
         this.previousHash = previousHash;
+        this.transactions = transactions;
         this.date = Date.now();
         this.hash = this.generateHash();
     }
 
     static genesis() : Block
     {
-        return new this([], "00");
+        return new this(uuid.v4(), 0, 0, "00", []);
     }
 
     private generateHash() : string
