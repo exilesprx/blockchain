@@ -14,6 +14,9 @@ app.use(express.json());
 
 producer.connect();
 
+// TODO: In the event the app crashes, replay all VALID block into the chain
+// There are two chains... a invalid chain and a valid chain. They have separate streams
+
 app.use('/transaction', (req: Request, res: Response, next: any) => {
 
     if (!req.body.to || !req.body.from || !req.body.amount) {
@@ -35,7 +38,7 @@ app.post('/transaction', (req: Request, res: Response) => {
         chain.addBlock(pool.getTransactions());
     }
 
-    return res.send(`Transaction ${transaction.getKey()} accepted.}`);
+    return res.send(`Transaction ${transaction.getKey()} accepted.`);
 });
 
 app.listen(80, () => {

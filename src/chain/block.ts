@@ -1,5 +1,5 @@
 import { SHA256 } from "crypto-js";
-import uuid from "uuid";
+import { v4 } from 'uuid';
 import Transaction from "../wallet/transaction";
 
 export default class Block
@@ -26,7 +26,7 @@ export default class Block
 
     public static genesis() : Block
     {
-        return new this(uuid.v4(), 0, 0, "00", []);
+        return new this(v4(), 0, 0, "00", []);
     }
 
     public getHash() : string

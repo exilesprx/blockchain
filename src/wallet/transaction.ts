@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import { v4 } from 'uuid';
 import SHA256 from 'crypto-js/sha256';
 
 export default class Transaction
@@ -15,7 +15,7 @@ export default class Transaction
         this.to = to;
         this.from = from;
         this.amount = amount;
-        this.id = uuid.v4();
+        this.id = v4();
         this.date = Date.now();
         this.hash = this.generateHash();
     }

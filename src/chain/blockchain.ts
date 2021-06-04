@@ -1,5 +1,5 @@
 import { Producer } from "kafkajs";
-import uuid from 'uuid';
+import { v4 } from 'uuid';
 import Topic from "../stream/topic/topic";
 import Transaction from "../wallet/transaction";
 import Block from "./block";
@@ -24,9 +24,9 @@ export default class Blockchain
             this.chain.shift();
         }
 
-        const block = new Block(uuid.v4(), 0, 0, this.getLastBlockHash(), transactions);
+        const block = new Block(v4(), 0, 0, this.getLastBlockHash(), transactions);
 
-        this.chain.push(block);
+        this.chain.push(block); console.log(`Block added ${block.getHash()}`)
 
         this.producer.send({
             topic: this.topic.toString(),
