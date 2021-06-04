@@ -1,4 +1,5 @@
 import { Producer } from "kafkajs";
+import Topic from "../stream/topic/topic";
 import Transaction from "./transaction";
 
 export default class TransactionPool
@@ -6,10 +7,12 @@ export default class TransactionPool
     private transactions: Transaction[];
     private limit: number;
     private producer: Producer;
+    private topic: Topic;
 
-    constructor(producer: Producer)
+    constructor(producer: Producer, topic: Topic)
     {
         this.producer = producer;
+        this.topic = topic;
         this.transactions = [];
         this.limit = 20;
     }
@@ -21,7 +24,7 @@ export default class TransactionPool
         this.transactions.push(transaction);
 
         this.producer.send({
-            topic: 'transaction-test',
+            topic: this.topic.toString(),
             messages: [
                 { key: transaction.getKey(), value: JSON.stringify(transaction) },
             ],

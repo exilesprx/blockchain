@@ -1,5 +1,6 @@
 import { Producer } from "kafkajs";
 import uuid from 'uuid';
+import Topic from "../stream/topic/topic";
 import Transaction from "../wallet/transaction";
 import Block from "./block";
 
@@ -8,10 +9,12 @@ export default class Blockchain
     private static limit: number = 10;
     private chain: Block[];
     private producer: Producer;
+    private topic: Topic;
 
-    constructor(producer: Producer)
+    constructor(producer: Producer, topic: Topic)
     {
         this.producer = producer;
+        this.topic = topic;
         this.chain = [Block.genesis()];
     }
 
@@ -26,7 +29,7 @@ export default class Blockchain
         this.chain.push(block);
 
         this.producer.send({
-            topic: 'block-test',
+            topic: this.topic.toString(),
             messages: [
                 { key: block.getKey(), value: JSON.stringify(block) },
             ]

@@ -2,12 +2,13 @@ import express,  {Request, Response} from 'express';
 import TransactionPool from './wallet/transaction-pool';
 import { producer } from './stream/producer';
 import Blockchain from './chain/blockchain';
+import Topic from './stream/topic/topic';
 
 const app = express();
 
-const chain = new Blockchain(producer);
+const chain = new Blockchain(producer, Topic.new('block-test'));
 
-const pool = new TransactionPool(producer);
+const pool = new TransactionPool(producer, Topic.new('transaction-test'));
 
 app.use(express.json());
 
