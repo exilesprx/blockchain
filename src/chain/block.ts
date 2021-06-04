@@ -24,20 +24,9 @@ export default class Block
         this.hash = this.generateHash();
     }
 
-    static genesis() : Block
+    public static genesis() : Block
     {
         return new this(uuid.v4(), 0, 0, "00", []);
-    }
-
-    private generateHash() : string
-    {
-        let transactionHashes = "";
-
-        this.transactions.forEach(transaction => {
-            transactionHashes += transaction.getHash();
-        });
-
-        return SHA256(`${transactionHashes}${this.id}${this.nounce}${this.difficulty}${this.previousHash}${this.difficulty}`).toString();
     }
 
     public getHash() : string
@@ -48,5 +37,16 @@ export default class Block
     public getKey() : any
     {
         return this.id;
+    }
+
+    private generateHash() : string
+    {
+        let transactionHashes = "";
+
+        this.transactions.forEach(transaction => {
+            transactionHashes += transaction.getHash();
+        });
+
+        return SHA256(`${transactionHashes}${this.id}${this.nounce}${this.difficulty}${this.previousHash}${this.difficulty}${this.date}`).toString();
     }
 }
