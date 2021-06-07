@@ -2,45 +2,45 @@ import express,  {Request, Response} from 'express';
 import TransactionPool from './wallet/transaction-pool';
 import { producer } from './stream/producer';
 import Blockchain from './chain/blockchain';
-import Topic from './stream/topic/topic';
+import { consumer } from './stream/consumer';
+import { logger } from './logs/logger'
+import Events from './events/emitter';
+import Amount from './wallet/specifications/Amount';
+import Receiver from './wallet/specifications/Receiver';
+import Sender from './wallet/specifications/Sender';
 
 const app = express();
 
-const chain = new Blockchain(producer, Topic.new('block-test'));
-
-const pool = new TransactionPool(producer, Topic.new('transaction-test'));
-
 app.use(express.json());
 
+const events = Events.register(producer, logger);
+
+const chain = new Blockchain(events);
+
+// chain.restore(consumer);
+
+const pool = new TransactionPool(events, chain);
+
+pool.addSpecification(new Amount())
+    .addSpecification(new Receiver())
+    .addSpecification(new Sender());
+
 producer.connect();
-
-// TODO: In the event the app crashes, replay all VALID block into the chain
-// There are two chains... a invalid chain and a valid chain. They have separate streams
-
-app.use('/transaction', (req: Request, res: Response, next: any) => {
-
-    if (!req.body.to || !req.body.from || !req.body.amount) {
-        res.sendStatus(401);
-    }
-
-    next();
-    return;
-});
 
 app.post('/transaction', (req: Request, res: Response) => {
     const params = req.body;
 
-    // Create a new transaction, add it to the pool, and broadcast it
-    const transaction = pool.addTransaction(params.to, params.from, params.amount);
+    try {
+        // Create a new transaction, add it to the pool, and broadcast it
+        const transaction = pool.addTransaction(params.to, params.from, params.amount);
 
-    // When the pool is filled, create a new block, and broadcast the block
-    if (pool.isFilled()) {
-        chain.addBlock(pool.getTransactions());
+        return res.send(`Transaction ${transaction.getKey()} accepted.`);
+    } catch(error) {
+        res.sendStatus(401);
+        return;
     }
-
-    return res.send(`Transaction ${transaction.getKey()} accepted.`);
 });
 
 app.listen(80, () => {
-    console.log("App listening on port 80");
+    logger.info("App listening on port 80");
 });

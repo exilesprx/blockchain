@@ -1,39 +1,45 @@
-import { Producer } from "kafkajs";
-import Topic from "../stream/topic/topic";
+import Blockchain from "../chain/blockchain";
+import Events from "../events/emitter";
+import NewBlockPolicy from "../policies/new-block-policy";
+import Specification from "./specifications/Specification";
 import Transaction from "./transaction";
 
 export default class TransactionPool
 {
     private transactions: Transaction[];
-    private limit: number;
-    private producer: Producer;
-    private topic: Topic;
+    private events: Events;
+    private chain: Blockchain;
+    private specifications: Specification[];
 
-    constructor(producer: Producer, topic: Topic)
+    constructor(events: Events, chain: Blockchain)
     {
-        this.producer = producer;
-        this.topic = topic;
+        this.events = events;
+        this.chain = chain;
         this.transactions = [];
-        this.limit = 20;
+        this.specifications = [];
     }
 
     public addTransaction(to: string, from: string, amount: number) : Transaction
     {
         const transaction = new Transaction(to, from, amount);
 
+        this.specifications.forEach(spec => {
+            spec.isSatisfiedBy(transaction);
+        });
+
         this.transactions.push(transaction);
 
-        this.producer.send({
-            topic: this.topic.toString(),
-            messages: [
-                { key: transaction.getKey(), value: JSON.stringify(transaction) },
-            ],
-        });
+        this.events.emit('transaction-added', transaction);
+
+        // When the pool is filled, create a new block, and broadcast the block
+        if (NewBlockPolicy.shouldCreateNewBlock(this)) {
+            this.chain.addBlock(this.flushTransactions());
+        }
 
         return transaction;
     }
 
-    public getTransactions() : Transaction[]
+    public flushTransactions() : Transaction[]
     {
         let transactions = this.transactions;
 
@@ -42,8 +48,20 @@ export default class TransactionPool
         return transactions;
     }
 
-    public isFilled() : boolean
+    public getTransactions() : Transaction[]
     {
-        return this.transactions.length == this.limit;
+        return this.transactions;
+    }
+
+    public length() : number
+    {
+        return this.transactions.length;
+    }
+
+    public addSpecification(specification: Specification) : this
+    {
+        this.specifications.push(specification);
+
+        return this;
     }
 }

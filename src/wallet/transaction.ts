@@ -34,4 +34,19 @@ export default class Transaction
     {
         return this.id;
     }
+
+    public getSender() : string
+    {
+        return this.from;
+    }
+
+    public getReceiver() : string
+    {
+        return this.to;
+    }
+
+    public getAmount() : number
+    {
+        return this.amount;
+    }
 }

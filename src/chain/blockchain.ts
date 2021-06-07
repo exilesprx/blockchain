@@ -1,39 +1,59 @@
-import { Producer } from "kafkajs";
+import { Consumer } from "kafkajs";
 import { v4 } from 'uuid';
-import Topic from "../stream/topic/topic";
 import Transaction from "../wallet/transaction";
 import Block from "./block";
+import BlockLimitPolicy from "../policies/block-limit-policy";
+import Events from "../events/emitter";
 
 export default class Blockchain
 {
-    private static limit: number = 10;
     private chain: Block[];
-    private producer: Producer;
-    private topic: Topic;
+    private events: Events;
 
-    constructor(producer: Producer, topic: Topic)
+    constructor(events: Events)
     {
-        this.producer = producer;
-        this.topic = topic;
+        this.events = events;
         this.chain = [Block.genesis()];
     }
 
     public addBlock(transactions: Transaction[]) : void
     {
-        if (this.chain.length == Blockchain.limit) {
+        if (BlockLimitPolicy.reachedLimit(this)) {
             this.chain.shift();
         }
 
         const block = new Block(v4(), 0, 0, this.getLastBlockHash(), transactions);
 
-        this.chain.push(block); console.log(`Block added ${block.getHash()}`)
+        this.chain.push(block);
 
-        this.producer.send({
-            topic: this.topic.toString(),
-            messages: [
-                { key: block.getKey(), value: JSON.stringify(block) },
-            ]
-        });
+        this.events.emit('block-added', block);
+    }
+
+    public async restore(consumer: Consumer)
+    {
+        // TODO: In the event the app crashes, grab the last X blocks and put them on the chain
+        // There are two chains... a invalid chain and a valid chain. They have separate streams
+
+        // await consumer.connect();
+        
+        // await consumer.subscribe({ topic: this.topic.toString(), fromBeginning: true });
+        
+        // await consumer.run({
+        //     eachMessage: async ({ topic, partition, message }) => {
+        //         // console.log('*******');
+        //         const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`
+        //         console.log(`- ${prefix} ${message.key}#${message.value}`)
+        //     },
+        // });
+
+        // consumer.seek({topic: this.topic.toString(), partition: 0, offset: '0'});
+       
+        // console.log('disconnect')
+    }
+
+    public length() : number
+    {
+        return this.chain.length;
     }
 
     private getLastBlockHash() : string
