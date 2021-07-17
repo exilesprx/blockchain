@@ -4,6 +4,7 @@ import Transaction from "../wallet/transaction";
 import Block from "./block";
 import BlockLimitPolicy from "../policies/block-limit-policy";
 import Events from "../events/emitter";
+import NewBlockPolicy from "../policies/new-block-policy";
 
 export default class Blockchain
 {
@@ -16,8 +17,12 @@ export default class Blockchain
         this.chain = [Block.genesis()];
     }
 
-    public addBlock(transactions: Transaction[]) : void
+    public addBlock(transactions: Transaction[]) : boolean
     {
+        if (! NewBlockPolicy.shouldCreateNewBlock(transactions)) {
+           return false;
+        }
+        
         if (BlockLimitPolicy.reachedLimit(this)) {
             this.chain.shift();
         }
@@ -27,10 +32,13 @@ export default class Blockchain
         this.chain.push(block);
 
         this.events.emit('block-added', block);
+
+        return true;
     }
 
     public async restore(consumer: Consumer)
     {
+        // I'm thinking - instead pull the last block from the database and then fetch the transactions too
         // TODO: In the event the app crashes, grab the last X blocks and put them on the chain
         // There are two chains... a invalid chain and a valid chain. They have separate streams
 

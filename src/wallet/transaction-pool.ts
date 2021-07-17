@@ -19,7 +19,7 @@ export default class TransactionPool
         this.specifications = [];
     }
 
-    public addTransaction(to: string, from: string, amount: number) : Transaction
+    public fill(to: string, from: string, amount: number) : Transaction
     {
         const transaction = new Transaction(to, from, amount);
 
@@ -31,21 +31,16 @@ export default class TransactionPool
 
         this.events.emit('transaction-added', transaction);
 
-        // When the pool is filled, create a new block, and broadcast the block
-        if (NewBlockPolicy.shouldCreateNewBlock(this)) {
-            this.chain.addBlock(this.flushTransactions());
+        if (this.chain.addBlock(this.getTransactions())) {
+            this.drain();
         }
 
         return transaction;
     }
 
-    public flushTransactions() : Transaction[]
+    public drain() : void
     {
-        let transactions = this.transactions;
-
         this.transactions = [];
-
-        return transactions;
     }
 
     public getTransactions() : Transaction[]

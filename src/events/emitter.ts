@@ -31,7 +31,7 @@ export default class Events extends EventEmitter
 
     public blockAdded(block: Block)
     {
-        this.logger.info("BLock added" + block.getHash());
+        this.logger.info(`Block added: ${block.getHash()}`);
 
         // this.producer.send({
         //     topic: Topic.new('block-test').toString(),
@@ -43,7 +43,7 @@ export default class Events extends EventEmitter
 
     public transactionAdded(transaction: Transaction)
     {
-        this.logger.info('Transaction added' + transaction.getHash());
+        this.logger.info(`Transaction added: ${transaction.getHash()}`);
 
         // this.producer.send({
         //     topic: Topic.new('transaction-test').toString(),

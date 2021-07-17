@@ -32,7 +32,7 @@ app.post('/transaction', (req: Request, res: Response) => {
 
     try {
         // Create a new transaction, add it to the pool, and broadcast it
-        const transaction = pool.addTransaction(params.to, params.from, params.amount);
+        const transaction = pool.fill(params.to, params.from, params.amount);
 
         return res.send(`Transaction ${transaction.getKey()} accepted.`);
     } catch(error) {

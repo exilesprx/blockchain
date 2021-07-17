@@ -1,11 +1,11 @@
-import TransactionPool from "../wallet/transaction-pool";
+import Transaction from "../wallet/transaction";
 
 export default class NewBlockPolicy
 {
     private static blockLimit = 20;
 
-    public static shouldCreateNewBlock(pool: TransactionPool) : boolean
+    public static shouldCreateNewBlock(transactions: Transaction[]) : boolean
     {
-        return pool.length() == this.blockLimit;
+        return transactions.length == this.blockLimit;
     }
 }

@@ -120,6 +120,7 @@ services:
       - kafka1
       - kafka-schema-registry
       - kafka-rest-proxy
+      - mongo
 
   kafka-connect-ui:
     image: landoop/kafka-connect-ui:0.9.7
@@ -165,7 +166,7 @@ services:
       - ../:/usr/app
     command: npm run app
 
-  consumer:
+  miner:
     extends:
       file: docker-compose.builder.yml
       service: install
@@ -176,3 +177,25 @@ services:
     volumes:
       - ../:/usr/app
     command: npm run mine
+
+  mongo:
+    image: mongo:4.0
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+      - MONGO_INITDB_DATABASE=blockchain
+  mongo-express:
+    image: mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+      - ME_CONFIG_MONGODB_AUTH_USERNAME=root
+      - ME_CONFIG_MONGODB_AUTH_PASSWORD=secret
+      - ME_CONFIG_BASICAUTH_USERNAME=debian
+      - ME_CONFIG_BASICAUTH_PASSWORD=password
+    depends_on:
+      - mongo
+    ports:
+      - "8888:8081"
