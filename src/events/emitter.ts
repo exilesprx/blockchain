@@ -33,23 +33,23 @@ export default class Events extends EventEmitter
     {
         this.logger.info(`Block added: ${block.getHash()}`);
 
-        // this.producer.send({
-        //     topic: Topic.new('block-test').toString(),
-        //     messages: [
-        //         { key: block.getKey(), value: JSON.stringify(block) },
-        //     ]
-        // });
+        this.producer.send({
+            topic: Topic.new('block-test').toString(),
+            messages: [
+                { key: block.getKey(), value: JSON.stringify(block) },
+            ]
+        });
     }
 
     public transactionAdded(transaction: Transaction)
     {
         this.logger.info(`Transaction added: ${transaction.getHash()}`);
 
-        // this.producer.send({
-        //     topic: Topic.new('transaction-test').toString(),
-        //     messages: [
-        //         { key: transaction.getKey(), value: JSON.stringify(transaction) },
-        //     ],
-        // });
+        this.producer.send({
+            topic: Topic.new('transaction-test').toString(),
+            messages: [
+                { key: transaction.getKey(), value: JSON.stringify(transaction) },
+            ],
+        });
     }
 }

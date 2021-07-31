@@ -12,6 +12,8 @@ const toWinstonLogLevel = (level: any) => {
           return 'info';
       case logLevel.DEBUG:
           return 'debug';
+      default:
+          return 'info';
   }
 }
 

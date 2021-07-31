@@ -39,6 +39,7 @@ export default class Blockchain
     public async restore(consumer: Consumer)
     {
         // I'm thinking - instead pull the last block from the database and then fetch the transactions too
+        // Make the block the current block and any transactions after the last one should be thrown into the pool
         // TODO: In the event the app crashes, grab the last X blocks and put them on the chain
         // There are two chains... a invalid chain and a valid chain. They have separate streams
 
