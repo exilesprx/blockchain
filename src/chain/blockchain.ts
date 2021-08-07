@@ -1,10 +1,11 @@
-import { Consumer } from "kafkajs";
+import BlockModel from '../models/block';
 import { v4 } from 'uuid';
 import Transaction from "../wallet/transaction";
 import Block from "./block";
 import BlockLimitPolicy from "../policies/block-limit-policy";
 import Events from "../events/emitter";
 import NewBlockPolicy from "../policies/new-block-policy";
+
 
 export default class Blockchain
 {
@@ -36,28 +37,31 @@ export default class Blockchain
         return true;
     }
 
-    public async restore(consumer: Consumer)
+    public async restore()
     {
-        // I'm thinking - instead pull the last block from the database and then fetch the transactions too
-        // Make the block the current block and any transactions after the last one should be thrown into the pool
-        // TODO: In the event the app crashes, grab the last X blocks and put them on the chain
-        // There are two chains... a invalid chain and a valid chain. They have separate streams
+        // Get the latest block
+        const blockModel = await BlockModel.findOne().lean();
 
-        // await consumer.connect();
-        
-        // await consumer.subscribe({ topic: this.topic.toString(), fromBeginning: true });
-        
-        // await consumer.run({
-        //     eachMessage: async ({ topic, partition, message }) => {
-        //         // console.log('*******');
-        //         const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`
-        //         console.log(`- ${prefix} ${message.key}#${message.value}`)
-        //     },
-        // });
+        if (!blockModel) {
+            return;
+        }
 
-        // consumer.seek({topic: this.topic.toString(), partition: 0, offset: '0'});
-       
-        // console.log('disconnect')
+        const block = new Block(
+            blockModel.id,
+            blockModel.nounce,
+            blockModel.difficulty,
+            blockModel.previousHash,
+            blockModel.transactions
+        );
+
+        if (block.getHash() != blockModel.hash) {
+            throw new TypeError();
+        }
+
+        this.chain = [block];
+
+        // TODO: Find all transaction newer than the ones in the block
+        // TODO: Fill the transaction pool with the transactions found
     }
 
     public length() : number

@@ -22,10 +22,10 @@ const chain = new Blockchain(events);
 
 const pool = new TransactionPool(events, chain);
 
-const user: string = process.env.DB_USER;
-const secret: string = process.env.DB_PASSWORD;
-const host: string = process.env.DB_HOST;
-const port: number = process.env.DB_PORT;
+const user: string = String(process.env.DB_USER);
+const secret: string = String(process.env.DB_PASSWORD);
+const host: string = String(process.env.DB_HOST);
+const port: number = Number(process.env.DB_PORT);
 
 const database = new Database(host, port, user, secret);
 
@@ -47,12 +47,12 @@ app.post('/transaction', (req: Request, res: Response) => {
     }
 });
 
-app.listen(80, () => {
+app.listen(80, async () => {
     logger.info("App listening on port 80");
-
-    // chain.restore(consumer);
 
     producer.connect();
 
     database.connect();
+
+    chain.restore();
 });

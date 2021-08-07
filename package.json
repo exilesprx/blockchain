@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "app": "nodemon ./build/app.js",
     "mine": "nodemon ./build/mine.js",
     "build": "./node_modules/typescript/bin/tsc"
@@ -24,9 +24,16 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.9",
+    "@babel/preset-typescript": "^7.14.5",
     "@types/crypto-js": "^4.0.1",
     "@types/express": "^4.17.12",
+    "@types/jest": "^26.0.24",
     "@types/uuid": "^8.3.0",
+    "babel-jest": "^27.0.6",
+    "jest": "^27.0.6",
+    "ts-node": "^10.1.0",
     "typescript": "^4.3.2"
   }
 }

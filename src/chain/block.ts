@@ -38,6 +38,11 @@ export default class Block
         return this.id;
     }
 
+    public getTransactionCount() : number
+    {
+        return this.transactions.length;
+    }
+
     private generateHash() : string
     {
         let transactionHashes = "";
