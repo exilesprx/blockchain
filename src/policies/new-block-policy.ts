@@ -8,4 +8,9 @@ export default class NewBlockPolicy
     {
         return transactions.length == this.blockLimit;
     }
+
+    public static getBlockLimit() : Number
+    {
+        return this.blockLimit;
+    }
 }
