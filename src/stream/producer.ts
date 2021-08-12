@@ -1,3 +1,3 @@
-import { kafka } from'./kafka.js';
+import { kafka } from'./kafka';
 
 export const producer = kafka.producer()

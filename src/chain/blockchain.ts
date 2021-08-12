@@ -25,14 +25,12 @@ export default class Blockchain
         }
         
         if (BlockLimitPolicy.reachedLimit(this)) {
-            this.chain.shift();
+            this.removeFirstBlock()
         }
 
         const block = new Block(v4(), 0, 0, this.getLastBlockHash(), transactions);
 
-        this.chain.push(block);
-
-        this.events.emit('block-added', block);
+        this.addNewBlock(block);
 
         return true;
     }
@@ -55,7 +53,11 @@ export default class Blockchain
         );
 
         if (block.getHash() != blockModel.hash) {
-            throw new TypeError();
+            // TODO: since we're restoring from that database, the date will be regenerated when the block
+            // is recreated from memory. Do we really need to concerns ourselves with keeping the original
+            // date of the block? Or should we just create a new timestamp? Because technically the app failed,
+            // and had to boot back up, therefore having to "recreate" the block.
+            // throw new TypeError();
         }
 
         this.chain = [block];
@@ -69,10 +71,22 @@ export default class Blockchain
         return this.chain.length;
     }
 
-    private getLastBlockHash() : string
+    public getLastBlockHash() : string
     {
         const block = this.chain[this.chain.length - 1];
 
         return block.getHash();
+    }
+
+    private removeFirstBlock() : Block|undefined
+    {
+        return this.chain.shift();
+    }
+
+    private addNewBlock(block: Block) : void
+    {
+        this.chain.push(block);
+
+        this.events.emit('block-added', block);
     }
 }
