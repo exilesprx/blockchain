@@ -72,15 +72,29 @@ describe("Blockchain", ()=> {
 
         const transactions: Transaction[] = [];
 
-        for(let i = 0; i < NewBlockPolicy.getBlockLimit(); i++) {
-            transactions.push(new Transaction(i.toString(), (i + 20).toString(), i * 40));
-        }
+        transactions.push(new Transaction("one", "two", 2));
 
         chain.addBlock(transactions);
 
         expect(chain.length()).toBe(2);
 
         expect(events.emit).toHaveBeenCalled();
+    });
+
+    test("it expects not to add a block", () => {
+        const chain = new Blockchain(events);
+
+        expect(chain.length()).toBe(1);
+
+        const transactions: Transaction[] = [];
+
+        transactions.push(new Transaction("one", "two", 2));
+
+        NewBlockPolicy.shouldCreateNewBlock.mockReturnValueOnce(false);
+
+        const blockAdded = chain.addBlock(transactions);
+
+        expect(blockAdded).toBeFalsy();
     });
 
     test("it expects to restore previous chain", async () => {
@@ -137,7 +151,8 @@ describe("Blockchain", ()=> {
         expect(genesisBlockHash).toBe(restoreLastBlockHash);
     });
 
-    test("it expects the hash between the database block and memory block to fail equality", () => {
-        // TODO: Not sure yet if restoring a block from the database should keep the hash in tact or not
+    test("it expects the database block hash and memory block hash to fail equality", () => {
+        // TODO: Not sure yet if restoring a block from the 
+        // database should keep the hash in tact or not
     });
 });

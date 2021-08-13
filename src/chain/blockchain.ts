@@ -35,35 +35,27 @@ export default class Blockchain
         return true;
     }
 
-    public async restore()
+    public async restore() : Promise<Block>|null
     {
         // Get the latest block
         const blockModel = await BlockModel.findOne().lean();
 
         if (!blockModel) {
-            return;
+            return null;
         }
 
-        const block = new Block(
-            blockModel.id,
-            blockModel.nounce,
-            blockModel.difficulty,
-            blockModel.previousHash,
-            blockModel.transactions
-        );
+        const block = Block.fromModel(blockModel);
 
         if (block.getHash() != blockModel.hash) {
-            // TODO: since we're restoring from that database, the date will be regenerated when the block
-            // is recreated from memory. Do we really need to concerns ourselves with keeping the original
-            // date of the block? Or should we just create a new timestamp? Because technically the app failed,
-            // and had to boot back up, therefore having to "recreate" the block.
-            // throw new TypeError();
+            throw new TypeError();
         }
 
         this.chain = [block];
 
         // TODO: Find all transaction newer than the ones in the block
         // TODO: Fill the transaction pool with the transactions found
+
+        return block;
     }
 
     public length() : number

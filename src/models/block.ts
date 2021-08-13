@@ -2,14 +2,14 @@ import { Schema, model } from 'mongoose';
 import Transaction from '../wallet/transaction';
 
 // 1. Create an interface representing a document in MongoDB.
-interface Block {
+export interface Block {
   id: string,
   transactions: Array<Transaction>,
   nounce: number,
   difficulty: number,
   previousHash: string,
   hash: string,
-  number: number
+  date: number
 }
 
 // 2. Create a Schema corresponding to the document interface.
@@ -20,7 +20,7 @@ const schema = new Schema<Block>({
   difficulty: { type: Number, required: true },
   previousHash: { type: String, required: true },
   hash: { type: String, required: true },
-  number: { type: Number, required: true }
+  date: { type: Number, required: true }
 });
 
 // 3. Create a Model.

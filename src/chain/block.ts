@@ -1,5 +1,6 @@
 import { SHA256 } from "crypto-js";
 import Transaction from "../wallet/transaction";
+import { Block as BlockContract } from "../models/block";
 
 export default class Block
 {
@@ -26,6 +27,22 @@ export default class Block
     public static genesis() : Block
     {
         return new this("genesis block", 0, 0, "00", []);
+    }
+
+    public static fromModel(model: BlockContract) : Block
+    {
+        const block = new this(
+            model.id,
+            model.nounce,
+            model.difficulty,
+            model.previousHash,
+            model.transactions
+        );
+
+        block.hash = model.hash;
+        block.date = model.date;
+
+        return block;
     }
 
     public getHash() : string
