@@ -6,6 +6,7 @@ import { producer } from '../../src/stream/producer';
 import { logger } from '../../src/logs/logger';
 import BlockModel from '../../src/models/block';
 import BlockLimitPolicy from '../../src/policies/block-limit-policy';
+import Block from '../../src/chain/block';
 
 jest.mock('../../src/events/emitter');
 jest.mock('../../src/stream/producer');
@@ -151,8 +152,63 @@ describe("Blockchain", ()=> {
         expect(genesisBlockHash).toBe(restoreLastBlockHash);
     });
 
-    test("it expects the database block hash and memory block hash to fail equality", () => {
-        // TODO: Not sure yet if restoring a block from the 
-        // database should keep the hash in tact or not
+    test("it expects the database block hash and memory block hash to be equal", async () => {
+        const chain = new Blockchain(events);
+
+        expect(chain.length()).toBe(1);
+
+        const blockModel = {
+            id: 1,
+            nounce: 0,
+            difficulty: 0,
+            previousHash: "",
+            transactions: [],
+            hash: "test",
+            date: 123
+        };
+
+        jest.spyOn(BlockModel, 'findOne')
+            .mockImplementation(() => {
+                return {
+                    lean: () => blockModel
+                }
+            });
+
+        await chain.restore();
+
+        const restoreLastBlockHash = chain.getLastBlockHash();
+
+        expect(restoreLastBlockHash).toBe("test");
+    });
+
+    test("it expect the database block hash and memory block hash to fail equality", async () => {
+
+        const chain = new Blockchain(events);
+
+        expect(chain.length()).toBe(1);
+
+        const blockModel = {
+            id: 1,
+            nounce: 0,
+            difficulty: 0,
+            previousHash: "",
+            transactions: [],
+            hash: "test",
+            date: 123
+        };
+
+        jest.spyOn(BlockModel, 'findOne')
+            .mockImplementation(() => {
+                return {
+                    lean: () => blockModel
+                }
+            });
+
+        jest.spyOn(Block, "fromModel")
+            .mockImplementationOnce(() => {
+                return new Block(1, 1, 1, "test", []);
+            });
+
+        await expect(chain.restore()).rejects.toBeInstanceOf(TypeError);
     });
 });

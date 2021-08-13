@@ -8,6 +8,8 @@ describe("Block", () => {
         const block = new Block(1, 0, 0, "test", []);
 
         expect(block.getTransactionCount()).toBe(0);
+
+        expect(block.getKey()).toBe(1);
     });
 
     test("it expects to have 1 transaction", () => {
@@ -17,6 +19,8 @@ describe("Block", () => {
         const block = new Block(1, 0, 0, "test", [transaction]);
 
         expect(block.getTransactionCount()).toBe(1);
+
+        expect(block.getKey()).toBe(1);
     });
 
     test("it expects two different blocks to have unique hashes", () => {
@@ -26,5 +30,9 @@ describe("Block", () => {
         const secondBlock = new Block(1, 0, 0, "test-1", []);
 
         expect(firstBlock.getHash()).not.toBe(secondBlock.getHash());
+
+        expect(firstBlock.getKey()).toBe(1);
+
+        expect(secondBlock.getKey()).toBe(1);
     });
 });
