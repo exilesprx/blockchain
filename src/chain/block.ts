@@ -31,12 +31,21 @@ export default class Block
 
     public static fromModel(model: BlockContract) : Block
     {
+        let transactions: Transaction[] = [];
+
+        model.transactions.forEach(transaction => {
+            
+            transactions.push(
+                Transaction.fromModel(transaction)
+            );
+        });
+
         const block = new this(
             model.id,
             model.nounce,
             model.difficulty,
             model.previousHash,
-            model.transactions
+            transactions
         );
 
         block.hash = model.hash;

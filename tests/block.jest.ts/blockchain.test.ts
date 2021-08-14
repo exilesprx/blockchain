@@ -149,7 +149,9 @@ describe("Blockchain", ()=> {
                 }
             });
 
-        await chain.restore();
+        await chain.restore().catch((value) => {
+            expect(value).toBeNull();
+        });
 
         const restoreLastBlockHash = chain.getLastBlockHash();
 

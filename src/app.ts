@@ -53,9 +53,11 @@ app.post('/transaction', (req: Request, res: Response) => {
 app.listen(80, async () => {
     logger.info("App listening on port 80");
 
+    logger.info(`Configs loaded: ${JSON.stringify(configs)}`);
+
     producer.connect();
 
     database.connect();
 
-    chain.restore();
+    await chain.restore();
 });

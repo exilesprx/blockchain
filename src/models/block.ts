@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import Transaction from '../wallet/transaction';
+import { Transaction } from './transaction';
 
 // 1. Create an interface representing a document in MongoDB.
 export interface Block {

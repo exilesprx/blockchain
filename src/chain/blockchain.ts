@@ -35,15 +35,15 @@ export default class Blockchain
         return true;
     }
 
-    public async restore() : Promise<Block>|null
+    public async restore() : Promise<Block>
     {
-        // Get the latest block
+        // TODO: Get the latest block
         const blockModel = await BlockModel.findOne().lean();
 
         if (!blockModel) {
-            return null;
+            return Promise.reject(null);
         }
-
+        
         const block = Block.fromModel(blockModel);
 
         if (block.getHash() != blockModel.hash) {
