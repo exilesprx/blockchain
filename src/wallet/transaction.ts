@@ -12,6 +12,7 @@ export default class Transaction
 
     constructor(to: string, from: string, amount: number)
     {
+        // TODO: change to and from to be Uuid
         this.to = to;
         this.from = from;
         this.amount = amount;

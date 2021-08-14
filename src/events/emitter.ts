@@ -4,29 +4,37 @@ import Block from '../chain/block';
 import Topic from '../stream/topic/topic';
 import Transaction from '../wallet/transaction';
 
-export default class Events extends EventEmitter
+export default class Events
 {
     private producer: Producer
+
     private logger: Logger;
 
-    constructor(producer: Producer, logger: Logger)
+    private emitter: EventEmitter;
+
+    constructor(emitter: EventEmitter, producer: Producer, logger: Logger)
     {
-        super();
+        this.emitter = emitter;
 
         this.producer = producer;
 
         this.logger = logger;
     }
 
-    public static register(producer: Producer, logger: Logger) : Events
+    public static register(emitter: EventEmitter, producer: Producer, logger: Logger) : Events
     {
-        const events = new this(producer, logger);
+        const events = new this(emitter, producer, logger);
 
-        events.on('block-added', events.blockAdded);
+        emitter.on('block-added', events.blockAdded);
 
-        events.on('transaction-added', events.transactionAdded);
+        emitter.on('transaction-added', events.transactionAdded);
 
         return events;
+    }
+
+    public emit(event: string, value: any) : void
+    {
+        this.emitter.emit(event, value);
     }
 
     public blockAdded(block: Block)

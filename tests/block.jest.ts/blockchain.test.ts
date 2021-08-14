@@ -7,14 +7,18 @@ import { logger } from '../../src/logs/logger';
 import BlockModel from '../../src/models/block';
 import BlockLimitPolicy from '../../src/policies/block-limit-policy';
 import Block from '../../src/chain/block';
+import EventEmitter from 'events';
 
 jest.mock('../../src/events/emitter');
 jest.mock('../../src/stream/producer');
 jest.mock('../../src/logs/logger');
 jest.mock('../../src/policies/new-block-policy');
 jest.mock('../../src/policies/block-limit-policy');
+jest.mock('events');
 
-const events = new Events(producer, logger);
+const emitter = new EventEmitter();
+
+const events = new Events(emitter, producer, logger);
 
 describe("Blockchain", ()=> {
 

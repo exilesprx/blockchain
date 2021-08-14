@@ -9,6 +9,7 @@ import Receiver from './wallet/specifications/Receiver';
 import Sender from './wallet/specifications/Sender';
 import Database from './database/index';
 import env from 'dotenv';
+import EventEmitter from 'events';
 
 const configs = env.config();
 
@@ -16,7 +17,9 @@ const app = express();
 
 app.use(express.json());
 
-const events = Events.register(producer, logger);
+const emitter = new EventEmitter();
+
+const events = Events.register(emitter, producer, logger);
 
 const chain = new Blockchain(events);
 
