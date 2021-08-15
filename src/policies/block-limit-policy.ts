@@ -8,4 +8,9 @@ export default class BlockLimitPolicy
     {
         return chain.length() == this.limit;
     }
+
+    public static getLimit() : number
+    {
+        return this.limit;
+    }
 }
