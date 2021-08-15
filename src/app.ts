@@ -10,6 +10,7 @@ import Sender from './wallet/specifications/Sender';
 import Database from './database/index';
 import env from 'dotenv';
 import EventEmitter from 'events';
+import SameWallet from './wallet/specifications/SameWallet';
 
 const configs = env.config();
 
@@ -34,7 +35,8 @@ const database = new Database(host, port, user, secret);
 
 pool.addSpecification(new Amount())
     .addSpecification(new Receiver())
-    .addSpecification(new Sender());
+    .addSpecification(new Sender())
+    .addSpecification(new SameWallet());
 
 app.post('/transaction', (req: Request, res: Response) => {
     const params = req.body;

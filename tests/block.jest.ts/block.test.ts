@@ -1,4 +1,6 @@
 import Block from "../../src/chain/block";
+import BlockModel from "../../src/models/block";
+import TransactionModel from "../../src/models/transaction";
 import Transaction from "../../src/wallet/transaction";
 
 describe("Block", () => {
@@ -34,5 +36,32 @@ describe("Block", () => {
         expect(firstBlock.getKey()).toBe(1);
 
         expect(secondBlock.getKey()).toBe(1);
+    });
+
+    test("it expects to create a transaction from a mongo model", () => {
+
+        const transactionModel = { id: 1, to: 1, from: 2, amount: 3, date: 1234, hash: "test" };
+
+        const blockModel = new BlockModel(
+            {
+                id: 1,
+                transactions: [transactionModel],
+                nounce: 0,
+                difficulty: 0,
+                previousHash: "test-1",
+                hash: "test",
+                date: Date.now()
+            }
+        );
+
+        jest.spyOn(Transaction, "fromModel");
+
+        const block = Block.fromModel(blockModel);
+
+        expect(Transaction.fromModel).toBeCalledTimes(1);
+
+        expect(Transaction.fromModel).toBeCalledWith(transactionModel);
+
+        expect(block.getTransactionCount()).toBe(1);
     });
 });
