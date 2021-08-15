@@ -1,7 +1,7 @@
 import NewBlockPolicy from '../src/policies/new-block-policy';
 import Transaction from '../src/wallet/transaction';
 
-describe("Block limt policy", () => {
+describe("New block limt policy", () => {
 
     test("it expects not to create a new block", () => {
 
@@ -21,4 +21,4 @@ describe("Block limt policy", () => {
         
         expect(NewBlockPolicy.getBlockLimit()).toBe(20);
     });
-})
+});

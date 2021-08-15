@@ -40,5 +40,5 @@ describe("Block limt policy", () => {
     test("it expects limit to be 10", () => {
 
         expect(BlockLimitPolicy.getLimit()).toBe(10);
-    })
+    });
 })
