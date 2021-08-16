@@ -1,7 +1,6 @@
 import Blockchain from "../chain/blockchain";
 import Events from "../events/emitter";
-import NewBlockPolicy from "../policies/new-block-policy";
-import Specification from "./specifications/Specification";
+import Specification from "./specifications/specification";
 import Transaction from "./transaction";
 
 export default class TransactionPool

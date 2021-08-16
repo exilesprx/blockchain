@@ -1,5 +1,5 @@
 import transaction from "../transaction";
-import Specification from "./Specification";
+import Specification from "./specification";
 
 export default class Receiver implements Specification
 {

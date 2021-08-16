@@ -4,13 +4,13 @@ import { producer } from './stream/producer';
 import Blockchain from './chain/blockchain';
 import { logger } from './logs/logger'
 import Events from './events/emitter';
-import Amount from './wallet/specifications/Amount';
-import Receiver from './wallet/specifications/Receiver';
-import Sender from './wallet/specifications/Sender';
+import Amount from './wallet/specifications/amount';
+import Receiver from './wallet/specifications/receiver';
+import Sender from './wallet/specifications/sender';
 import Database from './database/index';
 import env from 'dotenv';
 import EventEmitter from 'events';
-import SameWallet from './wallet/specifications/SameWallet';
+import SameWallet from './wallet/specifications/same-wallet';
 
 const configs = env.config();
 

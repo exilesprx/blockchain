@@ -1,7 +1,7 @@
 import { Kafka, logLevel } from 'kafkajs';
 import { logger } from '../logs/logger';
 
-const toWinstonLogLevel = (level: any) => {
+export const toWinstonLogLevel = (level: any) => {
     switch(level) {
       case logLevel.ERROR:
       case logLevel.NOTHING:
@@ -15,19 +15,22 @@ const toWinstonLogLevel = (level: any) => {
       default:
           return 'info';
   }
-}
+};
+
+export const logCreater = () => {
+  return ({ namespace, level, label, log }) => {
+    const { message, ...extra } = log;
+
+    logger.log({
+        level: toWinstonLogLevel(level),
+        message,
+        extra,
+    });
+  };
+};
 
 export const kafka = new Kafka({
   clientId: 'blockchain',
   brokers: ['kafka1:19092'],
-  logCreator: () => {
-    return ({ namespace, level, label, log }) => {
-      const { message, ...extra } = log
-        logger.log({
-            level: toWinstonLogLevel(level),
-            message,
-            extra,
-        })
-    }
-  }
+  logCreator: logCreater
 });
