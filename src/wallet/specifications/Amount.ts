@@ -3,7 +3,7 @@ import Specification from "./specification";
 
 export default class Amount implements Specification
 {
-    public isSatisfiedBy(transaction: transaction): boolean {
+    isSatisfiedBy(transaction: transaction): boolean {
         if (! (transaction.getAmount() > 0)) {
             throw new Error("Amount not allowed.");
         }
