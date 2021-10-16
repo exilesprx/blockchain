@@ -27,11 +27,11 @@ export default class Application
 
     private database: Database;
 
-    constructor(app: Express)
+    constructor(app: Express, emitter: EventEmitter)
     {
         this.app = app;
 
-        this.emitter = new EventEmitter();
+        this.emitter = emitter;
 
         this.events = Events.register(this.emitter, producer, logger);
 
@@ -71,7 +71,7 @@ export default class Application
 
     public registerRoutes()
     {
-        this.app.post('/transaction', TransactionRoute.getAction(this.pool));
+        this.app.post(TransactionRoute.getName(), TransactionRoute.getAction(this.pool));
         
     }
 }

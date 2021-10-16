@@ -3,7 +3,12 @@ import { Response, Request } from "express";
 
 export default class Transaction
 {
-    public static getAction(pool: TransactionPool)
+    public static getName() : string
+    {
+        return "/transaction";
+    }
+
+    public static getAction(pool: TransactionPool) : (req: Request, res: Response) => Response<any, Record<string, any>>
     {
         return (req: Request, res: Response) => {
             const params = req.body;
@@ -14,8 +19,7 @@ export default class Transaction
         
                 return res.send(`Transaction ${transaction.getKey()} accepted.`);
             } catch(error) {
-                res.sendStatus(401);
-                return;
+                return res.sendStatus(401);
             }
         }
     }
