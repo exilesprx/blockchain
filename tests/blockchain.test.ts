@@ -8,6 +8,7 @@ import BlockModel from '../src/models/block';
 import BlockLimitPolicy from '../src/policies/block-limit-policy';
 import Block from '../src/chain/block';
 import EventEmitter from 'events';
+import { Error } from 'mongoose';
 
 jest.mock('../src/events/emitter');
 jest.mock('../src/stream/producer');
@@ -150,7 +151,33 @@ describe("Blockchain", ()=> {
             });
 
         await chain.restore().catch((value) => {
-            expect(value).toBeNull();
+            expect(value).not.toBeCalled();
+        });
+
+        const restoreLastBlockHash = chain.getLastBlockHash();
+
+        expect(genesisBlockHash).toBe(restoreLastBlockHash);
+    });
+
+    test("it expects database issue", async () => {
+
+        const chain = new Blockchain(events);
+        
+        expect(chain.length()).toBe(1);
+
+        const genesisBlockHash = chain.getLastBlockHash();
+
+        jest.spyOn(BlockModel, 'findOne')
+            .mockImplementation(() => {
+                return {
+                    lean: () => {
+                        throw new Error("Issue");
+                    }
+                }
+            });
+
+        await chain.restore().catch((value) => {
+            expect(value).toBeInstanceOf(Error);
         });
 
         const restoreLastBlockHash = chain.getLastBlockHash();

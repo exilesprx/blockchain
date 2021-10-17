@@ -10,7 +10,6 @@ import SameWallet from "../wallet/specifications/same-wallet";
 import Sender from "../wallet/specifications/sender";
 import TransactionPool from "../wallet/transaction-pool";
 import { default as TransactionRoute } from "./routes/transaction";
-import env from 'dotenv';
 import Database from "../database";
 
 export default class Application
@@ -54,18 +53,14 @@ export default class Application
 
     public async boot()
     {
-        const configs = env.config();
-
         this.database.connect();
 
         producer.connect();
 
-        await this.chain.restore();
+        await this.chain.restore().catch(error => logger.error(error));
 
         this.app.listen(process.env.APP_PORT, () => {
             logger.info(`App listening on port ${process.env.APP_PORT}`);
-        
-            logger.info(`Configs loaded: ${JSON.stringify(configs)}`);
         });
     }
 

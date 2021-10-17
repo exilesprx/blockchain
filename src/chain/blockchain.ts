@@ -6,7 +6,6 @@ import BlockLimitPolicy from "../policies/block-limit-policy";
 import Events from "../events/emitter";
 import NewBlockPolicy from "../policies/new-block-policy";
 
-
 export default class Blockchain
 {
     private chain: Block[];
@@ -38,24 +37,27 @@ export default class Blockchain
     public async restore() : Promise<Block>
     {
         // TODO: Get the latest block
-        const blockModel = await BlockModel.findOne().lean();
-
-        if (!blockModel) {
-            return Promise.reject(null);
-        }
-        
-        const block = Block.fromModel(blockModel);
-
-        if (block.getHash() != blockModel.hash) {
-            throw new TypeError();
-        }
-
-        this.chain = [block];
-
         // TODO: Find all transaction newer than the ones in the block
         // TODO: Fill the transaction pool with the transactions found
+        try {
+            const blockModel = await BlockModel.findOne().lean();
 
-        return block;
+            if (!blockModel) {
+                return this.chain[0];
+            }
+            
+            const block = Block.fromModel(blockModel);
+    
+            if (block.getHash() != blockModel.hash) {
+                throw new TypeError();
+            }
+    
+            this.chain = [block];
+
+            return block;
+        } catch(error) {
+            return Promise.reject(error);
+        }
     }
 
     public length() : number
