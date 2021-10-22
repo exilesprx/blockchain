@@ -57,7 +57,15 @@ export default class Application
 
         producer.connect();
 
-        await this.chain.restore().catch(error => logger.error(error));
+        await this.chain.restore()
+            .then(block => {
+                block.getTransactionCount();
+
+                // TODO: Get the latest block
+                // TODO: Find all transaction newer than the ones in the block
+                // TODO: Fill the transaction pool with the transactions found
+            })
+            .catch(error => logger.error(error));
 
         this.app.listen(process.env.APP_PORT, () => {
             logger.info(`App listening on port ${process.env.APP_PORT}`);

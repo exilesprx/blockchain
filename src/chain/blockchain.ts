@@ -36,9 +36,6 @@ export default class Blockchain
 
     public async restore() : Promise<Block>
     {
-        // TODO: Get the latest block
-        // TODO: Find all transaction newer than the ones in the block
-        // TODO: Fill the transaction pool with the transactions found
         try {
             const blockModel = await BlockModel.findOne().lean();
 
