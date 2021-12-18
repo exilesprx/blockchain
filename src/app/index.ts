@@ -59,7 +59,7 @@ export default class Application
 
         await this.chain.restore()
             .then(block => {
-                block.getTransactionCount();
+                let date = block.getDate();
 
                 // TODO: Get the latest block
                 // TODO: Find all transaction newer than the ones in the block

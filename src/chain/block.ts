@@ -69,6 +69,11 @@ export default class Block
         return this.transactions.length;
     }
 
+    public getDate() : Date
+    {
+        return new Date(this.date);
+    }
+
     private generateHash() : string
     {
         let transactionHashes = "";

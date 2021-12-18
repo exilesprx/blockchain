@@ -37,6 +37,15 @@ export default class TransactionPool
         return transaction;
     }
 
+    public restore(since: Date) : Promise<Transaction[]>
+    {
+        try {
+            return Promise.resolve([]);
+        } catch(error) {
+            return Promise.reject([]);
+        }
+    }
+
     public drain() : void
     {
         this.transactions = [];
