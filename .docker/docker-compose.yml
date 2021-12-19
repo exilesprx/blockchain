@@ -163,7 +163,6 @@ services:
       - kafka1
     volumes:
       - ../:/usr/app
-    command: npm run app
 
   miner:
     extends:

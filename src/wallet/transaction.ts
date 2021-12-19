@@ -65,4 +65,9 @@ export default class Transaction
     {
         return this.amount;
     }
+
+    public getDate() : number
+    {
+        return this.date;
+    }
 }

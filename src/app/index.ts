@@ -11,6 +11,7 @@ import Sender from "../wallet/specifications/sender";
 import TransactionPool from "../wallet/transaction-pool";
 import { default as TransactionRoute } from "./routes/transaction";
 import Database from "../database";
+import TransactionModel from "../models/transaction";
 
 export default class Application
 {
@@ -58,8 +59,13 @@ export default class Application
         producer.connect();
 
         await this.chain.restore()
-            .then(block => {
-                let date = block.getDate();
+            .then(async block => {
+                
+                let date = block.getLastTransactionDate();
+
+                let transaction = await TransactionModel.find()
+                    .where("created_at").gt(date.valueOf())
+                    .lean();
 
                 // TODO: Get the latest block
                 // TODO: Find all transaction newer than the ones in the block

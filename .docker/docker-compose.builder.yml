@@ -8,4 +8,5 @@ services:
   install:
     extends:
       service: base
-    command: npm i
+    stdin_open: true
+    tty: true
