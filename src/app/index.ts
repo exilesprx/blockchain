@@ -70,6 +70,7 @@ export default class Application
                 // TODO: Get the latest block
                 // TODO: Find all transaction newer than the ones in the block
                 // TODO: Fill the transaction pool with the transactions found
+                // TODO: If we still have left over transactions, create another block
             })
             .catch(error => logger.error(error));
 

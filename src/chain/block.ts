@@ -69,17 +69,11 @@ export default class Block
         return this.transactions.length;
     }
 
-<<<<<<< HEAD
-    public getDate() : Date
-    {
-        return new Date(this.date);
-=======
     public getLastTransactionDate() : Date
     {
         let lastTransaction = this.transactions[this.transactions.length - 1];
 
         return new Date(lastTransaction.getDate());
->>>>>>> e1ace64... Docker updates
     }
 
     private generateHash() : string
