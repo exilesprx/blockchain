@@ -159,8 +159,6 @@ services:
       service: install
     ports:
       - "3000:80"
-    depends_on:
-      - kafka1
     volumes:
       - ../:/usr/app
 
@@ -184,18 +182,3 @@ services:
       - MONGO_INITDB_DATABASE=blockchain
     ports:
       - "27017:27017"
-  mongo-express:
-    image: mongo-express
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
-      - ME_CONFIG_MONGODB_PORT=27017
-      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
-      - ME_CONFIG_MONGODB_AUTH_DATABASE=blockchain
-      - ME_CONFIG_MONGODB_AUTH_USERNAME=root
-      - ME_CONFIG_MONGODB_AUTH_PASSWORD=secret
-      - ME_CONFIG_BASICAUTH_USERNAME=debian
-      - ME_CONFIG_BASICAUTH_PASSWORD=password
-    depends_on:
-      - mongo
-    ports:
-      - "8888:8081"
