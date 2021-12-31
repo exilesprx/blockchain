@@ -54,9 +54,19 @@ export default class Block
         return block;
     }
 
+    public mine() : void
+    {
+        // TODO: algo to run
+    }
+
     public getHash() : string
     {
         return this.hash;
+    }
+
+    public getPreviousHash() : string
+    {
+        return this.previousHash;
     }
 
     public getKey() : any
@@ -64,16 +74,9 @@ export default class Block
         return this.id;
     }
 
-    public getTransactionCount() : number
+    public getTransactions() : Transaction[]
     {
-        return this.transactions.length;
-    }
-
-    public getLastTransactionDate() : Date
-    {
-        let lastTransaction = this.transactions[this.transactions.length - 1];
-
-        return new Date(lastTransaction.getDate());
+        return this.transactions;
     }
 
     private generateHash() : string

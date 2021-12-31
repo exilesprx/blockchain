@@ -1,10 +1,6 @@
-import BlockModel from '../models/block';
-import { v4 } from 'uuid';
-import Transaction from "../wallet/transaction";
 import Block from "./block";
-import BlockLimitPolicy from "../policies/block-limit-policy";
 import Events from "../events/emitter";
-import NewBlockPolicy from "../policies/new-block-policy";
+import BlockLimitPolicy from "../policies/block-limit-policy";
 
 export default class Blockchain
 {
@@ -17,44 +13,21 @@ export default class Blockchain
         this.chain = [Block.genesis()];
     }
 
-    public addBlock(transactions: Transaction[]) : boolean
+    public addBlock(block: Block) : Block
     {
-        if (! NewBlockPolicy.shouldCreateNewBlock(transactions)) {
-           return false;
+        if (this.getLastBlockHash() != block.getPreviousHash()) {
+            throw new Error("Incorrect block reference.");
         }
-        
+
         if (BlockLimitPolicy.reachedLimit(this)) {
             this.removeFirstBlock()
         }
 
-        const block = new Block(v4(), 0, 0, this.getLastBlockHash(), transactions);
+        this.chain.push(block);
 
-        this.addNewBlock(block);
+        this.events.emit('block-added', block);
 
-        return true;
-    }
-
-    public async restore() : Promise<Block>
-    {
-        try {
-            const blockModel = await BlockModel.findOne().lean();
-
-            if (!blockModel) {
-                return this.chain[0];
-            }
-            
-            const block = Block.fromModel(blockModel);
-    
-            if (block.getHash() != blockModel.hash) {
-                throw new TypeError();
-            }
-    
-            this.chain = [block];
-
-            return block;
-        } catch(error) {
-            return Promise.reject(error);
-        }
+        return block;
     }
 
     public length() : number
@@ -62,22 +35,20 @@ export default class Blockchain
         return this.chain.length;
     }
 
-    public getLastBlockHash() : string
+    private getLastBlockHash() : string
     {
-        const block = this.chain[this.chain.length - 1];
+        const block = this.getPreviousBlock();
 
         return block.getHash();
+    }
+
+    private getPreviousBlock() : Block
+    {
+        return this.chain[this.chain.length - 1];
     }
 
     private removeFirstBlock() : Block|undefined
     {
         return this.chain.shift();
-    }
-
-    private addNewBlock(block: Block) : void
-    {
-        this.chain.push(block);
-
-        this.events.emit('block-added', block);
     }
 }

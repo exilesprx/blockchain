@@ -1,20 +1,16 @@
-import Blockchain from "../chain/blockchain";
 import Events from "../events/emitter";
 import Specification from "./specifications/specification";
 import Transaction from "./transaction";
 
 export default class TransactionPool
 {
-    private transactions: Transaction[];
     private events: Events;
-    private chain: Blockchain;
     private specifications: Specification[];
 
-    constructor(events: Events, chain: Blockchain)
+    constructor(events: Events)
     {
         this.events = events;
-        this.chain = chain;
-        this.transactions = [];
+
         this.specifications = [];
     }
 
@@ -26,39 +22,9 @@ export default class TransactionPool
             spec.isSatisfiedBy(transaction);
         });
 
-        this.transactions.push(transaction);
-
         this.events.emit('transaction-added', transaction);
 
-        if (this.chain.addBlock(this.getTransactions())) {
-            this.drain();
-        }
-
         return transaction;
-    }
-
-    public restore(since: Date) : Promise<Transaction[]>
-    {
-        try {
-            return Promise.resolve([]);
-        } catch(error) {
-            return Promise.reject([]);
-        }
-    }
-
-    public drain() : void
-    {
-        this.transactions = [];
-    }
-
-    public getTransactions() : Transaction[]
-    {
-        return this.transactions;
-    }
-
-    public length() : number
-    {
-        return this.transactions.length;
     }
 
     public addSpecification(specification: Specification) : this

@@ -11,7 +11,6 @@ import Sender from "../wallet/specifications/sender";
 import TransactionPool from "../wallet/transaction-pool";
 import { default as TransactionRoute } from "./routes/transaction";
 import Database from "../database";
-import TransactionModel from "../models/transaction";
 
 export default class Application
 {
@@ -37,7 +36,7 @@ export default class Application
 
         this.chain = new Blockchain(this.events);
 
-        this.pool = new TransactionPool(this.events, this.chain)
+        this.pool = new TransactionPool(this.events)
 
         this.database = new Database(String(process.env.DB_HOST), Number(process.env.DB_PORT), String(process.env.DB_USER), String(process.env.DB_PASSWORD));
     }
@@ -54,25 +53,13 @@ export default class Application
 
     public async boot()
     {
-        this.database.connect();
+        // this.database.connect();
 
         producer.connect();
 
-        await this.chain.restore()
-            .then(async block => {
-                
-                let date = block.getLastTransactionDate();
-
-                let transaction = await TransactionModel.find()
-                    .where("created_at").gt(date.valueOf())
-                    .lean();
-
-                // TODO: Get the latest block
-                // TODO: Find all transaction newer than the ones in the block
-                // TODO: Fill the transaction pool with the transactions found
-                // TODO: If we still have left over transactions, create another block
-            })
-            .catch(error => logger.error(error));
+        // await this.chain.restore()
+        //     .then(this.pool.restore)
+        //     .catch(error => logger.error(error));
 
         this.app.listen(process.env.APP_PORT, () => {
             logger.info(`App listening on port ${process.env.APP_PORT}`);
@@ -82,6 +69,5 @@ export default class Application
     public registerRoutes()
     {
         this.app.post(TransactionRoute.getName(), TransactionRoute.getAction(this.pool));
-        
     }
 }

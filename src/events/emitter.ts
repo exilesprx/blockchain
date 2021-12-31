@@ -41,11 +41,8 @@ export default class Events
     {
         this.logger.info(`Block added: ${block.getHash()}`);
 
-        this.producer.send({
-            topic: Topic.new('block-test').toString(),
-            messages: [
-                { key: block.getKey(), value: JSON.stringify(block) },
-            ]
+        block.getTransactions().forEach((transaction) => {
+            // TODO: update transaction processed status
         });
     }
 
@@ -54,7 +51,7 @@ export default class Events
         this.logger.info(`Transaction added: ${transaction.getHash()}`);
 
         this.producer.send({
-            topic: Topic.new('transaction-test').toString(),
+            topic: Topic.new('transaction-added').toString(),
             messages: [
                 { key: transaction.getKey(), value: JSON.stringify(transaction) },
             ],
