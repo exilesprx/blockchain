@@ -19,6 +19,8 @@ COPY --from=deps /usr/app/package.json /usr/app/
 
 COPY babel.config.js /usr/app/
 
+COPY jest.config.ts /usr/app/
+
 COPY ./src /usr/app/src
 
 COPY ./tests /usr/app/tests
