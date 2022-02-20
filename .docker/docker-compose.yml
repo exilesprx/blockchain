@@ -154,9 +154,8 @@ services:
       AUTO_CONNECT_CONNECTION_STRING: zoo1:2181
 
   app:
-    build:
-      context: ../
-      dockerfile: ./.docker/node/Dockerfile
+    image: blockchain:latest
+    container_name: blockchain
     ports:
       - "3000:80"
     env_file:
