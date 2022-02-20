@@ -154,18 +154,16 @@ services:
       AUTO_CONNECT_CONNECTION_STRING: zoo1:2181
 
   app:
-    extends:
-      file: docker-compose.builder.yml
-      service: install
+    build:
+      context: ../
+      dockerfile: ./.docker/node/Dockerfile
     ports:
       - "3000:80"
-    volumes:
-      - ../:/usr/app
+    env_file:
+      - ../.env
 
   miner:
-    extends:
-      file: docker-compose.builder.yml
-      service: install
+    build: node/
     ports:
       - "3006:80"
     depends_on:
