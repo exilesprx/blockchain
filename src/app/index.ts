@@ -11,6 +11,8 @@ import Sender from "../wallet/specifications/sender";
 import TransactionPool from "../wallet/transaction-pool";
 import { default as TransactionRoute } from "./routes/transaction";
 import Database from "../database";
+import Bank from "../bank";
+import Block from "../chain/block";
 
 export default class Application
 {
@@ -24,6 +26,8 @@ export default class Application
 
     private pool: TransactionPool;
 
+    private bank: Bank;
+
     private database: Database;
 
     constructor(app: Express, emitter: EventEmitter)
@@ -34,9 +38,11 @@ export default class Application
 
         this.events = Events.register(this.emitter, producer, logger);
 
-        this.chain = new Blockchain(this.events);
+        this.chain = new Blockchain();
 
-        this.pool = new TransactionPool(this.events)
+        this.pool = new TransactionPool();
+
+        this.bank = new Bank(this.pool, this.chain, this.events);
 
         this.database = new Database(String(process.env.DB_HOST), Number(process.env.DB_PORT), String(process.env.DB_USER), String(process.env.DB_PASSWORD));
     }
@@ -57,9 +63,10 @@ export default class Application
 
         producer.connect();
 
-        // await this.chain.restore()
-        //     .then(this.pool.restore)
-        //     .catch(error => logger.error(error));
+        // TODO: restore from eventstore
+
+        // TODO: consumer from block mined consumer
+        // this.bank.addBlock(new Block());
 
         this.app.listen(process.env.APP_PORT, () => {
             logger.info(`App listening on port ${process.env.APP_PORT}`);
@@ -68,6 +75,6 @@ export default class Application
 
     public registerRoutes()
     {
-        this.app.post(TransactionRoute.getName(), TransactionRoute.getAction(this.pool));
+        this.app.post(TransactionRoute.getName(), TransactionRoute.getAction(this.bank));
     }
 }

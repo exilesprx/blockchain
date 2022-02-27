@@ -30,7 +30,7 @@ export const logCreater = () => {
 };
 
 export const kafka = new Kafka({
-  clientId: 'blockchain',
-  brokers: ['kafka1:19092'],
+  clientId: process.env.KAFKA_CLIENT_ID,
+  brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`],
   logCreator: logCreater
 });

@@ -24,7 +24,7 @@ export default class Events
     {
         const events = new this(emitter, producer, logger);
 
-        emitter.on('block-added', events.blockAdded);
+        emitter.on('block-mined', events.blockMined);
 
         return events;
     }
@@ -34,12 +34,12 @@ export default class Events
         this.emitter.emit(event, value);
     }
 
-    public blockAdded(block: Block)
+    public blockMined(block: Block)
     {
-        this.logger.info(`Block added: ${block.getHash()}`);
+        this.logger.info(`Block mined: ${block.getHash()}`);
 
         this.producer.send({
-            topic: Topic.new('block-added').toString(),
+            topic: Topic.new('block-mined').toString(),
             messages: [
                 { key: block.getKey(), value: JSON.stringify(block) },
             ]

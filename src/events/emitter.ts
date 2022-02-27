@@ -41,14 +41,18 @@ export default class Events
     {
         this.logger.info(`Block added: ${block.getHash()}`);
 
+        // TODO: persist event
+
         block.getTransactions().forEach((transaction) => {
-            // TODO: update transaction processed status
+            // TODO: update wallets
         });
     }
 
     public transactionAdded(transaction: Transaction)
     {
         this.logger.info(`Transaction added: ${transaction.getHash()}`);
+
+        // TODO: persist block
 
         this.producer.send({
             topic: Topic.new('transaction-added').toString(),

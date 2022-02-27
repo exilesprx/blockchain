@@ -41,3 +41,5 @@ Jest is used to test the applicaiton code. However, Babel is required in order t
 - Notes 
     - Consumers/miners
         - MULTIPLE CONSUMERS MUST BE ON THE SAME GROUP TO MINE THE SAME PARTITION
+    - Transactions dropped
+        - if a transaction is never added to a block, how do we find the transaction? And how do we rebroadcast it?

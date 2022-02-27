@@ -1,15 +1,12 @@
 import Block from "./block";
-import Events from "../events/emitter";
 import BlockLimitPolicy from "../policies/block-limit-policy";
 
 export default class Blockchain
 {
     private chain: Block[];
-    private events: Events;
 
-    constructor(events: Events)
+    constructor()
     {
-        this.events = events;
         this.chain = [Block.genesis()];
     }
 
@@ -24,8 +21,6 @@ export default class Blockchain
         }
 
         this.chain.push(block);
-
-        this.events.emit('block-added', block);
 
         return block;
     }
