@@ -1,4 +1,4 @@
-import { consumer } from "./stream/consumer";
+import { consumer } from "../stream/consumer";
 
 const run = async () => {
     await consumer.connect()
