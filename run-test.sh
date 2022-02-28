@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo -e "\033[35m Updating image... \033[0m"
+echo -e "\033[35m Updating test image... \033[0m"
 docker build -f .docker/tests/Dockerfile -t blockchain-tests:latest .
 
 echo -e "\033[33m Running tests... \033[0m"

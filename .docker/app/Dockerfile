@@ -21,9 +21,7 @@ COPY tsconfig.json /usr/app/
 
 COPY ./src /usr/app/src
 
-COPY ./src/app/index.rx /usr/app/src/index.ts
-
-RUN npm run build --verbose
+RUN npm run build --verbose /usr/app/src/app/index.ts
 
 
 #

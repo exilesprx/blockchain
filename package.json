@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "program": "nodemon ./build/index.js",
-    "build": "./node_modules/typescript/bin/tsc index.ts"
+    "program": "nodemon index.js",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
