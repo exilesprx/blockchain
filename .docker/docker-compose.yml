@@ -158,18 +158,21 @@ services:
     container_name: blockchain
     ports:
       - "3000:80"
+    # depends_on:
+    #   - kafka1
     env_file:
       - ../.env
+    command: npm run program
 
   miner:
-    build: node/
+    build: blockchain-miner:latest
     ports:
       - "3006:80"
-    depends_on:
-      - kafka1
-    volumes:
-      - ../:/usr/app
-    command: npm run mine
+    # depends_on:
+    #   - kafka1
+    env_file:
+      - ../.env
+    command: npm run program
 
   mongo:
     image: mongo:4.0
