@@ -35,6 +35,12 @@ Jest is used to test the applicaiton code. However, Babel is required in order t
             out (we're using a stream with guaranteed ordering)
         - broadcast event "block added"
         - persist the block to eventstoreDB
+            - NOTE: not sure we need this
+- Auditor
+    - Transactions
+        - compares "generated transactions" vesus "processed transactions"
+        - should "rebroadcast" so they're added to a chain
+        - happens every X
 - End to end testing
     - Scheduler
         - Produces transactions every X secones (start with manual entry at first)
