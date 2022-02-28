@@ -12,7 +12,7 @@ import TransactionPool from "../wallet/transaction-pool";
 import { default as TransactionRoute } from "./routes/transaction";
 import Database from "../database";
 import Bank from "../bank";
-import Block from "../chain/block";
+import Link from "../chain/specifications/link";
 
 export default class Application
 {
@@ -55,6 +55,8 @@ export default class Application
             .addSpecification(new Receiver())
             .addSpecification(new Sender())
             .addSpecification(new SameWallet());
+
+        this.chain.addSpecification(new Link());
     }
 
     public async boot()

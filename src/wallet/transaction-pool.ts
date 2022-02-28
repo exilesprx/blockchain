@@ -10,13 +10,11 @@ export default class TransactionPool
         this.specifications = [];
     }
 
-    public fill(transaction: Transaction): Transaction
+    public fill(transaction: Transaction) : void
     {
         this.specifications.forEach(spec => {
             spec.isSatisfiedBy(transaction);
         });
-
-        return transaction;
     }
 
     public addSpecification(specification: Specification) : this

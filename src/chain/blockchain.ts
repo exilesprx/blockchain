@@ -1,28 +1,31 @@
 import Block from "./block";
 import BlockLimitPolicy from "../policies/block-limit-policy";
+import Specification from "./specifications/specifications";
 
 export default class Blockchain
 {
     private chain: Block[];
 
+    private specifications: Specification[];
+
     constructor()
     {
         this.chain = [Block.genesis()];
+
+        this.specifications = [];
     }
 
-    public addBlock(block: Block) : Block
+    public addBlock(block: Block) : void
     {
-        if (this.getLastBlockHash() != block.getPreviousHash()) {
-            throw new Error("Incorrect block reference.");
-        }
+        this.specifications.forEach(spec => {
+            spec.isSatisfiedBy(this.getPreviousBlock(), block);
+        });
 
         if (BlockLimitPolicy.reachedLimit(this)) {
             this.removeFirstBlock()
         }
 
         this.chain.push(block);
-
-        return block;
     }
 
     public length() : number
@@ -30,11 +33,9 @@ export default class Blockchain
         return this.chain.length;
     }
 
-    private getLastBlockHash() : string
+    public addSpecification(spec: Specification)
     {
-        const block = this.getPreviousBlock();
-
-        return block.getHash();
+        this.specifications.push(spec);
     }
 
     private getPreviousBlock() : Block

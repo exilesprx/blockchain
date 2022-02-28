@@ -33,9 +33,11 @@ Jest is used to test the applicaiton code. However, Babel is required in order t
         - add the mined block to the chain from stream
         - if previous block hash doesn't match, then a block proceeded it, so throw it
             out (we're using a stream with guaranteed ordering)
+            - NOTE: censensus model - app uses DB/memory - miners use memory
+            - would need to stop current mine process
         - broadcast event "block added"
         - persist the block to eventstoreDB
-            - NOTE: not sure we need this
+            - NOTE: not sure we need this since this would require machine to run this
 - Auditor
     - Transactions
         - compares "generated transactions" vesus "processed transactions"
@@ -49,3 +51,5 @@ Jest is used to test the applicaiton code. However, Babel is required in order t
         - MULTIPLE CONSUMERS MUST BE ON THE SAME GROUP TO MINE THE SAME PARTITION
     - Transactions dropped
         - if a transaction is never added to a block, how do we find the transaction? And how do we rebroadcast it?
+    - Miner
+        - if block mined event is received, so if its currently mining, if so, stop it, and start mining a new block (if reqs are met)
