@@ -1,4 +1,4 @@
-FROM node:alpine3.15 as deps
+FROM node:16-alpine as deps
 
 WORKDIR /usr/app
 
@@ -9,7 +9,7 @@ COPY ./package-lock.json /usr/app/
 RUN npm install
 
 #
-FROM node:alpine3.15 as build
+FROM node:16-alpine as build
 
 WORKDIR /usr/app
 
@@ -17,19 +17,19 @@ COPY --from=deps /usr/app/node_modules /usr/app/node_modules
 
 COPY --from=deps /usr/app/package.json /usr/app/
 
-COPY tsconfig.json /usr/app/
-
 COPY ./src /usr/app/src
 
-RUN npm run build --verbose /usr/app/src/app/index.ts
+RUN npm run build -- --project ./src/app/tsconfig.json
 
 
 #
-FROM node:alpine3.15
+FROM node:16-alpine
 
 WORKDIR /usr/app
 
-COPY --from=build /usr/app/build /usr/app
+COPY --from=deps /usr/app/node_modules /usr/app/node_modules
+
+COPY --from=build /usr/app/src/app/build /usr/app
 
 RUN chown -R node. .
 
