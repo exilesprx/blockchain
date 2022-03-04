@@ -1,8 +1,9 @@
 import EventEmitter from 'events';
 import { Logger, Producer } from 'kafkajs';
 import Block from '../chain/block';
+import Database from '../database';
 import Topic from '../stream/topic/topic';
-import Transaction from '../wallet/transaction';
+import TransactionEvent from '../models/transaction';
 
 export default class Events
 {
@@ -12,8 +13,12 @@ export default class Events
 
     private emitter: EventEmitter;
 
-    constructor(emitter: EventEmitter, producer: Producer, logger: Logger)
+    private database: Database;
+
+    constructor(database: Database, emitter: EventEmitter, producer: Producer, logger: Logger)
     {
+        this.database = database;
+
         this.emitter = emitter;
 
         this.producer = producer;
@@ -21,9 +26,9 @@ export default class Events
         this.logger = logger;
     }
 
-    public static register(emitter: EventEmitter, producer: Producer, logger: Logger) : Events
+    public static register(database: Database, emitter: EventEmitter, producer: Producer, logger: Logger) : Events
     {
-        const events = new this(emitter, producer, logger);
+        const events = new this(database, emitter, producer, logger);
 
         emitter.on('block-added', events.blockAdded);
 
@@ -48,16 +53,16 @@ export default class Events
         });
     }
 
-    public transactionAdded(transaction: Transaction)
+    public transactionAdded(transaction: TransactionEvent)
     {
-        this.logger.info(`Transaction added: ${transaction.getHash()}`);
+        this.logger.info(`Transaction added: ${transaction}`);
 
-        // TODO: persist block
+        this.database.persistEvent(transaction)
 
         this.producer.send({
             topic: Topic.new('transaction-added').toString(),
             messages: [
-                { key: transaction.getKey(), value: JSON.stringify(transaction) },
+                { key: transaction.data.id, value: JSON.stringify(transaction) },
             ],
         });
     }

@@ -15,6 +15,10 @@ See: tsconfig.json
 Jest is used to test the applicaiton code. However, Babel is required in order to support TypeScript when testing the source code.
 
 ### TODO
+- Database
+    - use eventstoreDB
+    - persist transactions submitted and verified (from API)
+    - persist mined blocks (from miner)
 - Bank
     - Transactions
         - added to a pool via API
@@ -53,3 +57,6 @@ Jest is used to test the applicaiton code. However, Babel is required in order t
         - if a transaction is never added to a block, how do we find the transaction? And how do we rebroadcast it?
     - Miner
         - if block mined event is received, so if its currently mining, if so, stop it, and start mining a new block (if reqs are met)
+    - Docker build
+        - clean up the build process
+        - create first version

@@ -30,13 +30,15 @@ export default class Application
 
     private database: Database;
 
-    constructor(app: Express, emitter: EventEmitter)
+    constructor()
     {
-        this.app = app;
+        this.app = express();
 
-        this.emitter = emitter;
+        this.database = new Database(String(process.env.DB_HOST), Number(process.env.DB_PORT));
 
-        this.events = Events.register(this.emitter, producer, logger);
+        this.emitter = new EventEmitter();
+
+        this.events = Events.register(this.database, this.emitter, producer, logger);
 
         this.chain = new Blockchain();
 
@@ -44,7 +46,6 @@ export default class Application
 
         this.bank = new Bank(this.pool, this.chain, this.events);
 
-        this.database = new Database(String(process.env.DB_HOST), Number(process.env.DB_PORT), String(process.env.DB_USER), String(process.env.DB_PASSWORD));
     }
 
     public init()
@@ -63,7 +64,7 @@ export default class Application
     {
         // this.database.connect();
 
-        producer.connect();
+        // producer.connect();
 
         // TODO: restore from eventstore, we only need to worry about block heres, the auditor will handle transactions
 

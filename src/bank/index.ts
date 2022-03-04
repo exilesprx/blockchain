@@ -3,6 +3,8 @@ import Events from "../events/emitter";
 import Blockchain from "../chain/blockchain";
 import Transaction from "../wallet/transaction";
 import Block from "../chain/block";
+import TransactionEvent from "../models/transaction";
+import { jsonEvent } from "@eventstore/db-client";
 
 export default class Bank
 {
@@ -25,7 +27,19 @@ export default class Bank
     {
         this.transactions.fill(transaction)
 
-        this.events.emit('transaction-added', transaction);
+        const event = jsonEvent<TransactionEvent>({
+            type: "transaction",
+            data: {
+                id: transaction.getKey(),
+                to: transaction.getReceiver(),
+                from: transaction.getSender(),
+                amount: transaction.getAmount(),
+                date: transaction.getDate(),
+                hash: transaction.getHash()
+            },
+        });
+
+        this.events.emit('transaction-added', event);
     }
 
     public addBlock(block: Block) : void

@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { JSONEventType } from '@eventstore/db-client';
 
 export interface Transaction {
     id: string,
@@ -9,15 +9,16 @@ export interface Transaction {
     hash: string
 };
 
-const schema = new Schema<Transaction>({
-    id: { type: String, required: true },
-    to: { type: String, required: true },
-    from: { type: String, required: true },
-    amount: { type: Number, required: true },
-    date: { type: Number, required: true },
-    hash: { type: String, required: true }
-});
+type TransactionEvent = JSONEventType<
+  "transaction",
+  {
+    id: string;
+    to: string;
+    from: string;
+    amount: number;
+    date: number;
+    hash: string;
+  }
+>;
 
-const TransactionModel = model<Transaction>('Transaction', schema);
-
-export default TransactionModel;
+export default TransactionEvent;
