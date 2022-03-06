@@ -1,9 +1,11 @@
 import EventEmitter from 'events';
-import { Logger, Producer } from 'kafkajs';
+import { Producer } from 'kafkajs';
 import Block from '../chain/block';
 import Database from '../database';
 import Topic from '../stream/topic/topic';
 import TransactionEvent from '../models/transaction';
+import Transaction from '../wallet/transaction';
+import { Logger } from 'winston';
 
 export default class Events
 {
@@ -30,9 +32,9 @@ export default class Events
     {
         const events = new this(database, emitter, producer, logger);
 
-        emitter.on('block-added', events.blockAdded);
+        emitter.on('block-added', events.blockAdded.bind(events));
 
-        emitter.on('transaction-added', events.transactionAdded);
+        emitter.on('transaction-added', events.transactionAdded.bind(events));
 
         return events;
     }
@@ -53,17 +55,17 @@ export default class Events
         });
     }
 
-    public transactionAdded(transaction: TransactionEvent)
+    public transactionAdded(transaction: Transaction)
     {
-        this.logger.info(`Transaction added: ${transaction}`);
+        this.logger.info(`Transaction added: ${transaction.getHash()}`);
 
         this.database.persistEvent(transaction)
 
-        this.producer.send({
-            topic: Topic.new('transaction-added').toString(),
-            messages: [
-                { key: transaction.data.id, value: JSON.stringify(transaction) },
-            ],
-        });
+        // this.producer.send({
+        //     topic: Topic.new('transaction-added').toString(),
+        //     messages: [
+        //         { key: transaction.getKey(), value: JSON.stringify(transaction) },
+        //     ],
+        // });
     }
 }

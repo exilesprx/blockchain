@@ -1,9 +1,11 @@
-import { EventStoreDBClient, JSONEventType } from "@eventstore/db-client";
+import { EventData, EventStoreDBClient, jsonEvent, JSONEventData, JSONEventOptions, JSONEventType } from "@eventstore/db-client";
 import { logger } from '../logs/logger'
+import TransactionEvent from "../models/transaction";
+import Transaction from "../wallet/transaction";
 
 export default class Database
 {
-    private client: EventStoreDBClient;
+    private client: EventStoreDBClient|null;
 
     private host: string;
 
@@ -14,19 +16,40 @@ export default class Database
         this.host = host;
 
         this.port = port;
+
+        this.client = null;
     }
 
     public connect()
     {
         this.client = new EventStoreDBClient({
             endpoint: `${this.host}:${this.port}`,
+        },
+        {
+            insecure: true
         });
     }
 
-    public persistEvent(event: JSONEventType)
+    public async persistEvent(transaction: Transaction)
     {
-        this.client.appendToStream(event.type, event);
+        if (!this.client) {
+            return;
+        }
 
-        logger.info(`Persisted ${event}`);
+        const event = jsonEvent<TransactionEvent>({
+            type: "transaction",
+            data: {
+                id: transaction.getKey(),
+                to: transaction.getReceiver(),
+                from: transaction.getSender(),
+                amount: transaction.getAmount(),
+                date: transaction.getDate(),
+                hash: transaction.getHash()
+            },
+        });
+
+        const result = await this.client.appendToStream(event.type, event);
+
+        // logger.info(`Persisted ${event}`);
     }
 }

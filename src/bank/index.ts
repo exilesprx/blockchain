@@ -26,20 +26,8 @@ export default class Bank
     public addTransaction(transaction: Transaction) : void
     {
         this.transactions.fill(transaction)
-
-        const event = jsonEvent<TransactionEvent>({
-            type: "transaction",
-            data: {
-                id: transaction.getKey(),
-                to: transaction.getReceiver(),
-                from: transaction.getSender(),
-                amount: transaction.getAmount(),
-                date: transaction.getDate(),
-                hash: transaction.getHash()
-            },
-        });
-
-        this.events.emit('transaction-added', event);
+        
+        this.events.emit('transaction-added', transaction);
     }
 
     public addBlock(block: Block) : void

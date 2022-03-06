@@ -157,23 +157,23 @@ services:
     image: blockchain:latest
     container_name: blockchain
     ports:
-      - "3000:80"
+      - "3000:3000"
     depends_on:
       - eventstore.db
     #   - kafka1
     env_file:
       - ../.env
-    command: npm run program
+    command: ./app/index.js
 
-  miner:
-    build: blockchain-miner:latest
-    ports:
-      - "3006:80"
-    # depends_on:
-    #   - kafka1
-    env_file:
-      - ../.env
-    command: npm run program
+  # miner:
+  #   build: blockchain-miner:latest
+  #   ports:
+  #     - "3006:80"
+  #   # depends_on:
+  #   #   - kafka1
+  #   env_file:
+  #     - ../.env
+  #   command: npm run program
 
   eventstore.db:
     image: eventstore/eventstore:20.10.2-buster-slim

@@ -62,7 +62,7 @@ export default class Application
 
     public async boot()
     {
-        // this.database.connect();
+        this.database.connect();
 
         // producer.connect();
 

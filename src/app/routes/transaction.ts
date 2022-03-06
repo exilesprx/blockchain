@@ -1,5 +1,6 @@
 import { Response, Request } from "express";
 import Bank from "../../bank";
+import { logger } from "../../logs/logger";
 import { default as TransactionDataModel } from "../../wallet/transaction";
 
 export default class Transaction
@@ -17,11 +18,12 @@ export default class Transaction
             try {
                 // Create a new transaction, add it to the pool, and broadcast it
                 const transaction = new TransactionDataModel(params.to, params.from, params.amount);
-
+                
                 bank.addTransaction(transaction);
         
                 return res.send(`Transaction ${transaction.getKey()} accepted.`);
             } catch(error) {
+                logger.error(`Error occurred: ${error}`)
                 return res.sendStatus(401);
             }
         }

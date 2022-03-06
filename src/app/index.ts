@@ -2,9 +2,7 @@ import Application from './main';
 import env from 'dotenv';
 import { logger } from "../logs/logger";
 
-const configs = env.config();
-
-logger.info(`Configs loaded: ${JSON.stringify(configs)}`);
+logger.info(`Configs loaded: ${JSON.stringify(process.env)}`);
 
 const application = new Application();
 
