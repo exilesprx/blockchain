@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
-import Bank from "../../bank";
-import { logger } from "../../logs/logger";
-import { default as TransactionDataModel } from "../../wallet/transaction";
+import Bank from "../../domain/bank";
+import { logger } from "../../domain/logs/logger";
+import { default as TransactionDataModel } from "../../domain/wallet/transaction";
 
 export default class Transaction
 {

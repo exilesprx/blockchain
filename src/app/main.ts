@@ -1,18 +1,18 @@
 import EventEmitter from "events";
 import express, { Express } from "express";
-import Blockchain from "../chain/blockchain";
-import Events from "../events/emitter";
-import { logger } from "../logs/logger";
-import { producer } from "../stream/producer";
-import Amount from "../wallet/specifications/amount";
-import Receiver from "../wallet/specifications/receiver";
-import SameWallet from "../wallet/specifications/same-wallet";
-import Sender from "../wallet/specifications/sender";
-import TransactionPool from "../wallet/transaction-pool";
+import Blockchain from "../domain/chain/blockchain";
+import Events from "../domain/events/emitter";
+import { logger } from "../domain/logs/logger";
+import { producer } from "../domain/stream/producer";
+import Amount from "../domain/wallet/specifications/amount";
+import Receiver from "../domain/wallet/specifications/receiver";
+import SameWallet from "../domain/wallet/specifications/same-wallet";
+import Sender from "../domain/wallet/specifications/sender";
+import TransactionPool from "../domain/wallet/transaction-pool";
 import { default as TransactionRoute } from "./routes/transaction";
 import Database from "../database";
-import Bank from "../bank";
-import Link from "../chain/specifications/link";
+import Bank from "../domain/bank";
+import Link from "../domain/chain/specifications/link";
 
 export default class Application
 {

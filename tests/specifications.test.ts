@@ -1,8 +1,8 @@
-import Amount from '../src/wallet/specifications/amount';
-import Receiver from '../src/wallet/specifications/receiver';
-import Sender from '../src/wallet/specifications/sender';
-import SameWallet from '../src/wallet/specifications/same-wallet';
-import Transaction from '../src/wallet/transaction';
+import Amount from '../src/domain/wallet/specifications/amount';
+import Receiver from '../src/domain/wallet/specifications/receiver';
+import Sender from '../src/domain/wallet/specifications/sender';
+import SameWallet from '../src/domain/wallet/specifications/same-wallet';
+import Transaction from '../src/domain/wallet/transaction';
 
 describe("Specifications", () => {
 

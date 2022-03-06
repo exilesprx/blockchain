@@ -1,5 +1,5 @@
-import NewBlockPolicy from '../src/policies/new-block-policy';
-import Transaction from '../src/wallet/transaction';
+import NewBlockPolicy from '../src/domain/policies/new-block-policy';
+import Transaction from '../src/domain/wallet/transaction';
 
 describe("New block limt policy", () => {
 

@@ -19,7 +19,7 @@ COPY --from=deps /usr/app/package.json /usr/app/
 
 COPY ./src /usr/app/src
 
-RUN npm run build -- --project ./src/app/tsconfig.json
+RUN npm run build ./src/app/index.ts
 
 
 #

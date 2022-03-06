@@ -1,6 +1,5 @@
-import Block from "../src/chain/block";
-import BlockModel from "../src/models/block"
-import Transaction from "../src/wallet/transaction";
+import Block from "../src/domain/chain/block";
+import Transaction from "../src/domain/wallet/transaction";
 
 describe("Block", () => {
 

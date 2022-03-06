@@ -1,9 +1,9 @@
 import EventEmitter from "events";
-import Block from "../src/chain/block";
-import Events from "../src/events/emitter";
-import { logger } from "../src/logs/logger";
-import { producer } from "../src/stream/producer";
-import Transaction from "../src/wallet/transaction";
+import Block from "../src/domain/chain/block";
+import Events from "../src/domain/events/emitter";
+import { logger } from "../src/domain/logs/logger";
+import { producer } from "../src/domain/stream/producer";
+import Transaction from "../src/domain/wallet/transaction";
 
 jest.mock('events');
 

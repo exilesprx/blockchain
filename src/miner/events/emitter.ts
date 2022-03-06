@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 import { Logger, Producer } from 'kafkajs';
-import Block from '../../chain/block';
-import Topic from '../../stream/topic/topic';
+import Block from '../../domain/chain/block';
+import Topic from '../../domain/stream/topic/topic';
 
 export default class Events
 {
