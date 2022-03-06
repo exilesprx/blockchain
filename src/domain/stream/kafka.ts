@@ -18,16 +18,19 @@ export const toWinstonLogLevel = (level: any) => {
 };
 
 export const logCreater = () => {
-  return ({ namespace, level, label, log }) => {
-    const { message, ...extra } = log;
+  return log;
+};
+
+const log = (info: any) => {
+  const {namespace, level, label, log} = info;
+  const { message, ...extra } = log;
 
     logger.log({
         level: toWinstonLogLevel(level),
         message,
         extra,
     });
-  };
-};
+}
 
 export const kafka = new Kafka({
   clientId: process.env.KAFKA_CLIENT_ID,

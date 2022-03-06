@@ -1,7 +1,7 @@
 import { EventData, EventStoreDBClient, jsonEvent, JSONEventData, JSONEventOptions, JSONEventType } from "@eventstore/db-client";
-import { logger } from '../logs/logger'
-import TransactionEvent from "../models/transaction";
-import Transaction from "../wallet/transaction";
+import { logger } from '../domain/logs/logger'
+import TransactionEvent from "./models/transaction";
+import Transaction from "../domain/wallet/transaction";
 
 export default class Database
 {

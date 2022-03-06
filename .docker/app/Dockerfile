@@ -17,9 +17,11 @@ COPY --from=deps /usr/app/node_modules /usr/app/node_modules
 
 COPY --from=deps /usr/app/package.json /usr/app/
 
+COPY ./tsconfig.json /usr/app/
+
 COPY ./src /usr/app/src
 
-RUN npm run build ./src/app/index.ts
+RUN npm run build -- --project ./src/app/tsconfig.json
 
 
 #
@@ -29,7 +31,7 @@ WORKDIR /usr/app
 
 COPY --from=deps /usr/app/node_modules /usr/app/node_modules
 
-COPY --from=build /usr/app/src/app/build /usr/app
+COPY --from=build /usr/app/build /usr/app
 
 RUN chown -R node. .
 

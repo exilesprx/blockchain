@@ -1,5 +1,4 @@
 import Application from './main';
-import env from 'dotenv';
 import { logger } from "../domain/logs/logger";
 
 logger.info(`Configs loaded: ${JSON.stringify(process.env)}`);
