@@ -158,11 +158,12 @@ services:
     container_name: blockchain
     ports:
       - "3000:3000"
+      - "9229:9229"
     depends_on:
       - eventstore.db
     #   - kafka1
     env_file:
-      - ../.env
+      - .env
     command: ./app/index.js
 
   # miner:
