@@ -3,7 +3,8 @@ import express, { Express } from "express";
 import Blockchain from "../domain/chain/blockchain";
 import Events from "../domain/events/emitter";
 import { logger } from "../domain/logs/logger";
-import { producer } from "../domain/stream/producer";
+import { default as kafka } from "../domain/stream/kafka";
+import Producer from "../domain/stream/producer";
 import Amount from "../domain/wallet/specifications/amount";
 import Receiver from "../domain/wallet/specifications/receiver";
 import SameWallet from "../domain/wallet/specifications/same-wallet";
@@ -30,6 +31,8 @@ export default class Application
 
     private database: Database;
 
+    private producer: Producer;
+
     constructor()
     {
         this.app = express();
@@ -38,7 +41,9 @@ export default class Application
 
         this.emitter = new EventEmitter();
 
-        this.events = Events.register(this.database, this.emitter, producer, logger);
+        this.producer = new Producer(kafka);
+
+        this.events = Events.register(this.database, this.emitter, this.producer, logger);
 
         this.chain = new Blockchain();
 
@@ -64,7 +69,7 @@ export default class Application
     {
         this.database.connect();
 
-        // producer.connect();
+        this.producer.connect();
 
         // TODO: restore from eventstore, we only need to worry about block heres, the auditor will handle transactions
 

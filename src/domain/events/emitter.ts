@@ -1,5 +1,5 @@
 import EventEmitter from 'events';
-import { Producer } from 'kafkajs';
+import Producer from '../stream/producer';
 import Block from '../chain/block';
 import Database from '../../database';
 import Topic from '../stream/topic/topic';
@@ -61,11 +61,6 @@ export default class Events
 
         this.database.persistEvent(transaction)
 
-        // this.producer.send({
-        //     topic: Topic.new('transaction-added').toString(),
-        //     messages: [
-        //         { key: transaction.getKey(), value: JSON.stringify(transaction) },
-        //     ],
-        // });
+        this.producer.send('transaction-added', transaction);
     }
 }

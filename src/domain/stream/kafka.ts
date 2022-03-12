@@ -1,7 +1,7 @@
 import { Kafka, logLevel } from 'kafkajs';
 import { logger } from '../logs/logger';
 
-export const toWinstonLogLevel = (level: any) => {
+const toWinstonLogLevel = (level: any) => {
     switch(level) {
       case logLevel.ERROR:
       case logLevel.NOTHING:
@@ -17,10 +17,6 @@ export const toWinstonLogLevel = (level: any) => {
   }
 };
 
-export const logCreater = () => {
-  return log;
-};
-
 const log = (info: any) => {
   const {namespace, level, label, log} = info;
   const { message, ...extra } = log;
@@ -32,8 +28,11 @@ const log = (info: any) => {
     });
 }
 
-export const kafka = new Kafka({
+const kafka = new Kafka({
   clientId: process.env.KAFKA_CLIENT_ID,
   brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`],
-  logCreator: logCreater
+  logCreator: () => log
 });
+
+
+export default kafka;

@@ -46,13 +46,14 @@ For VS code, since our local directories of source and builds are setup as /app/
 
 ### TODO
 - Database
-    - use eventstoreDB
-    - persist transactions submitted and verified (from API)
+    - ~~use eventstoreDB~~
+    - ~~persist transactions submitted (from API)~~
+    - persist transactiosn verified (from auditor)
     - persist mined blocks (from miner)
 - Bank
     - Transactions
-        - added to a pool via API
-        - broadcasts event "transaction added"
+        - ~~added to a pool via API~~
+        - ~~broadcasts event "transaction added"~~
     - Blockchain
         - add mined block to chain from stream
         - this chain it only present to add another node for a consensus check
