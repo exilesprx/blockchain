@@ -14,6 +14,36 @@ See: tsconfig.json
 
 Jest is used to test the applicaiton code. However, Babel is required in order to support TypeScript when testing the source code.
 
+## Debugging
+
+The following should be set to true in the tsconfig.json file:
+- inlineSourceMap
+- inlineSources
+
+For VS code, since our local directories of source and builds are setup as /app/src and /app/build, but the Docker only contains the build files at /usr/app, when using VS code we need to map /user/app (remote) to /app/src (local).
+```JSON
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Blockchain",
+            "type": "node",
+            "request": "attach",
+            "restart": true,
+            "port": 9229,
+            "address": "endeavour",
+            "localRoot": "${workspaceFolder}/src",
+            "remoteRoot": "/usr/app/",
+            "protocol": "inspector",
+            "sourceMaps": true,
+          }
+    ]
+}
+```
+
 ### TODO
 - Database
     - use eventstoreDB

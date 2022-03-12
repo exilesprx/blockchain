@@ -164,7 +164,7 @@ services:
     #   - kafka1
     env_file:
       - .env
-    command: --inspect=0.0.0.0:9229 ./app/index.js
+    command: --inspect=0.0.0.0:9229 --enable-source-maps ./app/index.js
 
   # miner:
   #   build: blockchain-miner:latest
