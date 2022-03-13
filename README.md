@@ -50,7 +50,7 @@ For VS code, since our local directories of source and builds are setup as /app/
     - ~~persist transactions submitted (from API)~~
     - persist transactiosn verified (from auditor)
     - persist mined blocks (from miner)
-- Bank
+- App
     - Transactions
         - ~~added to a pool via API~~
         - ~~broadcasts event "transaction added"~~
@@ -81,6 +81,11 @@ For VS code, since our local directories of source and builds are setup as /app/
 - End to end testing
     - Scheduler
         - Produces transactions every X secones (start with manual entry at first)
+- Process
+    - update to use nodemon
+    - update to use ts-node
+    - update to use npm dev and npm dev:debug
+    - remove ts building in container image
 - Notes 
     - Consumers/miners
         - MULTIPLE CONSUMERS MUST BE ON THE SAME GROUP TO MINE THE SAME PARTITION

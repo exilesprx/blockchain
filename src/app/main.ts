@@ -5,12 +5,13 @@ import Events from "../domain/events/emitter";
 import { logger } from "../domain/logs/logger";
 import { default as kafka } from "../domain/stream/kafka";
 import Producer from "../domain/stream/producer";
+import BlockConsumer from "../domain/stream/block-consumer";
 import Amount from "../domain/wallet/specifications/amount";
 import Receiver from "../domain/wallet/specifications/receiver";
 import SameWallet from "../domain/wallet/specifications/same-wallet";
 import Sender from "../domain/wallet/specifications/sender";
 import TransactionPool from "../domain/wallet/transaction-pool";
-import { default as TransactionRoute } from "./routes/transaction";
+import Transaction, { default as TransactionRoute } from "./routes/transaction";
 import Database from "../database";
 import Bank from "../domain/bank";
 import Link from "../domain/chain/specifications/link";
@@ -33,6 +34,8 @@ export default class Application
 
     private producer: Producer;
 
+    private consumer: BlockConsumer;
+
     constructor()
     {
         this.app = express();
@@ -43,13 +46,15 @@ export default class Application
 
         this.producer = new Producer(kafka);
 
-        this.events = Events.register(this.database, this.emitter, this.producer, logger);
+        this.events = Events.register(this.emitter, this.producer, logger);
 
         this.chain = new Blockchain();
 
         this.pool = new TransactionPool();
 
         this.bank = new Bank(this.pool, this.chain, this.events);
+
+        this.consumer = new BlockConsumer(this.bank, this.database, kafka);
 
     }
 
@@ -73,8 +78,7 @@ export default class Application
 
         // TODO: restore from eventstore, we only need to worry about block heres, the auditor will handle transactions
 
-        // TODO: consumer from block mined consumer
-        // this.bank.addBlock(new Block());
+        this.consumer.connect();
 
         this.app.listen(process.env.APP_PORT, () => {
             logger.info(`App listening on port ${process.env.APP_PORT}`);
@@ -83,6 +87,8 @@ export default class Application
 
     public registerRoutes()
     {
-        this.app.post(TransactionRoute.getName(), TransactionRoute.getAction(this.bank));
+        const transactionRoute = new Transaction(this.database, this.bank);
+        
+        this.app.post(TransactionRoute.getName(), transactionRoute.getAction.bind(transactionRoute));
     }
 }

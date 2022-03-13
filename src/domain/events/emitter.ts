@@ -1,9 +1,6 @@
 import EventEmitter from 'events';
 import Producer from '../stream/producer';
 import Block from '../chain/block';
-import Database from '../../database';
-import Topic from '../stream/topic/topic';
-import TransactionEvent from '../../database/models/transaction';
 import Transaction from '../wallet/transaction';
 import { Logger } from 'winston';
 
@@ -15,12 +12,8 @@ export default class Events
 
     private emitter: EventEmitter;
 
-    private database: Database;
-
-    constructor(database: Database, emitter: EventEmitter, producer: Producer, logger: Logger)
+    constructor(emitter: EventEmitter, producer: Producer, logger: Logger)
     {
-        this.database = database;
-
         this.emitter = emitter;
 
         this.producer = producer;
@@ -28,9 +21,9 @@ export default class Events
         this.logger = logger;
     }
 
-    public static register(database: Database, emitter: EventEmitter, producer: Producer, logger: Logger) : Events
+    public static register(emitter: EventEmitter, producer: Producer, logger: Logger) : Events
     {
-        const events = new this(database, emitter, producer, logger);
+        const events = new this(emitter, producer, logger);
 
         emitter.on('block-added', events.blockAdded.bind(events));
 
@@ -47,19 +40,11 @@ export default class Events
     public blockAdded(block: Block)
     {
         this.logger.info(`Block added: ${block.getHash()}`);
-
-        // TODO: persist event
-
-        block.getTransactions().forEach((transaction) => {
-            // TODO: update wallets
-        });
     }
 
     public transactionAdded(transaction: Transaction)
     {
         this.logger.info(`Transaction added: ${transaction.getHash()}`);
-
-        this.database.persistEvent(transaction)
 
         this.producer.send('transaction-added', transaction);
     }

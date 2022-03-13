@@ -2,6 +2,8 @@ import { EventData, EventStoreDBClient, jsonEvent, JSONEventData, JSONEventOptio
 import { logger } from '../domain/logs/logger'
 import TransactionEvent from "./models/transaction";
 import Transaction from "../domain/wallet/transaction";
+import Block from "../domain/chain/block";
+import BlockEvent from "./models/block";
 
 export default class Database
 {
@@ -30,7 +32,7 @@ export default class Database
         });
     }
 
-    public async persistEvent(transaction: Transaction)
+    public async persistTransaction(transaction: Transaction)
     {
         if (!this.client) {
             return;
@@ -48,8 +50,28 @@ export default class Database
             },
         });
 
-        const result = await this.client.appendToStream(event.type, event);
+        await this.client.appendToStream(event.type, event);
+    }
 
-        // logger.info(`Persisted ${event}`);
+    public async persistBlock(block: Block)
+    {
+        if (!this.client) {
+            return;
+        }
+
+        const event = jsonEvent<BlockEvent>({
+            type: "block",
+            data: {
+                id: block.getKey(),
+                transactions: block.getTransactions(),
+                nounce: 1,
+                difficulty: 1,
+                previousHash: block.getPreviousHash(),
+                hash: block.getHash(),
+                date: block.getDate(),
+            }
+        });
+
+        await this.client.appendToStream(event.type, event);
     }
 }
