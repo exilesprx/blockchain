@@ -17,21 +17,9 @@ COPY --from=deps /usr/app/node_modules /usr/app/node_modules
 
 COPY --from=deps /usr/app/package.json /usr/app/
 
-COPY ./tsconfig.json /usr/app/
+COPY ./nodemon.json /usr/app/nodemon.json
 
 COPY ./src /usr/app/src
-
-RUN npm run build -- --project ./src/app/tsconfig.json
-
-
-#
-FROM node:16-alpine
-
-WORKDIR /usr/app
-
-COPY --from=deps /usr/app/node_modules /usr/app/node_modules
-
-COPY --from=build /usr/app/build /usr/app
 
 RUN chown -R node. .
 

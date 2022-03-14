@@ -24,22 +24,20 @@ export default class Transaction
 
     public getAction(req: Request, res: Response) : Response<any, Record<string, any>>
     {
-        // return (req: Request, res: Response) => {
-            const params = req.body;
-        
-            try {
-                // Create a new transaction, add it to the pool, and broadcast it
-                const transaction = new TransactionDataModel(params.to, params.from, params.amount);
-                
-                this.bank.addTransaction(transaction);
+        const params = req.body;
+    
+        try {
+            // Create a new transaction, add it to the pool, and broadcast it
+            const transaction = new TransactionDataModel(params.to, params.from, params.amount);
+            
+            this.bank.addTransaction(transaction);
 
-                this.database.persistTransaction(transaction)
-        
-                return res.send(`Transaction ${transaction.getKey()} accepted.`);
-            } catch(error) {
-                logger.error(`Error occurred: ${error}`)
-                return res.sendStatus(401);
-            }
-        // }
+            this.database.persistTransaction(transaction)
+    
+            return res.send(`Transaction ${transaction.getKey()} accepted.`);
+        } catch(error) {
+            logger.error(`Error occurred: ${error}`)
+            return res.sendStatus(401);
+        }
     }
 }

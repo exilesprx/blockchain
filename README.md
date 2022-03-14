@@ -16,11 +16,7 @@ Jest is used to test the applicaiton code. However, Babel is required in order t
 
 ## Debugging
 
-The following should be set to true in the tsconfig.json file:
-- inlineSourceMap
-- inlineSources
-
-For VS code, since our local directories of source and builds are setup as /app/src and /app/build, but the Docker only contains the build files at /usr/app, when using VS code we need to map /user/app (remote) to /app/src (local).
+Using ts-node allows us to remove compilation of TypeScript files. So we can setup our directories to match.
 ```JSON
 {
     // Use IntelliSense to learn about possible attributes.
@@ -36,7 +32,7 @@ For VS code, since our local directories of source and builds are setup as /app/
             "port": 9229,
             "address": "endeavour",
             "localRoot": "${workspaceFolder}/src",
-            "remoteRoot": "/usr/app/",
+            "remoteRoot": "/usr/app/src",
             "protocol": "inspector",
             "sourceMaps": true,
           }
@@ -49,14 +45,14 @@ For VS code, since our local directories of source and builds are setup as /app/
     - ~~use eventstoreDB~~
     - ~~persist transactions submitted (from API)~~
     - persist transactiosn verified (from auditor)
-    - persist mined blocks (from miner)
+    - ~~persist mined blocks (from miner)~~
 - App
     - Transactions
         - ~~added to a pool via API~~
         - ~~broadcasts event "transaction added"~~
     - Blockchain
-        - add mined block to chain from stream
-        - this chain it only present to add another node for a consensus check
+        - ~~add mined block to chain from stream~~
+        - note: this chain is only present to add another node for a consensus check
 - Miner
     - Transactions
         - added to a pool via stream
@@ -82,10 +78,14 @@ For VS code, since our local directories of source and builds are setup as /app/
     - Scheduler
         - Produces transactions every X secones (start with manual entry at first)
 - Process
-    - update to use nodemon
-    - update to use ts-node
-    - update to use npm dev and npm dev:debug
-    - remove ts building in container image
+    - ~~update to use nodemon~~
+    - ~~update to use ts-node~~
+    - ~~update to use npm app and npm app:debug~~
+    - ~~remove ts building in container image~~
+    - ~~use docker cp or rebuild image to run new changes~~
+    - setup tslint IDE
+- Tests
+    - update the tests to match all the changes made
 - Notes 
     - Consumers/miners
         - MULTIPLE CONSUMERS MUST BE ON THE SAME GROUP TO MINE THE SAME PARTITION
