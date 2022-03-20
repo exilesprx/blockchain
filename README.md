@@ -95,4 +95,7 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
         - if block mined event is received, so if its currently mining, if so, stop it, and start mining a new block (if reqs are met)
     - Docker build
         - clean up the build process
-        - create first version
+        - container builds
+            - dev (app and miner)
+            - test
+            - prod (app and miner)
