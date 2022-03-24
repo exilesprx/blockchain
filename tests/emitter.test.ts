@@ -1,90 +1,82 @@
-import EventEmitter from "events";
-import Block from "../src/domain/chain/block";
-import Events from "../src/domain/events/emitter";
-import { logger } from "../src/domain/logs/logger";
-import { producer } from "../src/domain/stream/producer";
-import Transaction from "../src/domain/wallet/transaction";
+import EventEmitter from 'events';
+import Block from '../src/domain/chain/block';
+import Events from '../src/domain/events/emitter';
+import { logger } from '../src/domain/logs/logger';
+import { producer } from '../src/domain/stream/producer';
+import Transaction from '../src/domain/wallet/transaction';
 
 jest.mock('events');
 
 const emitter: EventEmitter = new EventEmitter();
 
-describe("Emitter", () => {
+describe('Emitter', () => {
+  beforeAll(() => {
+    jest.spyOn(producer, 'send')
+      .mockImplementation(() => null);
 
-    beforeAll(() => {
-        jest.spyOn(producer, 'send')
-            .mockImplementation(() => {
-                return null;
-            });
+    jest.spyOn(logger, 'info')
+      .mockImplementation(() => null);
+  });
 
-        jest.spyOn(logger, 'info')
-            .mockImplementation(() => {
-                return null;
-            });
-    });
+  test('it expects the listeners to be configured', () => {
+    const events = Events.register(emitter, producer, logger);
 
-    test("it expects the listeners to be configured", () => {
+    expect(emitter.on).toHaveBeenCalledTimes(2);
 
-        const events = Events.register(emitter, producer, logger);
+    expect(emitter.on).toHaveBeenCalledWith('block-added', events.blockAdded);
 
-        expect(emitter.on).toHaveBeenCalledTimes(2);
+    expect(emitter.on).toHaveBeenLastCalledWith('transaction-added', events.transactionAdded);
+  });
 
-        expect(emitter.on).toHaveBeenCalledWith('block-added', events.blockAdded);
+  test('it expects a log and kafka message when adding a block', () => {
+    const events = Events.register(emitter, producer, logger);
 
-        expect(emitter.on).toHaveBeenLastCalledWith('transaction-added', events.transactionAdded);
-    });
+    const block = new Block(1, 0, 0, 'test', []);
 
-    test("it expects a log and kafka message when adding a block", () => {
+    events.blockAdded(block);
 
-        const events = Events.register(emitter, producer, logger);
+    expect(logger.info).toHaveBeenCalledTimes(1);
 
-        const block = new Block(1, 0, 0, "test", []);
+    expect(producer.send).toHaveBeenLastCalledWith(
+      {
+        topic: 'block-test',
+        messages: [
+          {
+            key: block.getKey(),
+            value: JSON.stringify(block),
+          },
+        ],
+      },
+    );
+  });
 
-        events.blockAdded(block);
+  test('it expects a log and kafka message when adding a transaction', () => {
+    const events = Events.register(emitter, producer, logger);
 
-        expect(logger.info).toHaveBeenCalledTimes(1);
+    const transaction = new Transaction('1', '2', 50);
 
-        expect(producer.send).toHaveBeenLastCalledWith(
-            {
-                topic: "block-test",
-                messages: [
-                    {
-                        key: block.getKey(),
-                        value: JSON.stringify(block)
-                    }
-                ]
-            }
-        );
-    });
+    events.transactionAdded(transaction);
 
-    test("it expects a log and kafka message when adding a transaction", () => {
-        
-        const events = Events.register(emitter, producer, logger);
+    expect(logger.info).toHaveBeenCalledTimes(1);
 
-        const transaction = new Transaction("1", "2", 50);
+    expect(producer.send).toHaveBeenLastCalledWith(
+      {
+        topic: 'transaction-test',
+        messages: [
+          {
+            key: transaction.getKey(),
+            value: JSON.stringify(transaction),
+          },
+        ],
+      },
+    );
+  });
 
-        events.transactionAdded(transaction);
+  test('it expects to call emit on EventEmitter', () => {
+    const events = Events.register(emitter, producer, logger);
 
-        expect(logger.info).toHaveBeenCalledTimes(1);
+    events.emit('test', 1);
 
-        expect(producer.send).toHaveBeenLastCalledWith(
-            {
-                topic: "transaction-test",
-                messages: [
-                    {
-                        key: transaction.getKey(),
-                        value: JSON.stringify(transaction)
-                    }
-                ]
-            }
-        );
-    });
-
-    test("it expects to call emit on EventEmitter", () => {
-        const events = Events.register(emitter, producer, logger);
-
-        events.emit('test', 1);
-
-        expect(emitter.emit).toHaveBeenLastCalledWith("test", 1);
-    });
-})
+    expect(emitter.emit).toHaveBeenLastCalledWith('test', 1);
+  });
+});

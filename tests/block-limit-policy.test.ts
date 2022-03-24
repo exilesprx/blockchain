@@ -1,9 +1,9 @@
+import EventEmitter from 'events';
 import Blockchain from '../src/domain/chain/blockchain';
 import Events from '../src/domain/events/emitter';
 import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
 import { producer } from '../src/domain/stream/producer';
 import { logger } from '../src/domain/logs/logger';
-import EventEmitter from 'events';
 
 jest.mock('../src/chain/blockchain');
 jest.mock('../src/events/emitter');
@@ -15,30 +15,26 @@ const emitter = new EventEmitter();
 
 const events = new Events(emitter, producer, logger);
 
-describe("Block limt policy", () => {
+describe('Block limt policy', () => {
+  test('it expects limit is not reached', () => {
+    const chain = new Blockchain(events);
 
-    test("it expects limit is not reached", () => {
+    jest.spyOn(chain, 'length')
+      .mockReturnValue(1);
 
-        const chain = new Blockchain(events);
+    expect(BlockLimitPolicy.reachedLimit(chain)).toBeFalsy();
+  });
 
-        jest.spyOn(chain, 'length')
-            .mockReturnValue(1);
+  test('it expects limit is reached', () => {
+    const chain = new Blockchain(events);
 
-        expect(BlockLimitPolicy.reachedLimit(chain)).toBeFalsy();
-    });
+    jest.spyOn(chain, 'length')
+      .mockReturnValue(10);
 
-    test("it expects limit is reached", () => {
+    expect(BlockLimitPolicy.reachedLimit(chain)).toBeTruthy();
+  });
 
-        const chain = new Blockchain(events);
-
-        jest.spyOn(chain, 'length')
-            .mockReturnValue(10);
-
-        expect(BlockLimitPolicy.reachedLimit(chain)).toBeTruthy();
-    });
-
-    test("it expects limit to be 10", () => {
-
-        expect(BlockLimitPolicy.getLimit()).toBe(10);
-    });
-})
+  test('it expects limit to be 10', () => {
+    expect(BlockLimitPolicy.getLimit()).toBe(10);
+  });
+});

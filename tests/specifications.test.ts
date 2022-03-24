@@ -4,77 +4,68 @@ import Sender from '../src/domain/wallet/specifications/sender';
 import SameWallet from '../src/domain/wallet/specifications/same-wallet';
 import Transaction from '../src/domain/wallet/transaction';
 
-describe("Specifications", () => {
+describe('Specifications', () => {
+  test('it expects amount is satisfied by amount of 1', () => {
+    const transaction = new Transaction('one', 'two', 1);
 
-    test("it expects amount is satisfied by amount of 1", () => {
+    const amountSpec = new Amount();
 
-        const transaction = new Transaction("one", "two", 1);
+    expect(amountSpec.isSatisfiedBy(transaction)).toBeTruthy();
+  });
 
-        const amountSpec = new Amount();
+  test('it expects amount is not satisfied by amount of 0', () => {
+    const transaction = new Transaction('one', 'two', 0);
 
-        expect(amountSpec.isSatisfiedBy(transaction)).toBeTruthy();
-    });
+    const amountSpec = new Amount();
 
-    test("it expects amount is not satisfied by amount of 0", () => {
+    expect(() => amountSpec.isSatisfiedBy(transaction)).toThrow();
+  });
 
-        const transaction = new Transaction("one", "two", 0);
+  test('it expects receiver is satisfied by wallet of one', () => {
+    const transaction = new Transaction('one', 'two', 1);
 
-        const amountSpec = new Amount();
+    const receiverSpec = new Receiver();
 
-        expect(() => amountSpec.isSatisfiedBy(transaction)).toThrow();
-    });
+    expect(receiverSpec.isSatisfiedBy(transaction)).toBeTruthy();
+  });
 
-    test("it expects receiver is satisfied by wallet of one", () => {
+  test('it expects receiver is not satisfied by wallet of 1', () => {
+    const transation = new Transaction(1, 'two', 2);
 
-        const transaction = new Transaction("one", "two", 1);
+    const receiverSpec = new Receiver();
 
-        const receiverSpec = new Receiver();
+    expect(() => receiverSpec.isSatisfiedBy(transation)).toThrow();
+  });
 
-        expect(receiverSpec.isSatisfiedBy(transaction)).toBeTruthy();
-    });
+  test('it expects sender is satisfied by wallet of two', () => {
+    const transaction = new Transaction('one', 'two', 1);
 
-    test("it expects receiver is not satisfied by wallet of 1", () => {
+    const senderSpec = new Sender();
 
-        const transation = new Transaction(1, "two", 2);
+    expect(senderSpec.isSatisfiedBy(transaction)).toBeTruthy();
+  });
 
-        const receiverSpec = new Receiver();
+  test('it expects sender is not satisfied by wallet of 2', () => {
+    const transaction = new Transaction('one', 2, 1);
 
-        expect(() => receiverSpec.isSatisfiedBy(transation)).toThrow();
-    });
+    const senderSpec = new Sender();
 
-    test("it expects sender is satisfied by wallet of two", () => {
+    expect(() => senderSpec.isSatisfiedBy(transaction)).toThrow();
+  });
 
-        const transaction = new Transaction("one", "two", 1);
+  test('it expects same wallet is satisfied by waller of one and two', () => {
+    const transaction = new Transaction('one', 'two', 1);
 
-        const senderSpec = new Sender();
+    const sameWalletSpec = new SameWallet();
 
-        expect(senderSpec.isSatisfiedBy(transaction)).toBeTruthy();
-    });
+    expect(sameWalletSpec.isSatisfiedBy(transaction)).toBeTruthy();
+  });
 
-    test("it expects sender is not satisfied by wallet of 2", () => {
+  test('it expects same wallet is satisfied by waller of one and one', () => {
+    const transaction = new Transaction('one', 'one', 1);
 
-        const transaction = new Transaction("one", 2, 1);
+    const sameWalletSpec = new SameWallet();
 
-        const senderSpec = new Sender();
-
-        expect(() => senderSpec.isSatisfiedBy(transaction)).toThrow();
-    });
-
-    test("it expects same wallet is satisfied by waller of one and two", () => {
-
-        const transaction = new Transaction("one", "two", 1);
-
-        const sameWalletSpec = new SameWallet();
-
-        expect(sameWalletSpec.isSatisfiedBy(transaction)).toBeTruthy();
-    });
-
-    test("it expects same wallet is satisfied by waller of one and one", () => {
-    
-        const transaction = new Transaction("one", "one", 1);
-
-        const sameWalletSpec = new SameWallet();
-
-        expect(() => sameWalletSpec.isSatisfiedBy(transaction)).toThrow();
-    });
+    expect(() => sameWalletSpec.isSatisfiedBy(transaction)).toThrow();
+  });
 });

@@ -23,7 +23,7 @@ export default {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -67,8 +67,8 @@ export default {
 
   // An array of directory names to be searched recursively up from the requiring module's location
   moduleDirectories: [
-    "node_modules",
-    "src"
+    'node_modules',
+    'src',
   ],
 
   // An array of file extensions your modules use
@@ -119,7 +119,7 @@ export default {
 
   // A list of paths to directories that Jest should use to search for files in
   roots: [
-    "tests"
+    'tests',
   ],
 
   // Allows you to use a custom runner instead of Jest's default test runner

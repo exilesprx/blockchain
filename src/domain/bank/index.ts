@@ -1,37 +1,33 @@
-import TransactionPool from "../wallet/transaction-pool"
-import Events from "../events/emitter";
-import Blockchain from "../chain/blockchain";
-import Transaction from "../wallet/transaction";
-import Block from "../chain/block";
+import TransactionPool from '../wallet/transaction-pool';
+import Events from '../events/emitter';
+import Blockchain from '../chain/blockchain';
+import Transaction from '../wallet/transaction';
+import Block from '../chain/block';
 
-export default class Bank
-{
-    private transactions: TransactionPool;
-    
-    private blockchain: Blockchain;
+export default class Bank {
+  private transactions: TransactionPool;
 
-    private events: Events;
+  private blockchain: Blockchain;
 
-    public constructor(transactions: TransactionPool, blockchain: Blockchain, events: Events)
-    {
-        this.transactions = transactions;
+  private events: Events;
 
-        this.blockchain = blockchain;
+  public constructor(transactions: TransactionPool, blockchain: Blockchain, events: Events) {
+    this.transactions = transactions;
 
-        this.events = events;
-    }
+    this.blockchain = blockchain;
 
-    public addTransaction(transaction: Transaction) : void
-    {
-        this.transactions.fill(transaction)
-        
-        this.events.emit('transaction-added', transaction);
-    }
+    this.events = events;
+  }
 
-    public addBlock(block: Block) : void
-    {
-        this.blockchain.addBlock(block);
+  public addTransaction(transaction: Transaction) : void {
+    this.transactions.fill(transaction);
 
-        this.events.emit('block-added', block);
-    }
+    this.events.emit('transaction-added', transaction);
+  }
+
+  public addBlock(block: Block) : void {
+    this.blockchain.addBlock(block);
+
+    this.events.emit('block-added', block);
+  }
 }

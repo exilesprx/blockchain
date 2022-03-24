@@ -1,5 +1,5 @@
-import Transaction from "../../domain/wallet/transaction";
 import { JSONEventType } from '@eventstore/db-client';
+import Transaction from '../../domain/wallet/transaction';
 
 export interface Block {
   id: string,
@@ -12,7 +12,7 @@ export interface Block {
 }
 
 type BlockEvent = JSONEventType<
-  "block",
+  'block',
   {
     id: string;
     transactions: Transaction[];

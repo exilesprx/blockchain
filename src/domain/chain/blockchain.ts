@@ -1,50 +1,43 @@
-import Block from "./block";
-import BlockLimitPolicy from "../policies/block-limit-policy";
-import Specification from "./specifications/specifications";
+import Block from './block';
+import BlockLimitPolicy from '../policies/block-limit-policy';
+import Specification from './specifications/specifications';
 
-export default class Blockchain
-{
-    private chain: Block[];
+export default class Blockchain {
+  private chain: Block[];
 
-    private specifications: Specification[];
+  private specifications: Specification[];
 
-    constructor()
-    {
-        this.chain = [Block.genesis()];
+  constructor() {
+    this.chain = [Block.genesis()];
 
-        this.specifications = [];
+    this.specifications = [];
+  }
+
+  public addBlock(block: Block) : void {
+    this.specifications.forEach((spec) => {
+      spec.isSatisfiedBy(this.getPreviousBlock(), block);
+    });
+
+    if (BlockLimitPolicy.reachedLimit(this)) {
+      this.removeFirstBlock();
     }
 
-    public addBlock(block: Block) : void
-    {
-        this.specifications.forEach(spec => {
-            spec.isSatisfiedBy(this.getPreviousBlock(), block);
-        });
+    this.chain.push(block);
+  }
 
-        if (BlockLimitPolicy.reachedLimit(this)) {
-            this.removeFirstBlock()
-        }
+  public length() : number {
+    return this.chain.length;
+  }
 
-        this.chain.push(block);
-    }
+  public addSpecification(spec: Specification) {
+    this.specifications.push(spec);
+  }
 
-    public length() : number
-    {
-        return this.chain.length;
-    }
+  private getPreviousBlock() : Block {
+    return this.chain[this.chain.length - 1];
+  }
 
-    public addSpecification(spec: Specification)
-    {
-        this.specifications.push(spec);
-    }
-
-    private getPreviousBlock() : Block
-    {
-        return this.chain[this.chain.length - 1];
-    }
-
-    private removeFirstBlock() : Block|undefined
-    {
-        return this.chain.shift();
-    }
+  private removeFirstBlock() : Block|undefined {
+    return this.chain.shift();
+  }
 }

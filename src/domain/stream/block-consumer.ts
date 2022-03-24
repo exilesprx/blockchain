@@ -1,39 +1,36 @@
-import { EachMessagePayload } from "kafkajs";
-import Block from "../chain/block";
-import Consumer from "./consumer";
+import { EachMessagePayload } from 'kafkajs';
+import Block from '../chain/block';
+import Consumer from './consumer';
 
-export default class BlockConsumer extends Consumer
-{
-    public async run(topic: string) : Promise<void>
-    {
-        await this.consumer.subscribe({ topic: topic, fromBeginning: false })
-        await this.consumer.run(
-            {
-                eachMessage: this.emitBlockAdded
-            }
-        );
+export default class BlockConsumer extends Consumer {
+  public async run(topic: string) : Promise<void> {
+    await this.consumer.subscribe({ topic, fromBeginning: false });
+    await this.consumer.run(
+      {
+        eachMessage: this.emitBlockAdded,
+      },
+    );
+  }
+
+  protected async emitBlockAdded(payload: EachMessagePayload) : Promise<void> {
+    const { value } = payload.message;
+
+    if (!value) {
+      return;
     }
 
-    protected async emitBlockAdded(payload: EachMessagePayload) : Promise<void>
-    {
-        const value = payload.message.value;
+    const parts: any = value.toJSON();
 
-        if (!value) {
-            return;
-        }
+    const block = new Block(
+      parts.id,
+      parts.nounce,
+      parts.difficulty,
+      parts.previousHash,
+      parts.transactions,
+    );
 
-        const parts: any = value.toJSON();
+    this.bank.addBlock(block);
 
-        const block = new Block(
-            parts.id,
-            parts.nounce,
-            parts.difficulty,
-            parts.previousHash,
-            parts.transactions
-        );
-
-        this.bank.addBlock(block);
-
-        this.database.persistBlock(block);
-    }
+    this.database.persistBlock(block);
+  }
 }

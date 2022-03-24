@@ -7,10 +7,10 @@ export interface Transaction {
     amount: number,
     date: number,
     hash: string
-};
+}
 
 type TransactionEvent = JSONEventType<
-  "transaction",
+  'transaction',
   {
     id: string;
     to: string;

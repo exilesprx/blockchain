@@ -2,32 +2,28 @@ import { Kafka, Consumer as KafkaConsumer } from 'kafkajs';
 import Database from '../../database';
 import Bank from '../bank';
 
-export default abstract class Consumer
-{
-    protected consumer: KafkaConsumer;
+export default abstract class Consumer {
+  protected consumer: KafkaConsumer;
 
-    protected bank: Bank;
+  protected bank: Bank;
 
-    protected database: Database;
+  protected database: Database;
 
-    public constructor(bank: Bank, database: Database, stream: Kafka)
-    {
-        this.bank = bank;
+  public constructor(bank: Bank, database: Database, stream: Kafka) {
+    this.bank = bank;
 
-        this.database = database;
-        
-        this.consumer = stream.consumer({ groupId: `${process.env.KAFKA_GROUP_ID}` });
-    }
+    this.database = database;
 
-    public async connect() : Promise<void>
-    {
-        await this.consumer.connect();
-    }
+    this.consumer = stream.consumer({ groupId: `${process.env.KAFKA_GROUP_ID}` });
+  }
 
-    public async disconnect() : Promise<void>
-    {
-        await this.consumer.disconnect();
-    }
+  public async connect() : Promise<void> {
+    await this.consumer.connect();
+  }
+
+  public async disconnect() : Promise<void> {
+    await this.consumer.disconnect();
+  }
 
     public abstract run(topic: string) : Promise<void>;
 }
