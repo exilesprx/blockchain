@@ -86,8 +86,8 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
     - setup tslint IDE
     - circleCI
         - workflow
-            - install NPM packages
             - lint the project
+            - build NPM packages
             - run the tests
                 - depend on npm install and lint
 - Tests
