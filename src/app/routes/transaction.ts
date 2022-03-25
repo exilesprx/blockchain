@@ -2,7 +2,7 @@ import { Response, Request } from 'express';
 import Database from '../../database';
 import Bank from '../../domain/bank';
 import { logger } from '../../domain/logs/logger';
-import { default as TransactionDataModel } from '../../domain/wallet/transaction';
+import TransactionDataModel from '../../domain/wallet/transaction';
 
 export default class Transaction {
   private database: Database;

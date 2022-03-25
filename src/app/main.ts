@@ -4,7 +4,7 @@ import express, { Express } from 'express';
 import Blockchain from '../domain/chain/blockchain';
 import Events from '../domain/events/emitter';
 import { logger } from '../domain/logs/logger';
-import { default as kafka } from '../domain/stream/kafka';
+import kafka from '../domain/stream/kafka';
 import Producer from '../domain/stream/producer';
 import BlockConsumer from '../domain/stream/block-consumer';
 import Amount from '../domain/wallet/specifications/amount';
@@ -12,7 +12,7 @@ import Receiver from '../domain/wallet/specifications/receiver';
 import SameWallet from '../domain/wallet/specifications/same-wallet';
 import Sender from '../domain/wallet/specifications/sender';
 import TransactionPool from '../domain/wallet/transaction-pool';
-import Transaction, { default as TransactionRoute } from './routes/transaction';
+import TransactionRoute from './routes/transaction';
 import Database from '../database';
 import Bank from '../domain/bank';
 import Link from '../domain/chain/specifications/link';
@@ -72,7 +72,10 @@ export default class Application {
 
     this.producer.connect();
 
-    // TODO: restore from eventstore, we only need to worry about block heres, the auditor will handle transactions
+    /**
+     * TODO: restore from eventstore, we only need to worry about block heres, 
+     * the auditor will handle transactions
+     */
 
     this.consumer.connect();
 
@@ -82,7 +85,7 @@ export default class Application {
   }
 
   public registerRoutes() {
-    const transactionRoute = new Transaction(this.database, this.bank);
+    const transactionRoute = new TransactionRoute(this.database, this.bank);
 
     this.app.post(TransactionRoute.getName(), transactionRoute.getAction.bind(transactionRoute));
   }

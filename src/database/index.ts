@@ -1,7 +1,6 @@
 import {
-  EventData, EventStoreDBClient, jsonEvent, JSONEventData, JSONEventOptions, JSONEventType,
+  EventStoreDBClient, jsonEvent,
 } from '@eventstore/db-client';
-import { logger } from '../domain/logs/logger';
 import TransactionEvent from './models/transaction';
 import Transaction from '../domain/wallet/transaction';
 import Block from '../domain/chain/block';
