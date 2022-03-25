@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@4.1
+  node: circleci/node@5.0
 
 jobs:
   lint:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - run: npm run lint
-      
+
   build:
     docker:
       - image: cimg/node:16-alpine
@@ -23,16 +23,17 @@ jobs:
     docker:
       - image: cimg/node:16-alpine
     steps:
-      - node/test
+      - node/install-packages
+      - run: npm run test
 
 workflows:
-  build_lint_and_test:
+  build-lint-and-test:
     jobs:
       - lint
       - build:
-        requires:
-          - lint
-      -test:
-        requires:
-          - build
+          requires:
+            - lint
+      - test:
+          requires:
+            - build
 
