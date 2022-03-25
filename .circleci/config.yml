@@ -10,14 +10,14 @@ jobs:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      - run: npm run lint
+      - node/install-packages
 
   build:
     docker:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      - run: npm install
+      - node/install-packages
 
   test:
     docker:
