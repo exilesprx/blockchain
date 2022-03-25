@@ -30,7 +30,7 @@ jobs:
 workflows:
   build-lint-and-test:
     jobs:
-      - build:
+      - build
       - lint:
           requires:
             - build
