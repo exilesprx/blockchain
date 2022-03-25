@@ -7,21 +7,21 @@ orbs:
 jobs:
   lint:
     docker:
-      - image: cimg/node:16-alpine
+      - image: cimg/node:16.14.2
     steps:
       - checkout
       - run: npm run lint
 
   build:
     docker:
-      - image: cimg/node:16-alpine
+      - image: cimg/node:16.14.2
     steps:
       - checkout
       - run: npm install
 
   test:
     docker:
-      - image: cimg/node:16-alpine
+      - image: cimg/node:16.14.2
     steps:
       - node/install-packages
       - run: npm run test
