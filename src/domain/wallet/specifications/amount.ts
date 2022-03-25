@@ -1,10 +1,12 @@
-import transaction from '../transaction';
+import Transaction from '../transaction';
 import Specification from './specification';
 
 export default class Amount implements Specification {
-  isSatisfiedBy(transaction: transaction): boolean {
+  private message = 'Amount not allowed.';
+
+  public isSatisfiedBy(transaction: Transaction): boolean {
     if (!(transaction.getAmount() > 0)) {
-      throw new Error('Amount not allowed.');
+      throw new Error(this.message);
     }
 
     return true;

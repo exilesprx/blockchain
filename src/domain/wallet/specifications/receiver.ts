@@ -1,10 +1,12 @@
-import transaction from '../transaction';
+import Transaction from '../transaction';
 import Specification from './specification';
 
 export default class Receiver implements Specification {
-  isSatisfiedBy(transaction: transaction): boolean {
+  private message = 'Receiver not allowed.';
+
+  public isSatisfiedBy(transaction: Transaction): boolean {
     if (typeof transaction.getReceiver() !== 'string') {
-      throw new Error('Receiver not allowed.');
+      throw new Error(this.message);
     }
     return true;
   }

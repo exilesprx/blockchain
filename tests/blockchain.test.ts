@@ -1,11 +1,10 @@
 import EventEmitter from 'events';
-import { Error } from 'mongoose';
 import Blockchain from '../src/domain/chain/blockchain';
 import Events from '../src/domain/events/emitter';
 import NewBlockPolicy from '../src/domain/policies/new-block-policy';
 import Transaction from '../src/domain/wallet/transaction';
 import { producer } from '../src/domain/stream/producer';
-import { logger } from '../src/domain/logs/logger';
+import logger from '../src/domain/logs/logger';
 import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
 import Block from '../src/domain/chain/block';
 

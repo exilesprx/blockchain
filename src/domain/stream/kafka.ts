@@ -1,5 +1,5 @@
 import { Kafka, logLevel } from 'kafkajs';
-import { logger } from '../logs/logger';
+import logger from '../logs/logger';
 
 const toWinstonLogLevel = (level: any) => {
   switch (level) {
@@ -17,7 +17,7 @@ const toWinstonLogLevel = (level: any) => {
   }
 };
 
-const log = (info: any) => {
+const logCreator = (info: any) => {
   const {
     namespace, level, label, log,
   } = info;
@@ -33,7 +33,7 @@ const log = (info: any) => {
 const kafka = new Kafka({
   clientId: process.env.KAFKA_CLIENT_ID,
   brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`],
-  logCreator: () => log,
+  logCreator: () => logCreator,
 });
 
 export default kafka;
