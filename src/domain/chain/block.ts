@@ -16,7 +16,13 @@ export default class Block {
 
   private date: number;
 
-  constructor(id: any, nounce: number, difficulty: number, previousHash: string, transactions: Transaction[]) {
+  constructor(
+    id: any,
+    nounce: number,
+    difficulty: number,
+    previousHash: string,
+    transactions: Transaction[],
+  ) {
     this.id = id;
     this.nounce = nounce;
     this.difficulty = difficulty;
@@ -30,9 +36,9 @@ export default class Block {
     return new this('genesis block', 0, 0, '00', []);
   }
 
-  public mine() : void {
-    // TODO: algo to run
-  }
+  // public mine() : void {
+  // TODO: algo to run
+  // }
 
   public getHash() : string {
     return this.hash;

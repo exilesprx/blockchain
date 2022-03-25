@@ -25,5 +25,5 @@ export default abstract class Consumer {
     await this.consumer.disconnect();
   }
 
-    public abstract run(topic: string) : Promise<void>;
+  public abstract run(topic: string) : Promise<void>;
 }

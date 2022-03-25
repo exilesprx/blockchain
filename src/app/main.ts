@@ -73,7 +73,7 @@ export default class Application {
     this.producer.connect();
 
     /**
-     * TODO: restore from eventstore, we only need to worry about block heres, 
+     * TODO: restore from eventstore, we only need to worry about block heres,
      * the auditor will handle transactions
      */
 

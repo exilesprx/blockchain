@@ -1,6 +1,8 @@
 import Transaction from '../transaction';
 
-export default interface Specification
+interface Specification
 {
     isSatisfiedBy(transaction: Transaction) : boolean;
-};
+}
+
+export default Specification;
