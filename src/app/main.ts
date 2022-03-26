@@ -1,6 +1,7 @@
 /* eslint import/no-unresolved: 2 */
 import EventEmitter from 'events';
 import express, { Express } from 'express';
+import helmet from 'helmet';
 import Blockchain from '../domain/chain/blockchain';
 import Events from '../domain/events/emitter';
 import logger from '../domain/logs/logger';
@@ -58,6 +59,8 @@ export default class Application {
 
   public init() {
     this.app.use(express.json());
+
+    this.app.use(helmet());
 
     this.pool.addSpecification(new Amount())
       .addSpecification(new Receiver())
