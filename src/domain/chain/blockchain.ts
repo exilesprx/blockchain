@@ -1,8 +1,9 @@
 import Block from './block';
 import BlockLimitPolicy from '../policies/block-limit-policy';
 import Specification from './specifications/specifications';
+import BlockchainInterface from './blockchain-interface';
 
-export default class Blockchain {
+export default class Blockchain implements BlockchainInterface {
   private chain: Block[];
 
   private specifications: Specification[];
@@ -37,7 +38,7 @@ export default class Blockchain {
     return this.chain[this.chain.length - 1];
   }
 
-  private removeFirstBlock() : Block|undefined {
+  private removeFirstBlock() : Block | undefined {
     return this.chain.shift();
   }
 }

@@ -12,16 +12,16 @@ export interface Block {
 }
 
 type BlockEvent = JSONEventType<
-  'block',
-  {
-    id: string;
-    transactions: Transaction[];
-    nounce: number;
-    difficulty: number;
-    previousHash: string;
-    hash: string;
-    date: number;
-  }
+'block',
+{
+  id: string;
+  transactions: Transaction[];
+  nounce: number;
+  difficulty: number;
+  previousHash: string;
+  hash: string;
+  date: number;
+}
 >;
 
 export default BlockEvent;

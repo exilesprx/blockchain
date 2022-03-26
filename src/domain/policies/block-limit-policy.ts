@@ -1,9 +1,9 @@
-import Blockchain from '../chain/blockchain';
+import BlockchainInterface from '../chain/blockchain-interface';
 
 export default class BlockLimitPolicy {
   private static limit = 10;
 
-  public static reachedLimit(chain: Blockchain) : boolean {
+  public static reachedLimit(chain: BlockchainInterface) : boolean {
     return chain.length() === this.limit;
   }
 

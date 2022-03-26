@@ -19,7 +19,7 @@ const toWinstonLogLevel = (level: any) => {
 
 const logCreator = (info: any) => {
   const {
-    namespace, level, label, log,
+    level, log,
   } = info;
   const { message, ...extra } = log;
 
@@ -37,3 +37,4 @@ const kafka = new Kafka({
 });
 
 export default kafka;
+export { toWinstonLogLevel, logCreator };

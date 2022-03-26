@@ -7,7 +7,7 @@ import Block from '../domain/chain/block';
 import BlockEvent from './models/block';
 
 export default class Database {
-  private client: EventStoreDBClient|null;
+  private client: EventStoreDBClient | null;
 
   private host: string;
 

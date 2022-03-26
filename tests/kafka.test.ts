@@ -1,6 +1,6 @@
 import { logLevel } from 'kafkajs';
-import { logger } from '../src/domain/logs/logger';
-import { kafka, toWinstonLogLevel, logCreater } from '../src/domain/stream/kafka';
+import logger from '../src/domain/logs/logger';
+import { toWinstonLogLevel, logCreator } from '../src/domain/stream/kafka';
 
 jest.mock('../src/logs/logger');
 
@@ -52,7 +52,7 @@ describe('Kafka', () => {
       },
     };
 
-    logCreater()(arg);
+    logCreator(arg);
 
     expect(logger.log).toBeCalledWith(
       {
