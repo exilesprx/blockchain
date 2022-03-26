@@ -2,13 +2,40 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@4.1
+  node: circleci/node@5.0
+
+jobs:
+  build-app:
+    docker:
+      - image: cimg/node:16.14.2
+    steps:
+      - checkout
+      - node/install-packages
+      - run: npm run build:app
+
+  lint:
+    docker:
+      - image: cimg/node:16.14.2
+    steps:
+      - checkout
+      - node/install-packages
+      - run: npm run lint
+
+  test:
+    docker:
+      - image: cimg/node:16.14.2
+    steps:
+      - checkout
+      - node/install-packages
+      - run: npm run test
 
 workflows:
-  tests:
+  build-lint-and-test:
     jobs:
-      - node/test:
-          version: '15.1'
-          # This is the node version to use for the `cimg/node` tag
-          # Relevant tags can be found on the CircleCI Developer Hub
-          # https://circleci.com/developer/images/image/cimg/node
+      - build-app
+      - lint:
+          requires:
+            - build-app
+      - test:
+          requires:
+            - lint

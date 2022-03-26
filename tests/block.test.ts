@@ -1,66 +1,62 @@
-import Block from "../src/chain/block";
-import BlockModel from "../src/models/block"
-import Transaction from "../src/wallet/transaction";
+import Block from '../src/domain/chain/block';
+import Transaction from '../src/domain/wallet/transaction';
 
-describe("Block", () => {
+describe('Block', () => {
+  test('it expects to have zero transactions', () => {
+    const block = new Block(1, 0, 0, 'test', []);
 
-    test("it expects to have zero transactions", () => {
+    expect(block.getTransactionCount()).toBe(0);
 
-        const block = new Block(1, 0, 0, "test", []);
+    expect(block.getKey()).toBe(1);
+  });
 
-        expect(block.getTransactionCount()).toBe(0);
+  test('it expects to have 1 transaction', () => {
+    const transaction = new Transaction('tester1', 'tester2', 3);
 
-        expect(block.getKey()).toBe(1);
-    });
+    const block = new Block(1, 0, 0, 'test', [transaction]);
 
-    test("it expects to have 1 transaction", () => {
+    expect(block.getTransactionCount()).toBe(1);
 
-        const transaction = new Transaction("tester1", "tester2", 3);
+    expect(block.getKey()).toBe(1);
+  });
 
-        const block = new Block(1, 0, 0, "test", [transaction]);
+  test('it expects two different blocks to have unique hashes', () => {
+    const firstBlock = new Block(1, 0, 0, 'test', []);
 
-        expect(block.getTransactionCount()).toBe(1);
+    const secondBlock = new Block(1, 0, 0, 'test-1', []);
 
-        expect(block.getKey()).toBe(1);
-    });
+    expect(firstBlock.getHash()).not.toBe(secondBlock.getHash());
 
-    test("it expects two different blocks to have unique hashes", () => {
-        
-        const firstBlock = new Block(1, 0, 0, "test", []);
+    expect(firstBlock.getKey()).toBe(1);
 
-        const secondBlock = new Block(1, 0, 0, "test-1", []);
+    expect(secondBlock.getKey()).toBe(1);
+  });
 
-        expect(firstBlock.getHash()).not.toBe(secondBlock.getHash());
+  test('it expects to create a transaction from a mongo model', () => {
+    const transactionModel = {
+      id: 1, to: 1, from: 2, amount: 3, date: 1234, hash: 'test',
+    };
 
-        expect(firstBlock.getKey()).toBe(1);
+    const blockModel = new BlockModel(
+      {
+        id: 1,
+        transactions: [transactionModel],
+        nounce: 0,
+        difficulty: 0,
+        previousHash: 'test-1',
+        hash: 'test',
+        date: Date.now(),
+      },
+    );
 
-        expect(secondBlock.getKey()).toBe(1);
-    });
+    jest.spyOn(Transaction, 'fromModel');
 
-    test("it expects to create a transaction from a mongo model", () => {
+    const block = Block.fromModel(blockModel);
 
-        const transactionModel = { id: 1, to: 1, from: 2, amount: 3, date: 1234, hash: "test" };
+    expect(Transaction.fromModel).toBeCalledTimes(1);
 
-        const blockModel = new BlockModel(
-            {
-                id: 1,
-                transactions: [transactionModel],
-                nounce: 0,
-                difficulty: 0,
-                previousHash: "test-1",
-                hash: "test",
-                date: Date.now()
-            }
-        );
+    expect(Transaction.fromModel).toBeCalledWith(transactionModel);
 
-        jest.spyOn(Transaction, "fromModel");
-
-        const block = Block.fromModel(blockModel);
-
-        expect(Transaction.fromModel).toBeCalledTimes(1);
-
-        expect(Transaction.fromModel).toBeCalledWith(transactionModel);
-
-        expect(block.getTransactionCount()).toBe(1);
-    });
+    expect(block.getTransactionCount()).toBe(1);
+  });
 });

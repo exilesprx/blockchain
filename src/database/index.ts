@@ -1,43 +1,75 @@
-import mongoose from 'mongoose';
-import { logger } from '../logs/logger'
+import {
+  EventStoreDBClient, jsonEvent,
+} from '@eventstore/db-client';
+import TransactionEvent from './models/transaction';
+import Transaction from '../domain/wallet/transaction';
+import Block from '../domain/chain/block';
+import BlockEvent from './models/block';
 
-export default class Database
-{
-    private host: string;
+export default class Database {
+  private client: EventStoreDBClient | null;
 
-    private port: number;
+  private host: string;
 
-    private user: string;
+  private port: number;
 
-    private secret: string;
+  constructor(host: string, port: number) {
+    this.host = host;
 
-    private authSource: string;
+    this.port = port;
 
-    constructor(host: string, port: number, user: string, secret: string, authSource: string = 'admin')
-    {
-        this.host = host;
+    this.client = null;
+  }
 
-        this.port = port;
+  public connect() {
+    this.client = new EventStoreDBClient(
+      {
+        endpoint: `${this.host}:${this.port}`,
+      },
+      {
+        insecure: true,
+      },
+    );
+  }
 
-        this.user = user;
-
-        this.secret = secret;
-
-        this.authSource = authSource;
+  public async persistTransaction(transaction: Transaction) {
+    if (!this.client) {
+      return;
     }
 
-    public connect()
-    {
-        const connection = `mongodb://${this.user}:${this.secret}@${this.host}:${this.port}/blockchain`;
-        
-        mongoose.connect(connection, {useNewUrlParser: true, useUnifiedTopology: true, authSource: this.authSource });
+    const event = jsonEvent<TransactionEvent>({
+      type: 'transaction',
+      data: {
+        id: transaction.getKey(),
+        to: transaction.getReceiver(),
+        from: transaction.getSender(),
+        amount: transaction.getAmount(),
+        date: transaction.getDate(),
+        hash: transaction.getHash(),
+      },
+    });
 
-        mongoose.connection.on('error', err => {
-            logger.error(`Connection Error: ${err}`);
-        });
-        
-        mongoose.connection.once('open', () => {
-            logger.info("Connection successful");
-        });
+    await this.client.appendToStream(event.type, event);
+  }
+
+  public async persistBlock(block: Block) {
+    if (!this.client) {
+      return;
     }
+
+    const event = jsonEvent<BlockEvent>({
+      type: 'block',
+      data: {
+        id: block.getKey(),
+        transactions: block.getTransactions(),
+        nounce: 1,
+        difficulty: 1,
+        previousHash: block.getPreviousHash(),
+        hash: block.getHash(),
+        date: block.getDate(),
+      },
+    });
+
+    await this.client.appendToStream(event.type, event);
+  }
 }

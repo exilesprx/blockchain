@@ -1,14 +1,12 @@
-import Blockchain from '../src/chain/blockchain';
-import Events from '../src/events/emitter';
-import NewBlockPolicy from '../src/policies/new-block-policy';
-import Transaction from '../src/wallet/transaction';
-import { producer } from '../src/stream/producer';
-import { logger } from '../src/logs/logger';
-import BlockModel from '../src/models/block';
-import BlockLimitPolicy from '../src/policies/block-limit-policy';
-import Block from '../src/chain/block';
 import EventEmitter from 'events';
-import { Error } from 'mongoose';
+import Blockchain from '../src/domain/chain/blockchain';
+import Events from '../src/domain/events/emitter';
+import NewBlockPolicy from '../src/domain/policies/new-block-policy';
+import Transaction from '../src/domain/wallet/transaction';
+import { producer } from '../src/domain/stream/producer';
+import logger from '../src/domain/logs/logger';
+import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
+import Block from '../src/domain/chain/block';
 
 jest.mock('../src/events/emitter');
 jest.mock('../src/stream/producer');
@@ -21,227 +19,197 @@ const emitter = new EventEmitter();
 
 const events = new Events(emitter, producer, logger);
 
-describe("Blockchain", ()=> {
+describe('Blockchain', () => {
+  beforeAll(() => {
+    Events.mockImplementation(() => ({
+      emit: () => 1,
+    }));
 
-    beforeAll(() => {
+    NewBlockPolicy.shouldCreateNewBlock.mockReturnValue(true);
 
-        Events.mockImplementation(() => {
-            return {
-                emit: () => {
-                    return 1;
-                }
-            }
-        });
+    NewBlockPolicy.getBlockLimit.mockReturnValue(5);
 
-        NewBlockPolicy.shouldCreateNewBlock.mockReturnValue(true);
+    BlockLimitPolicy.reachedLimit.mockReturnValue(false);
+  });
 
-        NewBlockPolicy.getBlockLimit.mockReturnValue(5);
+  test('it expects to have one block', () => {
+    const chain = new Blockchain(events);
 
-        BlockLimitPolicy.reachedLimit.mockReturnValue(false);
+    expect(chain.length()).toBe(1);
+  });
+
+  test('it expects to remove a block from the beginning when limit is reached', () => {
+    const chain = new Blockchain(events);
+
+    jest.spyOn(chain, 'removeFirstBlock');
+
+    chain.addBlock([new Transaction('1', '2', 2)]);
+
+    // The default is false, but we want to "fake" the chain being full
+    BlockLimitPolicy.reachedLimit.mockReturnValueOnce(true);
+
+    chain.addBlock([new Transaction('1', '2', 2)]);
+
+    expect(NewBlockPolicy.shouldCreateNewBlock).toHaveBeenCalled();
+
+    expect(BlockLimitPolicy.reachedLimit).toHaveBeenCalled();
+
+    expect(chain.removeFirstBlock).toHaveBeenCalled();
+
+    expect(chain.length()).toBe(2);
+  });
+
+  test('it expects to add a block', () => {
+    const chain = new Blockchain(events);
+
+    expect(chain.length()).toBe(1);
+
+    const transactions: Transaction[] = [];
+
+    transactions.push(new Transaction('one', 'two', 2));
+
+    chain.addBlock(transactions);
+
+    expect(chain.length()).toBe(2);
+
+    expect(events.emit).toHaveBeenCalled();
+  });
+
+  test('it expects not to add a block', () => {
+    const chain = new Blockchain(events);
+
+    expect(chain.length()).toBe(1);
+
+    const transactions: Transaction[] = [];
+
+    transactions.push(new Transaction('one', 'two', 2));
+
+    NewBlockPolicy.shouldCreateNewBlock.mockReturnValueOnce(false);
+
+    const blockAdded = chain.addBlock(transactions);
+
+    expect(blockAdded).toBeFalsy();
+  });
+
+  test('it expects to restore previous chain', async () => {
+    const chain = new Blockchain(events);
+
+    expect(chain.length()).toBe(1);
+
+    const genesisBlockHash = chain.getLastBlockHash();
+
+    jest.spyOn(BlockModel, 'findOne')
+      .mockImplementation(() => ({
+        lean: () => ({
+          id: 1,
+          nounce: 0,
+          difficulty: 0,
+          previousHash: '',
+          transactions: [],
+        }),
+      }));
+
+    await chain.restore();
+
+    const restoreLastBlockHash = chain.getLastBlockHash();
+
+    expect(genesisBlockHash).not.toBe(restoreLastBlockHash);
+  });
+
+  test('it expects no block found, the only block is the genesis block', async () => {
+    const chain = new Blockchain(events);
+
+    expect(chain.length()).toBe(1);
+
+    const genesisBlockHash = chain.getLastBlockHash();
+
+    jest.spyOn(BlockModel, 'findOne')
+      .mockImplementation(() => ({
+        lean: () => null,
+      }));
+
+    await chain.restore().catch((value) => {
+      expect(value).not.toBeCalled();
     });
 
-    test("it expects to have one block", () => {
+    const restoreLastBlockHash = chain.getLastBlockHash();
 
-        const chain = new Blockchain(events);
+    expect(genesisBlockHash).toBe(restoreLastBlockHash);
+  });
 
-        expect(chain.length()).toBe(1);
+  test('it expects database issue', async () => {
+    const chain = new Blockchain(events);
+
+    expect(chain.length()).toBe(1);
+
+    const genesisBlockHash = chain.getLastBlockHash();
+
+    jest.spyOn(BlockModel, 'findOne')
+      .mockImplementation(() => ({
+        lean: () => {
+          throw new Error('Issue');
+        },
+      }));
+
+    await chain.restore().catch((value) => {
+      expect(value).toBeInstanceOf(Error);
     });
 
-    test("it expects to remove a block from the beginning when limit is reached", () => {
+    const restoreLastBlockHash = chain.getLastBlockHash();
 
-        const chain = new Blockchain(events);
+    expect(genesisBlockHash).toBe(restoreLastBlockHash);
+  });
 
-        jest.spyOn(chain, 'removeFirstBlock');
+  test('it expects the database block hash and memory block hash to be equal', async () => {
+    const chain = new Blockchain(events);
 
-        chain.addBlock([new Transaction("1", "2", 2)]);
+    expect(chain.length()).toBe(1);
 
-        // The default is false, but we want to "fake" the chain being full
-        BlockLimitPolicy.reachedLimit.mockReturnValueOnce(true);
+    const blockModel = {
+      id: 1,
+      nounce: 0,
+      difficulty: 0,
+      previousHash: '',
+      transactions: [],
+      hash: 'test',
+      date: 123,
+    };
 
-        chain.addBlock([new Transaction("1", "2", 2)]);
+    jest.spyOn(BlockModel, 'findOne')
+      .mockImplementation(() => ({
+        lean: () => blockModel,
+      }));
 
-        expect(NewBlockPolicy.shouldCreateNewBlock).toHaveBeenCalled();
+    await chain.restore();
 
-        expect(BlockLimitPolicy.reachedLimit).toHaveBeenCalled();
+    const restoreLastBlockHash = chain.getLastBlockHash();
 
-        expect(chain.removeFirstBlock).toHaveBeenCalled();
+    expect(restoreLastBlockHash).toBe('test');
+  });
 
-        expect(chain.length()).toBe(2);
-    });
+  test('it expect the database block hash and memory block hash to fail equality', async () => {
+    const chain = new Blockchain(events);
 
+    expect(chain.length()).toBe(1);
 
-    test("it expects to add a block", () => {
-        
-        const chain = new Blockchain(events);
+    const blockModel = {
+      id: 1,
+      nounce: 0,
+      difficulty: 0,
+      previousHash: '',
+      transactions: [],
+      hash: 'test',
+      date: 123,
+    };
 
-        expect(chain.length()).toBe(1);
+    jest.spyOn(BlockModel, 'findOne')
+      .mockImplementation(() => ({
+        lean: () => blockModel,
+      }));
 
-        const transactions: Transaction[] = [];
+    jest.spyOn(Block, 'fromModel')
+      .mockImplementationOnce(() => new Block(1, 1, 1, 'test', []));
 
-        transactions.push(new Transaction("one", "two", 2));
-
-        chain.addBlock(transactions);
-
-        expect(chain.length()).toBe(2);
-
-        expect(events.emit).toHaveBeenCalled();
-    });
-
-    test("it expects not to add a block", () => {
-        const chain = new Blockchain(events);
-
-        expect(chain.length()).toBe(1);
-
-        const transactions: Transaction[] = [];
-
-        transactions.push(new Transaction("one", "two", 2));
-
-        NewBlockPolicy.shouldCreateNewBlock.mockReturnValueOnce(false);
-
-        const blockAdded = chain.addBlock(transactions);
-
-        expect(blockAdded).toBeFalsy();
-    });
-
-    test("it expects to restore previous chain", async () => {
-
-        const chain = new Blockchain(events);
-
-        expect(chain.length()).toBe(1);
-
-        const genesisBlockHash = chain.getLastBlockHash();
-
-        jest.spyOn(BlockModel, 'findOne')
-            .mockImplementation(() => {
-                return {
-                    lean: () => {
-                        return {
-                            id: 1,
-                            nounce: 0,
-                            difficulty: 0,
-                            previousHash: "",
-                            transactions: []
-                        }
-                    }
-                }
-            });
-
-        await chain.restore();
-
-        const restoreLastBlockHash = chain.getLastBlockHash();
-
-        expect(genesisBlockHash).not.toBe(restoreLastBlockHash);
-    });
-
-    test("it expects no block found, the only block is the genesis block", async () => {
-
-        const chain = new Blockchain(events);
-        
-        expect(chain.length()).toBe(1);
-
-        const genesisBlockHash = chain.getLastBlockHash();
-
-        jest.spyOn(BlockModel, 'findOne')
-            .mockImplementation(() => {
-                return {
-                    lean: () => {
-                        return null
-                    }
-                }
-            });
-
-        await chain.restore().catch((value) => {
-            expect(value).not.toBeCalled();
-        });
-
-        const restoreLastBlockHash = chain.getLastBlockHash();
-
-        expect(genesisBlockHash).toBe(restoreLastBlockHash);
-    });
-
-    test("it expects database issue", async () => {
-
-        const chain = new Blockchain(events);
-        
-        expect(chain.length()).toBe(1);
-
-        const genesisBlockHash = chain.getLastBlockHash();
-
-        jest.spyOn(BlockModel, 'findOne')
-            .mockImplementation(() => {
-                return {
-                    lean: () => {
-                        throw new Error("Issue");
-                    }
-                }
-            });
-
-        await chain.restore().catch((value) => {
-            expect(value).toBeInstanceOf(Error);
-        });
-
-        const restoreLastBlockHash = chain.getLastBlockHash();
-
-        expect(genesisBlockHash).toBe(restoreLastBlockHash);
-    });
-
-    test("it expects the database block hash and memory block hash to be equal", async () => {
-        const chain = new Blockchain(events);
-
-        expect(chain.length()).toBe(1);
-
-        const blockModel = {
-            id: 1,
-            nounce: 0,
-            difficulty: 0,
-            previousHash: "",
-            transactions: [],
-            hash: "test",
-            date: 123
-        };
-
-        jest.spyOn(BlockModel, 'findOne')
-            .mockImplementation(() => {
-                return {
-                    lean: () => blockModel
-                }
-            });
-
-        await chain.restore();
-
-        const restoreLastBlockHash = chain.getLastBlockHash();
-
-        expect(restoreLastBlockHash).toBe("test");
-    });
-
-    test("it expect the database block hash and memory block hash to fail equality", async () => {
-
-        const chain = new Blockchain(events);
-
-        expect(chain.length()).toBe(1);
-
-        const blockModel = {
-            id: 1,
-            nounce: 0,
-            difficulty: 0,
-            previousHash: "",
-            transactions: [],
-            hash: "test",
-            date: 123
-        };
-
-        jest.spyOn(BlockModel, 'findOne')
-            .mockImplementation(() => {
-                return {
-                    lean: () => blockModel
-                }
-            });
-
-        jest.spyOn(Block, "fromModel")
-            .mockImplementationOnce(() => {
-                return new Block(1, 1, 1, "test", []);
-            });
-
-        await expect(chain.restore()).rejects.toBeInstanceOf(TypeError);
-    });
+    await expect(chain.restore()).rejects.toBeInstanceOf(TypeError);
+  });
 });
