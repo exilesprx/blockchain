@@ -1,4 +1,4 @@
-FROM node:16-alpine as deps
+FROM node:17-slim as deps
 
 WORKDIR /usr/app
 
@@ -9,7 +9,7 @@ COPY ./package-lock.json /usr/app/
 RUN npm install
 
 #
-FROM node:16-alpine as build
+FROM deps as build
 
 WORKDIR /usr/app
 
