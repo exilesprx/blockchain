@@ -23,6 +23,7 @@ jobs:
       - snyk/scan:
            token-variable: SNYK_TOKEN
            monitor-on-build: true
+           project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}'
 
   lint:
     docker:
