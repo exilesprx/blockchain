@@ -3,7 +3,7 @@ import EventEmitter from 'events';
 import express, { Express } from 'express';
 import Blockchain from '../domain/chain/blockchain';
 import Events from '../domain/events/emitter';
-import { logger } from '../domain/logs/logger';
+import logger from '../domain/logs/logger';
 import kafka from '../domain/stream/kafka';
 import Producer from '../domain/stream/producer';
 import BlockConsumer from '../domain/stream/block-consumer';

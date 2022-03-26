@@ -3,7 +3,7 @@ import Blockchain from '../src/domain/chain/blockchain';
 import Events from '../src/domain/events/emitter';
 import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
 import { producer } from '../src/domain/stream/producer';
-import { logger } from '../src/domain/logs/logger';
+import logger from '../src/domain/logs/logger';
 
 jest.mock('../src/chain/blockchain');
 jest.mock('../src/events/emitter');

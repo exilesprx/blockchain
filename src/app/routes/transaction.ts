@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import Database from '../../database';
 import Bank from '../../domain/bank';
-import { logger } from '../../domain/logs/logger';
+import logger from '../../domain/logs/logger';
 import TransactionDataModel from '../../domain/wallet/transaction';
 
 export default class Transaction {

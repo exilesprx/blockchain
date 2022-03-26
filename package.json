@@ -6,6 +6,8 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
+    "build:app": "tsc --project src/app/tsconfig.json",
+    "build:miner": "tsc --project src/miner/tsconfig.json",
     "app": "nodemon --config nodemon.json src/app/index.ts",
     "app:debug": "nodemon --config nodemon.json --inspect=0.0.0.0:9229 --enable-source-maps src/app/index.ts"
   },

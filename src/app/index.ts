@@ -1,5 +1,5 @@
 import Application from './main';
-import { logger } from '../domain/logs/logger';
+import logger from '../domain/logs/logger';
 
 logger.info(`Configs loaded: ${JSON.stringify(process.env)}`);
 

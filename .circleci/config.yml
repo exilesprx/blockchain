@@ -5,12 +5,13 @@ orbs:
   node: circleci/node@5.0
 
 jobs:
-  build:
+  build-app:
     docker:
       - image: cimg/node:16.14.2
     steps:
       - checkout
       - node/install-packages
+      - run: npm run build:app
 
   lint:
     docker:
@@ -31,11 +32,10 @@ jobs:
 workflows:
   build-lint-and-test:
     jobs:
-      - build
+      - build-app
       - lint:
           requires:
-            - build
+            - build-app
       - test:
           requires:
             - lint
-
