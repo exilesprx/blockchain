@@ -22,6 +22,7 @@ jobs:
       - node/install-packages
       - snyk/scan:
            token-variable: SNYK_TOKEN
+           monitor-on-build: true
 
   lint:
     docker:
