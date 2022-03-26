@@ -160,7 +160,7 @@ services:
       - "9229:9229"
     depends_on:
       - eventstore.db
-    #   - kafka1
+      - kafka1
     env_file:
       - .env
     command: npm run app:debug
