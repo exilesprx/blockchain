@@ -83,13 +83,12 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
     - ~~update to use npm app and npm app:debug~~
     - ~~remove ts building in container image~~
     - ~~use docker cp or rebuild image to run new changes~~
-    - setup tslint IDE
-    - circleCI
-        - workflow
-            - lint the project
-            - build NPM packages
-            - run the tests
-                - depend on npm install and lint
+    - ~~circleCI~~
+        - ~~workflow~~
+            - ~~build~~
+            - ~~lint the project~~
+            - ~~snyk~~
+            - ~~run the tests~~
 - Tests
     - update the tests to match all the changes made
 - Notes 
