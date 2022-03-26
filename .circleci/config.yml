@@ -3,6 +3,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0
+  snyk: snyk/snyk@1.1.2
 
 jobs:
   build-app:
@@ -12,6 +13,14 @@ jobs:
       - checkout
       - node/install-packages
       - run: npm run build:app
+
+  snyk:
+    docker:
+      - image: cimg/node:16.14.2
+    steps:
+      - checkout
+      - node/install-packages
+      - snyk/scan
 
   lint:
     docker:
@@ -33,6 +42,9 @@ workflows:
   build-lint-and-test:
     jobs:
       - build-app
+      - snyk:
+          requires:
+            - build-app
       - lint:
           requires:
             - build-app
