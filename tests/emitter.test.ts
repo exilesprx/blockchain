@@ -26,18 +26,20 @@ describe('Emitter', () => {
       .mockImplementation(() => null);
   });
 
-  test('it expects the listeners to be configured', () => {
-    const events = Events.register(emitter, producer, logger);
+  test('it expects the listeners can be configured', () => {
+    const events = new Events(emitter, producer, logger);
 
-    expect(emitter.on).toHaveBeenCalledTimes(2);
+    const spy = jest.fn();
 
-    expect(emitter.on).toHaveBeenNthCalledWith(1, 'block-added', events.blockAdded.bind(events));
+    events.register('test', spy);
 
-    expect(emitter.on).toHaveBeenNthCalledWith(2, 'transaction-added', events.transactionAdded.bind(events));
+    expect(emitter.on).toHaveBeenCalledTimes(1);
+
+    expect(emitter.on).toBeCalledWith('test', spy);
   });
 
   test('it expects a log and kafka message when adding a block', () => {
-    const events = Events.register(emitter, producer, logger);
+    const events = new Events(emitter, producer, logger);
 
     const block = new Block(1, 0, 0, 'test', []);
 
@@ -49,7 +51,7 @@ describe('Emitter', () => {
   });
 
   test('it expects a log and kafka message when adding a transaction', () => {
-    const events = Events.register(emitter, producer, logger);
+    const events = new Events(emitter, producer, logger);
 
     const transaction = new Transaction('1', '2', 50);
 
@@ -61,7 +63,7 @@ describe('Emitter', () => {
   });
 
   test('it expects to call emit on EventEmitter', () => {
-    const events = Events.register(emitter, producer, logger);
+    const events = new Events(emitter, producer, logger);
 
     events.emit('test', 1);
 

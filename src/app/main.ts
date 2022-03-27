@@ -46,7 +46,7 @@ export default class Application {
 
     this.producer = new Producer(kafka);
 
-    this.events = Events.register(this.emitter, this.producer, logger);
+    this.events = new Events(this.emitter, this.producer, logger);
 
     this.chain = new Blockchain();
 
@@ -68,6 +68,12 @@ export default class Application {
       .addSpecification(new SameWallet());
 
     this.chain.addSpecification(new Link());
+  }
+
+  public registerEvents() {
+    this.events.register('block-added', this.events.blockAdded.bind(this.events));
+
+    this.events.register('transaction-added', this.events.transactionAdded.bind(this.events));
   }
 
   public async boot() {
