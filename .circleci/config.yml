@@ -4,6 +4,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0
   snyk: snyk/snyk@1.1.2
+  codecov: codecov/codecov@3.1.1
 
 jobs:
   build-app:
@@ -40,6 +41,7 @@ jobs:
       - checkout
       - node/install-packages
       - run: npm run test
+      - codecov/upload
 
 workflows:
   build-lint-and-test:
