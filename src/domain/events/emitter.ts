@@ -19,14 +19,8 @@ export default class Events {
     this.logger = logger;
   }
 
-  public static register(emitter: EventEmitter, producer: Producer, logger: Logger) : Events {
-    const events = new this(emitter, producer, logger);
-
-    emitter.on('block-added', events.blockAdded.bind(events));
-
-    emitter.on('transaction-added', events.transactionAdded.bind(events));
-
-    return events;
+  public register(event: string, callback: any) : void {
+    this.emitter.on(event, callback);
   }
 
   public emit(event: string, value: any) : void {
