@@ -2,9 +2,9 @@ import { logLevel } from 'kafkajs';
 import logger from '../src/domain/logs/logger';
 import { toWinstonLogLevel, logCreator } from '../src/domain/stream/kafka';
 
-jest.mock('../src/logs/logger');
+jest.mock('../src/domain/logs/logger');
 
-describe('Kafka', () => {
+describe('Kafka Logger', () => {
   test('it expects the level to be debug', () => {
     const level = toWinstonLogLevel(logLevel.DEBUG);
 
