@@ -85,6 +85,8 @@ export default class Application {
   }
 
   public async boot() {
+    this.logger.info(`Configs loaded: ${JSON.stringify(process.env)}`);
+
     this.database.connect();
 
     this.producer.connect();
@@ -102,7 +104,7 @@ export default class Application {
   }
 
   public registerRoutes() {
-    const transactionRoute = new TransactionRoute(this.database, this.bank);
+    const transactionRoute = new TransactionRoute(this.database, this.bank, this.logger);
 
     this.app.post(TransactionRoute.getName(), transactionRoute.getAction.bind(transactionRoute));
   }

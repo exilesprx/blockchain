@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import Database from '../../database';
 import Bank from '../../domain/bank';
-import logger from '../../domain/logs/logger';
+import Logger from '../../domain/logs/logger';
 import TransactionDataModel from '../../domain/wallet/transaction';
 
 export default class Transaction {
@@ -9,10 +9,14 @@ export default class Transaction {
 
   private bank: Bank;
 
-  public constructor(database: Database, bank: Bank) {
+  private logger: Logger;
+
+  public constructor(database: Database, bank: Bank, logger: Logger) {
     this.database = database;
 
     this.bank = bank;
+
+    this.logger = logger;
   }
 
   public static getName() : string {
@@ -32,7 +36,7 @@ export default class Transaction {
 
       return res.send(`Transaction ${transaction.getKey()} accepted.`);
     } catch (error) {
-      logger.error(`Error occurred: ${error}`);
+      this.logger.error(`Error occurred: ${error}`);
       return res.sendStatus(401);
     }
   }

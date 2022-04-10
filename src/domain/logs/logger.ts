@@ -12,11 +12,15 @@ export default class Logger {
     });
   }
 
-  public info(message: string) {
+  public info(message: string) : void {
     this.logger.info(message);
   }
 
-  public log(entry: LogEntry) {
+  public log(entry: LogEntry) : void {
     this.logger.log(entry);
+  }
+
+  public error(message: string) : void {
+    this.logger.error(message);
   }
 }
