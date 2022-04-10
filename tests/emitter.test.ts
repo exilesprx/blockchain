@@ -1,29 +1,36 @@
 import Events from 'events';
-import { Kafka } from 'kafkajs';
 import Block from '../src/domain/chain/block';
 import Emitter from '../src/domain/events/emitter';
-import logger from '../src/domain/logs/logger';
+import KafkaLogger from '../src/domain/logs/kafka-logger';
+import Logger from '../src/domain/logs/logger';
 import Producer from '../src/domain/stream/producer';
+import Stream from '../src/domain/stream/stream';
 import Transaction from '../src/domain/wallet/transaction';
 
 jest.mock('events');
 jest.mock('kafkajs');
+jest.mock('../src/domain/logs/logger');
+jest.mock('../src/domain/logs/kafka-logger');
+jest.mock('../src/domain/stream/stream');
+jest.mock('../src/domain/stream/producer');
 
-let events: Events;
+const events: Events = new Events();
 
-const kafka: Kafka = new Kafka({ brokers: [] });
+const logger: Logger = new Logger();
 
-const producer: Producer = new Producer(kafka);
+const kafkaLogger = new KafkaLogger(logger);
+
+const stream: Stream = new Stream(kafkaLogger);
+
+const producer: Producer = new Producer(stream);
 
 describe('Emitter', () => {
   beforeAll(() => {
-    events = new Events();
+    Events.mockClear();
 
-    jest.spyOn(producer, 'send')
-      .mockImplementation(() => null);
+    Logger.mockClear();
 
-    jest.spyOn(logger, 'info')
-      .mockImplementation(() => null);
+    Producer.mockClear();
   });
 
   test('it expects the listeners can be configured', () => {

@@ -85,8 +85,6 @@ export default class Application {
   }
 
   public async boot() {
-    this.logger.info(`Configs loaded: ${JSON.stringify(process.env)}`);
-
     this.database.connect();
 
     this.producer.connect();

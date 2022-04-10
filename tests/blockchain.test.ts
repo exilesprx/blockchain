@@ -5,10 +5,6 @@ import Block from '../src/domain/chain/block';
 jest.mock('../src/domain/policies/block-limit-policy');
 
 describe('Blockchain', () => {
-  beforeAll(() => {
-    BlockLimitPolicy.reachedLimit.mockReturnValue(false);
-  });
-
   test('it expects to have one block', () => {
     const chain = new Blockchain();
 
