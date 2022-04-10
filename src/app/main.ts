@@ -6,10 +6,11 @@ import Bank from '../domain/bank';
 import Blockchain from '../domain/chain/blockchain';
 import Link from '../domain/chain/specifications/link';
 import Emitter from '../domain/events/emitter';
+import KafkaLogger from '../domain/logs/kafka-logger';
 import Logger from '../domain/logs/logger';
 import BlockConsumer from '../domain/stream/block-consumer';
-import kafka from '../domain/stream/kafka';
 import Producer from '../domain/stream/producer';
+import Stream from '../domain/stream/stream';
 import Amount from '../domain/wallet/specifications/amount';
 import Receiver from '../domain/wallet/specifications/receiver';
 import SameWallet from '../domain/wallet/specifications/same-wallet';
@@ -38,16 +39,20 @@ export default class Application {
 
   private logger: Logger;
 
+  private stream: Stream;
+
   constructor() {
     this.app = express();
 
     this.logger = new Logger();
 
+    this.stream = new Stream(new KafkaLogger(this.logger));
+
     this.database = new Database(String(process.env.DB_HOST), Number(process.env.DB_PORT));
 
     this.events = new Events();
 
-    this.producer = new Producer(kafka);
+    this.producer = new Producer(this.stream);
 
     this.emitter = new Emitter(this.events, this.producer, this.logger);
 
@@ -57,7 +62,7 @@ export default class Application {
 
     this.bank = new Bank(this.pool, this.chain, this.emitter);
 
-    this.consumer = new BlockConsumer(this.bank, this.database, kafka);
+    this.consumer = new BlockConsumer(this.bank, this.database, this.stream);
   }
 
   public init() {

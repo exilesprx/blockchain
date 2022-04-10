@@ -1,12 +1,13 @@
-import { Kafka, Producer as KafkaProducer } from 'kafkajs';
+import { Producer as KafkaProducer } from 'kafkajs';
+import Stream from './stream';
 import Transaction from '../wallet/transaction';
 import Topic from './topic/topic';
 
 export default class Producer {
   private producer: KafkaProducer;
 
-  public constructor(stream: Kafka) {
-    this.producer = stream.producer();
+  public constructor(stream: Stream) {
+    this.producer = stream.createProducer();
   }
 
   public connect() : void {
