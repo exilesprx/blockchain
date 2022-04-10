@@ -1,5 +1,5 @@
 import Events from 'events';
-import { Logger } from 'winston';
+import Logger from '../logs/logger';
 import Block from '../chain/block';
 import Producer from '../stream/producer';
 import Transaction from '../wallet/transaction';

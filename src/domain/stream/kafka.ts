@@ -1,5 +1,7 @@
 import { Kafka, logLevel } from 'kafkajs';
-import logger from '../logs/logger';
+import Logger from '../logs/logger';
+
+const logger: Logger = new Logger();
 
 const toWinstonLogLevel = (level: any) => {
   switch (level) {

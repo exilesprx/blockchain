@@ -1,10 +1,14 @@
 import { logLevel } from 'kafkajs';
-import logger from '../src/domain/logs/logger';
+import Logger from '../src/domain/logs/logger';
 import { toWinstonLogLevel, logCreator } from '../src/domain/stream/kafka';
 
 jest.mock('../src/domain/logs/logger');
 
 describe('Kafka Logger', () => {
+  beforeAll(() => {
+    Logger.mockClear();
+  });
+
   test('it expects the level to be debug', () => {
     const level = toWinstonLogLevel(logLevel.DEBUG);
 
@@ -54,7 +58,7 @@ describe('Kafka Logger', () => {
 
     logCreator(arg);
 
-    expect(logger.log).toBeCalledWith(
+    expect(Logger.mock.instances[0].log).toBeCalledWith(
       {
         extra: {
           comment: arg.log.comment,

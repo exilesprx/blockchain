@@ -1,11 +1,11 @@
 import express from 'express';
 import Application from '../src/app/main';
+import Database from '../src/database';
 import Blockchain from '../src/domain/chain/blockchain';
 import Emitter from '../src/domain/events/emitter';
-import TransactionPool from '../src/domain/wallet/transaction-pool';
-import Database from '../src/database';
-import Producer from '../src/domain/stream/producer';
 import Consumer from '../src/domain/stream/consumer';
+import Producer from '../src/domain/stream/producer';
+import TransactionPool from '../src/domain/wallet/transaction-pool';
 
 jest.mock('../src/domain/events/emitter');
 jest.mock('express');

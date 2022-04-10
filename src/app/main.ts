@@ -6,7 +6,7 @@ import Bank from '../domain/bank';
 import Blockchain from '../domain/chain/blockchain';
 import Link from '../domain/chain/specifications/link';
 import Emitter from '../domain/events/emitter';
-import logger from '../domain/logs/logger';
+import Logger from '../domain/logs/logger';
 import BlockConsumer from '../domain/stream/block-consumer';
 import kafka from '../domain/stream/kafka';
 import Producer from '../domain/stream/producer';
@@ -36,8 +36,12 @@ export default class Application {
 
   private consumer: BlockConsumer;
 
+  private logger: Logger;
+
   constructor() {
     this.app = express();
+
+    this.logger = new Logger();
 
     this.database = new Database(String(process.env.DB_HOST), Number(process.env.DB_PORT));
 
@@ -45,7 +49,7 @@ export default class Application {
 
     this.producer = new Producer(kafka);
 
-    this.emitter = new Emitter(this.events, this.producer, logger);
+    this.emitter = new Emitter(this.events, this.producer, this.logger);
 
     this.chain = new Blockchain();
 
@@ -88,7 +92,7 @@ export default class Application {
     this.consumer.connect();
 
     this.app.listen(process.env.APP_PORT, () => {
-      logger.info(`App listening on port ${process.env.APP_PORT}`);
+      this.logger.info(`App listening on port ${process.env.APP_PORT}`);
     });
   }
 
