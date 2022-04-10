@@ -6,7 +6,7 @@ COPY ./package.json /usr/app/
 
 COPY ./package-lock.json /usr/app/
 
-RUN npm install --production=false
+RUN npm ci --production=false
 
 #
 FROM node:alpine3.15 as tests

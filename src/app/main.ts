@@ -1,29 +1,28 @@
-/* eslint import/no-unresolved: 2 */
-import EventEmitter from 'events';
+import Events from 'events';
 import express, { Express } from 'express';
 import helmet from 'helmet';
+import Database from '../database';
+import Bank from '../domain/bank';
 import Blockchain from '../domain/chain/blockchain';
-import Events from '../domain/events/emitter';
+import Link from '../domain/chain/specifications/link';
+import Emitter from '../domain/events/emitter';
 import logger from '../domain/logs/logger';
+import BlockConsumer from '../domain/stream/block-consumer';
 import kafka from '../domain/stream/kafka';
 import Producer from '../domain/stream/producer';
-import BlockConsumer from '../domain/stream/block-consumer';
 import Amount from '../domain/wallet/specifications/amount';
 import Receiver from '../domain/wallet/specifications/receiver';
 import SameWallet from '../domain/wallet/specifications/same-wallet';
 import Sender from '../domain/wallet/specifications/sender';
 import TransactionPool from '../domain/wallet/transaction-pool';
 import TransactionRoute from './routes/transaction';
-import Database from '../database';
-import Bank from '../domain/bank';
-import Link from '../domain/chain/specifications/link';
 
 export default class Application {
   private app: Express;
 
-  private emitter: EventEmitter;
-
   private events: Events;
+
+  private emitter: Emitter;
 
   private chain: Blockchain;
 
@@ -42,17 +41,17 @@ export default class Application {
 
     this.database = new Database(String(process.env.DB_HOST), Number(process.env.DB_PORT));
 
-    this.emitter = new EventEmitter();
+    this.events = new Events();
 
     this.producer = new Producer(kafka);
 
-    this.events = new Events(this.emitter, this.producer, logger);
+    this.emitter = new Emitter(this.events, this.producer, logger);
 
     this.chain = new Blockchain();
 
     this.pool = new TransactionPool();
 
-    this.bank = new Bank(this.pool, this.chain, this.events);
+    this.bank = new Bank(this.pool, this.chain, this.emitter);
 
     this.consumer = new BlockConsumer(this.bank, this.database, kafka);
   }
@@ -71,9 +70,9 @@ export default class Application {
   }
 
   public registerEvents() {
-    this.events.register('block-added', this.events.blockAdded.bind(this.events));
+    this.emitter.register('block-added', this.emitter.blockAdded.bind(this.emitter));
 
-    this.events.register('transaction-added', this.events.transactionAdded.bind(this.events));
+    this.emitter.register('transaction-added', this.emitter.transactionAdded.bind(this.emitter));
   }
 
   public async boot() {
