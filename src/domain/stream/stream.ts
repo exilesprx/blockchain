@@ -20,4 +20,3 @@ export default class Stream {
     return this.kafka.consumer({ groupId: group });
   }
 }
-
