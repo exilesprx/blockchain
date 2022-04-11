@@ -1,5 +1,5 @@
 import Events from 'events';
-import express, { Express } from 'express';
+import express from 'express';
 import helmet from 'helmet';
 import Database from '../database';
 import Bank from '../domain/bank';
@@ -17,9 +17,10 @@ import SameWallet from '../domain/wallet/specifications/same-wallet';
 import Sender from '../domain/wallet/specifications/sender';
 import TransactionPool from '../domain/wallet/transaction-pool';
 import TransactionRoute from './routes/transaction';
+import Server from './server';
 
 export default class Application {
-  private app: Express;
+  private server: Server;
 
   private events: Events;
 
@@ -42,7 +43,7 @@ export default class Application {
   private stream: Stream;
 
   constructor() {
-    this.app = express();
+    this.server = new Server();
 
     this.logger = new Logger();
 
@@ -66,11 +67,10 @@ export default class Application {
   }
 
   public init() {
-    this.app.use(express.json());
+    this.server.use({ handlers: [express.json(), helmet()] });
 
-    this.app.use(helmet());
-
-    this.pool.addSpecification(new Amount())
+    this.pool
+      .addSpecification(new Amount())
       .addSpecification(new Receiver())
       .addSpecification(new Sender())
       .addSpecification(new SameWallet());
@@ -96,7 +96,7 @@ export default class Application {
 
     this.consumer.connect();
 
-    this.app.listen(process.env.APP_PORT, () => {
+    this.server.create(() => {
       this.logger.info(`App listening on port ${process.env.APP_PORT}`);
     });
   }
@@ -104,6 +104,6 @@ export default class Application {
   public registerRoutes() {
     const transactionRoute = new TransactionRoute(this.database, this.bank, this.logger);
 
-    this.app.post(TransactionRoute.getName(), transactionRoute.getAction.bind(transactionRoute));
+    this.server.post(TransactionRoute.getName(), transactionRoute.getAction.bind(transactionRoute));
   }
 }

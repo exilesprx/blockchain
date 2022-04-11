@@ -64,7 +64,7 @@ describe('Main', () => {
 
     application.init();
 
-    expect(expressUse).toBeCalledTimes(2);
+    expect(expressUse).toBeCalledTimes(1);
 
     expect(addSpecForPool).toBeCalledTimes(4);
 

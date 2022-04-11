@@ -8,7 +8,7 @@ COPY ./package.json /usr/app/
 
 COPY ./package-lock.json /usr/app/
 
-RUN npm install
+RUN npm ci
 
 #
 FROM deps as build
@@ -20,6 +20,8 @@ COPY --from=deps /usr/app/node_modules /usr/app/node_modules
 COPY --from=deps /usr/app/package.json /usr/app/
 
 COPY ./nodemon.json /usr/app/nodemon.json
+
+COPY ./tsconfig.json /usr/app/tsconfig.json
 
 COPY ./src /usr/app/src
 

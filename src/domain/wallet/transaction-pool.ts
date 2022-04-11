@@ -9,7 +9,7 @@ export default class TransactionPool {
   }
 
   public fill(transaction: Transaction) : void {
-    this.specifications.forEach((spec) => {
+    this.specifications.forEach((spec: Specification) => {
       spec.isSatisfiedBy(transaction);
     });
   }
