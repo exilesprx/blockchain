@@ -1,5 +1,6 @@
-import express from 'express';
 import Application from '../src/app/main';
+import TransactionRoute from '../src/app/routes/transaction';
+import Server from '../src/app/server';
 import Database from '../src/database';
 import Blockchain from '../src/domain/chain/blockchain';
 import Emitter from '../src/domain/events/emitter';
@@ -8,16 +9,13 @@ import Producer from '../src/domain/stream/producer';
 import TransactionPool from '../src/domain/wallet/transaction-pool';
 
 jest.mock('../src/domain/events/emitter');
-jest.mock('express');
 jest.mock('../src/domain/wallet/transaction-pool');
 jest.mock('../src/domain/chain/blockchain');
 jest.mock('../src/database');
 jest.mock('../src/domain/stream/producer');
 jest.mock('../src/domain/stream/consumer');
-
-const expressUse = jest.fn();
-
-const expressListen = jest.fn();
+jest.mock('../src/app/routes/transaction');
+jest.mock('../src/app/server');
 
 const addSpecForPool = jest.fn();
 
@@ -33,6 +31,8 @@ describe('Main', () => {
 
     Consumer.mockClear();
 
+    Server.mockClear();
+
     TransactionPool.mockImplementation(() => ({
       addSpecification: addSpecForPool.mockReturnThis(),
     }));
@@ -41,10 +41,11 @@ describe('Main', () => {
       addSpecification: addSpecForChain.mockReturnThis(),
     }));
 
-    express.mockImplementation(() => ({
-      use: expressUse,
-      listen: expressListen,
+    TransactionRoute.mockImplementation(() => ({
+      getAction: jest.fn(),
     }));
+
+    TransactionRoute.getName = jest.fn().mockReturnValue('test');
   });
 
   test('it expect events to be registered', () => {
@@ -64,7 +65,7 @@ describe('Main', () => {
 
     application.init();
 
-    expect(expressUse).toBeCalledTimes(1);
+    expect(Server.mock.instances[0].use).toBeCalledTimes(1);
 
     expect(addSpecForPool).toBeCalledTimes(4);
 
@@ -82,6 +83,19 @@ describe('Main', () => {
 
     expect(Consumer.mock.instances[0].connect).toBeCalled();
 
-    expect(expressListen).toBeCalledTimes(1);
+    expect(Server.mock.instances[0].create).toBeCalledTimes(1);
+  });
+
+  test('it expects routes to be registered', () => {
+    const application = new Application();
+
+    application.registerRoutes();
+
+    expect(Server.mock.instances[0].post).toBeCalled();
+
+    expect(Server.mock.instances[0].post).toBeCalledWith(
+      'test',
+      expect.any(Function),
+    );
   });
 });
