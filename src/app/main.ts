@@ -43,9 +43,9 @@ export default class Application {
   private stream: Stream;
 
   constructor() {
-    this.server = new Server();
-
     this.logger = new Logger();
+
+    this.server = new Server(this.logger);
 
     this.stream = new Stream(new KafkaLogger(this.logger));
 
@@ -96,9 +96,7 @@ export default class Application {
 
     this.consumer.connect();
 
-    this.server.create(() => {
-      this.logger.info(`App listening on port ${process.env.APP_PORT}`);
-    });
+    this.server.create();
   }
 
   public registerRoutes() {
