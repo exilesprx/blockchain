@@ -1,7 +1,5 @@
 FROM node:17-slim as deps
 
-RUN apt-get update && apt-get upgrade -y
-
 WORKDIR /usr/app
 
 COPY ./package.json /usr/app/

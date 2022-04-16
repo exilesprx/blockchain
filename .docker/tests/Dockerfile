@@ -1,4 +1,4 @@
-FROM node:alpine3.15 as deps
+FROM node:17-slim as deps
 
 WORKDIR /usr/app
 
@@ -9,7 +9,7 @@ COPY ./package-lock.json /usr/app/
 RUN npm ci --production=false
 
 #
-FROM node:alpine3.15 as tests
+FROM deps as tests
 
 WORKDIR /usr/app
 
