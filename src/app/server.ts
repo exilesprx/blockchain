@@ -1,35 +1,37 @@
 import express, { Express } from 'express';
 import { Server as HttpServer } from 'http';
-import Logger from '../domain/logs/logger';
 
 export default class Server {
   private framework: Express;
 
-  private logger: Logger;
+  private port: String | undefined;
 
-  public constructor(logger: Logger) {
-    this.logger = logger;
-
+  public constructor(port: String | undefined) {
     this.framework = express();
+
+    this.port = port;
   }
 
-  public use({ handlers = [] }: { handlers?: any[]; } = {}) : void {
+  public use(...handlers: any[]) : void {
     this.framework.use(handlers);
   }
 
-  public create() : HttpServer {
-    return this.framework.listen(process.env.APP_PORT, this.onConnect.bind(this));
+  public create(onConnect: () => void) : HttpServer {
+    return this.framework.listen(this.port, onConnect);
   }
 
   public post(path: string, ...handlers: any) : void {
     this.framework.post(path, handlers);
   }
 
-  public get(path: string, ...handlers: any) : void {
+  public get(path: string, ...handlers: any[]) : void {
     this.framework.get(path, handlers);
   }
 
-  private onConnect() : void {
-    this.logger.info(`App listening on port ${process.env.APP_PORT}`);
+  public getPort() : String {
+    if (this.port === undefined) {
+      throw new Error('Port is not configured');
+    }
+    return this.port;
   }
 }

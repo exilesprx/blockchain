@@ -1,8 +1,9 @@
 import Events from 'events';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import helmet from 'helmet';
 import Database from '../database';
 import Bank from '../domain/bank';
+import Block from '../domain/chain/block';
 import Blockchain from '../domain/chain/blockchain';
 import Link from '../domain/chain/specifications/link';
 import Emitter from '../domain/events/emitter';
@@ -15,6 +16,7 @@ import Amount from '../domain/wallet/specifications/amount';
 import Receiver from '../domain/wallet/specifications/receiver';
 import SameWallet from '../domain/wallet/specifications/same-wallet';
 import Sender from '../domain/wallet/specifications/sender';
+import Transaction from '../domain/wallet/transaction';
 import TransactionPool from '../domain/wallet/transaction-pool';
 import TransactionRoute from './routes/transaction';
 import Server from './server';
@@ -45,7 +47,7 @@ export default class Application {
   constructor() {
     this.logger = new Logger();
 
-    this.server = new Server(this.logger);
+    this.server = new Server(process.env.APP_PORT);
 
     this.stream = new Stream(new KafkaLogger(this.logger));
 
@@ -67,7 +69,7 @@ export default class Application {
   }
 
   public init() {
-    this.server.use({ handlers: [express.json(), helmet()] });
+    this.server.use(express.json(), helmet());
 
     this.pool
       .addSpecification(new Amount())
@@ -79,9 +81,9 @@ export default class Application {
   }
 
   public registerEvents() {
-    this.emitter.register('block-added', this.emitter.blockAdded.bind(this.emitter));
+    this.emitter.register('block-added', (block: Block) => this.emitter.blockAdded(block));
 
-    this.emitter.register('transaction-added', this.emitter.transactionAdded.bind(this.emitter));
+    this.emitter.register('transaction-added', (transaction: Transaction) => this.emitter.transactionAdded(transaction));
   }
 
   public async boot() {
@@ -96,12 +98,19 @@ export default class Application {
 
     this.consumer.connect();
 
-    this.server.create();
+    this.server.create(() => this.onConnect());
   }
 
   public registerRoutes() {
     const transactionRoute = new TransactionRoute(this.database, this.bank, this.logger);
 
-    this.server.post(TransactionRoute.getName(), transactionRoute.getAction.bind(transactionRoute));
+    this.server.post(
+      TransactionRoute.getName(),
+      (req: Request, res: Response) => transactionRoute.getAction(req, res),
+    );
+  }
+
+  private onConnect() : void {
+    this.logger.info(`App listening on port ${this.server.getPort()}`);
   }
 }
