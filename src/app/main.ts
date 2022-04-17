@@ -71,11 +71,12 @@ export default class Application {
   public init() {
     this.server.use(express.json(), helmet());
 
-    this.pool
-      .addSpecification(new Amount())
-      .addSpecification(new Receiver())
-      .addSpecification(new Sender())
-      .addSpecification(new SameWallet());
+    this.pool.addSpecification(
+      new Amount(),
+      new Receiver(),
+      new Sender(),
+      new SameWallet(),
+    );
 
     this.chain.addSpecification(new Link());
   }

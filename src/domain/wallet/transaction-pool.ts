@@ -14,9 +14,7 @@ export default class TransactionPool {
     });
   }
 
-  public addSpecification(specification: Specification) : this {
-    this.specifications.push(specification);
-
-    return this;
+  public addSpecification(...specification: Specification[]) : void {
+    this.specifications.push(...specification);
   }
 }

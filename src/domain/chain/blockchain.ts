@@ -30,8 +30,8 @@ export default class Blockchain implements BlockchainInterface {
     return this.chain.length;
   }
 
-  public addSpecification(specification: Specification) {
-    this.specifications.push(specification);
+  public addSpecification(...specification: Specification[]) : void {
+    this.specifications.push(...specification);
   }
 
   private getPreviousBlock() : Block {

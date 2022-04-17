@@ -3,9 +3,14 @@ import TransactionRoute from '../src/app/routes/transaction';
 import Server from '../src/app/server';
 import Database from '../src/database';
 import Blockchain from '../src/domain/chain/blockchain';
+import Link from '../src/domain/chain/specifications/link';
 import Emitter from '../src/domain/events/emitter';
 import Consumer from '../src/domain/stream/consumer';
 import Producer from '../src/domain/stream/producer';
+import Amount from '../src/domain/wallet/specifications/amount';
+import Receiver from '../src/domain/wallet/specifications/receiver';
+import SameWallet from '../src/domain/wallet/specifications/same-wallet';
+import Sender from '../src/domain/wallet/specifications/sender';
 import TransactionPool from '../src/domain/wallet/transaction-pool';
 
 jest.mock('../src/domain/events/emitter');
@@ -34,11 +39,11 @@ describe('Main', () => {
     Server.mockClear();
 
     TransactionPool.mockImplementation(() => ({
-      addSpecification: addSpecForPool.mockReturnThis(),
+      addSpecification: addSpecForPool,
     }));
 
     Blockchain.mockImplementation(() => ({
-      addSpecification: addSpecForChain.mockReturnThis(),
+      addSpecification: addSpecForChain,
     }));
 
     TransactionRoute.mockImplementation(() => ({
@@ -67,9 +72,18 @@ describe('Main', () => {
 
     expect(Server.mock.instances[0].use).toBeCalledTimes(1);
 
-    expect(addSpecForPool).toBeCalledTimes(4);
+    expect(addSpecForPool).toBeCalledTimes(1);
+
+    expect(addSpecForPool).toBeCalledWith(
+      expect.any(Amount),
+      expect.any(Receiver),
+      expect.any(Sender),
+      expect.any(SameWallet),
+    );
 
     expect(addSpecForChain).toBeCalledTimes(1);
+
+    expect(addSpecForChain).toBeCalledWith(expect.any(Link));
   });
 
   test('it expects connections for database, producer, and consumer', () => {
