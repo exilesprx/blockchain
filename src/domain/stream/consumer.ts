@@ -1,6 +1,7 @@
-import { Kafka, Consumer as KafkaConsumer } from 'kafkajs';
+import { Consumer as KafkaConsumer } from 'kafkajs';
 import Database from '../../database';
 import Bank from '../bank';
+import Stream from './stream';
 
 export default abstract class Consumer {
   protected consumer: KafkaConsumer;
@@ -9,12 +10,12 @@ export default abstract class Consumer {
 
   protected database: Database;
 
-  public constructor(bank: Bank, database: Database, stream: Kafka) {
+  public constructor(bank: Bank, database: Database, stream: Stream) {
     this.bank = bank;
 
     this.database = database;
 
-    this.consumer = stream.consumer({ groupId: `${process.env.KAFKA_GROUP_ID}` });
+    this.consumer = stream.createConsumer(`${process.env.KAFKA_GROUP_ID}`);
   }
 
   public async connect() : Promise<void> {

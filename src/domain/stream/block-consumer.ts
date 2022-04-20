@@ -29,6 +29,7 @@ export default class BlockConsumer extends Consumer {
       parts.transactions,
     );
 
+    // TODO: needs seperation of concerns applied
     this.bank.addBlock(block);
 
     this.database.persistBlock(block);

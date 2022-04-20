@@ -3,10 +3,13 @@ import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
 
 jest.mock('../src/domain/chain/blockchain');
 
-describe('Block limt policy', () => {
-  test('it expects limit is not reached', () => {
-    const chain = new Blockchain();
+const chain: Blockchain = new Blockchain();
 
+describe('Block limt policy', () => {
+  beforeAll(() => {
+    Blockchain.mockClear();
+  });
+  test('it expects limit is not reached', () => {
     jest.spyOn(chain, 'length')
       .mockReturnValue(1);
 
@@ -14,8 +17,6 @@ describe('Block limt policy', () => {
   });
 
   test('it expects limit is reached', () => {
-    const chain = new Blockchain();
-
     jest.spyOn(chain, 'length')
       .mockReturnValue(BlockLimitPolicy.getLimit());
 

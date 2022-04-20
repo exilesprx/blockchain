@@ -1,42 +1,50 @@
 import { logLevel } from 'kafkajs';
-import logger from '../src/domain/logs/logger';
-import { toWinstonLogLevel, logCreator } from '../src/domain/stream/kafka';
+import Logger from '../src/domain/logs/logger';
+import KafkaLogger from '../src/domain/logs/kafka-logger';
 
 jest.mock('../src/domain/logs/logger');
 
+const logger: Logger = new Logger();
+
+const kafkaLogger: KafkaLogger = new KafkaLogger(logger);
+
 describe('Kafka Logger', () => {
+  beforeAll(() => {
+    Logger.mockClear();
+  });
+
   test('it expects the level to be debug', () => {
-    const level = toWinstonLogLevel(logLevel.DEBUG);
+    const level = KafkaLogger.toWinstonLogLevel(logLevel.DEBUG);
 
     expect(level).toBe('debug');
   });
 
   test('it expects the level to be error', () => {
-    const level = toWinstonLogLevel(logLevel.ERROR);
+    const level = KafkaLogger.toWinstonLogLevel(logLevel.ERROR);
 
     expect(level).toBe('error');
   });
 
   test('it expects the level to be info', () => {
-    const level = toWinstonLogLevel(logLevel.INFO);
+    const level = KafkaLogger.toWinstonLogLevel(logLevel.INFO);
 
     expect(level).toBe('info');
   });
 
   test('it expects the level to be error', () => {
-    const level = toWinstonLogLevel(logLevel.NOTHING);
+    const level = KafkaLogger.toWinstonLogLevel(logLevel.NOTHING);
 
     expect(level).toBe('error');
   });
 
   test('it expects the level to be warn', () => {
-    const level = toWinstonLogLevel(logLevel.WARN);
+    const level = KafkaLogger.toWinstonLogLevel(logLevel.WARN);
 
     expect(level).toBe('warn');
   });
 
   test('it expects the level to be info', () => {
-    const level = toWinstonLogLevel(null);
+    const level = KafkaLogger.toWinstonLogLevel(null);
 
     expect(level).toBe('info');
   });
@@ -52,7 +60,9 @@ describe('Kafka Logger', () => {
       },
     };
 
-    logCreator(arg);
+    kafkaLogger.logCreator(arg);
+
+    expect(logger.log).toBeCalledTimes(1);
 
     expect(logger.log).toBeCalledWith(
       {

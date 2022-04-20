@@ -1,17 +1,17 @@
-import EventEmitter from 'events';
-import { Logger } from 'winston';
-import Producer from '../stream/producer';
+import Events from 'events';
+import Logger from '../logs/logger';
 import Block from '../chain/block';
+import Producer from '../stream/producer';
 import Transaction from '../wallet/transaction';
 
-export default class Events {
+export default class Emitter {
   private producer: Producer;
 
   private logger: Logger;
 
-  private emitter: EventEmitter;
+  private emitter: Events;
 
-  constructor(emitter: EventEmitter, producer: Producer, logger: Logger) {
+  constructor(emitter: Events, producer: Producer, logger: Logger) {
     this.emitter = emitter;
 
     this.producer = producer;

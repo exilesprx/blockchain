@@ -15,7 +15,7 @@ export default class Blockchain implements BlockchainInterface {
   }
 
   public addBlock(block: Block) : void {
-    this.specifications.forEach((spec) => {
+    this.specifications.forEach((spec: Specification) => {
       spec.isSatisfiedBy(this.getPreviousBlock(), block);
     });
 
@@ -30,8 +30,8 @@ export default class Blockchain implements BlockchainInterface {
     return this.chain.length;
   }
 
-  public addSpecification(spec: Specification) {
-    this.specifications.push(spec);
+  public addSpecification(...specification: Specification[]) : void {
+    this.specifications.push(...specification);
   }
 
   private getPreviousBlock() : Block {

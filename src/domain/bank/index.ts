@@ -1,5 +1,5 @@
 import TransactionPool from '../wallet/transaction-pool';
-import Events from '../events/emitter';
+import Emitter from '../events/emitter';
 import Blockchain from '../chain/blockchain';
 import Transaction from '../wallet/transaction';
 import Block from '../chain/block';
@@ -9,9 +9,9 @@ export default class Bank {
 
   private blockchain: Blockchain;
 
-  private events: Events;
+  private events: Emitter;
 
-  public constructor(transactions: TransactionPool, blockchain: Blockchain, events: Events) {
+  public constructor(transactions: TransactionPool, blockchain: Blockchain, events: Emitter) {
     this.transactions = transactions;
 
     this.blockchain = blockchain;

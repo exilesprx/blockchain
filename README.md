@@ -52,7 +52,7 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
         - ~~broadcasts event "transaction added"~~
     - Blockchain
         - ~~add mined block to chain from stream~~
-        - note: this chain is only present to add another node for a consensus check
+        - ~~note: this chain is only present to add another node for a consensus check~~
 - Miner
     - Transactions
         - added to a pool via stream
@@ -74,6 +74,11 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
         - compares "generated transactions" vesus "processed transactions"
         - should "rebroadcast" so they're added to a chain
         - happens every X
+- Restoration
+    - Application
+        - grab the last few block events
+        - restore the chain with the blocks pulled
+    - Miner
 - End to end testing
     - Scheduler
         - Produces transactions every X secones (start with manual entry at first)
@@ -90,7 +95,9 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
             - ~~snyk~~
             - ~~run the tests~~
 - Tests
-    - update the tests to match all the changes made
+    - ~~update the tests to match all the changes made~~
+    - ~~add code coverage~~
+    - increase code coverage with meaningful tests
 - Notes 
     - Consumers/miners
         - MULTIPLE CONSUMERS MUST BE ON THE SAME GROUP TO MINE THE SAME PARTITION
@@ -99,7 +106,7 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
     - Miner
         - if block mined event is received, so if its currently mining, if so, stop it, and start mining a new block (if reqs are met)
     - Docker build
-        - clean up the build process
+        - ~~clean up the build process~~
         - container builds
             - dev (app and miner)
             - test
