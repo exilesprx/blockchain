@@ -82,9 +82,15 @@ export default class Application {
   }
 
   public registerEvents() {
-    this.emitter.register('block-added', (block: Block) => this.emitter.blockAdded(block));
+    this.emitter.register(
+      'block-added',
+      (block: Block) => this.emitter.blockAdded(block),
+    );
 
-    this.emitter.register('transaction-added', (transaction: Transaction) => this.emitter.transactionAdded(transaction));
+    this.emitter.register(
+      'transaction-added',
+      (transaction: Transaction) => this.emitter.transactionAdded(transaction),
+    );
   }
 
   public async boot() {
