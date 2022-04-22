@@ -153,7 +153,7 @@ services:
       AUTO_CONNECT_CONNECTION_STRING: zoo1:2181
 
   app:
-    image: blockchain:latest
+    image: exilesprx/blockchain:latest
     container_name: blockchain
     ports:
       - "3000:3000"

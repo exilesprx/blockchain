@@ -8,7 +8,7 @@ export default class Stream {
     this.kafka = new Kafka({
       clientId: process.env.KAFKA_CLIENT_ID,
       brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`],
-      logCreator: () => kafkaLogger.logCreator,
+      logCreator: () => (info) => kafkaLogger.logCreator(info),
     });
   }
 
