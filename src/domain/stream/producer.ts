@@ -10,7 +10,7 @@ export default class Producer {
     this.producer = stream.createProducer();
   }
 
-  public connect() : void {
+  public async connect() : Promise<void> {
     this.producer.connect();
   }
 
