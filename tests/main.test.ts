@@ -86,16 +86,16 @@ describe('Main', () => {
     expect(addSpecForChain).toBeCalledWith(expect.any(Link));
   });
 
-  test('it expects connections for database, producer, and consumer', () => {
+  test('it expects connections for database, producer, and consumer', async () => {
     const application = new Application();
 
     application.boot();
 
     expect(Database.mock.instances[0].connect).toBeCalled();
 
-    expect(Producer.mock.instances[0].connect).toBeCalled();
+    await expect(Producer.mock.instances[0].connect).toBeCalled();
 
-    expect(Consumer.mock.instances[0].connect).toBeCalled();
+    await expect(Consumer.mock.instances[0].connect).toBeCalled();
 
     expect(Server.mock.instances[0].create).toBeCalledTimes(1);
   });

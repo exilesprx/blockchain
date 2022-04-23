@@ -96,14 +96,14 @@ export default class Application {
   public async boot() {
     this.database.connect();
 
-    this.producer.connect();
+    await this.producer.connect();
 
     /**
      * TODO: restore from eventstore, we only need to worry about block heres,
      * the auditor will handle transactions
      */
 
-    this.consumer.connect();
+    await this.consumer.connect();
 
     this.server.create(() => this.onConnect());
   }

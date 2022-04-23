@@ -33,6 +33,8 @@ services:
       - ./full-stack/kafka1/data:/var/lib/kafka/data
     depends_on:
       - zoo1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   kafka-schema-registry:
     image: confluentinc/cp-schema-registry:6.0.2
@@ -153,7 +155,7 @@ services:
       AUTO_CONNECT_CONNECTION_STRING: zoo1:2181
 
   app:
-    image: blockchain:latest
+    image: exilesprx/blockchain:latest
     container_name: blockchain
     ports:
       - "3000:3000"
