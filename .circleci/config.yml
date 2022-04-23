@@ -5,6 +5,8 @@ orbs:
   node: circleci/node@5.0
   snyk: snyk/snyk@1.1.2
   codecov: codecov/codecov@3.1.1
+  hadolint: orbies/hadolint@1.0.0
+  docker: circleci/docker@2.0.3
 
 jobs:
   build-app:
@@ -22,9 +24,9 @@ jobs:
       - checkout
       - node/install-packages
       - snyk/scan:
-           token-variable: SNYK_TOKEN
-           monitor-on-build: true
-           project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}'
+          token-variable: SNYK_TOKEN
+          monitor-on-build: true
+          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}'
 
   lint:
     docker:
@@ -42,9 +44,22 @@ jobs:
       - node/install-packages
       - run: npm run test
       - codecov/upload
+    
+  docker-publish-app:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          path: .docker/app
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+      - docker/push:
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          tag: latest
 
 workflows:
-  build-lint-and-test:
+  app:
     jobs:
       - build-app
       - snyk:
@@ -56,3 +71,15 @@ workflows:
       - test:
           requires:
             - lint
+      - docker/hadolint:
+          dockerfiles: '.docker/app/Dockerfile'
+          ignore-rules: 'DL4005,DL3008'
+          trusted-registries: 'docker.io'
+          requires:
+            - build-app
+      - docker-publish-app:
+          requires:
+            - docker/hadolint
+          filters:
+            branches:
+              only: main
