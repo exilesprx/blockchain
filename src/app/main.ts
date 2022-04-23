@@ -103,7 +103,7 @@ export default class Application {
      * the auditor will handle transactions
      */
 
-    this.consumer.connect();
+    await this.consumer.connect();
 
     this.server.create(() => this.onConnect());
   }
