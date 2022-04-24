@@ -4,12 +4,12 @@ import Block from '../chain/block';
 import Producer from '../stream/producer';
 import Transaction from '../wallet/transaction';
 
-export default class Emitter {
-  private producer: Producer;
+export default abstract class Emitter {
+  protected producer: Producer;
 
-  private logger: Logger;
+  protected logger: Logger;
 
-  private emitter: Events;
+  protected emitter: Events;
 
   constructor(emitter: Events, producer: Producer, logger: Logger) {
     this.emitter = emitter;
@@ -27,13 +27,7 @@ export default class Emitter {
     this.emitter.emit(event, value);
   }
 
-  public blockAdded(block: Block) {
-    this.logger.info(`Block added: ${block.getHash()}`);
-  }
+  public abstract blockAdded(block: Block) : void;
 
-  public transactionAdded(transaction: Transaction) {
-    this.logger.info(`Transaction added: ${transaction.getHash()}`);
-
-    this.producer.send('transaction-added', transaction);
-  }
+  public abstract transactionAdded(transaction: Transaction) : void;
 }

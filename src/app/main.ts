@@ -2,11 +2,9 @@ import Events from 'events';
 import express, { Request, Response } from 'express';
 import helmet from 'helmet';
 import Database from '../database';
-import Bank from '../domain/bank';
 import Block from '../domain/chain/block';
 import Blockchain from '../domain/chain/blockchain';
 import Link from '../domain/chain/specifications/link';
-import Emitter from '../domain/events/emitter';
 import KafkaLogger from '../domain/logs/kafka-logger';
 import Logger from '../domain/logs/logger';
 import BlockConsumer from '../domain/stream/block-consumer';
@@ -18,21 +16,20 @@ import SameWallet from '../domain/wallet/specifications/same-wallet';
 import Sender from '../domain/wallet/specifications/sender';
 import Transaction from '../domain/wallet/transaction';
 import TransactionPool from '../domain/wallet/transaction-pool';
+import AddBlock from './actions/add-block';
+import AddTransaction from './actions/add-transaction';
+import Emitter from './events/emitter';
 import TransactionRoute from './routes/transaction';
 import Server from './server';
 
 export default class Application {
   private server: Server;
 
-  private events: Events;
-
   private emitter: Emitter;
 
   private chain: Blockchain;
 
   private pool: TransactionPool;
-
-  private bank: Bank;
 
   private database: Database;
 
@@ -42,30 +39,26 @@ export default class Application {
 
   private logger: Logger;
 
-  private stream: Stream;
-
   constructor() {
     this.logger = new Logger();
 
     this.server = new Server(process.env.APP_PORT);
 
-    this.stream = new Stream(new KafkaLogger(this.logger));
+    const stream = new Stream(new KafkaLogger(this.logger));
 
     this.database = new Database(String(process.env.DB_HOST), Number(process.env.DB_PORT));
 
-    this.events = new Events();
+    this.producer = new Producer(stream);
 
-    this.producer = new Producer(this.stream);
+    this.emitter = new Emitter(new Events(), this.producer, this.logger);
 
-    this.emitter = new Emitter(this.events, this.producer, this.logger);
+    this.chain = new Blockchain(this.emitter);
 
-    this.chain = new Blockchain();
+    this.pool = new TransactionPool(this.emitter);
 
-    this.pool = new TransactionPool();
+    const action = new AddBlock(this.chain, this.database);
 
-    this.bank = new Bank(this.pool, this.chain, this.emitter);
-
-    this.consumer = new BlockConsumer(this.bank, this.database, this.stream);
+    this.consumer = new BlockConsumer(action, stream);
   }
 
   public init() {
@@ -105,11 +98,15 @@ export default class Application {
 
     await this.consumer.connect();
 
+    await this.consumer.run();
+
     this.server.create(() => this.onConnect());
   }
 
   public registerRoutes() {
-    const transactionRoute = new TransactionRoute(this.database, this.bank, this.logger);
+    const action = new AddTransaction(this.pool, this.database);
+
+    const transactionRoute = new TransactionRoute(action, this.logger);
 
     this.server.post(
       TransactionRoute.getName(),

@@ -36,9 +36,17 @@ export default class Block {
     return new this('genesis block', 0, 0, '00', []);
   }
 
-  // public mine() : void {
-  // TODO: algo to run
-  // }
+  public mine() : void {
+    const hash = this.generateHash();
+
+    const chars = hash.slice(0, this.difficulty);
+
+    while (chars !== '0'.repeat(this.difficulty)) {
+      this.nounce += 1;
+
+      this.hash = this.generateHash();
+    }
+  }
 
   public getHash() : string {
     return this.hash;

@@ -1,20 +1,10 @@
-import { Consumer as KafkaConsumer } from 'kafkajs';
-import Database from '../../database';
-import Bank from '../bank';
+import { Consumer as KafkaConsumer, EachMessagePayload } from 'kafkajs';
 import Stream from './stream';
 
 export default abstract class Consumer {
   protected consumer: KafkaConsumer;
 
-  protected bank: Bank;
-
-  protected database: Database;
-
-  public constructor(bank: Bank, database: Database, stream: Stream) {
-    this.bank = bank;
-
-    this.database = database;
-
+  public constructor(stream: Stream) {
     this.consumer = stream.createConsumer(`${process.env.KAFKA_GROUP_ID}`);
   }
 
@@ -26,5 +16,14 @@ export default abstract class Consumer {
     await this.consumer.disconnect();
   }
 
-  public abstract run(topic: string) : Promise<void>;
+  protected async run(topic: string) : Promise<void> {
+    await this.consumer.subscribe({ topic, fromBeginning: false });
+    await this.consumer.run(
+      {
+        eachMessage: (payload: EachMessagePayload) => this.transformMessage(payload),
+      },
+    );
+  }
+
+  protected abstract transformMessage(payload: EachMessagePayload) : Promise<void>;
 }

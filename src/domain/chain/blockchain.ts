@@ -1,17 +1,38 @@
-import Block from './block';
+import { v4 } from 'uuid';
+import Emitter from '../events/emitter';
 import BlockLimitPolicy from '../policies/block-limit-policy';
-import Specification from './specifications/specifications';
+import Transaction from '../wallet/transaction';
+import Block from './block';
 import BlockchainInterface from './blockchain-interface';
+import Specification from './specifications/specifications';
 
 export default class Blockchain implements BlockchainInterface {
+  private emitter: Emitter;
+
   private chain: Block[];
 
   private specifications: Specification[];
 
-  constructor() {
+  private static startingNounce: number = 0;
+
+  constructor(emitter: Emitter) {
+    this.emitter = emitter;
+
     this.chain = [Block.genesis()];
 
     this.specifications = [];
+  }
+
+  public createBlock(transactions: Transaction[]) : Block {
+    const difficulty = 1;
+
+    return new Block(
+      v4(),
+      Blockchain.startingNounce,
+      difficulty,
+      this.getPreviousHash(),
+      transactions,
+    );
   }
 
   public addBlock(block: Block) : void {
@@ -24,6 +45,8 @@ export default class Blockchain implements BlockchainInterface {
     }
 
     this.chain.push(block);
+
+    this.emitter.emit('block-added', block);
   }
 
   public length() : number {
@@ -40,5 +63,9 @@ export default class Blockchain implements BlockchainInterface {
 
   private removeFirstBlock() : Block | undefined {
     return this.chain.shift();
+  }
+
+  private getPreviousHash() : string {
+    return this.getPreviousBlock().getHash();
   }
 }

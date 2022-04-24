@@ -1,6 +1,6 @@
 import Events from 'events';
 import Block from '../src/domain/chain/block';
-import Emitter from '../src/domain/events/emitter';
+import Emitter from '../src/app/events/emitter';
 import KafkaLogger from '../src/domain/logs/kafka-logger';
 import Logger from '../src/domain/logs/logger';
 import Producer from '../src/domain/stream/producer';
@@ -66,7 +66,7 @@ describe('Emitter', () => {
 
     expect(logger.info).toHaveBeenCalledTimes(1);
 
-    expect(producer.send).toHaveBeenLastCalledWith('transaction-added', transaction);
+    expect(producer.sendTransaction).toHaveBeenLastCalledWith(transaction);
   });
 
   test('it expects to call emit on EventEmitter', () => {

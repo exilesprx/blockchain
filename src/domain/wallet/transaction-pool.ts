@@ -1,12 +1,18 @@
+import Emitter from '../../app/events/emitter';
+import NewBlockPolicy from '../policies/new-block-policy';
 import Specification from './specifications/specification';
 import Transaction from './transaction';
 
 export default class TransactionPool {
+  private emitter: Emitter;
+
   private specifications: Specification[];
 
   private transactions: Transaction[];
 
-  constructor() {
+  constructor(emitter: Emitter) {
+    this.emitter = emitter;
+
     this.specifications = [];
 
     this.transactions = [];
@@ -18,6 +24,8 @@ export default class TransactionPool {
     });
 
     this.transactions.push(transaction);
+
+    this.emitter.emit('transaction-added', transaction);
   }
 
   public addSpecification(...specification: Specification[]) : void {
@@ -26,5 +34,17 @@ export default class TransactionPool {
 
   public isEmpty() : boolean {
     return this.transactions.length === 0;
+  }
+
+  public shouldCreateNewBlock() : boolean {
+    return NewBlockPolicy.shouldCreateNewBlock(this.transactions);
+  }
+
+  public flush() : Transaction[] {
+    const transactions: Transaction[] = [...this.transactions];
+
+    this.transactions = [];
+
+    return transactions;
   }
 }
