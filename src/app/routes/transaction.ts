@@ -1,20 +1,15 @@
-import { Response, Request } from 'express';
-import Database from '../../database';
-import Bank from '../../domain/bank';
+import { Request, Response } from 'express';
 import Logger from '../../domain/logs/logger';
 import TransactionDataModel from '../../domain/wallet/transaction';
+import AddTransaction from '../commands/add-transaction';
 
 export default class Transaction {
-  private database: Database;
-
-  private bank: Bank;
+  private action: AddTransaction;
 
   private logger: Logger;
 
-  public constructor(database: Database, bank: Bank, logger: Logger) {
-    this.database = database;
-
-    this.bank = bank;
+  public constructor(action: AddTransaction, logger: Logger) {
+    this.action = action;
 
     this.logger = logger;
   }
@@ -30,9 +25,7 @@ export default class Transaction {
       // Create a new transaction, add it to the pool, and broadcast it
       const transaction = new TransactionDataModel(params.to, params.from, params.amount);
 
-      this.bank.addTransaction(transaction);
-
-      this.database.persistTransaction(transaction);
+      this.action.execute(transaction);
 
       return res.send(`Transaction ${transaction.getKey()} accepted.`);
     } catch (error) {

@@ -1,18 +1,24 @@
 import { EachMessagePayload } from 'kafkajs';
+import AddBlock from '../../app/commands/add-block';
 import Block from '../chain/block';
 import Consumer from './consumer';
+import Stream from './stream';
+import Topic from './topic/topic';
 
 export default class BlockConsumer extends Consumer {
-  public async run(topic: string) : Promise<void> {
-    await this.consumer.subscribe({ topic, fromBeginning: false });
-    await this.consumer.run(
-      {
-        eachMessage: this.emitBlockAdded,
-      },
-    );
+  private action: AddBlock;
+
+  public constructor(action: AddBlock, stream: Stream) {
+    super(stream);
+
+    this.action = action;
   }
 
-  protected async emitBlockAdded(payload: EachMessagePayload) : Promise<void> {
+  public async run() : Promise<void> {
+    super.run(Topic.new('block-added').toString());
+  }
+
+  protected async transformMessage(payload: EachMessagePayload) : Promise<void> {
     const { value } = payload.message;
 
     if (!value) {
@@ -29,9 +35,6 @@ export default class BlockConsumer extends Consumer {
       parts.transactions,
     );
 
-    // TODO: needs seperation of concerns applied
-    this.bank.addBlock(block);
-
-    this.database.persistBlock(block);
+    this.action.execute(block);
   }
 }

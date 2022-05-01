@@ -1,4 +1,5 @@
 import { SHA256 } from 'crypto-js';
+import BlockMinedPolicy from '../policies/block-mined-policy';
 import Transaction from '../wallet/transaction';
 
 export default class Block {
@@ -36,9 +37,17 @@ export default class Block {
     return new this('genesis block', 0, 0, '00', []);
   }
 
-  // public mine() : void {
-  // TODO: algo to run
-  // }
+  public mine() : Promise<void> {
+    return new Promise((resolve) => {
+      while (!BlockMinedPolicy.mined(this.hash, this.difficulty)) {
+        this.nounce += 1;
+
+        this.hash = this.generateHash();
+      }
+
+      resolve();
+    });
+  }
 
   public getHash() : string {
     return this.hash;

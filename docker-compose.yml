@@ -167,15 +167,17 @@ services:
       - .env
     command: npm run app:debug
 
-  # miner:
-  #   build: blockchain-miner:latest
-  #   ports:
-  #     - "3006:80"
-  #   # depends_on:
-  #   #   - kafka1
-  #   env_file:
-  #     - ../.env
-  #   command: npm run program
+  miner:
+    image: exilesprx/blockchain:latest
+    container_name: miner
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    depends_on:
+      - kafka1
+    env_file:
+      - .env
+    command: npm run miner:debug
 
   eventstore.db:
     image: eventstore/eventstore:20.10.2-buster-slim

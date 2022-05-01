@@ -8,4 +8,7 @@ docker build -f .docker/app/Dockerfile -t blockchain:${BRANCH} .
 echo -e "\033[33m Running build:app... \033[0m"
 docker run -it blockchain:${BRANCH} npm run build:app
 
+echo -e "\033[33m Running build:miner... \033[0m"
+docker run -it blockchain:${BRANCH} npm run build:miner
+
 echo -e "\033[32m Done! \033[0m"

@@ -1,22 +1,7 @@
-export default class Miner {
-  public mine() : void {
-    if (NewBlockPolicy.shouldCreateNewBlock(this.transactions)) {
-      this.chain.createBlock(this.transactions);
-      this.drain();
-    }
-  }
+import Miner from './main';
 
-  public createBlock(transactions: Transaction[]) : Block {
-    if (BlockLimitPolicy.reachedLimit(this)) {
-      this.removeFirstBlock();
-    }
+const miner = new Miner();
 
-    const block = new Block(v4(), 0, 0, this.getLastBlockHash(), transactions);
+miner.registerEvents();
 
-    return block;
-  }
-
-  // TODO: consume transactions
-  // TODO: add to block
-  // TODO: mine block
-}
+miner.boot();

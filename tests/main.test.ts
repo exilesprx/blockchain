@@ -97,6 +97,8 @@ describe('Main', () => {
 
     await expect(Consumer.mock.instances[0].connect).toBeCalled();
 
+    await expect(Consumer.mock.instances[0].run).toBeCalled();
+
     expect(Server.mock.instances[0].create).toBeCalledTimes(1);
   });
 

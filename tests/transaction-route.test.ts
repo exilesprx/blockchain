@@ -1,25 +1,24 @@
 import TransactionRoute from '../src/app/routes/transaction';
 import Database from '../src/database/index';
-import Bank from '../src/domain/bank';
 import Logger from '../src/domain/logs/logger';
+import AddTransaction from '../src/app/commands/add-transaction';
 
 jest.mock('../src/database/index');
-jest.mock('../src/domain/bank');
 jest.mock('../src/domain/logs/logger');
+jest.mock('../src/app/commands/add-transaction');
 
 describe('Transaction route', () => {
   beforeAll(() => {
     Database.mockClear();
 
-    Bank.mockClear();
+    AddTransaction.mockClear();
 
     Logger.mockClear();
   });
 
   test('it expects to add a transition to the bank and persist it', () => {
-    const database = new Database('host', 8888);
-    const bank = new Bank(jest.fn(), jest.fn(), jest.fn());
-    const route = new TransactionRoute(database, bank, jest.fn());
+    const action = new AddTransaction(jest.fn(), jest.fn());
+    const route = new TransactionRoute(action, jest.fn());
     const res = {
       send: jest.fn(),
       sendStatus: () => {},
@@ -35,17 +34,14 @@ describe('Transaction route', () => {
 
     route.getAction(req, res);
 
-    expect(Bank.mock.instances[0].addTransaction).toBeCalled();
-
-    expect(Database.mock.instances[0].persistTransaction).toBeCalled();
+    expect(AddTransaction.mock.instances[0].execute).toBeCalled();
   });
 
   test('it expects to aend a 401 response', () => {
-    const database = new Database('host', 8888);
-    const bank = new Bank(jest.fn(), jest.fn(), jest.fn());
+    const action = new AddTransaction(jest.fn(), jest.fn());
     const log = new Logger();
     const spy = jest.fn();
-    const route = new TransactionRoute(database, bank, log);
+    const route = new TransactionRoute(action, log);
     const res = {
       sendStatus: spy,
     };
