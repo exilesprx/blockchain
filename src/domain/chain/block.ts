@@ -1,4 +1,5 @@
 import { SHA256 } from 'crypto-js';
+import BlockMinedPolicy from '../policies/block-mined-policy';
 import Transaction from '../wallet/transaction';
 
 export default class Block {
@@ -37,11 +38,7 @@ export default class Block {
   }
 
   public mine() : void {
-    const hash = this.generateHash();
-
-    const chars = hash.slice(0, this.difficulty);
-
-    while (chars !== '0'.repeat(this.difficulty)) {
+    while (!BlockMinedPolicy.mined(this.hash, this.difficulty)) {
       this.nounce += 1;
 
       this.hash = this.generateHash();

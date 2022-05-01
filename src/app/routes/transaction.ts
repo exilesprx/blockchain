@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Logger from '../../domain/logs/logger';
 import TransactionDataModel from '../../domain/wallet/transaction';
-import AddTransaction from '../actions/add-transaction';
+import AddTransaction from '../commands/add-transaction';
 
 export default class Transaction {
   private action: AddTransaction;

@@ -1,5 +1,5 @@
 import { EachMessagePayload } from 'kafkajs';
-import AddBlock from '../../app/actions/add-block';
+import AddBlock from '../../app/commands/add-block';
 import Block from '../chain/block';
 import Consumer from './consumer';
 import Stream from './stream';

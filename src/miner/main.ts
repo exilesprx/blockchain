@@ -7,7 +7,7 @@ import Producer from '../domain/stream/producer';
 import Stream from '../domain/stream/stream';
 import TransactionConsumer from '../domain/stream/transaction-consumer';
 import TransactionPool from '../domain/wallet/transaction-pool';
-import AddTransaction from './actions/add-transaction';
+import AddTransaction from './commands/add-transaction';
 import Emitter from './events/emitter';
 
 export default class Miner {
