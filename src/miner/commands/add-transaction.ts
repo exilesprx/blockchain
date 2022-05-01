@@ -17,11 +17,7 @@ export default class AddTransaction {
     this.pool.fill(transaction);
 
     if (this.pool.shouldCreateNewBlock()) {
-      const block = this.chain.createBlock(this.pool.flush());
-
-      block.mine();
-
-      this.chain.addBlock(block);
+      this.chain.mineBlock(this.pool.flush());
     }
   }
 }

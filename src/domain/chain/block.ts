@@ -37,12 +37,16 @@ export default class Block {
     return new this('genesis block', 0, 0, '00', []);
   }
 
-  public mine() : void {
-    while (!BlockMinedPolicy.mined(this.hash, this.difficulty)) {
-      this.nounce += 1;
+  public mine() : Promise<void> {
+    return new Promise((resolve) => {
+      while (!BlockMinedPolicy.mined(this.hash, this.difficulty)) {
+        this.nounce += 1;
 
-      this.hash = this.generateHash();
-    }
+        this.hash = this.generateHash();
+      }
+
+      resolve();
+    });
   }
 
   public getHash() : string {

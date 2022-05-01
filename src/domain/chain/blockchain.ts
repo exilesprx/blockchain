@@ -23,16 +23,25 @@ export default class Blockchain implements BlockchainInterface {
     this.specifications = [];
   }
 
-  public createBlock(transactions: Transaction[]) : Block {
+  public mineBlock(transactions: Transaction[]) : void {
     const difficulty = 1;
 
-    return new Block(
+    const block = new Block(
       v4(),
       Blockchain.startingNounce,
       difficulty,
       this.getPreviousHash(),
       transactions,
     );
+
+    block.mine()
+      .then(() => {
+        this.addBlock(block);
+
+        this.emitter.emit('block-mined', block);
+      }).catch(() => {
+        this.emitter.emit('mine-failed', block);
+      });
   }
 
   public addBlock(block: Block) : void {
