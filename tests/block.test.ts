@@ -39,7 +39,7 @@ describe('Block', () => {
     expect(secondBlock.getKey()).toBe(1);
   });
 
-  test('it expects the block to be mined after 2 attempts', () => {
+  test('it expects the block to be mined after 2 attempts', async () => {
     const block = new Block(1, 0, 1, 'test', []);
 
     const hash = block.getHash();
@@ -48,7 +48,7 @@ describe('Block', () => {
       .mockReturnValueOnce(false)
       .mockReturnValueOnce(true);
 
-    block.mine();
+    await block.mine();
 
     expect(BlockMinedPolicy.mined).toBeCalledTimes(2);
 
