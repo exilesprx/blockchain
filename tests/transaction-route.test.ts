@@ -5,7 +5,7 @@ import AddTransaction from '../src/app/commands/add-transaction';
 
 jest.mock('../src/database/index');
 jest.mock('../src/domain/logs/logger');
-jest.mock('../src/app/actions/add-transaction');
+jest.mock('../src/app/commands/add-transaction');
 
 describe('Transaction route', () => {
   beforeAll(() => {
