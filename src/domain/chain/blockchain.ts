@@ -23,7 +23,7 @@ export default class Blockchain implements BlockchainInterface {
     this.specifications = [];
   }
 
-  public mineBlock(transactions: Transaction[]) : void {
+  public async mineBlock(transactions: Transaction[]) : void {
     const difficulty = 1;
 
     const block = new Block(
@@ -34,14 +34,13 @@ export default class Blockchain implements BlockchainInterface {
       transactions,
     );
 
-    block.mine()
-      .then(() => {
-        this.addBlock(block);
+    try {
+      await block.mine();
 
-        this.emitter.emit('block-mined', block);
-      }).catch(() => {
-        this.emitter.emit('mine-failed', block);
-      });
+      this.emitter.emit('block-mined', block);
+    } catch (error: any) {
+      this.emitter.emit('mine-failed', block);
+    }
   }
 
   public addBlock(block: Block) : void {
