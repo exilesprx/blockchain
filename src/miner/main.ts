@@ -10,6 +10,7 @@ import TransactionPool from '../domain/wallet/transaction-pool';
 import AddTransaction from './commands/add-transaction';
 import Emitter from './events/emitter';
 import BlockAdded from '../domain/events/block-added';
+import MineFailed from '../domain/events/mine-failed';
 
 export default class Miner {
   private emitter: Emitter;
@@ -38,6 +39,11 @@ export default class Miner {
     this.emitter.register(
       new BlockAdded().toString(),
       (block: Block) => this.emitter.blockAdded(block),
+    );
+
+    this.emitter.register(
+      new MineFailed().toString(),
+      (block: Block) => this.emitter.mineFailed(block),
     );
   }
 

@@ -12,4 +12,9 @@ export default class Emitter extends BaseEmitter {
   public transactionAdded(transaction: Transaction) : void {
     this.logger.info(`Transaction added: ${transaction.getHash()}`);
   }
+
+  public mineFailed(block: Block) : void {
+    this.logger.error(`Block failed to be mined: ${block.getHash()}`);
+    // TODO: Notify the auditor
+  }
 }
