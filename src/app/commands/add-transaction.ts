@@ -1,6 +1,7 @@
 import Database from '../../infrastructure/database';
 import Transaction from '../../domain/wallet/transaction';
 import TransactionPool from '../../domain/wallet/transaction-pool';
+import TransactionDataTransferObject from '../data-transfer-objects/transaction';
 
 export default class AddTransaction {
   private pool: TransactionPool;
@@ -13,9 +14,15 @@ export default class AddTransaction {
     this.database = database;
   }
 
-  public execute(transaction: Transaction) {
+  public execute(transactionData: TransactionDataTransferObject) : string {
+    const { to, from, amount } = transactionData.destruct();
+
+    const transaction = new Transaction(to, from, amount);
+
     this.pool.fill(transaction);
 
     this.database.persistTransaction(transaction);
+
+    return transaction.getHash();
   }
 }

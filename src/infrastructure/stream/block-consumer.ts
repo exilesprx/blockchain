@@ -1,6 +1,6 @@
 import { EachMessagePayload } from 'kafkajs';
 import AddBlock from '../../app/commands/add-block';
-import Block from '../../domain/chain/block';
+import BlockDataTransferObject from '../../app/data-transfer-objects/block';
 import Consumer from './consumer';
 import Stream from './stream';
 import BlockTopic from './topic/block';
@@ -27,7 +27,7 @@ export default class BlockConsumer extends Consumer {
 
     const parts: any = value.toJSON();
 
-    const block = new Block(
+    const block = new BlockDataTransferObject(
       parts.id,
       parts.nounce,
       parts.difficulty,
