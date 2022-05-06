@@ -1,7 +1,7 @@
 import { EventStoreDBClient, jsonEvent } from '@eventstore/db-client';
 import TransactionEvent from './models/transaction';
-import Transaction from '../domain/wallet/transaction';
-import Block from '../domain/chain/block';
+import Transaction from '../../domain/wallet/transaction';
+import Block from '../../domain/chain/block';
 import BlockEvent from './models/block';
 
 export default class Database {

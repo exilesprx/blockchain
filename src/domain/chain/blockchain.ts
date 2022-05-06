@@ -23,7 +23,7 @@ export default class Blockchain implements BlockchainInterface {
     this.specifications = [];
   }
 
-  public async mineBlock(transactions: Transaction[]) : void {
+  public async mineBlock(transactions: Transaction[]) : Promise<void> {
     const difficulty = 1;
 
     const block = new Block(

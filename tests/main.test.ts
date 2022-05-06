@@ -1,7 +1,7 @@
 import Application from '../src/app/main';
 import TransactionRoute from '../src/app/routes/transaction';
 import Server from '../src/app/server';
-import Database from '../src/infrastructure';
+import Database from '../src/infrastructure/database';
 import Blockchain from '../src/domain/chain/blockchain';
 import Link from '../src/domain/chain/specifications/link';
 import Emitter from '../src/domain/events/emitter';
@@ -16,9 +16,9 @@ import TransactionPool from '../src/domain/wallet/transaction-pool';
 jest.mock('../src/domain/events/emitter');
 jest.mock('../src/domain/wallet/transaction-pool');
 jest.mock('../src/domain/chain/blockchain');
-jest.mock('../src/database');
-jest.mock('../src/domain/stream/producer');
-jest.mock('../src/domain/stream/consumer');
+jest.mock('../src/infrastructure/database');
+jest.mock('../src/infrastructure/stream/producer');
+jest.mock('../src/infrastructure/stream/consumer');
 jest.mock('../src/app/routes/transaction');
 jest.mock('../src/app/server');
 

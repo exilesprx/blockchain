@@ -11,8 +11,8 @@ jest.mock('events');
 jest.mock('kafkajs');
 jest.mock('../src/domain/logs/logger');
 jest.mock('../src/domain/logs/kafka-logger');
-jest.mock('../src/domain/stream/stream');
-jest.mock('../src/domain/stream/producer');
+jest.mock('../src/infrastructure/stream/stream');
+jest.mock('../src/infrastructure/stream/producer');
 
 const events: Events = new Events();
 

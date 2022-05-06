@@ -1,7 +1,7 @@
 import Events from 'events';
 import express, { Request, Response } from 'express';
 import helmet from 'helmet';
-import Database from '../infrastructure';
+import Database from '../infrastructure/database';
 import Block from '../domain/chain/block';
 import Blockchain from '../domain/chain/blockchain';
 import Link from '../domain/chain/specifications/link';
