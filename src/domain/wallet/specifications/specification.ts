@@ -1,7 +1,7 @@
 import Transaction from '../transaction';
 
 interface Specification {
-  isSatisfiedBy(transaction: Transaction) : boolean;
+  isSatisfiedBy(transaction: Transaction) : void;
 }
 
 export default Specification;
