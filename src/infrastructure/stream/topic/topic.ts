@@ -1,12 +1,8 @@
-export default class Topic {
+export default abstract class Topic {
   private name: string;
 
-  private constructor(name: string) {
+  protected constructor(name: string) {
     this.name = name;
-  }
-
-  public static new(name: string) : Topic {
-    return new this(name);
   }
 
   public toString() : string {

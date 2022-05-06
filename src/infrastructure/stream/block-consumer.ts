@@ -3,7 +3,7 @@ import AddBlock from '../../app/commands/add-block';
 import Block from '../../domain/chain/block';
 import Consumer from './consumer';
 import Stream from './stream';
-import Topic from './topic/topic';
+import BlockTopic from './topic/block';
 
 export default class BlockConsumer extends Consumer {
   private action: AddBlock;
@@ -15,7 +15,7 @@ export default class BlockConsumer extends Consumer {
   }
 
   public async run() : Promise<void> {
-    super.run(Topic.new('block-added').toString());
+    super.run(new BlockTopic().toString());
   }
 
   protected async transformMessage(payload: EachMessagePayload) : Promise<void> {
