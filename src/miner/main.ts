@@ -9,6 +9,7 @@ import TransactionConsumer from '../infrastructure/stream/transaction-consumer';
 import TransactionPool from '../domain/wallet/transaction-pool';
 import AddTransaction from './commands/add-transaction';
 import Emitter from './events/emitter';
+import BlockAdded from '../domain/events/block-added';
 
 export default class Miner {
   private emitter: Emitter;
@@ -35,7 +36,7 @@ export default class Miner {
 
   public registerEvents() : void {
     this.emitter.register(
-      'block-added',
+      new BlockAdded().toString(),
       (block: Block) => this.emitter.blockAdded(block),
     );
   }

@@ -1,4 +1,7 @@
 import { v4 } from 'uuid';
+import BlockAdded from '../events/block-added';
+import MineFailed from '../events/mine-failed';
+import BlockMined from '../events/block-mined';
 import Emitter from '../events/emitter';
 import BlockLimitPolicy from '../policies/block-limit-policy';
 import Transaction from '../wallet/transaction';
@@ -37,9 +40,9 @@ export default class Blockchain implements BlockchainInterface {
     try {
       await block.mine();
 
-      this.emitter.emit('block-mined', block);
+      this.emitter.emit(new BlockMined().toString(), block);
     } catch (error: any) {
-      this.emitter.emit('mine-failed', block);
+      this.emitter.emit(new MineFailed().toString(), block);
     }
   }
 
@@ -54,7 +57,7 @@ export default class Blockchain implements BlockchainInterface {
 
     this.chain.push(block);
 
-    this.emitter.emit('block-added', block);
+    this.emitter.emit(new BlockAdded().toString(), block);
   }
 
   public length() : number {

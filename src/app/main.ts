@@ -21,6 +21,8 @@ import AddTransaction from './commands/add-transaction';
 import Emitter from './events/emitter';
 import TransactionRoute from './routes/transaction';
 import Server from './server';
+import BlockAdded from '../domain/events/block-added';
+import TransactionAdded from '../domain/events/transaction-added';
 
 export default class Application {
   private server: Server;
@@ -80,12 +82,12 @@ export default class Application {
 
   public registerEvents() {
     this.emitter.register(
-      'block-added',
+      new BlockAdded().toString(),
       (block: Block) => this.emitter.blockAdded(block),
     );
 
     this.emitter.register(
-      'transaction-added',
+      new TransactionAdded().toString(),
       (transaction: Transaction) => this.emitter.transactionAdded(transaction),
     );
   }
