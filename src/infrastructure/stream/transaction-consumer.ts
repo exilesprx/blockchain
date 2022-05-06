@@ -1,9 +1,9 @@
 import { EachMessagePayload } from 'kafkajs';
+import Transaction from '../../domain/wallet/transaction';
 import AddTransaction from '../../miner/commands/add-transaction';
-import Transaction from '../wallet/transaction';
 import Consumer from './consumer';
 import Stream from './stream';
-import Topic from './topic/topic';
+import TransactionTopic from './topic/transaction';
 
 export default class TransactionConsumer extends Consumer {
   private action: AddTransaction;
@@ -15,7 +15,7 @@ export default class TransactionConsumer extends Consumer {
   }
 
   public async run() : Promise<void> {
-    super.run(Topic.new('transaction-added').toString());
+    super.run(new TransactionTopic().toString());
   }
 
   protected async transformMessage(payload: EachMessagePayload) : Promise<void> {

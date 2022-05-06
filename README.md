@@ -4,6 +4,16 @@
 
 This blockchain is for educational purposes only and should not be used for production purposes in its current state. As the application matures and meets standards, then at that point it can be used for production purposes.
 
+## Docker
+
+Images for this project can be found: https://hub.docker.com/r/exilesprx/blockchain
+
+Helper scripts:
+- run-build
+  - this will build an image with the current file state, tag using the current branch name, and build the app and miner
+- run-test
+  - this will build a test image with the current file state, tag using the current branch name, and runs the tests
+
 ### Compilation
 
 TypeScript is used for the source code of the application. The source code is then "compiled" into raw JavaScript and placed in the "build" folder.

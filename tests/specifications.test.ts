@@ -10,7 +10,7 @@ describe('Specifications', () => {
 
     const amountSpec = new Amount();
 
-    expect(amountSpec.isSatisfiedBy(transaction)).toBeTruthy();
+    expect(() => amountSpec.isSatisfiedBy(transaction)).not.toThrow();
   });
 
   test('it expects amount is not satisfied by amount of 0', () => {
@@ -26,7 +26,7 @@ describe('Specifications', () => {
 
     const receiverSpec = new Receiver();
 
-    expect(receiverSpec.isSatisfiedBy(transaction)).toBeTruthy();
+    expect(() => receiverSpec.isSatisfiedBy(transaction)).not.toThrow();
   });
 
   test('it expects receiver is not satisfied by wallet of 1', () => {
@@ -42,7 +42,7 @@ describe('Specifications', () => {
 
     const senderSpec = new Sender();
 
-    expect(senderSpec.isSatisfiedBy(transaction)).toBeTruthy();
+    expect(() => senderSpec.isSatisfiedBy(transaction)).not.toThrow();
   });
 
   test('it expects sender is not satisfied by wallet of 2', () => {
@@ -58,7 +58,7 @@ describe('Specifications', () => {
 
     const sameWalletSpec = new SameWallet();
 
-    expect(sameWalletSpec.isSatisfiedBy(transaction)).toBeTruthy();
+    expect(() => sameWalletSpec.isSatisfiedBy(transaction)).not.toThrow();
   });
 
   test('it expects same wallet is satisfied by waller of one and one', () => {

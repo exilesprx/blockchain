@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Logger from '../../domain/logs/logger';
-import TransactionDataModel from '../../domain/wallet/transaction';
 import AddTransaction from '../commands/add-transaction';
+import TransactionDataTransferObject from '../data-transfer-objects/transaction';
 
 export default class Transaction {
   private action: AddTransaction;
@@ -23,11 +23,11 @@ export default class Transaction {
 
     try {
       // Create a new transaction, add it to the pool, and broadcast it
-      const transaction = new TransactionDataModel(params.to, params.from, params.amount);
+      const transaction = new TransactionDataTransferObject(params.to, params.from, params.amount);
 
-      this.action.execute(transaction);
+      const hash = this.action.execute(transaction);
 
-      return res.send(`Transaction ${transaction.getKey()} accepted.`);
+      return res.send(`Transaction ${hash} accepted.`);
     } catch (error) {
       this.logger.error(`Error occurred: ${error}`);
       return res.sendStatus(401);

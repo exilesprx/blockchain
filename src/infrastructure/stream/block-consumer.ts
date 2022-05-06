@@ -1,9 +1,9 @@
 import { EachMessagePayload } from 'kafkajs';
 import AddBlock from '../../app/commands/add-block';
-import Block from '../chain/block';
+import BlockDataTransferObject from '../../app/data-transfer-objects/block';
 import Consumer from './consumer';
 import Stream from './stream';
-import Topic from './topic/topic';
+import BlockTopic from './topic/block';
 
 export default class BlockConsumer extends Consumer {
   private action: AddBlock;
@@ -15,7 +15,7 @@ export default class BlockConsumer extends Consumer {
   }
 
   public async run() : Promise<void> {
-    super.run(Topic.new('block-added').toString());
+    super.run(new BlockTopic().toString());
   }
 
   protected async transformMessage(payload: EachMessagePayload) : Promise<void> {
@@ -27,7 +27,7 @@ export default class BlockConsumer extends Consumer {
 
     const parts: any = value.toJSON();
 
-    const block = new Block(
+    const block = new BlockDataTransferObject(
       parts.id,
       parts.nounce,
       parts.difficulty,

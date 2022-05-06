@@ -3,12 +3,14 @@ import Block from '../domain/chain/block';
 import Blockchain from '../domain/chain/blockchain';
 import KafkaLogger from '../domain/logs/kafka-logger';
 import Logger from '../domain/logs/logger';
-import Producer from '../domain/stream/producer';
-import Stream from '../domain/stream/stream';
-import TransactionConsumer from '../domain/stream/transaction-consumer';
+import Producer from '../infrastructure/stream/producer';
+import Stream from '../infrastructure/stream/stream';
+import TransactionConsumer from '../infrastructure/stream/transaction-consumer';
 import TransactionPool from '../domain/wallet/transaction-pool';
 import AddTransaction from './commands/add-transaction';
 import Emitter from './events/emitter';
+import BlockAdded from '../domain/events/block-added';
+import MineFailed from '../domain/events/mine-failed';
 
 export default class Miner {
   private emitter: Emitter;
@@ -35,8 +37,13 @@ export default class Miner {
 
   public registerEvents() : void {
     this.emitter.register(
-      'block-added',
+      new BlockAdded().toString(),
       (block: Block) => this.emitter.blockAdded(block),
+    );
+
+    this.emitter.register(
+      new MineFailed().toString(),
+      (block: Block) => this.emitter.mineFailed(block),
     );
   }
 

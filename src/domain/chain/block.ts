@@ -38,15 +38,13 @@ export default class Block {
   }
 
   public mine() : Promise<void> {
-    return new Promise((resolve) => {
-      while (!BlockMinedPolicy.mined(this.hash, this.difficulty)) {
-        this.nounce += 1;
+    while (!BlockMinedPolicy.mined(this.hash, this.difficulty)) {
+      this.nounce += 1;
 
-        this.hash = this.generateHash();
-      }
+      this.hash = this.generateHash();
+    }
 
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   public getHash() : string {
@@ -67,6 +65,14 @@ export default class Block {
 
   public getDate() : number {
     return this.date;
+  }
+
+  public getNounce() : number {
+    return this.nounce;
+  }
+
+  public getDifficulty() : number {
+    return this.difficulty;
   }
 
   private generateHash() : string {

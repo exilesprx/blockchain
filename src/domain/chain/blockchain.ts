@@ -1,4 +1,7 @@
 import { v4 } from 'uuid';
+import BlockAdded from '../events/block-added';
+import MineFailed from '../events/mine-failed';
+import BlockMined from '../events/block-mined';
 import Emitter from '../events/emitter';
 import BlockLimitPolicy from '../policies/block-limit-policy';
 import Transaction from '../wallet/transaction';
@@ -23,7 +26,7 @@ export default class Blockchain implements BlockchainInterface {
     this.specifications = [];
   }
 
-  public mineBlock(transactions: Transaction[]) : void {
+  public async mineBlock(transactions: Transaction[]) : Promise<void> {
     const difficulty = 1;
 
     const block = new Block(
@@ -34,14 +37,13 @@ export default class Blockchain implements BlockchainInterface {
       transactions,
     );
 
-    block.mine()
-      .then(() => {
-        this.addBlock(block);
+    try {
+      await block.mine();
 
-        this.emitter.emit('block-mined', block);
-      }).catch(() => {
-        this.emitter.emit('mine-failed', block);
-      });
+      this.emitter.emit(new BlockMined().toString(), block);
+    } catch (error: any) {
+      this.emitter.emit(new MineFailed().toString(), block);
+    }
   }
 
   public addBlock(block: Block) : void {
@@ -55,7 +57,7 @@ export default class Blockchain implements BlockchainInterface {
 
     this.chain.push(block);
 
-    this.emitter.emit('block-added', block);
+    this.emitter.emit(new BlockAdded().toString(), block);
   }
 
   public length() : number {

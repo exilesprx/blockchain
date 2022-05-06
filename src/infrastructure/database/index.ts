@@ -1,9 +1,7 @@
-import {
-  EventStoreDBClient, jsonEvent,
-} from '@eventstore/db-client';
+import { EventStoreDBClient, jsonEvent } from '@eventstore/db-client';
 import TransactionEvent from './models/transaction';
-import Transaction from '../domain/wallet/transaction';
-import Block from '../domain/chain/block';
+import Transaction from '../../domain/wallet/transaction';
+import Block from '../../domain/chain/block';
 import BlockEvent from './models/block';
 
 export default class Database {
@@ -13,12 +11,16 @@ export default class Database {
 
   private port: number;
 
-  constructor(host: string, port: number) {
+  private insecure: boolean;
+
+  constructor(host: string, port: number, insecure: boolean) {
     this.host = host;
 
     this.port = port;
 
     this.client = null;
+
+    this.insecure = insecure;
   }
 
   public connect() {
@@ -27,7 +29,7 @@ export default class Database {
         endpoint: `${this.host}:${this.port}`,
       },
       {
-        insecure: true,
+        insecure: this.insecure,
       },
     );
   }
@@ -62,8 +64,8 @@ export default class Database {
       data: {
         id: block.getKey(),
         transactions: block.getTransactions(),
-        nounce: 1,
-        difficulty: 1,
+        nounce: block.getNounce(),
+        difficulty: block.getDifficulty(),
         previousHash: block.getPreviousHash(),
         hash: block.getHash(),
         date: block.getDate(),

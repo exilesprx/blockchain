@@ -1,4 +1,5 @@
 import Emitter from '../../app/events/emitter';
+import TransactionAdded from '../events/transaction-added';
 import NewBlockPolicy from '../policies/new-block-policy';
 import Specification from './specifications/specification';
 import Transaction from './transaction';
@@ -25,7 +26,7 @@ export default class TransactionPool {
 
     this.transactions.push(transaction);
 
-    this.emitter.emit('transaction-added', transaction);
+    this.emitter.emit(new TransactionAdded().toString(), transaction);
   }
 
   public addSpecification(...specification: Specification[]) : void {
