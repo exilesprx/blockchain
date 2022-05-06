@@ -1,7 +1,7 @@
 import Events from 'events';
 import Logger from '../logs/logger';
 import Block from '../chain/block';
-import Producer from '../stream/producer';
+import Producer from '../../infrastructure/stream/producer';
 import Transaction from '../wallet/transaction';
 
 export default abstract class Emitter {

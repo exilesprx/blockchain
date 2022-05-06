@@ -1,5 +1,5 @@
 import { Consumer, Kafka, Producer } from 'kafkajs';
-import KafkaLogger from '../logs/kafka-logger';
+import KafkaLogger from '../../domain/logs/kafka-logger';
 
 export default class Stream {
   private kafka: Kafka;

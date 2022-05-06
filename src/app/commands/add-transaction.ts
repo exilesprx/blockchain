@@ -1,4 +1,4 @@
-import Database from '../../database';
+import Database from '../../infrastructure';
 import Transaction from '../../domain/wallet/transaction';
 import TransactionPool from '../../domain/wallet/transaction-pool';
 

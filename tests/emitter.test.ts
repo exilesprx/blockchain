@@ -3,8 +3,8 @@ import Block from '../src/domain/chain/block';
 import Emitter from '../src/app/events/emitter';
 import KafkaLogger from '../src/domain/logs/kafka-logger';
 import Logger from '../src/domain/logs/logger';
-import Producer from '../src/domain/stream/producer';
-import Stream from '../src/domain/stream/stream';
+import Producer from '../src/infrastructure/stream/producer';
+import Stream from '../src/infrastructure/stream/stream';
 import Transaction from '../src/domain/wallet/transaction';
 
 jest.mock('events');

@@ -1,5 +1,5 @@
 import TransactionRoute from '../src/app/routes/transaction';
-import Database from '../src/database/index';
+import Database from '../src/infrastructure/index';
 import Logger from '../src/domain/logs/logger';
 import AddTransaction from '../src/app/commands/add-transaction';
 

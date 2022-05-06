@@ -1,4 +1,4 @@
-import Database from '../../database';
+import Database from '../../infrastructure';
 import Block from '../../domain/chain/block';
 import Blockchain from '../../domain/chain/blockchain';
 

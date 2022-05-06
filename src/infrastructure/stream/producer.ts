@@ -1,6 +1,6 @@
 import { Producer as KafkaProducer } from 'kafkajs';
-import Block from '../chain/block';
-import Transaction from '../wallet/transaction';
+import Block from '../../domain/chain/block';
+import Transaction from '../../domain/wallet/transaction';
 import Stream from './stream';
 import Topic from './topic/topic';
 
