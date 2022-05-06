@@ -67,6 +67,14 @@ export default class Block {
     return this.date;
   }
 
+  public getNounce() : number {
+    return this.nounce;
+  }
+
+  public getDifficulty() : number {
+    return this.difficulty;
+  }
+
   private generateHash() : string {
     let transactionHashes = '';
 

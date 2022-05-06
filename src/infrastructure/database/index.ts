@@ -64,8 +64,8 @@ export default class Database {
       data: {
         id: block.getKey(),
         transactions: block.getTransactions(),
-        nounce: 1,
-        difficulty: 1,
+        nounce: block.getNounce(),
+        difficulty: block.getDifficulty(),
         previousHash: block.getPreviousHash(),
         hash: block.getHash(),
         date: block.getDate(),
