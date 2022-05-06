@@ -46,7 +46,11 @@ export default class Application {
 
     const stream = new Stream(new KafkaLogger(this.logger));
 
-    this.database = new Database(String(process.env.DB_HOST), Number(process.env.DB_PORT));
+    this.database = new Database(
+      String(process.env.DB_HOST),
+      Number(process.env.DB_PORT),
+      Boolean(process.env.DB_INSECURE),
+    );
 
     this.producer = new Producer(stream);
 
