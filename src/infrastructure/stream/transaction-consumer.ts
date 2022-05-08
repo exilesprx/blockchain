@@ -25,12 +25,13 @@ export default class TransactionConsumer extends Consumer {
       return;
     }
 
-    const parts: any = value.toJSON();
+    const { to, from, amount }: any = JSON.parse(value.toString());
 
+    // TODO: need to pass date and hash
     const transaction = new Transaction(
-      parts.to,
-      parts.from,
-      parts.amount,
+      to,
+      from,
+      amount,
     );
 
     this.action.execute(transaction);

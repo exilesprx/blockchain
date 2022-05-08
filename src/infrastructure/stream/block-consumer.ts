@@ -1,6 +1,7 @@
 import { EachMessagePayload } from 'kafkajs';
 import AddBlock from '../../app/commands/add-block';
 import BlockDataTransferObject from '../../app/data-transfer-objects/block';
+import Transaction from '../../domain/wallet/transaction';
 import Consumer from './consumer';
 import Stream from './stream';
 import BlockTopic from './topic/block';
@@ -25,14 +26,18 @@ export default class BlockConsumer extends Consumer {
       return;
     }
 
-    const parts: any = value.toJSON();
+    const {
+      id, nounce, difficulty, previousHash, transactions,
+    } = JSON.parse(value.toString());
 
+    // TODO: need to pass date and hash
+    // TODO: need to convert transactions to objects
     const block = new BlockDataTransferObject(
-      parts.id,
-      parts.nounce,
-      parts.difficulty,
-      parts.previousHash,
-      parts.transactions,
+      id,
+      nounce,
+      difficulty,
+      previousHash,
+      transactions,
     );
 
     this.action.execute(block);
