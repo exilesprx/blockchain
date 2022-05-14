@@ -1,15 +1,19 @@
 import Transaction from '../../domain/wallet/transaction';
 
-export default class BlockDataTransferObject {
-  private transactions: Transaction[];
+export default class BlockMesssage {
+  public transactions: Transaction[];
 
-  private id: any;
+  public id: any;
 
-  private nounce: number;
+  public nounce: number;
 
-  private difficulty: number;
+  public difficulty: number;
 
-  private previousHash: string;
+  public previousHash: string;
+
+  public date: number;
+
+  public hash: string;
 
   constructor(
     id: any,
@@ -17,23 +21,17 @@ export default class BlockDataTransferObject {
     difficulty: number,
     previousHash: string,
     transactions: Transaction[],
+    date: number,
+    hash: string,
   ) {
     this.id = id;
     this.nounce = nounce;
     this.difficulty = difficulty;
     this.previousHash = previousHash;
     this.transactions = transactions;
+    this.date = date;
+    this.hash = hash;
   }
 
-  public destruct(): {
-    id: any; nounce: number; difficulty: number; previousHash: string; transactions: Transaction[];
-  } {
-    return {
-      id: this.id,
-      nounce: this.nounce,
-      difficulty: this.difficulty,
-      previousHash: this.previousHash,
-      transactions: this.transactions,
-    };
-  }
+  // TODO: need to convert transactions to objects
 }

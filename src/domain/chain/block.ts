@@ -33,8 +33,28 @@ export default class Block {
     this.hash = this.generateHash();
   }
 
+  public static fromJson(
+    data: { id: any, nounce: number, difficulty: number,
+      previousHash: string, transactions: [], date: number, hash: string },
+  ) : Block {
+    // TODO: pass the DTO instead
+    const trans = data.transactions;
+
+    const b = new this(
+      data.id,
+      data.nounce,
+      data.difficulty,
+      data.previousHash,
+      [],
+    );
+    b.hash = data.hash;
+    b.date = data.date;
+
+    return b;
+  }
+
   public static genesis() : Block {
-    return new this('genesis block', 0, 0, '00', []);
+    return new this('genesis block', 0, 0, '0'.repeat(32), []);
   }
 
   public mine() : Promise<void> {
