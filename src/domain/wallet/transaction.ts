@@ -23,6 +23,23 @@ export default class Transaction {
     this.hash = this.generateHash();
   }
 
+  public static fromMessage(
+    id: any,
+    to: string,
+    from: string,
+    amount: number,
+    date: number,
+    hash: string,
+  ) : Transaction {
+    const transaction = new this(to, from, amount);
+
+    transaction.id = id;
+    transaction.date = date;
+    transaction.hash = hash;
+
+    return transaction;
+  }
+
   private generateHash() : string {
     return SHA256(`${this.to}${this.from}${this.amount}${this.id}${this.date}`).toString();
   }

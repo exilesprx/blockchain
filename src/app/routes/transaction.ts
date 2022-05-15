@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Logger from '../../domain/logs/logger';
 import AddTransaction from '../commands/add-transaction';
-import TransactionDataTransferObject from '../data-transfer-objects/transaction';
+import TransactionTranslator from '../translators/transaction-translator';
 
 export default class Transaction {
   private action: AddTransaction;
@@ -23,7 +23,7 @@ export default class Transaction {
 
     try {
       // Create a new transaction, add it to the pool, and broadcast it
-      const transaction = new TransactionDataTransferObject(params.to, params.from, params.amount);
+      const transaction = TransactionTranslator.fromRequest(params);
 
       const hash = this.action.execute(transaction);
 

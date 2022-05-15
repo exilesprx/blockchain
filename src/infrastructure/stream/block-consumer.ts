@@ -25,7 +25,7 @@ export default class BlockConsumer extends Consumer {
       return;
     }
 
-    const block = BlockTranslator.toBlock(value);
+    const block = BlockTranslator.fromMessage(value);
 
     this.action.execute(block);
   }

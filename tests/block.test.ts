@@ -2,7 +2,6 @@ import Block from '../src/domain/chain/block';
 import BlockMinedPolicy from '../src/domain/policies/block-mined-policy';
 import Transaction from '../src/domain/wallet/transaction';
 import BlockTranslator from '../src/infrastructure/stream/translators/block-translator';
-import BlockMessage from '../src/app/data-transfer-objects/block';
 import data from './stubs/block.json';
 
 jest.mock('../src/domain/policies/block-mined-policy');
@@ -61,7 +60,7 @@ describe('Block', () => {
   });
 
   test('it expects', () => {
-    const blockMessage = BlockTranslator.toBlock(
+    const blockMessage = BlockTranslator.fromMessage(
       Buffer.from(JSON.stringify(data)),
     );
 

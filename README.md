@@ -65,20 +65,17 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
         - ~~note: this chain is only present to add another node for a consensus check~~
 - Miner
     - Transactions
-        - added to a pool via stream
-        - determine if we should create a block
-            - to start use arbitrary rule of "block count > 20"
-        - if yes, create a block and mine
+        - ~~added to a pool via stream~~
+        - ~~determine if we should create a block~~
+            - ~~to start use arbitrary rule of "block count > 20"~~
+        - ~~if yes, create a block and mine~~
     - Blockchain
-        - broadcast event "block mined"
-        - add the mined block to the chain from stream
-        - if previous block hash doesn't match, then a block proceeded it, so throw it
-            out (we're using a stream with guaranteed ordering)
+        - ~~broadcast event "block mined"~~
+        - ~~add the mined block to the chain from stream~~
+        - ~~if previous block hash doesn't match, then a block proceeded it, so throw it out (we're using a stream with guaranteed ordering)~~
             - NOTE: censensus model - app uses DB/memory - miners use memory
             - would need to stop current mine process
-        - broadcast event "block added"
-        - persist the block to eventstoreDB
-            - NOTE: not sure we need this since this would require machine to run this
+        - ~~broadcast event "block added"~~
 - Auditor
     - Transactions
         - compares "generated transactions" vesus "processed transactions"
