@@ -1,4 +1,6 @@
+import TransactionTranslator from '../src/app/translators/transaction-translator';
 import Transaction from '../src/domain/wallet/transaction';
+import data from './stubs/transaction.json';
 
 describe('Transactions', () => {
   test('it expect to have a valid transaction', () => {
@@ -19,5 +21,17 @@ describe('Transactions', () => {
 
   test('it expects a transaction should not fail using the same wallet', () => {
     expect(() => new Transaction('one', 'one', 20)).not.toThrow(TypeError);
+  });
+
+  test('it expects to translate a consumer message into transactions', () => {
+    const transaction = TransactionTranslator.fromMessage(data);
+
+    expect(transaction).toBeInstanceOf(Transaction);
+
+    expect(transaction.getHash()).toBe(data.hash);
+
+    expect(transaction.getDate()).toBe(data.date);
+
+    expect(transaction.getKey()).toBe(data.id);
   });
 });
