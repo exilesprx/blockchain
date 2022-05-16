@@ -171,8 +171,7 @@ services:
     image: exilesprx/blockchain:latest
     container_name: miner
     ports:
-      - "3000:3000"
-      - "9229:9229"
+      - "9230:9229"
     depends_on:
       - kafka1
     env_file:

@@ -1,9 +1,9 @@
 import { EachMessagePayload } from 'kafkajs';
 import AddBlock from '../../app/commands/add-block';
-import BlockDataTransferObject from '../../app/data-transfer-objects/block';
 import Consumer from './consumer';
 import Stream from './stream';
 import BlockTopic from './topic/block';
+import BlockTranslator from './translators/block-translator';
 
 export default class BlockConsumer extends Consumer {
   private action: AddBlock;
@@ -25,15 +25,7 @@ export default class BlockConsumer extends Consumer {
       return;
     }
 
-    const parts: any = value.toJSON();
-
-    const block = new BlockDataTransferObject(
-      parts.id,
-      parts.nounce,
-      parts.difficulty,
-      parts.previousHash,
-      parts.transactions,
-    );
+    const block = BlockTranslator.fromMessage(value);
 
     this.action.execute(block);
   }

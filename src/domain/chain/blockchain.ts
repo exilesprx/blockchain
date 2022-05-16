@@ -40,6 +40,8 @@ export default class Blockchain implements BlockchainInterface {
     try {
       await block.mine();
 
+      this.addBlock(block);
+
       this.emitter.emit(new BlockMined().toString(), block);
     } catch (error: any) {
       this.emitter.emit(new MineFailed().toString(), block);
