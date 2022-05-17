@@ -19,7 +19,7 @@
     "@eventstore/db-client": "^3.3.1",
     "crypto-js": "^4.1.1",
     "events": "^3.3.0",
-    "express": "^4.17.3",
+    "express": "^4.18.0",
     "helmet": "^5.0.2",
     "kafkajs": "^1.16.0",
     "uuid": "^8.3.2",
