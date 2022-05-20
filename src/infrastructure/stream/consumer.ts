@@ -5,7 +5,7 @@ export default abstract class Consumer {
   protected consumer: KafkaConsumer;
 
   public constructor(stream: Stream) {
-    this.consumer = stream.createConsumer(`${process.env.KAFKA_GROUP_ID}`);
+    this.consumer = stream.createConsumer(`${process.env.KAFKA_GROUP_ID}-${process.env.HOSTNAME}`);
   }
 
   public async connect() : Promise<void> {
