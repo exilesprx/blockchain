@@ -1,4 +1,5 @@
 import { EachMessagePayload } from 'kafkajs';
+import TransactionTranslator from '../../app/translators/transaction-translator';
 import Transaction from '../../domain/wallet/transaction';
 import AddTransaction from '../../miner/commands/add-transaction';
 import Consumer from './consumer';
@@ -25,14 +26,7 @@ export default class TransactionConsumer extends Consumer {
       return;
     }
 
-    const { to, from, amount }: any = JSON.parse(value.toString());
-
-    // TODO: need to pass date and hash
-    const transaction = new Transaction(
-      to,
-      from,
-      amount,
-    );
+    const transaction = TransactionTranslator.fromMessage(value);
 
     this.action.execute(transaction);
   }

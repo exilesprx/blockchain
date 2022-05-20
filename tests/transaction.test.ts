@@ -24,7 +24,7 @@ describe('Transactions', () => {
   });
 
   test('it expects to translate a consumer message into transactions', () => {
-    const transaction = TransactionTranslator.fromMessage(data);
+    const transaction = TransactionTranslator.fromObject(data);
 
     expect(transaction).toBeInstanceOf(Transaction);
 

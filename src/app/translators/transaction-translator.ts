@@ -9,7 +9,27 @@ export default class TransactionTranslator {
     );
   }
 
-  public static fromMessage(
+  public static fromMessage(value: Buffer) : Transaction {
+    const message: {
+      id: any,
+      to: string,
+      from: string,
+      amount: number,
+      date: number,
+      hash: string
+    } = JSON.parse(value.toString());
+
+    return Transaction.fromMessage(
+      message.id,
+      message.to,
+      message.from,
+      message.amount,
+      message.date,
+      message.hash,
+    );
+  }
+
+  public static fromObject(
     message: { id: any, to: string, from: string, amount: number, date: number, hash: string },
   ) : Transaction {
     return Transaction.fromMessage(
@@ -22,7 +42,7 @@ export default class TransactionTranslator {
     );
   }
 
-  public static fromMessageForMany(transactions: []) : Transaction[] {
+  public static fromObjectForMany(transactions: []) : Transaction[] {
     const messageTransactions: Transaction[] = [];
 
     transactions.forEach(
@@ -37,7 +57,7 @@ export default class TransactionTranslator {
         },
       ) => {
         messageTransactions.push(
-          TransactionTranslator.fromMessage(transaction),
+          TransactionTranslator.fromObject(transaction),
         );
       },
     );

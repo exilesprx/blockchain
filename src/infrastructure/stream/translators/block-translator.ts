@@ -8,7 +8,7 @@ export default class BlockTranslator {
       id, nounce, difficulty, previousHash, transactions, date, hash,
     } = JSON.parse(value.toString());
 
-    const mTransactions: Transaction[] = TransactionTranslator.fromMessageForMany(transactions);
+    const mTransactions: Transaction[] = TransactionTranslator.fromObjectForMany(transactions);
 
     return Block.fromMessage(
       id,
