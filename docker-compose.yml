@@ -154,9 +154,9 @@ services:
       HTTP_PORT: 8000
       AUTO_CONNECT_CONNECTION_STRING: zoo1:2181
 
-  app:
+  bank:
     image: exilesprx/blockchain:latest
-    container_name: blockchain
+    container_name: bank
     ports:
       - "3000:3000"
       - "9229:9229"
@@ -165,7 +165,7 @@ services:
       - kafka1
     env_file:
       - .env
-    command: npm run app:debug
+    command: npm run bank:debug
 
   miner:
     image: exilesprx/blockchain:latest
