@@ -21,4 +21,27 @@ export default class TransactionTranslator {
       message.hash,
     );
   }
+
+  public static fromMessageForMany(transactions: []) : Transaction[] {
+    const messageTransactions: Transaction[] = [];
+
+    transactions.forEach(
+      (
+        transaction: {
+          id: any,
+          to: string,
+          from: string,
+          amount: number,
+          date: number,
+          hash: string
+        },
+      ) => {
+        messageTransactions.push(
+          TransactionTranslator.fromMessage(transaction),
+        );
+      },
+    );
+
+    return messageTransactions;
+  }
 }
