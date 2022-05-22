@@ -55,8 +55,8 @@ export default class Block {
     return new this('genesis block', 0, 0, '0'.repeat(32), []);
   }
 
-  public mine() : Promise<void> {
-    while (!BlockMinedPolicy.mined(this.hash, this.difficulty)) {
+  public async mine() : Promise<void> {
+    while (!this.isMined()) {
       this.nounce += 1;
 
       this.hash = this.generateHash();
@@ -91,6 +91,10 @@ export default class Block {
 
   public getDifficulty() : number {
     return this.difficulty;
+  }
+
+  public isMined() : boolean {
+    return BlockMinedPolicy.containsSuccessiveChars(this.hash, this.difficulty);
   }
 
   private generateHash() : string {

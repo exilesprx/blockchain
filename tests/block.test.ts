@@ -46,15 +46,15 @@ describe('Block', () => {
 
     const hash = block.getHash();
 
-    BlockMinedPolicy.mined
+    BlockMinedPolicy.containsSuccessiveChars
       .mockReturnValueOnce(false)
       .mockReturnValueOnce(true);
 
     await block.mine();
 
-    expect(BlockMinedPolicy.mined).toBeCalledTimes(2);
+    expect(BlockMinedPolicy.containsSuccessiveChars).toBeCalledTimes(2);
 
-    expect(BlockMinedPolicy.mined).toBeCalledWith(expect.any(String), 1);
+    expect(BlockMinedPolicy.containsSuccessiveChars).toBeCalledWith(expect.any(String), 1);
 
     expect(block.getHash()).not.toEqual(hash);
   });
