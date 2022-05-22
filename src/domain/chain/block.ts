@@ -45,12 +45,13 @@ export default class Block {
     const block = new this(id, nounce, difficulty, previousHash, transactions);
 
     block.date = date;
-    block.hash = hash;
+    block.hash = hash; // TODO: regenerate hash
 
     return block;
   }
 
   public static genesis() : Block {
+    // TODO: pass 0 as date
     return new this('genesis block', 0, 0, '0'.repeat(32), []);
   }
 
