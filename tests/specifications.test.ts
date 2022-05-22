@@ -1,12 +1,13 @@
+import { v4 } from 'uuid';
 import Amount from '../src/domain/wallet/specifications/amount';
 import Receiver from '../src/domain/wallet/specifications/receiver';
-import Sender from '../src/domain/wallet/specifications/sender';
 import SameWallet from '../src/domain/wallet/specifications/same-wallet';
+import Sender from '../src/domain/wallet/specifications/sender';
 import Transaction from '../src/domain/wallet/transaction';
 
 describe('Specifications', () => {
   test('it expects amount is satisfied by amount of 1', () => {
-    const transaction = new Transaction('one', 'two', 1);
+    const transaction = new Transaction(v4(), 'one', 'two', 1, 0);
 
     const amountSpec = new Amount();
 
@@ -14,7 +15,7 @@ describe('Specifications', () => {
   });
 
   test('it expects amount is not satisfied by amount of 0', () => {
-    const transaction = new Transaction('one', 'two', 0);
+    const transaction = new Transaction(v4(), 'one', 'two', 0, 0);
 
     const amountSpec = new Amount();
 
@@ -22,7 +23,7 @@ describe('Specifications', () => {
   });
 
   test('it expects receiver is satisfied by wallet of one', () => {
-    const transaction = new Transaction('one', 'two', 1);
+    const transaction = new Transaction(v4(), 'one', 'two', 1, 0);
 
     const receiverSpec = new Receiver();
 
@@ -30,7 +31,7 @@ describe('Specifications', () => {
   });
 
   test('it expects receiver is not satisfied by wallet of 1', () => {
-    const transation = new Transaction(1, 'two', 2);
+    const transation = new Transaction(v4(), 1, 'two', 2, 0);
 
     const receiverSpec = new Receiver();
 
@@ -38,7 +39,7 @@ describe('Specifications', () => {
   });
 
   test('it expects sender is satisfied by wallet of two', () => {
-    const transaction = new Transaction('one', 'two', 1);
+    const transaction = new Transaction(v4(), 'one', 'two', 1, 0);
 
     const senderSpec = new Sender();
 
@@ -46,7 +47,7 @@ describe('Specifications', () => {
   });
 
   test('it expects sender is not satisfied by wallet of 2', () => {
-    const transaction = new Transaction('one', 2, 1);
+    const transaction = new Transaction(v4(), 'one', 2, 1, 0);
 
     const senderSpec = new Sender();
 
@@ -54,7 +55,7 @@ describe('Specifications', () => {
   });
 
   test('it expects same wallet is satisfied by waller of one and two', () => {
-    const transaction = new Transaction('one', 'two', 1);
+    const transaction = new Transaction(v4(), 'one', 'two', 1, 0);
 
     const sameWalletSpec = new SameWallet();
 
@@ -62,7 +63,7 @@ describe('Specifications', () => {
   });
 
   test('it expects same wallet is satisfied by waller of one and one', () => {
-    const transaction = new Transaction('one', 'one', 1);
+    const transaction = new Transaction(v4(), 'one', 'one', 1, 0);
 
     const sameWalletSpec = new SameWallet();
 

@@ -1,11 +1,14 @@
+import { v4 } from 'uuid';
 import Transaction from '../../domain/wallet/transaction';
 
 export default class TransactionTranslator {
   public static fromRequest(params: { to: string, from: string, amount: number }) : Transaction {
     return new Transaction(
+      v4(),
       params.to,
       params.from,
       params.amount,
+      Date.now(),
     );
   }
 
@@ -19,26 +22,24 @@ export default class TransactionTranslator {
       hash: string
     } = JSON.parse(value.toString());
 
-    return Transaction.fromMessage(
+    return new Transaction(
       message.id,
       message.to,
       message.from,
       message.amount,
       message.date,
-      message.hash,
     );
   }
 
   public static fromObject(
-    message: { id: any, to: string, from: string, amount: number, date: number, hash: string },
+    message: { id: any, to: string, from: string, amount: number, date: number },
   ) : Transaction {
-    return Transaction.fromMessage(
+    return new Transaction(
       message.id,
       message.to,
       message.from,
       message.amount,
       message.date,
-      message.hash,
     );
   }
 

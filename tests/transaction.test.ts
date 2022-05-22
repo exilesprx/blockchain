@@ -1,10 +1,11 @@
+import { v4 } from 'uuid';
 import TransactionTranslator from '../src/app/translators/transaction-translator';
 import Transaction from '../src/domain/wallet/transaction';
 import data from './stubs/transaction.json';
 
 describe('Transactions', () => {
   test('it expect to have a valid transaction', () => {
-    const transaction = new Transaction('one', 'two', 30);
+    const transaction = new Transaction(v4(), 'one', 'two', 30, 0);
 
     expect(transaction.getReceiver()).toBe('one');
 
@@ -14,13 +15,13 @@ describe('Transactions', () => {
   });
 
   test('it expects a transaction can occur between different wallets', () => {
-    const transaction = new Transaction('one', 'two', 20);
+    const transaction = new Transaction(v4(), 'one', 'two', 20, 0);
 
     expect(transaction.getHash()).not.toBeNull();
   });
 
   test('it expects a transaction should not fail using the same wallet', () => {
-    expect(() => new Transaction('one', 'one', 20)).not.toThrow(TypeError);
+    expect(() => new Transaction(v4(), 'one', 'one', 20, 0)).not.toThrow(TypeError);
   });
 
   test('it expects to translate a consumer message into transactions', () => {

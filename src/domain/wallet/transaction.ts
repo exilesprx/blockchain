@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 import SHA256 from 'crypto-js/sha256';
 
 export default class Transaction {
@@ -14,30 +13,13 @@ export default class Transaction {
 
   private hash: string;
 
-  constructor(to: string, from: string, amount: number) {
+  constructor(id: string, to: string, from: string, amount: number, date: number) {
+    this.id = id;
     this.to = to;
     this.from = from;
     this.amount = amount;
-    this.id = v4();
-    this.date = Date.now();
+    this.date = date;
     this.hash = this.generateHash();
-  }
-
-  public static fromMessage(
-    id: any,
-    to: string,
-    from: string,
-    amount: number,
-    date: number,
-    hash: string,
-  ) : Transaction {
-    const transaction = new this(to, from, amount);
-
-    transaction.id = id;
-    transaction.date = date;
-    transaction.hash = hash;
-
-    return transaction;
   }
 
   private generateHash() : string {
