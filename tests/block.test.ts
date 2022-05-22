@@ -12,7 +12,7 @@ describe('Block', () => {
   });
 
   test('it expects to have zero transactions', () => {
-    const block = new Block(1, 0, 0, 'test', []);
+    const block = new Block(1, 0, 0, 'test', [], 0);
 
     expect(block.getTransactions().length).toBe(0);
 
@@ -22,7 +22,7 @@ describe('Block', () => {
   test('it expects to have 1 transaction', () => {
     const transaction = new Transaction('tester1', 'tester2', 3);
 
-    const block = new Block(1, 0, 0, 'test', [transaction]);
+    const block = new Block(1, 0, 0, 'test', [transaction], 0);
 
     expect(block.getTransactions().length).toBe(1);
 
@@ -30,9 +30,9 @@ describe('Block', () => {
   });
 
   test('it expects two different blocks to have unique hashes', () => {
-    const firstBlock = new Block(1, 0, 0, 'test', []);
+    const firstBlock = new Block(1, 0, 0, 'test', [], 0);
 
-    const secondBlock = new Block(1, 0, 0, 'test-1', []);
+    const secondBlock = new Block(1, 0, 0, 'test-1', [], 0);
 
     expect(firstBlock.getHash()).not.toBe(secondBlock.getHash());
 
@@ -42,7 +42,7 @@ describe('Block', () => {
   });
 
   test('it expects the block to be mined after 2 attempts', async () => {
-    const block = new Block(1, 0, 1, 'test', []);
+    const block = new Block(1, 0, 1, 'test', [], 0);
 
     const hash = block.getHash();
 

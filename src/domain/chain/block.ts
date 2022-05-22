@@ -23,36 +23,19 @@ export default class Block {
     difficulty: number,
     previousHash: string,
     transactions: Transaction[],
+    date: number,
   ) {
     this.id = id;
     this.nounce = nounce;
     this.difficulty = difficulty;
     this.previousHash = previousHash;
     this.transactions = transactions;
-    this.date = Date.now();
+    this.date = date;
     this.hash = this.generateHash();
   }
 
-  public static fromMessage(
-    id: any,
-    nounce: number,
-    difficulty: number,
-    previousHash: string,
-    transactions: Transaction[],
-    date: number,
-    hash: string,
-  ) : Block {
-    const block = new this(id, nounce, difficulty, previousHash, transactions);
-
-    block.date = date;
-    block.hash = hash; // TODO: regenerate hash
-
-    return block;
-  }
-
   public static genesis() : Block {
-    // TODO: pass 0 as date
-    return new this('genesis block', 0, 0, '0'.repeat(32), []);
+    return new this('genesis block', 0, 0, '0'.repeat(32), [], 0);
   }
 
   public async mine() : Promise<void> {

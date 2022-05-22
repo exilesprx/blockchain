@@ -35,6 +35,7 @@ export default class Blockchain implements BlockchainInterface {
       difficulty,
       this.getPreviousHash(),
       transactions,
+      Date.now(),
     );
 
     try {
