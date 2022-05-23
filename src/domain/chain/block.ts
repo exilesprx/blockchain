@@ -37,7 +37,7 @@ export default class Block {
     this.transactions = transactions;
     this.date = date;
     this.hash = this.generateHash();
-    this.state = new Unmined();
+    this.state = this.determineState(this.hash);
   }
 
   public static genesis() : Block {
@@ -96,5 +96,13 @@ export default class Block {
     });
 
     return SHA256(`${transactionHashes}${this.id}${this.nounce}${this.difficulty}${this.previousHash}${this.difficulty}${this.date}`).toString();
+  }
+
+  protected determineState(hash: string) : BlockState {
+    if (BlockMinedPolicy.containsSuccessiveChars(hash, this.difficulty)) {
+      return new Mined();
+    }
+
+    return new Unmined();
   }
 }
