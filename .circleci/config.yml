@@ -8,13 +8,21 @@ orbs:
   docker: circleci/docker@2.0.3
 
 jobs:
-  build-app:
+  build-bank:
     docker:
       - image: cimg/node:16.14.2
     steps:
       - checkout
       - node/install-packages
-      - run: npm run build:app
+      - run: npm run build:bank
+
+  build-miner:
+    docker:
+      - image: cimg/node:16.14.2
+    steps:
+      - checkout
+      - node/install-packages
+      - run: npm run build:miner
 
   snyk:
     docker:
@@ -47,13 +55,16 @@ jobs:
 workflows:
   app:
     jobs:
-      - build-app
+      - build-bank
+      - build-miner
       - snyk:
           requires:
-            - build-app
+            - build-bank
+            - build-miner
       - lint:
           requires:
-            - build-app
+            - build-bank
+            - build-miner
       - test:
           requires:
             - lint
@@ -62,4 +73,5 @@ workflows:
           ignore-rules: 'DL4005,DL3008'
           trusted-registries: 'docker.io'
           requires:
-            - build-app
+            - build-bank
+            - build-miner
