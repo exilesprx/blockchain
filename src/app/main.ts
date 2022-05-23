@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import Block from '../domain/chain/block';
 import Blockchain from '../domain/chain/blockchain';
 import Link from '../domain/chain/specifications/link';
-import Mined from '../domain/chain/specifications/mined';
+import BlockMined from '../domain/chain/specifications/mined';
 import BlockAdded from '../domain/events/block-added';
 import TransactionAdded from '../domain/events/transaction-added';
 import KafkaLogger from '../domain/logs/kafka-logger';
@@ -81,7 +81,7 @@ export default class Application {
     // TODO: add hash verification, can reused block mined policy
     this.chain.addSpecification(
       new Link(),
-      new Mined(),
+      new BlockMined(),
     );
   }
 

@@ -12,7 +12,7 @@ import Receiver from '../src/domain/wallet/specifications/receiver';
 import SameWallet from '../src/domain/wallet/specifications/same-wallet';
 import Sender from '../src/domain/wallet/specifications/sender';
 import TransactionPool from '../src/domain/wallet/transaction-pool';
-import Mined from '../src/domain/chain/specifications/mined';
+import BlockMined from '../src/domain/chain/specifications/mined';
 
 jest.mock('../src/domain/events/emitter');
 jest.mock('../src/domain/wallet/transaction-pool');
@@ -86,7 +86,7 @@ describe('Main', () => {
 
     expect(addSpecForChain).toBeCalledWith(
       expect.any(Link),
-      expect.any(Mined),
+      expect.any(BlockMined),
     );
   });
 

@@ -3,7 +3,7 @@ import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
 import Block from '../src/domain/chain/block';
 import Link from '../src/domain/chain/specifications/link';
 import Emitter from '../src/domain/events/emitter';
-import Mined from '../src/domain/chain/specifications/mined';
+import BlockMined from '../src/domain/chain/specifications/mined';
 
 jest.mock('../src/domain/policies/block-limit-policy');
 jest.mock('../src/domain/events/emitter');
@@ -92,18 +92,18 @@ describe('Blockchain', () => {
     expect(chain.length()).toBe(1);
   });
 
-  test('it expects the block to be mined before adding to chain', () => {
+  test('it expects an unmined block to be rejected from the chain', () => {
     const emitter = new Emitter(jest.fn(), jest.fn(), jest.fn());
     const chain = new Blockchain(emitter);
     const block = new Block(1, 1, 1, 'test', [], 0);
 
-    jest.spyOn(block, 'isMined').mockReturnValue(true);
+    jest.spyOn(block, 'isMined').mockReturnValue(false);
 
-    chain.addSpecification(new Mined());
+    chain.addSpecification(new BlockMined());
 
-    expect(() => chain.addBlock(block)).not.toThrowError();
+    expect(() => chain.addBlock(block)).toThrowError();
 
-    expect(chain.length()).toBe(2);
+    expect(chain.length()).toBe(1);
   });
 
   test('it expects the ability to add multiple specs at once', () => {
