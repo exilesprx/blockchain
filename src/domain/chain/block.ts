@@ -1,6 +1,9 @@
 import { SHA256 } from 'crypto-js';
 import BlockMinedPolicy from '../policies/block-mined-policy';
 import Transaction from '../wallet/transaction';
+import BlockState from './state/block-state';
+import Mined from './state/mined';
+import Unmined from './state/unmined';
 
 export default class Block {
   private transactions: Transaction[];
@@ -17,6 +20,8 @@ export default class Block {
 
   private date: number;
 
+  private state: BlockState;
+
   constructor(
     id: any,
     nounce: number,
@@ -32,6 +37,7 @@ export default class Block {
     this.transactions = transactions;
     this.date = date;
     this.hash = this.generateHash();
+    this.state = new Unmined();
   }
 
   public static genesis() : Block {
@@ -39,11 +45,13 @@ export default class Block {
   }
 
   public async mine() : Promise<void> {
-    while (!this.isMined()) {
+    while (!BlockMinedPolicy.containsSuccessiveChars(this.hash, this.difficulty)) {
       this.nounce += 1;
 
       this.hash = this.generateHash();
     }
+
+    this.state = new Mined();
 
     return Promise.resolve();
   }
@@ -77,7 +85,7 @@ export default class Block {
   }
 
   public isMined() : boolean {
-    return BlockMinedPolicy.containsSuccessiveChars(this.hash, this.difficulty);
+    return Mined.sameInstance(this.state);
   }
 
   private generateHash() : string {

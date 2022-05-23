@@ -1,4 +1,6 @@
 import Block from '../src/domain/chain/block';
+import Mined from '../src/domain/chain/state/mined';
+import Unmined from '../src/domain/chain/state/unmined';
 import BlockMinedPolicy from '../src/domain/policies/block-mined-policy';
 import Transaction from '../src/domain/wallet/transaction';
 import BlockTranslator from '../src/infrastructure/stream/translators/block-translator';
@@ -57,6 +59,8 @@ describe('Block', () => {
     expect(BlockMinedPolicy.containsSuccessiveChars).toBeCalledWith(expect.any(String), 1);
 
     expect(block.getHash()).not.toEqual(hash);
+
+    expect(block.isMined()).toBeTruthy();
   });
 
   test('it expects to translate a consumer message into a block', () => {
