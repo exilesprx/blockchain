@@ -6,10 +6,10 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
-    "build:app": "tsc --project src/app/tsconfig.json",
+    "build:bank": "tsc --project src/app/tsconfig.json",
     "build:miner": "tsc --project src/miner/tsconfig.json",
-    "app": "nodemon --config nodemon.json src/app/index.ts",
-    "app:debug": "nodemon --config nodemon.json --inspect=0.0.0.0:9229 --enable-source-maps src/app/index.ts",
+    "bank": "nodemon --config nodemon.json src/app/index.ts",
+    "bank:debug": "nodemon --config nodemon.json --inspect=0.0.0.0:9229 --enable-source-maps src/app/index.ts",
     "miner": "nodemon --config nodemon.json src/miner/index.ts",
     "miner:debug": "nodemon --config nodemon.json --inspect=0.0.0.0:9229 --enable-source-maps src/miner/index.ts"
   },

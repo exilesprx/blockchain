@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import Emitter from '../src/domain/events/emitter';
 import Amount from '../src/domain/wallet/specifications/amount';
 import Transaction from '../src/domain/wallet/transaction';
@@ -19,7 +20,7 @@ describe('Transaction pool', () => {
     const emitter = new Emitter(jest.fn(), jest.fn(), jest.fn());
     const pool = new TransactionPool(emitter);
 
-    const transaction = new Transaction('to', 'from', 2);
+    const transaction = new Transaction(v4(), 'to', 'from', 2, 0);
 
     pool.addSpecification(new Amount());
 
@@ -33,11 +34,26 @@ describe('Transaction pool', () => {
   test('it expects an invalid transaction is not added to the pool', () => {
     const pool = new TransactionPool(jest.fn());
 
-    const transaction = new Transaction('to', 'from', 0);
+    const transaction = new Transaction(v4(), 'to', 'from', 0, 0);
 
     pool.addSpecification(new Amount());
 
     expect(() => pool.fill(transaction)).toThrow();
+  });
+
+  test('it expects the pool to be empty after flushing', () => {
+    const emitter = new Emitter(jest.fn(), jest.fn(), jest.fn());
+    const pool = new TransactionPool(emitter);
+
+    pool.fill(new Transaction(v4(), 'to', 'from', 2, 0));
+
+    pool.fill(new Transaction(v4(), 'to', 'from', 2, 0));
+
+    expect(pool.isEmpty()).toBe(false);
+
+    pool.flush();
+
+    expect(pool.isEmpty()).toBe(true);
   });
 
   test('it expects the ability to add multiple specifications at once', () => {
@@ -45,7 +61,7 @@ describe('Transaction pool', () => {
 
     const pool = new TransactionPool(emitter);
 
-    const transaction = new Transaction('to', 'from', 5);
+    const transaction = new Transaction(v4(), 'to', 'from', 5, 0);
 
     const amountSpec = new Amount();
 

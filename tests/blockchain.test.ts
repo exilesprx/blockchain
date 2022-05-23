@@ -3,6 +3,7 @@ import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
 import Block from '../src/domain/chain/block';
 import Link from '../src/domain/chain/specifications/link';
 import Emitter from '../src/domain/events/emitter';
+import BlockMined from '../src/domain/chain/specifications/mined';
 
 jest.mock('../src/domain/policies/block-limit-policy');
 jest.mock('../src/domain/events/emitter');
@@ -27,7 +28,7 @@ describe('Blockchain', () => {
     // The default is false, but we want to "fake" the chain being full
     BlockLimitPolicy.reachedLimit.mockReturnValueOnce(true);
 
-    chain.addBlock(new Block(1, 1, 1, 'test', []));
+    chain.addBlock(new Block(1, 1, 1, 'test', [], 0));
 
     expect(BlockLimitPolicy.reachedLimit).toHaveBeenCalled();
 
@@ -44,7 +45,7 @@ describe('Blockchain', () => {
 
     expect(chain.length()).toBe(1);
 
-    chain.addBlock(new Block(1, 1, 1, 'test', []));
+    chain.addBlock(new Block(1, 1, 1, 'test', [], 0));
 
     expect(Emitter.mock.instances[0].emit).toBeCalled();
 
@@ -57,7 +58,7 @@ describe('Blockchain', () => {
 
     const link = new Link();
 
-    const block = new Block(1, 1, 1, 'test', []);
+    const block = new Block(1, 1, 1, 'test', [], 0);
 
     const spy = jest.spyOn(link, 'isSatisfiedBy')
       .mockImplementation(() => true);
@@ -84,9 +85,23 @@ describe('Blockchain', () => {
 
     chain.addSpecification(new Link());
 
-    expect(() => chain.addBlock(new Block(1, 1, 1, 'test', []))).toThrowError();
+    expect(() => chain.addBlock(new Block(1, 1, 1, 'test', [], 0))).toThrowError();
 
     expect(Emitter.mock.instances[0].emit).not.toBeCalled();
+
+    expect(chain.length()).toBe(1);
+  });
+
+  test('it expects an unmined block to be rejected from the chain', () => {
+    const emitter = new Emitter(jest.fn(), jest.fn(), jest.fn());
+    const chain = new Blockchain(emitter);
+    const block = new Block(1, 1, 1, 'test', [], 0);
+
+    jest.spyOn(block, 'isMined').mockReturnValue(false);
+
+    chain.addSpecification(new BlockMined());
+
+    expect(() => chain.addBlock(block)).toThrowError();
 
     expect(chain.length()).toBe(1);
   });
@@ -97,7 +112,7 @@ describe('Blockchain', () => {
 
     const link = new Link();
 
-    const block = new Block(1, 1, 1, 'test', []);
+    const block = new Block(1, 1, 1, 'test', [], 0);
 
     const spy = jest.spyOn(link, 'isSatisfiedBy')
       .mockReturnValue(true);

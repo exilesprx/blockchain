@@ -1,28 +1,29 @@
 import Events from 'events';
 import express, { Request, Response } from 'express';
 import helmet from 'helmet';
-import Database from '../infrastructure/database';
 import Block from '../domain/chain/block';
 import Blockchain from '../domain/chain/blockchain';
 import Link from '../domain/chain/specifications/link';
+import BlockMined from '../domain/chain/specifications/mined';
+import BlockAdded from '../domain/events/block-added';
+import TransactionAdded from '../domain/events/transaction-added';
 import KafkaLogger from '../domain/logs/kafka-logger';
 import Logger from '../domain/logs/logger';
-import BlockConsumer from '../infrastructure/stream/block-consumer';
-import Producer from '../infrastructure/stream/producer';
-import Stream from '../infrastructure/stream/stream';
 import Amount from '../domain/wallet/specifications/amount';
 import Receiver from '../domain/wallet/specifications/receiver';
 import SameWallet from '../domain/wallet/specifications/same-wallet';
 import Sender from '../domain/wallet/specifications/sender';
 import Transaction from '../domain/wallet/transaction';
 import TransactionPool from '../domain/wallet/transaction-pool';
+import Database from '../infrastructure/database';
+import BlockConsumer from '../infrastructure/stream/block-consumer';
+import Producer from '../infrastructure/stream/producer';
+import Stream from '../infrastructure/stream/stream';
 import AddBlock from './commands/add-block';
 import AddTransaction from './commands/add-transaction';
 import Emitter from './events/emitter';
 import TransactionRoute from './routes/transaction';
 import Server from './server';
-import BlockAdded from '../domain/events/block-added';
-import TransactionAdded from '../domain/events/transaction-added';
 
 export default class Application {
   private server: Server;
@@ -77,7 +78,11 @@ export default class Application {
       new SameWallet(),
     );
 
-    this.chain.addSpecification(new Link());
+    // TODO: add hash verification, can reused block mined policy
+    this.chain.addSpecification(
+      new Link(),
+      new BlockMined(),
+    );
   }
 
   public registerEvents() {

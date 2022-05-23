@@ -48,7 +48,7 @@ describe('Emitter', () => {
   test('it expects a log and kafka message when adding a block', () => {
     const emitter = new Emitter(events, producer, logger);
 
-    const block = new Block(1, 0, 0, 'test', []);
+    const block = new Block(1, 0, 0, 'test', [], 0);
 
     emitter.blockAdded(block);
 
