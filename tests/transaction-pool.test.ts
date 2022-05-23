@@ -41,6 +41,21 @@ describe('Transaction pool', () => {
     expect(() => pool.fill(transaction)).toThrow();
   });
 
+  test('it expects the pool to be empty after flushing', () => {
+    const emitter = new Emitter(jest.fn(), jest.fn(), jest.fn());
+    const pool = new TransactionPool(emitter);
+
+    pool.fill(new Transaction(v4(), 'to', 'from', 2, 0));
+
+    pool.fill(new Transaction(v4(), 'to', 'from', 2, 0));
+
+    expect(pool.isEmpty()).toBe(false);
+
+    pool.flush();
+
+    expect(pool.isEmpty()).toBe(true);
+  });
+
   test('it expects the ability to add multiple specifications at once', () => {
     const emitter = new Emitter(jest.fn(), jest.fn(), jest.fn());
 
