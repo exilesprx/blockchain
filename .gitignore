@@ -3,5 +3,7 @@ build/
 .vscode
 *.http
 .env
+.env.eventstore
+.env.graylog
 coverage/
 .dccache

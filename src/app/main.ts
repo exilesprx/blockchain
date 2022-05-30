@@ -78,7 +78,6 @@ export default class Application {
       new SameWallet(),
     );
 
-    // TODO: add hash verification, can reused block mined policy
     this.chain.addSpecification(
       new Link(),
       new BlockMined(),
