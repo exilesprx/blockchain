@@ -76,6 +76,12 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
             - NOTE: censensus model - app uses DB/memory - miners use memory
             - would need to stop current mine process
         - ~~broadcast event "block added"~~
+- Logger
+    - treat as a feature
+    - add graylog
+    - add winston gelf
+    - wrap logger in support class
+    - add environment var to include stack trace in gelf logs
 - Auditor
     - Transactions
         - compares "generated transactions" vesus "processed transactions"
