@@ -163,6 +163,7 @@ services:
     depends_on:
       - eventstore.db
       - kafka1
+      - graylog
     env_file:
       - .env
     command: npm run bank:debug
@@ -174,6 +175,7 @@ services:
       - "9230:9229"
     depends_on:
       - kafka1
+      - graylog
     env_file:
       - .env
     command: npm run miner:debug
