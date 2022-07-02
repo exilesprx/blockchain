@@ -77,11 +77,10 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
             - would need to stop current mine process
         - ~~broadcast event "block added"~~
 - Logger
-    - treat as a feature
-    - add graylog
-    - add winston gelf
-    - wrap logger in support class
-    - add environment var to include stack trace in gelf logs
+    - ~~treat as a feature~~
+    - ~~add graylog~~
+    - ~~add winston gelf~~
+    - ~~wrap logger in support class~~
 - Auditor
     - Transactions
         - compares "generated transactions" vesus "processed transactions"
@@ -113,7 +112,7 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
     - increase code coverage with meaningful tests
 - Notes 
     - Consumers/miners
-        - MULTIPLE CONSUMERS MUST BE ON THE SAME GROUP TO MINE THE SAME PARTITION
+        - MULTIPLE CONSUMERS MUST BE ON DIFFERENT GROUPS
     - Transactions dropped
         - if a transaction is never added to a block, how do we find the transaction? And how do we rebroadcast it?
     - Miner
