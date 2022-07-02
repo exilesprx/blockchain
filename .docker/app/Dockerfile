@@ -1,4 +1,4 @@
-FROM node:17-slim as deps
+FROM node:18.4-slim as deps
 
 WORKDIR /usr/app
 
