@@ -7,6 +7,9 @@ export default class Logger {
   public constructor() {
     this.logger = winston.createLogger({
       exitOnError: false,
+      format: winston.format.combine(
+        winston.format.errors({ stack: true }),
+      ),
       transports: [
         new GelfTransport(),
       ],
