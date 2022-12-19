@@ -59,7 +59,7 @@ export default class Application {
 
     this.emitter = new Emitter(new Events(), this.producer, this.logger);
 
-    this.chain = new Blockchain(this.emitter);
+    this.chain = new Blockchain();
 
     this.pool = new TransactionPool(this.emitter);
 

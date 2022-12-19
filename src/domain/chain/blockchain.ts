@@ -10,7 +10,7 @@ import BlockchainInterface from './blockchain-interface';
 import Specification from './specifications/specifications';
 
 export default class Blockchain implements BlockchainInterface {
-  private emitter: Emitter;
+  private events: [];
 
   private chain: Block[];
 
@@ -18,12 +18,16 @@ export default class Blockchain implements BlockchainInterface {
 
   private static startingNounce: number = 0;
 
-  constructor(emitter: Emitter) {
-    this.emitter = emitter;
+  constructor() {
+    this.events = [];
 
     this.chain = [Block.genesis()];
 
     this.specifications = [];
+  }
+
+  public flush(): [] {
+    throw new Error('Method not implemented.');
   }
 
   public async mineBlock(transactions: Transaction[]) : Promise<void> {
@@ -60,6 +64,7 @@ export default class Blockchain implements BlockchainInterface {
 
     this.chain.push(block);
 
+    // TODO: update to push to array - events
     this.emitter.emit(new BlockAdded().toString(), block);
   }
 

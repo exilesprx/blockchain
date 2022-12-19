@@ -34,6 +34,7 @@ describe('Blockchain', () => {
 
     expect(chain.removeFirstBlock).toHaveBeenCalled();
 
+    // TODO: update to flush events and check length and type
     expect(Emitter.mock.instances[0].emit).toBeCalled();
 
     expect(chain.length()).toBe(1);
@@ -47,6 +48,7 @@ describe('Blockchain', () => {
 
     chain.addBlock(new Block(1, 1, 1, 'test', [], 0));
 
+    // TODO: update to flush events and check length and type
     expect(Emitter.mock.instances[0].emit).toBeCalled();
 
     expect(chain.length()).toBe(2);
@@ -76,6 +78,7 @@ describe('Blockchain', () => {
       block,
     );
 
+    // TODO: update to flush events and check length and type
     expect(Emitter.mock.instances[0].emit).toBeCalled();
   });
 
@@ -87,6 +90,7 @@ describe('Blockchain', () => {
 
     expect(() => chain.addBlock(new Block(1, 1, 1, 'test', [], 0))).toThrowError();
 
+    // TODO: update to flush events and check length and type
     expect(Emitter.mock.instances[0].emit).not.toBeCalled();
 
     expect(chain.length()).toBe(1);
@@ -128,6 +132,7 @@ describe('Blockchain', () => {
       block,
     );
 
+    // TODO: update to flush events and check length and type
     expect(Emitter.mock.instances[0].emit).toBeCalled();
   });
 });
