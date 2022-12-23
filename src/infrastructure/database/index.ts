@@ -1,8 +1,6 @@
-import { EventStoreDBClient, jsonEvent } from '@eventstore/db-client';
+import { EventData, EventStoreDBClient, jsonEvent } from '@eventstore/db-client';
 import TransactionEvent from './models/transaction';
 import Transaction from '../../domain/wallet/transaction';
-import Block from '../../domain/chain/block';
-import BlockEvent from './models/block';
 
 export default class Database {
   private client: EventStoreDBClient | null;
@@ -54,23 +52,10 @@ export default class Database {
     await this.client.appendToStream(event.type, event);
   }
 
-  public async persistBlock(block: Block) {
+  public async persist(event: EventData) {
     if (!this.client) {
       return;
     }
-
-    const event = jsonEvent<BlockEvent>({
-      type: 'block',
-      data: {
-        id: block.getKey(),
-        transactions: block.getTransactions(),
-        nounce: block.getNounce(),
-        difficulty: block.getDifficulty(),
-        previousHash: block.getPreviousHash(),
-        hash: block.getHash(),
-        date: block.getDate(),
-      },
-    });
 
     await this.client.appendToStream(event.type, event);
   }
