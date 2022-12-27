@@ -11,6 +11,10 @@ export default class BlockRepository {
   }
 
   public async persist(block: Block) {
+    // TODO: pass in chain
+    // TODO: get last block
+    // TODO: get data using to array on block
+    // TODO: flush events and dispatch them
     const event = jsonEvent<BlockEvent>({
       type: 'block',
       data: {

@@ -2,7 +2,6 @@ import { v4 } from 'uuid';
 import BlockAdded from '../events/block-added';
 import MineFailed from '../events/mine-failed';
 import BlockMined from '../events/block-mined';
-import Emitter from '../events/emitter';
 import BlockLimitPolicy from '../policies/block-limit-policy';
 import Transaction from '../wallet/transaction';
 import Block from './block';
@@ -10,7 +9,7 @@ import BlockchainInterface from './blockchain-interface';
 import Specification from './specifications/specifications';
 
 export default class Blockchain implements BlockchainInterface {
-  private events: [];
+  private events: any[];
 
   private chain: Block[];
 
@@ -26,8 +25,8 @@ export default class Blockchain implements BlockchainInterface {
     this.specifications = [];
   }
 
-  public flush(): [] {
-    throw new Error('Method not implemented.');
+  public flush(): any[] {
+    return this.events.splice(0, this.events.length);
   }
 
   public async mineBlock(transactions: Transaction[]) : Promise<void> {
@@ -46,10 +45,11 @@ export default class Blockchain implements BlockchainInterface {
       await block.mine();
 
       this.addBlock(block);
-
-      this.emitter.emit(new BlockMined().toString(), block);
+      this.events.push(new BlockMined());
+      //this.emitter.emit(new BlockMined().toString(), block);
     } catch (error: any) {
-      this.emitter.emit(new MineFailed().toString(), block);
+      this.events.push(new MineFailed());
+      //this.emitter.emit(new MineFailed().toString(), block);
     }
   }
 
@@ -65,7 +65,8 @@ export default class Blockchain implements BlockchainInterface {
     this.chain.push(block);
 
     // TODO: update to push to array - events
-    this.emitter.emit(new BlockAdded().toString(), block);
+    this.events.push(new BlockAdded());
+    //this.emitter.emit(new BlockAdded().toString(), block);
   }
 
   public length() : number {
