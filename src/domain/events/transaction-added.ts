@@ -5,7 +5,9 @@ export default class TransactionAdded extends Event {
     super('transaction-added');
   }
 
+  // eslint-disable-next-line class-methods-use-this
   public toJson() {
-    return {};
+    return {
+    };
   }
 }

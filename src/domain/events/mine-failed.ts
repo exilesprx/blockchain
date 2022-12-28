@@ -5,6 +5,7 @@ export default class MineFailed extends Event {
     super('mine-failed');
   }
 
+  // eslint-disable-next-line class-methods-use-this
   public toJson() {
     return {};
   }

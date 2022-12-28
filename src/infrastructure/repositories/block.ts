@@ -1,5 +1,4 @@
 import { jsonEvent } from '@eventstore/db-client';
-import Block from '../../domain/chain/block';
 import Blockchain from '../../domain/chain/blockchain';
 import Database from '../database';
 import BlockEvent from '../database/models/block';

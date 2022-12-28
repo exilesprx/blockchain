@@ -6,4 +6,4 @@ describe(() => {
   });
   test('it persists the data to the event store', () => {
   });
-})
+});
