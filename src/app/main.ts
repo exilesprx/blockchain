@@ -89,7 +89,7 @@ export default class Application {
 
   public registerEvents() {
     this.emitter.register(
-      new BlockAdded().toString(),
+      BlockAdded.toString(),
       (block: Block) => this.emitter.blockAdded(block),
     );
 

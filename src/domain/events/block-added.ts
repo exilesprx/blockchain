@@ -15,6 +15,8 @@ export default class BlockAdded extends Event {
 
   private hash: string;
 
+  private date: number;
+
   public constructor(block: Block) {
     super('block-added');
 
@@ -24,6 +26,7 @@ export default class BlockAdded extends Event {
     this.difficulty = block.getDifficulty();
     this.previousHash = block.getPreviousHash();
     this.hash = block.getHash();
+    this.date = block.getDate();
   }
 
   public toJson() {
@@ -34,6 +37,7 @@ export default class BlockAdded extends Event {
       difficulty: this.difficulty,
       previousHash: this.previousHash,
       hash: this.hash,
+      date: this.date,
     };
   }
 }

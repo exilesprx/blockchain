@@ -42,22 +42,22 @@ export default class Miner {
 
   public registerEvents() : void {
     this.emitter.register(
-      new BlockAdded().toString(),
+      BlockAdded.toString(),
       (block: Block) => this.emitter.blockAdded(block),
     );
 
     this.emitter.register(
-      new TransactionAdded().toString(),
+      TransactionAdded.toString(),
       (transaction: Transaction) => this.emitter.transactionAdded(transaction),
     );
 
     this.emitter.register(
-      new BlockMined().toString(),
+      BlockMined.toString(),
       (block: Block) => this.emitter.blockMined(block),
     );
 
     this.emitter.register(
-      new MineFailed().toString(),
+      MineFailed.toString(),
       (block: Block) => this.emitter.mineFailed(block),
     );
   }

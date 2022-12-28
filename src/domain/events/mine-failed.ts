@@ -4,4 +4,8 @@ export default class MineFailed extends Event {
   public constructor() {
     super('mine-failed');
   }
+
+  public toJson() {
+    return {};
+  }
 }

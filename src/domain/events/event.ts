@@ -5,7 +5,7 @@ export default abstract class Event {
     this.name = name;
   }
 
-  public toString(): string {
+  public static toString(): string {
     return this.name;
   }
 
