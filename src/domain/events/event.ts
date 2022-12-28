@@ -8,4 +8,6 @@ export default abstract class Event {
   public toString(): string {
     return this.name;
   }
+
+  public abstract toJson(): any;
 }

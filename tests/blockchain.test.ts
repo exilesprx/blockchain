@@ -135,6 +135,11 @@ describe('Blockchain', () => {
     // TODO: update to flush events and check length and type
   });
   test('it flushes the events', () => {
+    const chain = new Blockchain();
+    const block = new Block(1, 1, 1, 'test', [], 0);
+    chain.addBlock(block);
 
+    expect(chain.flush().length).toBe(1);
+    expect(chain.flush().length).toBe(0);
   });
 });

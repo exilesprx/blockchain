@@ -17,6 +17,7 @@ import Transaction from '../domain/wallet/transaction';
 import TransactionPool from '../domain/wallet/transaction-pool';
 import Database from '../infrastructure/database';
 import BlockRepository from '../infrastructure/repositories/block';
+import BlockEventRepository from '../infrastructure/repositories/block-event';
 import BlockConsumer from '../infrastructure/stream/block-consumer';
 import Producer from '../infrastructure/stream/producer';
 import Stream from '../infrastructure/stream/stream';
@@ -64,7 +65,8 @@ export default class Application {
 
     this.pool = new TransactionPool(this.emitter);
 
-    const action = new AddBlock(this.chain, new BlockRepository(this.database));
+    const repo = new BlockEventRepository(this.emitter, new BlockRepository(this.database));
+    const action = new AddBlock(this.chain, repo);
 
     this.consumer = new BlockConsumer(action, stream);
   }

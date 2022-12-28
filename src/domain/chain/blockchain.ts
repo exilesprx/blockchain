@@ -65,7 +65,7 @@ export default class Blockchain implements BlockchainInterface {
     this.chain.push(block);
 
     // TODO: update to push to array - events
-    this.events.push(new BlockAdded());
+    this.events.push(new BlockAdded(block));
     //this.emitter.emit(new BlockAdded().toString(), block);
   }
 
@@ -77,7 +77,7 @@ export default class Blockchain implements BlockchainInterface {
     this.specifications.push(...specification);
   }
 
-  private getPreviousBlock() : Block {
+  public getPreviousBlock() : Block {
     return this.chain[this.chain.length - 1];
   }
 

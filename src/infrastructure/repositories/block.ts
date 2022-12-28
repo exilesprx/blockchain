@@ -1,5 +1,6 @@
 import { jsonEvent } from '@eventstore/db-client';
 import Block from '../../domain/chain/block';
+import Blockchain from '../../domain/chain/blockchain';
 import Database from '../database';
 import BlockEvent from '../database/models/block';
 
@@ -10,22 +11,15 @@ export default class BlockRepository {
     this.database = database;
   }
 
-  public async persist(block: Block) {
+  public async persist(chain: Blockchain) {
     // TODO: pass in chain
     // TODO: get last block
     // TODO: get data using to array on block
     // TODO: flush events and dispatch them
+    const data = chain.getPreviousBlock().toJson();
     const event = jsonEvent<BlockEvent>({
       type: 'block',
-      data: {
-        id: block.getKey(),
-        transactions: block.getTransactions(),
-        nounce: block.getNounce(),
-        difficulty: block.getDifficulty(),
-        previousHash: block.getPreviousHash(),
-        hash: block.getHash(),
-        date: block.getDate(),
-      },
+      data,
     });
 
     await this.database.persist(event);

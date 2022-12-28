@@ -1,13 +1,13 @@
 import Block from '../../domain/chain/block';
 import Blockchain from '../../domain/chain/blockchain';
-import BlockRepository from '../../infrastructure/repositories/block';
+import BlockEventRepository from '../../infrastructure/repositories/block-event';
 
 export default class AddBlock {
   private chain: Blockchain;
 
-  private repo: BlockRepository;
+  private repo: BlockEventRepository;
 
-  public constructor(chain: Blockchain, repo: BlockRepository) {
+  public constructor(chain: Blockchain, repo: BlockEventRepository) {
     this.chain = chain;
 
     this.repo = repo;
@@ -16,7 +16,7 @@ export default class AddBlock {
   public execute(block: Block) : string {
     this.chain.addBlock(block);
 
-    this.repo.persist(block);
+    this.repo.persist(this.chain);
 
     return block.getHash();
   }
