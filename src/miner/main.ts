@@ -31,7 +31,7 @@ export default class Miner {
 
     this.emitter = new Emitter(new Events(), this.producer, logger);
 
-    const chain = new Blockchain(this.emitter);
+    const chain = new Blockchain();
 
     const pool = new TransactionPool(this.emitter);
 
