@@ -6,7 +6,12 @@
 	"build": {
 		"dockerfile": "../.docker/app/Dockerfile",
 		"target": "dev"
-	}
+	},
+	
+	"mounts": [
+		"source=${localWorkspaceFolderBasename}-node-modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+	]
+
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
