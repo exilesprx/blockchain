@@ -4,7 +4,7 @@
 	"name": "Blockchain",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"build": {
-		"dockerfile": "../.docker/app/Dockerfile",
+		"dockerfile": "../.docker/Dockerfile",
 		"target": "dev"
 	},
 	
