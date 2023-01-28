@@ -18,6 +18,8 @@ import TransactionPool from '../domain/wallet/transaction-pool';
 import Database from '../infrastructure/database';
 import BlockRepository from '../infrastructure/repositories/block';
 import BlockEventRepository from '../infrastructure/repositories/block-event';
+import TransactionEventRepository from '../infrastructure/repositories/transaction-events';
+import TransactionRepository from '../infrastructure/repositories/transaction';
 import BlockConsumer from '../infrastructure/stream/block-consumer';
 import Producer from '../infrastructure/stream/producer';
 import Stream from '../infrastructure/stream/stream';
@@ -63,7 +65,7 @@ export default class Application {
 
     this.chain = new Blockchain();
 
-    this.pool = new TransactionPool(this.emitter);
+    this.pool = new TransactionPool();
 
     const repo = new BlockEventRepository(this.emitter, new BlockRepository(this.database));
     const action = new AddBlock(this.chain, repo);
@@ -117,7 +119,8 @@ export default class Application {
   }
 
   public registerRoutes() {
-    const action = new AddTransaction(this.pool, this.database);
+    const repository = new TransactionEventRepository(this.emitter, new TransactionRepository(this.database));
+    const action = new AddTransaction(this.pool, repository);
 
     const transactionRoute = new TransactionRoute(action, this.logger);
 

@@ -7,9 +7,10 @@ import Transaction from '../wallet/transaction';
 import Block from './block';
 import BlockchainInterface from './blockchain-interface';
 import Specification from './specifications/specifications';
+import Event from '../events/event';
 
 export default class Blockchain implements BlockchainInterface {
-  private events: any[];
+  private events: Event[];
 
   private chain: Block[];
 
@@ -23,10 +24,6 @@ export default class Blockchain implements BlockchainInterface {
     this.chain = [Block.genesis()];
 
     this.specifications = [];
-  }
-
-  public flush(): any[] {
-    return this.events.splice(0, this.events.length);
   }
 
   public async mineBlock(transactions: Transaction[]) : Promise<void> {
@@ -46,10 +43,8 @@ export default class Blockchain implements BlockchainInterface {
 
       this.addBlock(block);
       this.events.push(new BlockMined(block));
-      //this.emitter.emit(new BlockMined().toString(), block);
     } catch (error: any) {
-      this.events.push(new MineFailed());
-      //this.emitter.emit(new MineFailed().toString(), block);
+      this.events.push(new MineFailed(block));
     }
   }
 
@@ -64,9 +59,7 @@ export default class Blockchain implements BlockchainInterface {
 
     this.chain.push(block);
 
-    // TODO: update to push to array - events
     this.events.push(new BlockAdded(block));
-    //this.emitter.emit(new BlockAdded().toString(), block);
   }
 
   public length() : number {
@@ -87,5 +80,9 @@ export default class Blockchain implements BlockchainInterface {
 
   private getPreviousHash() : string {
     return this.getPreviousBlock().getHash();
+  }
+
+  public flushEvents(): any[] {
+    return this.events.splice(0, this.events.length);
   }
 }

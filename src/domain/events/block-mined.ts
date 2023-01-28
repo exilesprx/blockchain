@@ -19,7 +19,7 @@ export default class BlockMined extends Event {
   private date: number;
 
   public constructor(block: Block) {
-    super('block-mined');
+    super();
 
     this.id = block.getKey();
     this.transactions = block.getTransactions();

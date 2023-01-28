@@ -36,7 +36,7 @@ describe('Blockchain', () => {
 
     // TODO: update to flush events and check length and type
     expect(chain.length()).toBe(1);
-    const events = chain.flush();
+    const events = chain.flushEvents();
     expect(events.length).toBe(1);
     expect(events.at(0)).toBeInstanceOf(BlockAdded);
   });
@@ -50,7 +50,7 @@ describe('Blockchain', () => {
 
     // TODO: update to flush events and check length and type
     expect(chain.length()).toBe(2);
-    const events = chain.flush();
+    const events = chain.flushEvents();
     expect(events.length).toBe(1);
     expect(events.at(0)).toBeInstanceOf(BlockAdded);
   });
@@ -79,7 +79,7 @@ describe('Blockchain', () => {
     );
 
     // TODO: update to flush events and check length and type
-    const events = chain.flush();
+    const events = chain.flushEvents();
     expect(events.length).toBe(1);
     expect(events.at(0)).toBeInstanceOf(BlockAdded);
   });
@@ -94,7 +94,7 @@ describe('Blockchain', () => {
     // TODO: update to flush events and check length and type
     expect(chain.length()).toBe(1);
 
-    const events = chain.flush();
+    const events = chain.flushEvents();
     expect(events.length).toBe(0);
   });
 
@@ -139,7 +139,7 @@ describe('Blockchain', () => {
     const block = new Block(1, 1, 1, 'test', [], 0);
     chain.addBlock(block);
 
-    expect(chain.flush().length).toBe(1);
-    expect(chain.flush().length).toBe(0);
+    expect(chain.flushEvents().length).toBe(1);
+    expect(chain.flushEvents().length).toBe(0);
   });
 });

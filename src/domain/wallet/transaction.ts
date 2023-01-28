@@ -1,4 +1,5 @@
 import SHA256 from 'crypto-js/sha256';
+import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction';
 
 export default class Transaction {
   private to: string;
@@ -48,5 +49,16 @@ export default class Transaction {
 
   public getDate() : number {
     return this.date;
+  }
+  
+  public toJson(): TransactionContract {
+    return {
+      id: this.getKey(),
+      to: this.getReceiver(),
+      from: this.getSender(),
+      amount: this.getAmount(),
+      date: this.getDate(),
+      hash: this.getHash()
+    }
   }
 }
