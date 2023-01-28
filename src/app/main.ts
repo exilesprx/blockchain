@@ -28,6 +28,8 @@ import AddTransaction from './commands/add-transaction';
 import Emitter from './events/emitter';
 import TransactionRoute from './routes/transaction';
 import Server from './server';
+import { Block as BlockContract } from '../infrastructure/database/models/block';
+import { Transaction as TransactionContract } from '../infrastructure/database/models/transaction';
 
 export default class Application {
   private server: Server;
@@ -92,12 +94,12 @@ export default class Application {
   public registerEvents() {
     this.emitter.register(
       BlockAdded.toString(),
-      (block: Block) => this.emitter.blockAdded(block),
+      (block: BlockContract) => this.emitter.blockAdded(block),
     );
 
     this.emitter.register(
       TransactionAdded.toString(),
-      (transaction: Transaction) => this.emitter.transactionAdded(transaction),
+      (transaction: TransactionContract) => this.emitter.transactionAdded(transaction),
     );
   }
 
