@@ -94,7 +94,7 @@ export default class Application {
     );
 
     this.emitter.register(
-      new TransactionAdded().toString(),
+      TransactionAdded.toString(),
       (transaction: Transaction) => this.emitter.transactionAdded(transaction),
     );
   }

@@ -11,7 +11,7 @@ export default class TransactionPool {
 
   private transactions: Transaction[];
 
-  constructor(emitter: Emitter) {
+  public constructor(emitter: Emitter) {
     this.emitter = emitter;
 
     this.specifications = [];

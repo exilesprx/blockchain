@@ -18,7 +18,7 @@ export default class BlockAdded extends Event {
   private date: number;
 
   public constructor(block: Block) {
-    super('block-added');
+    super();
 
     this.id = block.getKey();
     this.transactions = block.getTransactions();

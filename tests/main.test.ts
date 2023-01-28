@@ -61,9 +61,9 @@ describe('Main', () => {
 
     expect(Emitter.mock.instances[0].register).toBeCalledTimes(2);
 
-    expect(Emitter.mock.instances[0].register).toBeCalledWith('block-added', expect.any(Function));
+    expect(Emitter.mock.instances[0].register).toBeCalledWith('BlockAdded', expect.any(Function));
 
-    expect(Emitter.mock.instances[0].register).toBeCalledWith('transaction-added', expect.any(Function));
+    expect(Emitter.mock.instances[0].register).toBeCalledWith('TransactionAdded', expect.any(Function));
   });
 
   test('it expects specifications added', () => {

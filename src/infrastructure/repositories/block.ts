@@ -11,10 +11,6 @@ export default class BlockRepository {
   }
 
   public async persist(chain: Blockchain) {
-    // TODO: pass in chain
-    // TODO: get last block
-    // TODO: get data using to array on block
-    // TODO: flush events and dispatch them
     const data = chain.getPreviousBlock().toJson();
     const event = jsonEvent<BlockEvent>({
       type: 'block',
