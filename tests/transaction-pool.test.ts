@@ -1,5 +1,4 @@
 import { v4 } from 'uuid';
-import Emitter from '../src/domain/events/emitter';
 import Amount from '../src/domain/wallet/specifications/amount';
 import Transaction from '../src/domain/wallet/transaction';
 import TransactionPool from '../src/domain/wallet/transaction-pool';
@@ -21,7 +20,7 @@ describe('Transaction pool', () => {
     pool.addSpecification(new Amount());
 
     pool.fill(transaction);
-    
+
     const events = pool.flushEvents();
 
     expect(events.length).toBe(1);

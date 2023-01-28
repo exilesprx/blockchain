@@ -7,7 +7,7 @@ export type Transaction = {
   amount: number,
   date: number,
   hash: string
-}
+};
 
 type TransactionEvent = JSONEventType<
 'transaction',

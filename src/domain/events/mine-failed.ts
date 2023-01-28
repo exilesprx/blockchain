@@ -6,13 +6,13 @@ export default class MineFailed extends Event {
 
   public constructor(block: Block) {
     super();
-    
+
     this.id = block.getKey();
   }
 
   public toJson() {
     return {
-      id: this.id
+      id: this.id,
     };
   }
 }

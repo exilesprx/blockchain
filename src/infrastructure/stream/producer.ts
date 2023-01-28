@@ -2,8 +2,8 @@ import { Producer as KafkaProducer } from 'kafkajs';
 import Stream from './stream';
 import BlockTopic from './topic/block';
 import TransactionTopic from './topic/transaction';
-import { Block as BlockContract } from '../../infrastructure/database/models/block';
-import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction';
+import { Block as BlockContract } from '../database/models/block';
+import { Transaction as TransactionContract } from '../database/models/transaction';
 
 export default class Producer {
   private producer: KafkaProducer;

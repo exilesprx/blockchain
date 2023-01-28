@@ -50,7 +50,7 @@ export default class Transaction {
   public getDate() : number {
     return this.date;
   }
-  
+
   public toJson(): TransactionContract {
     return {
       id: this.getKey(),
@@ -58,7 +58,7 @@ export default class Transaction {
       from: this.getSender(),
       amount: this.getAmount(),
       date: this.getDate(),
-      hash: this.getHash()
-    }
+      hash: this.getHash(),
+    };
   }
 }

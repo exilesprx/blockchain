@@ -13,7 +13,7 @@ export default class TransactionPool {
 
   public constructor() {
     this.events = [];
-    
+
     this.specifications = [];
 
     this.transactions = [];
@@ -48,7 +48,7 @@ export default class TransactionPool {
 
     return transactions;
   }
-  
+
   public lastTransaction(): Transaction {
     return this.transactions[this.transactions.length - 1];
   }

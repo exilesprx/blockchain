@@ -14,7 +14,7 @@ export default class TransactionRepository {
     const data = pool.lastTransaction().toJson();
     const event = jsonEvent<TransactionEvent>({
       type: 'transaction',
-      data
+      data,
     });
 
     await this.database.persist(event);

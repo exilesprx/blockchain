@@ -9,7 +9,7 @@ export type Block = {
   previousHash: string,
   hash: string,
   date: number
-}
+};
 
 type BlockEvent = JSONEventType<
 'block',

@@ -4,15 +4,20 @@ import Event from './event';
 
 export default class TransactionAdded extends Event {
   private id: any;
+
   private to: string;
+
   private from: string;
+
   private amount: number;
+
   private date: number;
+
   private hash: string;
-  
+
   public constructor(transaction: Transaction) {
     super();
-    
+
     this.id = transaction.getKey();
     this.to = transaction.getReceiver();
     this.from = transaction.getSender();
@@ -28,7 +33,7 @@ export default class TransactionAdded extends Event {
       from: this.from,
       amount: this.amount,
       date: this.date,
-      hash: this.hash
+      hash: this.hash,
     };
   }
 }

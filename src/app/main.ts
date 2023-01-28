@@ -1,7 +1,6 @@
 import Events from 'events';
 import express, { Request, Response } from 'express';
 import helmet from 'helmet';
-import Block from '../domain/chain/block';
 import Blockchain from '../domain/chain/blockchain';
 import Link from '../domain/chain/specifications/link';
 import BlockMined from '../domain/chain/specifications/mined';
@@ -13,7 +12,6 @@ import Amount from '../domain/wallet/specifications/amount';
 import Receiver from '../domain/wallet/specifications/receiver';
 import SameWallet from '../domain/wallet/specifications/same-wallet';
 import Sender from '../domain/wallet/specifications/sender';
-import Transaction from '../domain/wallet/transaction';
 import TransactionPool from '../domain/wallet/transaction-pool';
 import Database from '../infrastructure/database';
 import BlockRepository from '../infrastructure/repositories/block';
@@ -121,7 +119,10 @@ export default class Application {
   }
 
   public registerRoutes() {
-    const repository = new TransactionEventRepository(this.emitter, new TransactionRepository(this.database));
+    const repository = new TransactionEventRepository(
+      this.emitter,
+      new TransactionRepository(this.database),
+    );
     const action = new AddTransaction(this.pool, repository);
 
     const transactionRoute = new TransactionRoute(action, this.logger);
