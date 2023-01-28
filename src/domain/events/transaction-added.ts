@@ -3,12 +3,12 @@ import { Transaction as TransactionContract } from '../../infrastructure/databas
 import Event from './event';
 
 export default class TransactionAdded extends Event {
-  private id;
-  private to;
-  private from;
-  private amount;
-  private date;
-  private hash;
+  private id: any;
+  private to: string;
+  private from: string;
+  private amount: number;
+  private date: number;
+  private hash: string;
   
   public constructor(transaction: Transaction) {
     super();

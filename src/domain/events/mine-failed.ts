@@ -1,12 +1,18 @@
+import Block from '../chain/block';
 import Event from './event';
 
 export default class MineFailed extends Event {
-  public constructor() {
+  private id: any;
+
+  public constructor(block: Block) {
     super();
+    
+    this.id = block.getKey();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   public toJson() {
-    return {};
+    return {
+      id: this.id
+    };
   }
 }

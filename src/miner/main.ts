@@ -14,6 +14,8 @@ import BlockMined from '../domain/events/block-mined';
 import TransactionConsumer from '../infrastructure/stream/transaction-consumer';
 import AddTransaction from './commands/add-transaction';
 import Emitter from './events/emitter';
+import { Block as BlockContract } from '../infrastructure/database/models/block';
+import { Transaction as TransactionContract } from '../infrastructure/database/models/transaction';
 
 export default class Miner {
   private emitter: Emitter;
@@ -33,7 +35,7 @@ export default class Miner {
 
     const chain = new Blockchain();
 
-    const pool = new TransactionPool(this.emitter);
+    const pool = new TransactionPool();
 
     const action = new AddTransaction(chain, pool);
 
@@ -43,22 +45,22 @@ export default class Miner {
   public registerEvents() : void {
     this.emitter.register(
       BlockAdded.toString(),
-      (block: Block) => this.emitter.blockAdded(block),
+      (block: BlockContract) => this.emitter.blockAdded(block),
     );
 
     this.emitter.register(
       TransactionAdded.toString(),
-      (transaction: Transaction) => this.emitter.transactionAdded(transaction),
+      (transaction: TransactionContract) => this.emitter.transactionAdded(transaction),
     );
 
     this.emitter.register(
       BlockMined.toString(),
-      (block: Block) => this.emitter.blockMined(block),
+      (block: BlockContract) => this.emitter.blockMined(block),
     );
 
     this.emitter.register(
       MineFailed.toString(),
-      (block: Block) => this.emitter.mineFailed(block),
+      (block: BlockContract) => this.emitter.mineFailed(block),
     );
   }
 
