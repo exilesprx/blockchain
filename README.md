@@ -10,13 +10,24 @@ Images for this project can be found: https://hub.docker.com/r/exilesprx/blockch
 
 Helper scripts:
 - run-build
-  - this will build an image with the current file state, tag using the current branch name, and build the app and miner
+  - this will build an image containing the source files
+  - tag using the current branch name
+  - build the bank and miner to ensure no JavaScript issues
 - run-test
-  - this will build a test image with the current file state, tag using the current branch name, and runs the tests
+  - this will build a test image with containing the source files
+  - tag using the current branch name
+  - runs the tests
+
+### Run
+- nodemon uses ts-node to run typescript removing the extra step of compiling the code before running
+- the build command exists to ensure no errors will present themselves upon run time, so its important to "compile" the source code at some point 
 
 ### Compilation
 
 TypeScript is used for the source code of the application. The source code is then "compiled" into raw JavaScript and placed in the "build" folder.
+    - commands:
+        - build:miner
+        - build:bank
 
 See: tsconfig.json
 

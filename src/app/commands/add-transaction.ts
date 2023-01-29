@@ -1,22 +1,22 @@
 import Transaction from '../../domain/wallet/transaction';
 import TransactionPool from '../../domain/wallet/transaction-pool';
-import Database from '../../infrastructure/database';
+import TransactionEventRepository from '../../infrastructure/repositories/transaction-events';
 
 export default class AddTransaction {
   private pool: TransactionPool;
 
-  private database: Database;
+  private repo: TransactionEventRepository;
 
-  public constructor(pool: TransactionPool, database: Database) {
+  public constructor(pool: TransactionPool, repo: TransactionEventRepository) {
     this.pool = pool;
 
-    this.database = database;
+    this.repo = repo;
   }
 
   public execute(transaction: Transaction) : string {
     this.pool.fill(transaction);
 
-    this.database.persistTransaction(transaction);
+    this.repo.persist(this.pool);
 
     return transaction.getHash();
   }

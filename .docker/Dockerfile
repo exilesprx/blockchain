@@ -6,14 +6,28 @@ COPY ./package.json /usr/app/
 
 COPY ./package-lock.json /usr/app/
 
+#
+FROM deps as dev
+
 RUN npm ci
+
+COPY --from=deps /usr/app/package.json /usr/app/
+
+COPY babel.config.js /usr/app/
+
+COPY jest.config.ts /usr/app/
+
+COPY ./src /usr/app/src
+
+COPY ./tests /usr/app/tests
+
 
 #
 FROM deps as build
 
-WORKDIR /usr/app
+RUN npm ci --omit=dev
 
-COPY --from=deps /usr/app/node_modules /usr/app/node_modules
+WORKDIR /usr/app
 
 COPY --from=deps /usr/app/package.json /usr/app/
 

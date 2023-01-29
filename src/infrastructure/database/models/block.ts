@@ -1,7 +1,7 @@
 import { JSONEventType } from '@eventstore/db-client';
 import Transaction from '../../../domain/wallet/transaction';
 
-export interface Block {
+export type Block = {
   id: string,
   transactions: Transaction[],
   nounce: number,
@@ -9,7 +9,7 @@ export interface Block {
   previousHash: string,
   hash: string,
   date: number
-}
+};
 
 type BlockEvent = JSONEventType<
 'block',

@@ -1,11 +1,9 @@
 import Events from 'events';
-import Block from '../domain/chain/block';
 import Blockchain from '../domain/chain/blockchain';
 import BlockAdded from '../domain/events/block-added';
 import MineFailed from '../domain/events/mine-failed';
 import KafkaLogger from '../domain/logs/kafka-logger';
 import Logger from '../domain/logs/logger';
-import Transaction from '../domain/wallet/transaction';
 import TransactionPool from '../domain/wallet/transaction-pool';
 import Producer from '../infrastructure/stream/producer';
 import Stream from '../infrastructure/stream/stream';
@@ -14,6 +12,8 @@ import BlockMined from '../domain/events/block-mined';
 import TransactionConsumer from '../infrastructure/stream/transaction-consumer';
 import AddTransaction from './commands/add-transaction';
 import Emitter from './events/emitter';
+import { Block as BlockContract } from '../infrastructure/database/models/block';
+import { Transaction as TransactionContract } from '../infrastructure/database/models/transaction';
 
 export default class Miner {
   private emitter: Emitter;
@@ -31,9 +31,9 @@ export default class Miner {
 
     this.emitter = new Emitter(new Events(), this.producer, logger);
 
-    const chain = new Blockchain(this.emitter);
+    const chain = new Blockchain();
 
-    const pool = new TransactionPool(this.emitter);
+    const pool = new TransactionPool();
 
     const action = new AddTransaction(chain, pool);
 
@@ -42,23 +42,23 @@ export default class Miner {
 
   public registerEvents() : void {
     this.emitter.register(
-      new BlockAdded().toString(),
-      (block: Block) => this.emitter.blockAdded(block),
+      BlockAdded.toString(),
+      (block: BlockContract) => this.emitter.blockAdded(block),
     );
 
     this.emitter.register(
-      new TransactionAdded().toString(),
-      (transaction: Transaction) => this.emitter.transactionAdded(transaction),
+      TransactionAdded.toString(),
+      (transaction: TransactionContract) => this.emitter.transactionAdded(transaction),
     );
 
     this.emitter.register(
-      new BlockMined().toString(),
-      (block: Block) => this.emitter.blockMined(block),
+      BlockMined.toString(),
+      (block: BlockContract) => this.emitter.blockMined(block),
     );
 
     this.emitter.register(
-      new MineFailed().toString(),
-      (block: Block) => this.emitter.mineFailed(block),
+      MineFailed.toString(),
+      (block: BlockContract) => this.emitter.mineFailed(block),
     );
   }
 

@@ -69,7 +69,7 @@ workflows:
           requires:
             - lint
       - docker/hadolint:
-          dockerfiles: '.docker/app/Dockerfile'
+          dockerfiles: '.docker/Dockerfile'
           ignore-rules: 'DL4005,DL3008'
           trusted-registries: 'docker.io'
           requires:

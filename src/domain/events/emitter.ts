@@ -1,8 +1,8 @@
 import Events from 'events';
 import Logger from '../logs/logger';
-import Block from '../chain/block';
 import Producer from '../../infrastructure/stream/producer';
-import Transaction from '../wallet/transaction';
+import { Block as BlockContract } from '../../infrastructure/database/models/block';
+import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction';
 
 export default abstract class Emitter {
   protected producer: Producer;
@@ -27,7 +27,7 @@ export default abstract class Emitter {
     this.emitter.emit(event, value);
   }
 
-  public abstract blockAdded(block: Block) : void;
+  public abstract blockAdded(block: BlockContract) : void;
 
-  public abstract transactionAdded(transaction: Transaction) : void;
+  public abstract transactionAdded(transaction: TransactionContract) : void;
 }

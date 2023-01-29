@@ -1,5 +1,4 @@
 import { v4 } from 'uuid';
-import Emitter from '../src/domain/events/emitter';
 import Amount from '../src/domain/wallet/specifications/amount';
 import Transaction from '../src/domain/wallet/transaction';
 import TransactionPool from '../src/domain/wallet/transaction-pool';
@@ -7,9 +6,6 @@ import TransactionPool from '../src/domain/wallet/transaction-pool';
 jest.mock('../src/domain/events/emitter');
 
 describe('Transaction pool', () => {
-  beforeAll(() => {
-    Emitter.mockClear();
-  });
   test('it expects the pool to be empty when initialized', () => {
     const pool = new TransactionPool(jest.fn());
 
@@ -17,8 +13,7 @@ describe('Transaction pool', () => {
   });
 
   test('it expects a valid transaction is added to the pool', () => {
-    const emitter = new Emitter(jest.fn(), jest.fn(), jest.fn());
-    const pool = new TransactionPool(emitter);
+    const pool = new TransactionPool();
 
     const transaction = new Transaction(v4(), 'to', 'from', 2, 0);
 
@@ -26,13 +21,15 @@ describe('Transaction pool', () => {
 
     pool.fill(transaction);
 
-    expect(Emitter.mock.instances[0].emit).toBeCalled();
+    const events = pool.flushEvents();
+
+    expect(events.length).toBe(1);
 
     expect(pool.isEmpty()).toBeFalsy();
   });
 
   test('it expects an invalid transaction is not added to the pool', () => {
-    const pool = new TransactionPool(jest.fn());
+    const pool = new TransactionPool();
 
     const transaction = new Transaction(v4(), 'to', 'from', 0, 0);
 
@@ -42,8 +39,7 @@ describe('Transaction pool', () => {
   });
 
   test('it expects the pool to be empty after flushing', () => {
-    const emitter = new Emitter(jest.fn(), jest.fn(), jest.fn());
-    const pool = new TransactionPool(emitter);
+    const pool = new TransactionPool();
 
     pool.fill(new Transaction(v4(), 'to', 'from', 2, 0));
 
@@ -57,9 +53,7 @@ describe('Transaction pool', () => {
   });
 
   test('it expects the ability to add multiple specifications at once', () => {
-    const emitter = new Emitter(jest.fn(), jest.fn(), jest.fn());
-
-    const pool = new TransactionPool(emitter);
+    const pool = new TransactionPool();
 
     const transaction = new Transaction(v4(), 'to', 'from', 5, 0);
 
@@ -71,8 +65,6 @@ describe('Transaction pool', () => {
     pool.addSpecification(amountSpec, amountSpec, amountSpec);
 
     pool.fill(transaction);
-
-    expect(Emitter.mock.instances[0].emit).toBeCalled();
 
     expect(spy).toBeCalledTimes(3);
   });

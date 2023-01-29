@@ -1,7 +1,7 @@
 import Block from '../block';
 
-interface Specification {
-  isSatisfiedBy(prevous: Block, current: Block): void;
-}
+type Specification = {
+  isSatisfiedBy(prevous: Block, current: Block): void,
+};
 
 export default Specification;

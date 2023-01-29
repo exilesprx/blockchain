@@ -2,15 +2,15 @@ import { v4 } from 'uuid';
 import BlockAdded from '../events/block-added';
 import MineFailed from '../events/mine-failed';
 import BlockMined from '../events/block-mined';
-import Emitter from '../events/emitter';
 import BlockLimitPolicy from '../policies/block-limit-policy';
 import Transaction from '../wallet/transaction';
 import Block from './block';
 import BlockchainInterface from './blockchain-interface';
 import Specification from './specifications/specifications';
+import Event from '../events/event';
 
 export default class Blockchain implements BlockchainInterface {
-  private emitter: Emitter;
+  private events: Event[];
 
   private chain: Block[];
 
@@ -18,8 +18,8 @@ export default class Blockchain implements BlockchainInterface {
 
   private static startingNounce: number = 0;
 
-  constructor(emitter: Emitter) {
-    this.emitter = emitter;
+  constructor() {
+    this.events = [];
 
     this.chain = [Block.genesis()];
 
@@ -42,10 +42,9 @@ export default class Blockchain implements BlockchainInterface {
       await block.mine();
 
       this.addBlock(block);
-
-      this.emitter.emit(new BlockMined().toString(), block);
+      this.events.push(new BlockMined(block));
     } catch (error: any) {
-      this.emitter.emit(new MineFailed().toString(), block);
+      this.events.push(new MineFailed(block));
     }
   }
 
@@ -60,7 +59,7 @@ export default class Blockchain implements BlockchainInterface {
 
     this.chain.push(block);
 
-    this.emitter.emit(new BlockAdded().toString(), block);
+    this.events.push(new BlockAdded(block));
   }
 
   public length() : number {
@@ -71,7 +70,7 @@ export default class Blockchain implements BlockchainInterface {
     this.specifications.push(...specification);
   }
 
-  private getPreviousBlock() : Block {
+  public getPreviousBlock() : Block {
     return this.chain[this.chain.length - 1];
   }
 
@@ -81,5 +80,9 @@ export default class Blockchain implements BlockchainInterface {
 
   private getPreviousHash() : string {
     return this.getPreviousBlock().getHash();
+  }
+
+  public flushEvents(): any[] {
+    return this.events.splice(0, this.events.length);
   }
 }

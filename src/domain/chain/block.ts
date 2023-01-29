@@ -4,6 +4,7 @@ import Transaction from '../wallet/transaction';
 import BlockState from './state/block-state';
 import Mined from './state/mined';
 import Unmined from './state/unmined';
+import { Block as BlockContract } from '../../infrastructure/database/models/block';
 
 export default class Block {
   private transactions: Transaction[];
@@ -104,5 +105,17 @@ export default class Block {
     }
 
     return new Unmined();
+  }
+
+  public toJson(): BlockContract {
+    return {
+      id: this.id,
+      transactions: this.transactions,
+      nounce: this.nounce,
+      difficulty: this.difficulty,
+      previousHash: this.previousHash,
+      hash: this.hash,
+      date: this.date,
+    };
   }
 }

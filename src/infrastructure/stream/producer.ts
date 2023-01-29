@@ -1,9 +1,9 @@
 import { Producer as KafkaProducer } from 'kafkajs';
-import Block from '../../domain/chain/block';
-import Transaction from '../../domain/wallet/transaction';
 import Stream from './stream';
 import BlockTopic from './topic/block';
 import TransactionTopic from './topic/transaction';
+import { Block as BlockContract } from '../database/models/block';
+import { Transaction as TransactionContract } from '../database/models/transaction';
 
 export default class Producer {
   private producer: KafkaProducer;
@@ -16,20 +16,20 @@ export default class Producer {
     this.producer.connect();
   }
 
-  public sendTransaction(transaction: Transaction) : void {
+  public sendTransaction(transaction: TransactionContract) : void {
     this.producer.send({
       topic: new TransactionTopic().toString(),
       messages: [
-        { key: transaction.getKey(), value: JSON.stringify(transaction) },
+        { key: transaction.id, value: JSON.stringify(transaction) },
       ],
     });
   }
 
-  public sendBlock(block: Block) : void {
+  public sendBlock(block: BlockContract) : void {
     this.producer.send({
       topic: new BlockTopic().toString(),
       messages: [
-        { key: block.getKey(), value: JSON.stringify(block) },
+        { key: block.id, value: JSON.stringify(block) },
       ],
     });
   }

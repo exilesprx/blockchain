@@ -58,4 +58,8 @@ describe('Block', () => {
 
     expect(block.isMined()).toBe(false);
   });
+
+  test('it converts the data to an array', () => {
+
+  });
 });

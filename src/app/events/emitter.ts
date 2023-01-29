@@ -1,14 +1,14 @@
-import Block from '../../domain/chain/block';
 import BaseEmitter from '../../domain/events/emitter';
-import Transaction from '../../domain/wallet/transaction';
+import { Block as BlockContract } from '../../infrastructure/database/models/block';
+import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction';
 
 export default class Emitter extends BaseEmitter {
-  public blockAdded(block: Block) : void {
-    this.logger.info(`Block added: ${block.getHash()}`);
+  public blockAdded(block: BlockContract) : void {
+    this.logger.info(`Block added: ${block.hash}`);
   }
 
-  public transactionAdded(transaction: Transaction) : void {
-    this.logger.info(`Transaction added: ${transaction.getHash()}`);
+  public transactionAdded(transaction: TransactionContract) : void {
+    this.logger.info(`Transaction added: ${transaction.hash}`);
 
     this.producer.sendTransaction(transaction);
   }

@@ -1,7 +1,6 @@
 import Events from 'events';
 import express, { Request, Response } from 'express';
 import helmet from 'helmet';
-import Block from '../domain/chain/block';
 import Blockchain from '../domain/chain/blockchain';
 import Link from '../domain/chain/specifications/link';
 import BlockMined from '../domain/chain/specifications/mined';
@@ -13,9 +12,12 @@ import Amount from '../domain/wallet/specifications/amount';
 import Receiver from '../domain/wallet/specifications/receiver';
 import SameWallet from '../domain/wallet/specifications/same-wallet';
 import Sender from '../domain/wallet/specifications/sender';
-import Transaction from '../domain/wallet/transaction';
 import TransactionPool from '../domain/wallet/transaction-pool';
 import Database from '../infrastructure/database';
+import BlockRepository from '../infrastructure/repositories/block';
+import BlockEventRepository from '../infrastructure/repositories/block-event';
+import TransactionEventRepository from '../infrastructure/repositories/transaction-events';
+import TransactionRepository from '../infrastructure/repositories/transaction';
 import BlockConsumer from '../infrastructure/stream/block-consumer';
 import Producer from '../infrastructure/stream/producer';
 import Stream from '../infrastructure/stream/stream';
@@ -24,6 +26,8 @@ import AddTransaction from './commands/add-transaction';
 import Emitter from './events/emitter';
 import TransactionRoute from './routes/transaction';
 import Server from './server';
+import { Block as BlockContract } from '../infrastructure/database/models/block';
+import { Transaction as TransactionContract } from '../infrastructure/database/models/transaction';
 
 export default class Application {
   private server: Server;
@@ -59,11 +63,12 @@ export default class Application {
 
     this.emitter = new Emitter(new Events(), this.producer, this.logger);
 
-    this.chain = new Blockchain(this.emitter);
+    this.chain = new Blockchain();
 
-    this.pool = new TransactionPool(this.emitter);
+    this.pool = new TransactionPool();
 
-    const action = new AddBlock(this.chain, this.database);
+    const repo = new BlockEventRepository(this.emitter, new BlockRepository(this.database));
+    const action = new AddBlock(this.chain, repo);
 
     this.consumer = new BlockConsumer(action, stream);
   }
@@ -86,13 +91,13 @@ export default class Application {
 
   public registerEvents() {
     this.emitter.register(
-      new BlockAdded().toString(),
-      (block: Block) => this.emitter.blockAdded(block),
+      BlockAdded.toString(),
+      (block: BlockContract) => this.emitter.blockAdded(block),
     );
 
     this.emitter.register(
-      new TransactionAdded().toString(),
-      (transaction: Transaction) => this.emitter.transactionAdded(transaction),
+      TransactionAdded.toString(),
+      (transaction: TransactionContract) => this.emitter.transactionAdded(transaction),
     );
   }
 
@@ -114,7 +119,11 @@ export default class Application {
   }
 
   public registerRoutes() {
-    const action = new AddTransaction(this.pool, this.database);
+    const repository = new TransactionEventRepository(
+      this.emitter,
+      new TransactionRepository(this.database),
+    );
+    const action = new AddTransaction(this.pool, repository);
 
     const transactionRoute = new TransactionRoute(action, this.logger);
 

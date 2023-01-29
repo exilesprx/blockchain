@@ -1,13 +1,13 @@
 import { JSONEventType } from '@eventstore/db-client';
 
-export interface Transaction {
+export type Transaction = {
   id: string,
   to: string,
   from: string,
   amount: number,
   date: number,
   hash: string
-}
+};
 
 type TransactionEvent = JSONEventType<
 'transaction',
