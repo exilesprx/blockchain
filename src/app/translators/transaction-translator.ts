@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import Transaction from '../../domain/wallet/transaction';
+import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction';
 
 export default class TransactionTranslator {
   public static fromRequest(params: { to: string, from: string, amount: number }) : Transaction {
@@ -13,14 +14,7 @@ export default class TransactionTranslator {
   }
 
   public static fromMessage(value: Buffer) : Transaction {
-    const message: {
-      id: any,
-      to: string,
-      from: string,
-      amount: number,
-      date: number,
-      hash: string
-    } = JSON.parse(value.toString());
+    const message: TransactionContract = JSON.parse(value.toString());
 
     return new Transaction(
       message.id,
@@ -31,9 +25,7 @@ export default class TransactionTranslator {
     );
   }
 
-  public static fromObject(
-    message: { id: any, to: string, from: string, amount: number, date: number },
-  ) : Transaction {
+  public static fromObject(message: TransactionContract) : Transaction {
     return new Transaction(
       message.id,
       message.to,
@@ -47,16 +39,7 @@ export default class TransactionTranslator {
     const messageTransactions: Transaction[] = [];
 
     transactions.forEach(
-      (
-        transaction: {
-          id: any,
-          to: string,
-          from: string,
-          amount: number,
-          date: number,
-          hash: string
-        },
-      ) => {
+      (transaction: TransactionContract) => {
         messageTransactions.push(
           TransactionTranslator.fromObject(transaction),
         );
