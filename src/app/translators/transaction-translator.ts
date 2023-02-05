@@ -35,7 +35,7 @@ export default class TransactionTranslator {
     );
   }
 
-  public static fromObjectForMany(transactions: []) : Transaction[] {
+  public static fromObjectForMany(transactions: TransactionContract[]) : Transaction[] {
     const messageTransactions: Transaction[] = [];
 
     transactions.forEach(
