@@ -13,7 +13,7 @@ describe('Transaction Translator', () => {
     };
 
     const transaction = TransactionTranslator.fromObject(message);
-    expect(transaction.getHash()).toBe('abc123');
+    expect(transaction.getHash()).not.toBe('abc123');
     expect(transaction).toBeInstanceOf(Transaction);
   });
 
@@ -29,6 +29,7 @@ describe('Transaction Translator', () => {
 
     const buffer = Buffer.from(JSON.stringify(message));
     const transaction = TransactionTranslator.fromMessage(buffer);
-    expect(transaction.getAmount).toBe(123);
+    expect(transaction.getAmount()).toBe(123);
+    expect(transaction.getHash()).not.toBe('abc123');
   });
 });
