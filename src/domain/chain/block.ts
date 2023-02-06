@@ -110,7 +110,7 @@ export default class Block {
   public toJson(): BlockContract {
     return {
       id: this.id,
-      transactions: this.transactions,
+      transactions: this.transactions.map((transaction: Transaction) => transaction.toJson()),
       nounce: this.nounce,
       difficulty: this.difficulty,
       previousHash: this.previousHash,

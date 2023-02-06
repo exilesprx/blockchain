@@ -1,9 +1,9 @@
 import { JSONEventType } from '@eventstore/db-client';
-import Transaction from '../../../domain/wallet/transaction';
+import { Transaction as TransactionContract } from './transaction';
 
 export type Block = {
   id: string,
-  transactions: Transaction[],
+  transactions: TransactionContract[],
   nounce: number,
   difficulty: number,
   previousHash: string,
@@ -13,15 +13,7 @@ export type Block = {
 
 type BlockEvent = JSONEventType<
 'block',
-{
-  id: string;
-  transactions: Transaction[];
-  nounce: number;
-  difficulty: number;
-  previousHash: string;
-  hash: string;
-  date: number;
-}
+Block
 >;
 
 export default BlockEvent;
