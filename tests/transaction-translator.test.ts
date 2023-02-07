@@ -32,4 +32,12 @@ describe('Transaction Translator', () => {
     expect(transaction.getDate()).toBe(data.date);
     expect(transaction.getAmount()).toBe(data.amount);
   });
+
+  test('it expects to translate to a transaction from a request body', () => {
+    const request = { to: '123', from: '321', amount: 2 };
+    const transaction = TransactionTranslator.fromRequest(request);
+    expect(transaction.getAmount()).toBe(request.amount);
+    expect(transaction.getSender()).toBe(request.from);
+    expect(transaction.getReceiver()).toBe(request.to);
+  });
 });
