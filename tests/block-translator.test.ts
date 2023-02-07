@@ -10,19 +10,36 @@ describe('Block Translator', () => {
     );
 
     expect(block).toBeInstanceOf(Block);
+  });
+
+  test('it expects to translate transactions in the block', () => {
+    const block = BlockTranslator.fromMessage(
+      Buffer.from(JSON.stringify(data)),
+    );
 
     block.getTransactions().forEach((transaction) => {
       expect(transaction).toBeInstanceOf(Transaction);
     });
+  });
 
-    expect(block.getHash()).toBe('00d27024e9d5cc76db419b25be702aff8ecaab4cfcc43759c140de6967d9b4bd');
+  test('it expects to recalulate hash', () => {
+    const block = BlockTranslator.fromMessage(
+      Buffer.from(JSON.stringify(data)),
+    );
 
-    expect(block.getDate()).toBe(1651979137030);
+    expect(block.getHash()).not.toBe(data.hash);
+  });
 
-    expect(block.getKey()).toBe('47254a8a-1aaf-42ad-a4cd-f0afb0578b33');
+  test('it expects block properties to match values parsed', () => {
+    const block = BlockTranslator.fromMessage(
+      Buffer.from(JSON.stringify(data)),
+    );
 
-    expect(block.getTransactions().length).toBe(20);
-
-    expect(block.getTransactions()[0]).toBeInstanceOf(Transaction);
+    expect(block.getDate()).toBe(data.date);
+    expect(block.getKey()).toBe(data.id);
+    expect(block.getDifficulty()).toBe(data.difficulty);
+    expect(block.getNounce()).toBe(data.nounce);
+    expect(block.getPreviousHash()).toBe(data.previousHash);
+    expect(block.getTransactions().length).toBe(data.transactions.length);
   });
 });

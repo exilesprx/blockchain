@@ -11,14 +11,7 @@ export type Transaction = {
 
 type TransactionEvent = JSONEventType<
 'transaction',
-{
-  id: string;
-  to: string;
-  from: string;
-  amount: number;
-  date: number;
-  hash: string;
-}
+Transaction
 >;
 
 export default TransactionEvent;
