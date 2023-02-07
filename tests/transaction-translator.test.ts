@@ -22,7 +22,7 @@ describe('Transaction Translator', () => {
       expect(transaction.getHash()).not.toBe(data.hash);
     });
   });
-  
+
   test('it expects transaction properties to match values parsed', () => {
     const transaction = TransactionTranslator.fromObject(data);
     expect(transaction).toBeInstanceOf(Transaction);
@@ -31,5 +31,5 @@ describe('Transaction Translator', () => {
     expect(transaction.getKey()).toBe(data.id);
     expect(transaction.getDate()).toBe(data.date);
     expect(transaction.getAmount()).toBe(data.amount);
-  })
+  });
 });

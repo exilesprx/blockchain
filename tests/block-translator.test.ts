@@ -11,7 +11,7 @@ describe('Block Translator', () => {
 
     expect(block).toBeInstanceOf(Block);
   });
-  
+
   test('it expects to translate transactions in the block', () => {
     const block = BlockTranslator.fromMessage(
       Buffer.from(JSON.stringify(data)),
@@ -29,7 +29,7 @@ describe('Block Translator', () => {
 
     expect(block.getHash()).not.toBe(data.hash);
   });
-  
+
   test('it expects block properties to match values parsed', () => {
     const block = BlockTranslator.fromMessage(
       Buffer.from(JSON.stringify(data)),
