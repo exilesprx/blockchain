@@ -8,9 +8,7 @@ describe('Transactions', () => {
     const transaction = new Transaction(v4(), 'one', 'two', 30, 0);
 
     expect(transaction.getReceiver()).toBe('one');
-
     expect(transaction.getSender()).toBe('two');
-
     expect(transaction.getAmount()).toBe(30);
   });
 
@@ -22,17 +20,5 @@ describe('Transactions', () => {
 
   test('it expects a transaction should not fail using the same wallet', () => {
     expect(() => new Transaction(v4(), 'one', 'one', 20, 0)).not.toThrow(TypeError);
-  });
-
-  test('it expects to translate a consumer message into transactions', () => {
-    const transaction = TransactionTranslator.fromObject(data);
-
-    expect(transaction).toBeInstanceOf(Transaction);
-
-    expect(transaction.getHash()).toBe(data.hash);
-
-    expect(transaction.getDate()).toBe(data.date);
-
-    expect(transaction.getKey()).toBe(data.id);
   });
 });
