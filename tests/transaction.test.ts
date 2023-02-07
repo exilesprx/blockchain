@@ -1,7 +1,5 @@
 import { v4 } from 'uuid';
-import TransactionTranslator from '../src/app/translators/transaction-translator';
 import Transaction from '../src/domain/wallet/transaction';
-import data from './stubs/transaction.json';
 
 describe('Transactions', () => {
   test('it expect to have a valid transaction', () => {
