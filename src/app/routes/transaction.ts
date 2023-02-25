@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Logger from '../../domain/logs/logger';
+import Logger from '../../infrastructure/logs/logger';
 import AddTransactionFromRequest from '../commands/add-transaction-from-request';
 import TransactionTranslator from '../translators/transaction-translator';
 
