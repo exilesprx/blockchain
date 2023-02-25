@@ -1,14 +1,14 @@
 import { EachMessagePayload } from 'kafkajs';
-import AddBlock from '../../app/commands/add-block';
+import AddBlockFromConsumer from '../../app/commands/add-block-from-consumer';
 import Consumer from './consumer';
 import Stream from './stream';
 import BlockTopic from './topic/block';
 import BlockTranslator from './translators/block-translator';
 
 export default class BlockConsumer extends Consumer {
-  private action: AddBlock;
+  private action: AddBlockFromConsumer;
 
-  public constructor(action: AddBlock, stream: Stream) {
+  public constructor(action: AddBlockFromConsumer, stream: Stream) {
     super(stream);
 
     this.action = action;

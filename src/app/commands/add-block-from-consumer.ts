@@ -2,7 +2,7 @@ import Block from '../../domain/chain/block';
 import Blockchain from '../../domain/chain/blockchain';
 import BlockEventRepository from '../../infrastructure/repositories/block-event';
 
-export default class AddBlock {
+export default class AddBlockFromConsumer {
   private chain: Blockchain;
 
   private repo: BlockEventRepository;

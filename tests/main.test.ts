@@ -4,7 +4,7 @@ import Server from '../src/app/server';
 import Database from '../src/infrastructure/database';
 import Blockchain from '../src/domain/chain/blockchain';
 import Link from '../src/domain/chain/specifications/link';
-import Emitter from '../src/domain/events/emitter';
+import Emitter from '../src/app/events/abstract-emitter';
 import Consumer from '../src/infrastructure/stream/consumer';
 import Producer from '../src/infrastructure/stream/producer';
 import Amount from '../src/domain/wallet/specifications/amount';

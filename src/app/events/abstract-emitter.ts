@@ -1,5 +1,5 @@
 import Events from 'events';
-import Logger from '../logs/logger';
+import Logger from '../../domain/logs/logger';
 import Producer from '../../infrastructure/stream/producer';
 import { Block as BlockContract } from '../../infrastructure/database/models/block';
 import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction';
