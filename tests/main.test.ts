@@ -1,4 +1,4 @@
-import Application from '../src/app/main';
+import Application from '../src/app/bank/main';
 import TransactionRoute from '../src/app/routes/transaction';
 import Server from '../src/app/server';
 import Database from '../src/infrastructure/database';

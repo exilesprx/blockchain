@@ -1,6 +1,6 @@
 import TransactionRoute from '../src/app/routes/transaction';
 import Database from '../src/infrastructure/database/index';
-import Logger from '../src/domain/logs/logger';
+import Logger from '../src/infrastructure/logs/logger';
 import AddTransactionFromRequest from '../src/app/commands/add-transaction-from-request';
 
 jest.mock('../src/infrastructure/database/index');
