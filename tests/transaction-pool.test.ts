@@ -3,7 +3,7 @@ import Amount from '../src/domain/wallet/specifications/amount';
 import Transaction from '../src/domain/wallet/transaction';
 import TransactionPool from '../src/domain/wallet/transaction-pool';
 
-jest.mock('../src/domain/events/emitter');
+jest.mock('../src/app/events/abstract-emitter');
 
 describe('Transaction pool', () => {
   test('it expects the pool to be empty when initialized', () => {

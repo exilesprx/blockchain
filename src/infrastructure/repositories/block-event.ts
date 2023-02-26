@@ -1,5 +1,5 @@
 import Blockchain from '../../domain/chain/blockchain';
-import Emitter from '../../domain/events/emitter';
+import Emitter from '../../app/events/abstract-emitter';
 import Event from '../../domain/events/event';
 import BlockRepository from './block';
 

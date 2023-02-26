@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
-import Logger from '../../domain/logs/logger';
-import AddTransaction from '../commands/add-transaction';
+import Logger from '../../infrastructure/logs/logger';
+import AddTransactionFromRequest from '../commands/add-transaction-from-request';
 import TransactionTranslator from '../translators/transaction-translator';
 
 export default class Transaction {
-  private action: AddTransaction;
+  private action: AddTransactionFromRequest;
 
   private logger: Logger;
 
-  public constructor(action: AddTransaction, logger: Logger) {
+  public constructor(action: AddTransactionFromRequest, logger: Logger) {
     this.action = action;
 
     this.logger = logger;

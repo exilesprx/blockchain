@@ -1,6 +1,6 @@
 import { EachMessagePayload } from 'kafkajs';
-import TransactionTranslator from '../../app/translators/transaction-translator';
-import AddTransaction from '../../miner/commands/add-transaction';
+import TransactionTranslator from './translators/transaction-translator';
+import AddTransaction from '../../app/commands/add-transaction-from-consumer';
 import Consumer from './consumer';
 import Stream from './stream';
 import TransactionTopic from './topic/transaction';

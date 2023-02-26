@@ -1,16 +1,16 @@
 import Events from 'events';
 import Block from '../src/domain/chain/block';
 import Emitter from '../src/app/events/emitter';
-import KafkaLogger from '../src/domain/logs/kafka-logger';
-import Logger from '../src/domain/logs/logger';
+import KafkaLogger from '../src/infrastructure/logs/kafka-logger';
+import Logger from '../src/infrastructure/logs/logger';
 import Producer from '../src/infrastructure/stream/producer';
 import Stream from '../src/infrastructure/stream/stream';
 import Transaction from '../src/domain/wallet/transaction';
 
 jest.mock('events');
 jest.mock('kafkajs');
-jest.mock('../src/domain/logs/logger');
-jest.mock('../src/domain/logs/kafka-logger');
+jest.mock('../src/infrastructure/logs/logger');
+jest.mock('../src/infrastructure/logs/kafka-logger');
 jest.mock('../src/infrastructure/stream/stream');
 jest.mock('../src/infrastructure/stream/producer');
 

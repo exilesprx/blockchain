@@ -9,12 +9,6 @@ describe('Transaction Translator', () => {
     expect(transaction).toBeInstanceOf(Transaction);
   });
 
-  test('it expects to translate a buffer into a transaction', () => {
-    const buffer = Buffer.from(JSON.stringify(data));
-    const transaction = TransactionTranslator.fromMessage(buffer);
-    expect(transaction.getHash()).not.toBe(data.hash);
-  });
-
   test('it expects to translate an array of transactions', () => {
     const transactions = [data, data];
     const convertedTransactions = TransactionTranslator.fromObjectForMany(transactions);

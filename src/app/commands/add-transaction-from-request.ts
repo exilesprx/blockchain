@@ -2,7 +2,7 @@ import Transaction from '../../domain/wallet/transaction';
 import TransactionPool from '../../domain/wallet/transaction-pool';
 import TransactionEventRepository from '../../infrastructure/repositories/transaction-events';
 
-export default class AddTransaction {
+export default class AddTransactionFromRequest {
   private pool: TransactionPool;
 
   private repo: TransactionEventRepository;

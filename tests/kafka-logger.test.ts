@@ -1,8 +1,8 @@
 import { logLevel } from 'kafkajs';
-import Logger from '../src/domain/logs/logger';
-import KafkaLogger from '../src/domain/logs/kafka-logger';
+import Logger from '../src/infrastructure/logs/logger';
+import KafkaLogger from '../src/infrastructure/logs/kafka-logger';
 
-jest.mock('../src/domain/logs/logger');
+jest.mock('../src/infrastructure/logs/logger');
 
 const logger: Logger = new Logger();
 
