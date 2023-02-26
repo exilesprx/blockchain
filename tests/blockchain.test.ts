@@ -7,7 +7,7 @@ import BlockMined from '../src/domain/chain/specifications/mined';
 import BlockAdded from '../src/domain/events/block-added';
 
 jest.mock('../src/domain/policies/block-limit-policy');
-jest.mock('../src/domain/events/emitter');
+jest.mock('../src/app/events/abstract-emitter');
 
 describe('Blockchain', () => {
   beforeAll(() => {

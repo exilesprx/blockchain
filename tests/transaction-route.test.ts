@@ -4,8 +4,8 @@ import Logger from '../src/infrastructure/logs/logger';
 import AddTransactionFromRequest from '../src/app/commands/add-transaction-from-request';
 
 jest.mock('../src/infrastructure/database/index');
-jest.mock('../src/domain/logs/logger');
-jest.mock('../src/app/commands/add-transaction');
+jest.mock('../src/infrastructure/logs/logger');
+jest.mock('../src/app/commands/add-transaction-from-request');
 
 describe('Transaction route', () => {
   beforeAll(() => {

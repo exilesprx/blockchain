@@ -14,7 +14,7 @@ import Sender from '../src/domain/wallet/specifications/sender';
 import TransactionPool from '../src/domain/wallet/transaction-pool';
 import BlockMined from '../src/domain/chain/specifications/mined';
 
-jest.mock('../src/domain/events/emitter');
+jest.mock('../src/app/events/abstract-emitter');
 jest.mock('../src/domain/wallet/transaction-pool');
 jest.mock('../src/domain/chain/blockchain');
 jest.mock('../src/infrastructure/database');
@@ -59,9 +59,7 @@ describe('Main', () => {
 
     application.registerEvents();
 
-    expect(Emitter.mock.instances[0].register).toBeCalledTimes(2);
-
-    expect(Emitter.mock.instances[0].register).toBeCalledWith('BlockAdded', expect.any(Function));
+    expect(Emitter.mock.instances[0].register).toBeCalledTimes(1);
 
     expect(Emitter.mock.instances[0].register).toBeCalledWith('TransactionAdded', expect.any(Function));
   });

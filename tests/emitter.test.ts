@@ -9,8 +9,8 @@ import Transaction from '../src/domain/wallet/transaction';
 
 jest.mock('events');
 jest.mock('kafkajs');
-jest.mock('../src/domain/logs/logger');
-jest.mock('../src/domain/logs/kafka-logger');
+jest.mock('../src/infrastructure/logs/logger');
+jest.mock('../src/infrastructure/logs/kafka-logger');
 jest.mock('../src/infrastructure/stream/stream');
 jest.mock('../src/infrastructure/stream/producer');
 
