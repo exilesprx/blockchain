@@ -13,18 +13,6 @@ export default class TransactionTranslator {
     );
   }
 
-  public static fromMessage(value: Buffer) : Transaction {
-    const message: TransactionContract = JSON.parse(value.toString());
-
-    return new Transaction(
-      message.id,
-      message.to,
-      message.from,
-      message.amount,
-      message.date,
-    );
-  }
-
   public static fromObject(message: TransactionContract) : Transaction {
     return new Transaction(
       message.id,
