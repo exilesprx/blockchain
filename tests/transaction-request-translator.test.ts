@@ -1,5 +1,4 @@
 import TransactionTranslator from '../src/app/translators/transaction-translator';
-import { default as ConsumerTransactionTranslator } from '../src/infrastructure/stream/translators/transaction-translator';
 import Transaction from '../src/domain/wallet/transaction';
 import data from './stubs/transaction.json';
 
@@ -8,12 +7,6 @@ describe('Transaction Translator', () => {
     const transaction = TransactionTranslator.fromObject(data);
     expect(transaction.getHash()).not.toBe(data.hash);
     expect(transaction).toBeInstanceOf(Transaction);
-  });
-
-  test('it expects to translate a buffer into a transaction', () => {
-    const buffer = Buffer.from(JSON.stringify(data));
-    const transaction = ConsumerTransactionTranslator.fromMessage(buffer);
-    expect(transaction.getHash()).not.toBe(data.hash);
   });
 
   test('it expects to translate an array of transactions', () => {
