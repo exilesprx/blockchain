@@ -115,7 +115,7 @@ services:
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
     volumes:
-      - ./connectors:/etc/kafka-connect/jars/
+      - connectors:/etc/kafka-connect/jars/
     depends_on:
       - zoo1
       - kafka
@@ -246,11 +246,9 @@ services:
 
 volumes:
   kafka:
+  connectors:
   eventstore-volume-data:
   eventstore-volume-logs:
   mongo-data:
-    driver: local
   es-data:
-    driver: local
   graylog-data:
-    driver: local
