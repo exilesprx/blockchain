@@ -1,4 +1,4 @@
-FROM node:19.8.1-bullseye-slim as deps
+FROM node:19.9.0-bullseye-slim as deps
 
 WORKDIR /usr/app
 
