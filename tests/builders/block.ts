@@ -7,11 +7,11 @@ export default class BlockBuilder {
   private block: Block;
 
   public constructor() {
-    this.block = new Block(v4(), 0, 1, faker.unique.name, [], Date.now());
+    this.block = new Block(v4(), 0, 1, faker.string.alpha(20), [], Date.now());
   }
 
   public withNoTransactions() : BlockBuilder {
-    this.block = new Block(v4(), 0, 1, faker.unique.name, [], Date.now());
+    this.block = new Block(v4(), 0, 1, faker.string.alpha(20), [], Date.now());
     return this;
   }
 
@@ -24,7 +24,7 @@ export default class BlockBuilder {
       Date.now(),
     );
 
-    this.block = new Block(v4(), 0, 1, faker.unique.name, [transaction], 0);
+    this.block = new Block(v4(), 0, 1, faker.string.alpha(20), [transaction], 0);
     return this;
   }
 
