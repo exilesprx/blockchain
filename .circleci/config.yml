@@ -78,6 +78,7 @@ workflows:
     jobs:
       - lint
       - security
+      - snyk
       - docker/hadolint:
           dockerfiles: '.docker/Dockerfile'
           ignore-rules: 'DL4005,DL3008'
@@ -86,9 +87,6 @@ workflows:
           requires:
             - lint
       - build-miner:
-          requires:
-            - lint
-      - snyk:
           requires:
             - lint
       - test:
