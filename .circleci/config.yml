@@ -83,13 +83,14 @@ workflows:
           dockerfiles: '.docker/Dockerfile'
           ignore-rules: 'DL4005,DL3008'
           trusted-registries: 'docker.io'
-      - build-bank:
-          requires:
-            - lint
-      - build-miner:
-          requires:
-            - lint
       - test:
           requires:
-            - build-miner
-            - build-bank
+            - lint
+            - snyk
+            - security
+      - build-bank:
+          requires:
+            - test
+      - build-miner:
+          requires:
+            - test 
