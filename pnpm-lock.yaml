@@ -34,7 +34,7 @@ dependencies:
     version: 7.0.0
   kafkajs:
     specifier: ^2.2.3
-    version: 2.2.3
+    version: 2.2.4
   nodemon:
     specifier: ^3.0.1
     version: 3.0.1
@@ -4291,8 +4291,8 @@ packages:
     hasBin: true
     dev: true
 
-  /kafkajs@2.2.3:
-    resolution: {integrity: sha512-JmzIiLHE/TdQ7b4I2B/DNMtfhTh66fmEaEg7gGkyQXBC6f1A7I2jSjeUsVIJfC8d9YcEIURyBjtOEKBO5OHVhg==}
+  /kafkajs@2.2.4:
+    resolution: {integrity: sha512-j/YeapB1vfPT2iOIUn/vxdyKEuhuY2PxMBvf5JWux6iSaukAccrMtXEY/Lb7OvavDhOWME589bpLrEdnVHjfjA==}
     engines: {node: '>=14.0.0'}
     dev: false
 
