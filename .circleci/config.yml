@@ -35,6 +35,7 @@ jobs:
       - run: corepack enable
       - run: corepack prepare pnpm@latest-8 --activate
       - run: apt -y update && apt -y install curl sudo
+      - run: pnpm i
       - snyk/scan:
           token-variable: SNYK_TOKEN
           monitor-on-build: true
