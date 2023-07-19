@@ -2,7 +2,6 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.0
   snyk: snyk/snyk@1.1.2
   codecov: codecov/codecov@3.1.1
   docker: circleci/docker@2.0.3
@@ -13,7 +12,8 @@ jobs:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      - node/install-packages
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
       - run: npm run build:bank
 
   build-miner:
@@ -21,7 +21,8 @@ jobs:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      - node/install-packages
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
       - run: npm run build:miner
 
   snyk:
@@ -29,7 +30,8 @@ jobs:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      - node/install-packages
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
       - snyk/scan:
           token-variable: SNYK_TOKEN
           monitor-on-build: true
@@ -40,16 +42,18 @@ jobs:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      - node/install-packages
-      - run: npm run lint
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
+      - run: pnpm run lint
 
   test:
     docker:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      - node/install-packages
-      - run: npm run test
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
+      - run: pnpm run test
       - codecov/upload
 
 workflows:
