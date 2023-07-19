@@ -51,6 +51,16 @@ jobs:
       - run: pnpm i
       - run: pnpm run lint
 
+  security:
+    docker:
+      - image: node:20.4.0-bullseye-slim
+    steps:
+      - checkout
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
+      - run: pnpm i
+      - run: pnpm audit
+      
   test:
     docker:
       - image: node:20.4.0-bullseye-slim
@@ -67,6 +77,7 @@ workflows:
   app:
     jobs:
       - lint
+      - security
       - docker/hadolint:
           dockerfiles: '.docker/Dockerfile'
           ignore-rules: 'DL4005,DL3008'
