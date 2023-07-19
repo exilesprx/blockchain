@@ -89,7 +89,6 @@ workflows:
             - lint
       - test:
           requires:
-            - lint
             - snyk
             - security
       - build-bank:
