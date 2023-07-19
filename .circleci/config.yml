@@ -15,7 +15,7 @@ jobs:
       - run: corepack enable
       - run: corepack prepare pnpm@latest-8 --activate
       - run: pnpm i
-      - run: npm run build:bank
+      - run: pnpm run build:bank
 
   build-miner:
     docker:
@@ -25,7 +25,7 @@ jobs:
       - run: corepack enable
       - run: corepack prepare pnpm@latest-8 --activate
       - run: pnpm i
-      - run: npm run build:miner
+      - run: pnpm run build:miner
 
   snyk:
     docker:
