@@ -9,7 +9,7 @@ orbs:
 jobs:
   build-bank:
     docker:
-      - image: cimg/node:20.4.0
+      - image: node:20.4.0-bullseye-slim
     steps:
       - checkout
       - run: corepack enable
@@ -18,7 +18,7 @@ jobs:
 
   build-miner:
     docker:
-      - image: cimg/node:20.4.0
+      - image: node:20.4.0-bullseye-slim
     steps:
       - checkout
       - run: corepack enable
@@ -27,7 +27,7 @@ jobs:
 
   snyk:
     docker:
-      - image: cimg/node:20.4.0
+      - image: node:20.4.0-bullseye-slim
     steps:
       - checkout
       - run: corepack enable
@@ -39,7 +39,7 @@ jobs:
 
   lint:
     docker:
-      - image: cimg/node:20.4.0
+      - image: node:20.4.0-bullseye-slim
     steps:
       - checkout
       - run: corepack enable
@@ -48,7 +48,7 @@ jobs:
 
   test:
     docker:
-      - image: cimg/node:20.4.0
+      - image: node:20.4.0-bullseye-slim
     steps:
       - checkout
       - run: corepack enable
