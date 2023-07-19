@@ -84,7 +84,7 @@ devDependencies:
     version: 5.16.0(eslint@8.11.0)(typescript@5.0.4)
   babel-jest:
     specifier: ^29.3.1
-    version: 29.3.1(@babel/core@7.14.8)
+    version: 29.6.1(@babel/core@7.14.8)
   eslint:
     specifier: ^8.11.0
     version: 8.11.0
@@ -2260,24 +2260,6 @@ packages:
   /available-typed-arrays@1.0.5:
     resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
-    dev: true
-
-  /babel-jest@29.3.1(@babel/core@7.14.8):
-    resolution: {integrity: sha512-aard+xnMoxgjwV70t0L6wkW/3HQQtV+O0PEimxKgzNqCJnbYmroPojdP2tqKSOAt8QAKV/uSZU8851M7B5+fcA==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    peerDependencies:
-      '@babel/core': ^7.8.0
-    dependencies:
-      '@babel/core': 7.14.8
-      '@jest/transform': 29.6.1
-      '@types/babel__core': 7.20.1
-      babel-plugin-istanbul: 6.1.1
-      babel-preset-jest: 29.5.0(@babel/core@7.14.8)
-      chalk: 4.1.2
-      graceful-fs: 4.2.11
-      slash: 3.0.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /babel-jest@29.6.1(@babel/core@7.14.8):
