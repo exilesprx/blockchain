@@ -1,15 +1,17 @@
 FROM node:20.4.0-bullseye-slim as deps
 
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 WORKDIR /usr/app
 
 COPY ./package.json /usr/app/
 
-COPY ./package-lock.json /usr/app/
+COPY ./pnpm-lock.yaml /usr/app/
 
 #
 FROM deps as dev
 
-RUN npm ci
+RUN pnpm i
 
 COPY --from=deps /usr/app/package.json /usr/app/
 
@@ -25,7 +27,7 @@ COPY ./tests /usr/app/tests
 #
 FROM deps as build
 
-RUN npm ci --omit=dev
+RUN pnpm i --prod
 
 WORKDIR /usr/app
 

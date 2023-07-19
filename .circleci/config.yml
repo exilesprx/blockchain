@@ -2,7 +2,6 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.0
   snyk: snyk/snyk@1.1.2
   codecov: codecov/codecov@3.1.1
   docker: circleci/docker@2.0.3
@@ -10,26 +9,33 @@ orbs:
 jobs:
   build-bank:
     docker:
-      - image: cimg/node:16.14.2
+      - image: node:20.4.0-bullseye-slim
     steps:
       - checkout
-      - node/install-packages
-      - run: npm run build:bank
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
+      - run: pnpm i
+      - run: pnpm run build:bank
 
   build-miner:
     docker:
-      - image: cimg/node:16.14.2
+      - image: node:20.4.0-bullseye-slim
     steps:
       - checkout
-      - node/install-packages
-      - run: npm run build:miner
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
+      - run: pnpm i
+      - run: pnpm run build:miner
 
   snyk:
     docker:
-      - image: cimg/node:16.14.2
+      - image: node:20.4.0-bullseye-slim
     steps:
       - checkout
-      - node/install-packages
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
+      - run: apt -y update && apt -y install curl sudo
+      - run: pnpm i
       - snyk/scan:
           token-variable: SNYK_TOKEN
           monitor-on-build: true
@@ -37,19 +43,34 @@ jobs:
 
   lint:
     docker:
-      - image: cimg/node:16.14.2
+      - image: node:20.4.0-bullseye-slim
     steps:
       - checkout
-      - node/install-packages
-      - run: npm run lint
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
+      - run: pnpm i
+      - run: pnpm run lint
 
+  security:
+    docker:
+      - image: node:20.4.0-bullseye-slim
+    steps:
+      - checkout
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
+      - run: pnpm i
+      - run: pnpm audit
+      
   test:
     docker:
-      - image: cimg/node:16.14.2
+      - image: node:20.4.0-bullseye-slim
     steps:
       - checkout
-      - node/install-packages
-      - run: npm run test
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest-8 --activate
+      - run: apt -y update && apt -y install curl sudo gpg
+      - run: pnpm i
+      - run: pnpm run test
       - codecov/upload
 
 workflows:
@@ -60,10 +81,7 @@ workflows:
           dockerfiles: '.docker/Dockerfile'
           ignore-rules: 'DL4005,DL3008'
           trusted-registries: 'docker.io'
-      - build-bank:
-          requires:
-            - lint
-      - build-miner:
+      - security:
           requires:
             - lint
       - snyk:
@@ -71,5 +89,11 @@ workflows:
             - lint
       - test:
           requires:
-            - build-miner
-            - build-bank
+            - snyk
+            - security
+      - build-bank:
+          requires:
+            - test
+      - build-miner:
+          requires:
+            - test 
