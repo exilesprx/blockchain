@@ -77,12 +77,16 @@ workflows:
   app:
     jobs:
       - lint
-      - security
-      - snyk
       - docker/hadolint:
           dockerfiles: '.docker/Dockerfile'
           ignore-rules: 'DL4005,DL3008'
           trusted-registries: 'docker.io'
+      - security:
+          requires:
+            - lint
+      - snyk:
+          requires:
+            - lint
       - test:
           requires:
             - lint
