@@ -49,7 +49,7 @@ dependencies:
     version: 9.0.0
   winston:
     specifier: ^3.8.1
-    version: 3.8.1
+    version: 3.10.0
   winston-transport:
     specifier: ^4.5.0
     version: 4.5.0
@@ -5482,10 +5482,11 @@ packages:
       triple-beam: 1.4.1
     dev: false
 
-  /winston@3.8.1:
-    resolution: {integrity: sha512-r+6YAiCR4uI3N8eQNOg8k3P3PqwAm20cLKlzVD9E66Ch39+LZC+VH1UKf9JemQj2B3QoUHfKD7Poewn0Pr3Y1w==}
+  /winston@3.10.0:
+    resolution: {integrity: sha512-nT6SIDaE9B7ZRO0u3UvdrimG0HkB7dSTAgInQnNR2SOPJ4bvq5q79+pXLftKmP52lJGW15+H5MCK0nM9D3KB/g==}
     engines: {node: '>= 12.0.0'}
     dependencies:
+      '@colors/colors': 1.5.0
       '@dabh/diagnostics': 2.0.3
       async: 3.2.4
       is-stream: 2.0.1
