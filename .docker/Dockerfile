@@ -1,4 +1,4 @@
-FROM node:20.4.0-bullseye-slim as deps
+FROM node:20.5.0-bullseye-slim as deps
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
