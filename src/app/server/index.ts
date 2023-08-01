@@ -1,5 +1,5 @@
-import express, { Express } from 'express';
 import { Server as HttpServer } from 'http';
+import express, { Express } from 'express';
 
 export default class Server {
   private framework: Express;
