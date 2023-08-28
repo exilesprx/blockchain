@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@eventstore/db-client':
-    specifier: ^5.0.1
-    version: 5.0.1
+    specifier: ^6.0.0
+    version: 6.0.0
   '@types/crypto-js':
     specifier: ^4.1.1
     version: 4.1.1
@@ -1395,11 +1395,11 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@eventstore/db-client@5.0.1:
-    resolution: {integrity: sha512-4zaeVhrpu+F+yjv4IWUrqGa46QX5vtmpNpjpmSkljRnLmdr6SwcFjILd44KvGfwi8KomTS9X5vzwrdo0P8kxuA==}
+  /@eventstore/db-client@6.0.0:
+    resolution: {integrity: sha512-daDlJzWwA3VDNakimXfdR1suSOkcA2qGmqO1MpO5qD0yunAOMqPLq+4rV9Ra3Frs/vaVPwLotYbqjOtGXzpGuQ==}
     engines: {node: ^12.18.3 || >=14}
     dependencies:
-      '@grpc/grpc-js': 1.8.18
+      '@grpc/grpc-js': 1.9.0
       '@types/debug': 4.1.8
       '@types/google-protobuf': 3.15.6
       '@types/node': 16.18.38
@@ -1415,8 +1415,8 @@ packages:
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
     dev: true
 
-  /@grpc/grpc-js@1.8.18:
-    resolution: {integrity: sha512-2uWPtxhsXmVgd8WzDhfamSjHpZDXfMjMDciY6VRTq4Sn7rFzazyf0LLDa0oav+61UHIoEZb4KKaAV6S7NuJFbQ==}
+  /@grpc/grpc-js@1.9.0:
+    resolution: {integrity: sha512-H8+iZh+kCE6VR/Krj6W28Y/ZlxoZ1fOzsNt77nrdE3knkbSelW1Uus192xOFCxHyeszLj8i4APQkSIXjAoOxXg==}
     engines: {node: ^8.13.0 || >=10.10.0}
     dependencies:
       '@grpc/proto-loader': 0.7.8

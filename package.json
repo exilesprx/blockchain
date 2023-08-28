@@ -16,7 +16,7 @@
   "author": "Exilesprx <campbell.andrew86@yahoo.com>",
   "license": "ISC",
   "dependencies": {
-    "@eventstore/db-client": "^5.0.1",
+    "@eventstore/db-client": "^6.0.0",
     "@types/crypto-js": "^4.1.1",
     "@types/express": "^4.17.17",
     "@types/uuid": "^9.0.2",
