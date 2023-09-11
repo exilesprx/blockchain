@@ -10,7 +10,7 @@ dependencies:
     version: 6.0.0
   '@types/crypto-js':
     specifier: ^4.1.1
-    version: 4.1.1
+    version: 4.1.2
   '@types/express':
     specifier: ^4.17.17
     version: 4.17.17
@@ -1941,8 +1941,8 @@ packages:
       '@types/node': 20.6.0
     dev: false
 
-  /@types/crypto-js@4.1.1:
-    resolution: {integrity: sha512-BG7fQKZ689HIoc5h+6D2Dgq1fABRa0RbBWKBd9SP/MVRVXROflpm5fhwyATX5duFmbStzyzyycPB8qUYKDH3NA==}
+  /@types/crypto-js@4.1.2:
+    resolution: {integrity: sha512-t33RNmTu5ufG/sorROIafiCVJMx3jz95bXUMoPAZcUD14fxMXnuTzqzXZoxpR0tNx2xpw11Dlmem9vGCsrSOfA==}
     dev: false
 
   /@types/debug@4.1.8:
