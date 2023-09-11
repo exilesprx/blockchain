@@ -4,8 +4,12 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    reviewers:
+      - "exilesprx"
 
   - package-ecosystem: "docker"
     directory: ".docker/"
     schedule:
       interval: "weekly"
+    reviewers:
+      - "exilesprx"
