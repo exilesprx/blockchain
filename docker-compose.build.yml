@@ -15,12 +15,3 @@ services:
       target: develop
       cache_from: 
         - exilesprx/blockchain:source
-
-  build:
-    image: exilesprx/blockchain:build
-    build:
-      context: .
-      dockerfile: .docker/Dockerfile
-      target: build
-      cache_from: 
-        - exilesprx/blockchain:source

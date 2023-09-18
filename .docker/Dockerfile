@@ -26,7 +26,7 @@ RUN pnpm i
 
 
 #
-FROM exilesprx/blockchain:source AS build
+FROM exilesprx/blockchain:source AS version
 
 COPY --from=exilesprx/blockchain:source /usr/app/package.json /usr/app/
 
