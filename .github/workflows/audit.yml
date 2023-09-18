@@ -1,0 +1,20 @@
+name: Audit
+
+on:
+  push
+  workflow_run:
+    workflows: [lint]
+    types:
+      - completed
+
+jobs:
+  audit:
+    runs_on: exilesprx\blockchain:develop
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install packages
+        run: pnpm i
+
+      - name: Audit packages
+        run: pnpm audit
