@@ -17,6 +17,15 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Install packages
+        run: pnpm i
+
+      - name: Build bank
+        run: pnpm run build:bank
+
+      - name: Build miner
+        run: pnpm run build:miner
+
       - name: Release docker
         env:
           VERSION: ${{  github.ref_name }}

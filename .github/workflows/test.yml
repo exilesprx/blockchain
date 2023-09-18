@@ -1,0 +1,21 @@
+name: Test
+
+on:
+  workflow_run:
+    workflows: ["Audit"]
+    types:
+      - completed
+
+jobs:
+  test:
+    runs-on: exilesprx\blockchain:develop
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install packages
+        run: pnpm i
+
+      - name: Test code
+        run: pnpm run test
+
+      ## Upload to code cov
