@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint-typescript:
-    runs_on: exilesprx\blockchain:develop
+    runs-on: exilesprx\blockchain:develop
     steps:
       - uses: actions/checkout@v3
 
