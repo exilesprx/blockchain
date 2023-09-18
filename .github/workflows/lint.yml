@@ -18,7 +18,7 @@ jobs:
         run: pnpm run lint
 
   lint-docker:
-    runs_on: ubunti-latest
+    runs-on: ubunti-latest
     steps:
       - uses: actions/checkout@v3
 
