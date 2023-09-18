@@ -3,7 +3,7 @@ name: Audit
 on:
   push
   workflow_run:
-    workflows: [lint]
+    workflows: ["Lint"]
     types:
       - completed
 
