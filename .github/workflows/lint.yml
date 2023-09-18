@@ -8,7 +8,7 @@ on:
 jobs:
   lint-typescript:
     runs-on: ubuntu-latest
-    container: exilesprx\blockchain:develop
+    container: exilesprx/blockchain:develop
     steps:
       - uses: actions/checkout@v3
 
@@ -20,7 +20,7 @@ jobs:
 
   lint-docker:
     runs-on: ubuntu-latest
-    container: exilesprx\blockchain:develop
+    container: exilesprx/blockchain:develop
     steps:
       - uses: actions/checkout@v3
 

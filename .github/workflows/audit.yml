@@ -9,7 +9,7 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    container: exilesprx\blockchain:develop
+    container: exilesprx/blockchain:develop
     steps:
       - uses: actions/checkout@v3
 
