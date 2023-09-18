@@ -3,8 +3,7 @@ name: Audit
 on:
   workflow_run:
     workflows: ["Lint"]
-    types:
-      - completed
+    types: [requested]
     branches_ignore:
       - 'main'
 
