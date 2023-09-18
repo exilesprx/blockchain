@@ -1,6 +1,7 @@
 FROM node:20.6.1-bookworm-slim AS source
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable \
+  && corepack prepare pnpm@latest --activate
 
 COPY ./package.json /usr/app/
 
