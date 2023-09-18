@@ -20,7 +20,6 @@ jobs:
 
   lint-docker:
     runs-on: ubuntu-latest
-    container: exilesprx/blockchain:develop
     steps:
       - uses: actions/checkout@v3
 
