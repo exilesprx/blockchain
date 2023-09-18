@@ -8,9 +8,9 @@ COPY ./package.json /usr/app/
 COPY ./pnpm-lock.yaml /usr/app/
 
 #
-FROM exilesprx\blockhain:source AS develop
+FROM exilesprx/blockchain:source AS develop
 
-COPY --from=exilesprx\blockchain:source /usr/app/package.json /usr/app/
+COPY --from=exilesprx/blockchain:source /usr/app/package.json /usr/app/
 
 COPY babel.config.js /usr/app/
 
@@ -26,9 +26,9 @@ RUN pnpm i
 
 
 #
-FROM exilesprx\blockchain:source AS build
+FROM exilesprx/blockchain:source AS build
 
-COPY --from=exilesprx\blockchain:source /usr/app/package.json /usr/app/
+COPY --from=exilesprx/blockchain:source /usr/app/package.json /usr/app/
 
 COPY ./nodemon.json /usr/app/nodemon.json
 
