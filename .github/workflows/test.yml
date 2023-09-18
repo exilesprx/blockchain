@@ -5,6 +5,8 @@ on:
     workflows: ["Audit"]
     types:
       - completed
+    branches_ignore:
+      - 'main'
 
 jobs:
   test:
