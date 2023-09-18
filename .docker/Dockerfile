@@ -1,19 +1,15 @@
-FROM node:20.6.1-bullseye-slim as deps
+FROM node:20.6.1-bookworm-slim AS source
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
-
-WORKDIR /usr/app
 
 COPY ./package.json /usr/app/
 
 COPY ./pnpm-lock.yaml /usr/app/
 
 #
-FROM deps as dev
+FROM exilesprx\blockhain:source AS develop
 
-RUN pnpm i
-
-COPY --from=deps /usr/app/package.json /usr/app/
+COPY --from=exilesprx\blockchain:source /usr/app/package.json /usr/app/
 
 COPY babel.config.js /usr/app/
 
@@ -23,15 +19,15 @@ COPY ./src /usr/app/src
 
 COPY ./tests /usr/app/tests
 
-
-#
-FROM deps as build
-
-RUN pnpm i --prod
-
 WORKDIR /usr/app
 
-COPY --from=deps /usr/app/package.json /usr/app/
+RUN pnpm i
+
+
+#
+FROM exilesprx\blockchain:source AS build
+
+COPY --from=exilesprx\blockchain:source /usr/app/package.json /usr/app/
 
 COPY ./nodemon.json /usr/app/nodemon.json
 
@@ -39,6 +35,9 @@ COPY ./tsconfig.json /usr/app/tsconfig.json
 
 COPY ./src /usr/app/src
 
-RUN chown -R node. .
+WORKDIR /usr/app
+
+RUN pnpm i --prod \
+  && chown -R node. .
 
 CMD [ "node" ]
