@@ -41,7 +41,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: aduit
+    needs: audit
     container: exilesprx/blockchain:develop
     steps:
       - uses: actions/checkout@v3
