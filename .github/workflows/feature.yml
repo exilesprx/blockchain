@@ -1,0 +1,55 @@
+name: Feature actions
+
+on:
+  push:
+    branches_ignore:
+      - 'main'
+
+jobs:
+  lint-typescript:
+    runs-on: ubuntu-latest
+    container: exilesprx/blockchain:develop
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install packges
+        run: pnpm i
+
+      - name: Lint code
+        run: pnpm run lint
+
+  lint-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Lint dockerfile
+        run: docker run --rm -i -v "$PWD"/hadolint.yml:/.config/hadolint.yaml hadolint/hadolint < .docker/Dockerfile
+
+  audit:
+    runs-on: ubuntu-latest
+    needs: lint-typescript
+    container: exilesprx/blockchain:develop
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install packages
+        run: pnpm i
+
+      - name: Audit packages
+        run: pnpm audit
+
+  test:
+    runs-on: ubuntu-latest
+    needs: aduit
+    container: exilesprx/blockchain:develop
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install packages
+        run: pnpm i
+
+      - name: Test code
+        run: pnpm run test
+
+      ## Upload to code cov
