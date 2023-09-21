@@ -32,7 +32,7 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_ORG_TOKEN }}
 
-  build-source:
+  build-bank:
     runs-on: ubuntu-latest
     needs: test
     container: exilesprx/blockchain:source
@@ -43,15 +43,28 @@ jobs:
           path: node_modules
           key: node-modules
 
-      - name: Build bank
+      - name: Build
         run: pnpm run build:bank
 
-      - name: Build miner
-        run: pnpm run build:miner
-
-  build-docker:
+  build-miner:
     runs-on: ubuntu-latest
     needs: test
+    container: exilesprx/blockchain:source
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules
+
+      - name: Build
+        run: pnpm run build:miner
+
+  build-docker-source:
+    runs-on: ubuntu-latest
+    needs:
+      - build-bank
+      - build-miner
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
@@ -65,12 +78,30 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build source
+      - name: Build
         run: |
           docker compose -f docker-compose.build.yml build --pull source
           docker compose -f docker-compose.build.yml push source
 
-      - name: Build main
+  build-docker-main:
+    runs-on: ubuntu-latest
+    needs:
+      - build-bank
+      - build-miner
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build
         run: |
           docker compose -f docker-compose.build.yml build --pull main
           docker compose -f docker-compose.build.yml push main
