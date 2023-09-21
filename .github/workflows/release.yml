@@ -1,0 +1,33 @@
+name: Release actions
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  install-packages:
+    uses: ./.github/workflows/install-packages.yml
+
+  docker-build-release:
+    runs-on: ubuntu-latest
+    needs: install-packages
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          docker compose -f docker-compose.version.yml build --pull version
+          docker compose -f docker-compose.version.yml push version

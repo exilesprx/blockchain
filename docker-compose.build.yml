@@ -1,0 +1,17 @@
+services:
+
+  source:
+    image: exilesprx/blockchain:source
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: source
+
+  main:
+    image: exilesprx/blockchain:main
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: main
+      cache_from: 
+        - exilesprx/blockchain:source

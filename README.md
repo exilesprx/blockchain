@@ -1,6 +1,6 @@
 # Blockchain
 
-[![CircleCI](https://circleci.com/gh/exilesprx/blockchain/tree/main.svg?style=svg)](https://circleci.com/gh/exilesprx/blockchain/tree/main) [![codecov](https://codecov.io/gh/exilesprx/blockchain/branch/main/graph/badge.svg?token=LDLR0MVT0Z)](https://codecov.io/gh/exilesprx/blockchain)
+[![codecov](https://codecov.io/gh/exilesprx/blockchain/branch/main/graph/badge.svg?token=LDLR0MVT0Z)](https://codecov.io/gh/exilesprx/blockchain)
 
 This blockchain is for educational purposes only and should not be used for production purposes in its current state. As the application matures and meets standards, then at that point it can be used for production purposes.
 

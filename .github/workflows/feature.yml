@@ -1,0 +1,90 @@
+name: Feature actions
+
+on:
+  push:
+    branches_ignore:
+      - 'main'
+
+jobs:
+  install-packages:
+    uses: ./.github/workflows/install-packages.yml
+
+  lint-typescript:
+    runs-on: ubuntu-latest
+    needs: install-packages
+    container: exilesprx/blockchain:source
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules
+
+      - name: Lint code
+        run: pnpm run lint
+
+  lint-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Lint dockerfile
+        run: docker run --rm -i -v "$PWD"/hadolint.yml:/.config/hadolint.yaml hadolint/hadolint < .docker/Dockerfile
+
+  audit:
+    runs-on: ubuntu-latest
+    needs:
+      - lint-typescript
+      - lint-docker
+    container: exilesprx/blockchain:source
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules
+
+      - name: Audit packages
+        run: pnpm audit
+
+  test:
+    runs-on: ubuntu-latest
+    needs: audit
+    container: exilesprx/blockchain:source
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules
+
+      - name: Test code
+        run: pnpm run test
+  
+  typescript-build-bank:
+    runs-on: ubuntu-latest
+    needs: test
+    container: exilesprx/blockchain:source
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules
+
+      - name: Build
+        run: pnpm run build:bank
+
+  typescript-build-miner:
+    runs-on: ubuntu-latest
+    needs: test
+    container: exilesprx/blockchain:source
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules
+
+      - name: Build
+        run: pnpm run build:miner

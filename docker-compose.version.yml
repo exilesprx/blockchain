@@ -1,0 +1,10 @@
+services:
+
+  version:
+    image: exilesprx/blockchain:v${VERSION}
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: version
+      cache_from: 
+        - exilesprx/blockchain:source
