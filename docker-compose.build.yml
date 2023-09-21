@@ -7,11 +7,11 @@ services:
       dockerfile: .docker/Dockerfile
       target: source
 
-  develop:
-    image: exilesprx/blockchain:develop  
+  main:
+    image: exilesprx/blockchain:main
     build:
       context: .
       dockerfile: .docker/Dockerfile
-      target: develop
+      target: main
       cache_from: 
         - exilesprx/blockchain:source

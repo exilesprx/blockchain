@@ -8,7 +8,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    container: exilesprx/blockchain:develop
     steps:
       - uses: actions/checkout@v3
 
@@ -29,7 +28,7 @@ jobs:
 
       - name: Release docker
         env:
-          VERSION: ${{  github.ref_name }}
+          VERSION: ${{ github.ref_name }}
         run: |
           docker compose -f docker-compose.version.yml build --pull version
           docker compose -f docker-compose.version.yml push version
