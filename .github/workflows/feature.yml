@@ -43,7 +43,8 @@ jobs:
 
       - name: Download node modules
         uses: actions/download-artifact@v3
-        with: node-modules
+        with:
+          name: node-modules
 
       - name: Audit packages
         run: pnpm audit
@@ -57,7 +58,8 @@ jobs:
 
       - name: Download node modules
         uses: actions/download-artifact@v3
-        with: node-modules
+        with:
+          name: node-modules
 
       - name: Test code
         run: pnpm run test
