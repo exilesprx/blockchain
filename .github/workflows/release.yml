@@ -7,17 +7,7 @@ on:
 
 jobs:
   install-packages:
-    runs-on: ubuntu-latest
-    container: exilesprx/blockchain:source
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules
-
-      - name: Install
-        run: pnpm i
+    uses: ./.github/workflows/install.yml
 
   docker-build-release:
     runs-on: ubuntu-latest

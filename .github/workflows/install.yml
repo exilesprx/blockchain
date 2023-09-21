@@ -5,7 +5,7 @@ on:
 
 jobs:
 
-  install:
+  packages:
     runs-on: ubuntu-latest
     container: exilesprx/blockchain:source
     steps:
