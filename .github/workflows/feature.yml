@@ -11,12 +11,12 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install packges
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         with:
           path: node_modules
           key: node-modules
+
+      - name: Install packges
         run: pnpm i
 
       - name: Lint code
@@ -38,12 +38,12 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-
-      - name: Audit packages
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         with:
           path: node_modules
           key: node-modules
+
+      - name: Audit packages
         run: pnpm audit
 
   test:
@@ -52,10 +52,10 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-
-      - name: Test code
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         with:
           path: node_modules
           key: node-modules
+
+      - name: Test code
         run: pnpm run test
