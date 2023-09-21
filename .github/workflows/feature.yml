@@ -18,7 +18,7 @@ jobs:
       - name: Lint code
         run: pnpm run lint
 
-      - name: Node modules artificats
+      - name: Upload node modules
         uses: actions/upload-artifact@v3
         with:
           name: node-modules
@@ -40,10 +40,12 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+
+      - name: Download node modules
+        uses: actions/download-artifact@v3
+        with: node-modules
 
       - name: Audit packages
-        with: node-modules
         run: pnpm audit
 
   test:
@@ -52,8 +54,10 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+
+      - name: Download node modules
+        uses: actions/download-artifact@v3
+        with: node-modules
 
       - name: Test code
-        with: node-modules
         run: pnpm run test
