@@ -18,6 +18,12 @@ jobs:
       - name: Lint code
         run: pnpm run lint
 
+      - name: Node modules artificats
+      - uses: actions/upload-artifact@v3
+        with:
+          name: node-modules
+          path: node_modules
+
   lint-docker:
     runs-on: ubuntu-latest
     steps:
@@ -34,11 +40,10 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install packages
-        run: pnpm i
+      - uses: actions/download-artifact@v3
 
       - name: Audit packages
+        with: node-modules
         run: pnpm audit
 
   test:
@@ -47,14 +52,8 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install packages
-        run: pnpm i
+      - uses: actions/download-artifact@v3
 
       - name: Test code
+        with: node-modules
         run: pnpm run test
-
-      - name: Install deps for codecov
-        run: |
-          apt-get -y update
-          apt-get -y install --no-install-recommends curl ca-certificates sudo gpg
