@@ -6,8 +6,29 @@ on:
       - 'main'
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: exilesprx/blockchain:source
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install packages
+        run: pnpm i
+
+      - name: Test code
+        run: pnpm run test
+
+      - name: Install deps for codecov
+        run: apt-get -y install --no-install-recommends curl ca-certificates sudo gpg
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4-beta
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_ORG_TOKEN }}
+
   build:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - uses: actions/checkout@v3
 
