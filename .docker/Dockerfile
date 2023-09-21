@@ -16,11 +16,11 @@ COPY jest.config.ts /usr/app/
 
 COPY src /usr/app/src
 
+COPY node_modules node_modules
+
 COPY tests /usr/app/tests
 
 WORKDIR /usr/app
-
-RUN pnpm i
 
 
 FROM exilesprx/blockchain:source AS version
@@ -29,15 +29,16 @@ COPY --from=exilesprx/blockchain:main /usr/app/package.json /usr/app/
 
 COPY --from=exilesprx/blockchain:main /usr/app/pnpm-lock.yml /usr/app
 
+COPY --from=exilesprx/blockchain:main /usr/app/src /usr/app/src
+
+COPY --from=exilesprx/blockchain:main /usr/app/node_modules /usr/app/node_modules
+
 COPY nodemon.json /usr/app/nodemon.json
 
 COPY tsconfig.json /usr/app/tsconfig.json
 
-COPY --from=exilesprx/blockchain:main /usr/app/src /usr/app/src
-
 WORKDIR /usr/app
 
-RUN pnpm i --prod \
-  && chown -R node. .
+RUN chown -R node. .
 
 CMD [ "node" ]
