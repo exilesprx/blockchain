@@ -7,6 +7,9 @@ on:
 
 jobs:
   install-packages:
+    runs-on: ubuntu-latest
+    container: exilesprx/blockchain:source
+    steps:
       - uses: actions/cache@v3
         with:
           path: node_modules
