@@ -49,7 +49,7 @@ jobs:
       - name: Build miner
         run: pnpm run build:miner
 
-  build-docker-source:
+  build-docker:
     runs-on: ubuntu-latest
     needs: test
     steps:
