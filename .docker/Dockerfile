@@ -16,7 +16,7 @@ COPY jest.config.ts /usr/app/
 
 COPY src /usr/app/src
 
-COPY node_modules node_modules
+COPY node_modules /usr/app/node_modules
 
 COPY tests /usr/app/tests
 
