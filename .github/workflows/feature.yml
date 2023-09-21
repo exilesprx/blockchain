@@ -19,7 +19,7 @@ jobs:
         run: pnpm run lint
 
       - name: Node modules artificats
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: node-modules
           path: node_modules
