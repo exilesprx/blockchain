@@ -7,7 +7,7 @@ on:
 
 jobs:
   install-packages:
-    uses: ./.github/workflows/install.yml
+    uses: ./.github/workflows/install-packages.yml
 
   lint-typescript:
     runs-on: ubuntu-latest
