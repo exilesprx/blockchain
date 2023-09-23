@@ -10,10 +10,15 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules
 
       - name: Install
         run: pnpm i
+
+      - name: Compress files
+        run: tar -czf pnpm-packages.tar.gz node_modules
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: pnpm-packages
+          path: pnpm-packages.tar.gz
