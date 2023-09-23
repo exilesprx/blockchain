@@ -1,7 +1,7 @@
 services:
 
   version:
-    image: exilesprx/blockchain:v${VERSION}
+    image: exilesprx/blockchain:${VERSION}
     build:
       context: .
       dockerfile: .docker/Dockerfile
