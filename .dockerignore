@@ -1,5 +1,17 @@
-.docker/*
-.requests/*
-.vscode/*
-.circleci/*
-node_modules/*
+# Ignore everything
+*
+
+# Allow
+node_modules/
+src/
+tests/
+
+.eslintignore
+.eslintrc.json
+babel.config.js
+jest.config.js
+nodemon.json
+package.json
+pnpm-lock.yaml
+tsconfig.eslint.json
+tsconfig.json
