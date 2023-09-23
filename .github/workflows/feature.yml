@@ -18,7 +18,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: node_modules
-          key: node-modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Lint code
         run: pnpm run lint
@@ -42,7 +42,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: node_modules
-          key: node-modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Audit packages
         run: pnpm audit
@@ -56,7 +56,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: node_modules
-          key: node-modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Test code
         run: pnpm run test
@@ -70,7 +70,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: node_modules
-          key: node-modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Build
         run: pnpm run build:bank
@@ -84,7 +84,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: node_modules
-          key: node-modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Build
         run: pnpm run build:miner
