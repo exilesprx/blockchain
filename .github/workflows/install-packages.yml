@@ -10,14 +10,10 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        id: pnpm-cache
+      - uses: actions/upload-artifact@v3
         with:
+          name: pnpm-packages
           path: node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: Cache path
-        run: echo "dir='node_modules'" >> $GITHUB_OUTPUT
 
       - name: Install
         run: pnpm i

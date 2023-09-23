@@ -15,10 +15,9 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/download-artifact@v3
         with:
-          path: ${{ steps.pnpm-cache.outputs.dir }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          name: pnpm-packages
 
       - name: Lint code
         run: pnpm run lint
@@ -39,10 +38,9 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/download-artifact@v3
         with:
-          path: ${{ steps.pnpm-cache.outputs.dir }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          name: pnpm-packages
 
       - name: Audit packages
         run: pnpm audit
@@ -53,10 +51,9 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/download-artifact@v3
         with:
-          path: ${{ steps.pnpm-cache.outputs.dir }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          name: pnpm-packages
 
       - name: Test code
         run: pnpm run test
@@ -67,10 +64,9 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/download-artifact@v3
         with:
-          path: ${{ steps.pnpm-cache.outputs.dir }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          name: pnpm-packages
 
       - name: Build
         run: pnpm run build:bank
@@ -81,10 +77,9 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/download-artifact@v3
         with:
-          path: ${{ steps.pnpm-cache.outputs.dir }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          name: pnpm-packages
 
       - name: Build
         run: pnpm run build:miner
