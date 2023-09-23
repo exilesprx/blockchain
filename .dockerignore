@@ -6,12 +6,9 @@
 !src/
 !tests/
 
-!.eslintignore
-!.eslintrc.json
 !babel.config.js
-!jest.config.js
+!jest.config.ts
 !nodemon.json
 !package.json
 !pnpm-lock.yaml
-!tsconfig.eslint.json
 !tsconfig.json
