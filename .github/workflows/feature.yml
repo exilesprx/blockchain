@@ -16,6 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Lint code
         run: pnpm run lint
