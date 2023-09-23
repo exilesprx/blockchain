@@ -14,8 +14,11 @@ jobs:
       - name: Install
         run: pnpm i
 
+      - name: Compress files
+        run: tar -czf node_modules.tar.gz node_modules
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: pnpm-packages
-          path: node_modules
+          path: node_modules.tar.gz
