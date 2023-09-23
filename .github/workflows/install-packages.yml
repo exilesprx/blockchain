@@ -19,7 +19,7 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Cache path
-        run: echo "dir=node_modules" >> $GITHUB_OUTPUT
+        run: echo "dir='node_modules'" >> $GITHUB_OUTPUT
 
       - name: Install
         run: pnpm i
