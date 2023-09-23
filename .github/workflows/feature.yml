@@ -41,9 +41,6 @@ jobs:
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
-        with:
-          name: pnpm-packages
 
       - name: Audit packages
         run: pnpm audit
@@ -58,6 +55,9 @@ jobs:
         with:
           name: pnpm-packages
 
+      - name: Extract artifacts
+        run: tar -xvf pnpm-packages.tar.gz
+
       - name: Test code
         run: pnpm run test
   
@@ -71,6 +71,9 @@ jobs:
         with:
           name: pnpm-packages
 
+      - name: Extract artifacts
+        run: tar -xvf pnpm-packages.tar.gz
+
       - name: Build
         run: pnpm run build:bank
 
@@ -83,6 +86,9 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: pnpm-packages
+
+      - name: Extract artifacts
+        run: tar -xvf pnpm-packages.tar.gz
 
       - name: Build
         run: pnpm run build:miner
