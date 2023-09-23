@@ -19,6 +19,9 @@ jobs:
         with:
           name: pnpm-packages
 
+      - name: Extract artifacts
+        run: tar -xvf node-modules.tar.gz
+
       - name: Lint code
         run: pnpm run lint
 
