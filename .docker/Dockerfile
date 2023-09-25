@@ -1,4 +1,4 @@
-FROM node:20.6.1-bookworm-slim AS source
+FROM node:20.7.0-bookworm-slim AS source
 
 RUN corepack enable \
   && corepack prepare pnpm@latest --activate
