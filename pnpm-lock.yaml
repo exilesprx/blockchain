@@ -16,7 +16,7 @@ dependencies:
     version: 4.17.19
   '@types/uuid':
     specifier: ^9.0.5
-    version: 9.0.5
+    version: 9.0.6
   crypto-js:
     specifier: ^4.1.1
     version: 4.1.1
@@ -1985,8 +1985,8 @@ packages:
     resolution: {integrity: sha512-6tOUG+nVHn0cJbVp25JFayS5UE6+xlbcNF9Lo9mU7U0zk3zeUShZied4YEQZjy1JBF043FSkdXw8YkUJuVtB5g==}
     dev: false
 
-  /@types/uuid@9.0.5:
-    resolution: {integrity: sha512-xfHdwa1FMJ082prjSJpoEI57GZITiQz10r3vEJCHa2khEFQjKy91aWKz6+zybzssCvXUwE1LQWgWVwZ4nYUvHQ==}
+  /@types/uuid@9.0.6:
+    resolution: {integrity: sha512-BT2Krtx4xaO6iwzwMFUYvWBWkV2pr37zD68Vmp1CDV196MzczBRxuEpD6Pr395HAgebC/co7hOphs53r8V7jew==}
     dev: false
 
   /@types/yargs-parser@21.0.1:
