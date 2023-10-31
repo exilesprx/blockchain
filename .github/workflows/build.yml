@@ -101,6 +101,7 @@ jobs:
     needs:
       - typescript-build-bank
       - typescript-build-miner
+      - docker-build-source
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
