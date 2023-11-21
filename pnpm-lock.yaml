@@ -66,7 +66,7 @@ devDependencies:
     version: 7.23.3(@babel/core@7.23.2)
   '@faker-js/faker':
     specifier: ^8.2.0
-    version: 8.2.0
+    version: 8.3.1
   '@tsconfig/node16':
     specifier: ^16.1.1
     version: 16.1.1
@@ -1440,8 +1440,8 @@ packages:
       - supports-color
     dev: false
 
-  /@faker-js/faker@8.2.0:
-    resolution: {integrity: sha512-VacmzZqVxdWdf9y64lDOMZNDMM/FQdtM9IsaOPKOm2suYwEatb8VkdHqOzXcDnZbk7YDE2BmsJmy/2Hmkn563g==}
+  /@faker-js/faker@8.3.1:
+    resolution: {integrity: sha512-FdgpFxY6V6rLZE9mmIBb9hM0xpfvQOSNOLnzolzKwsE1DH+gC7lEKV1p1IbR0lAYyvYd5a4u3qWJzowUkw1bIw==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
     dev: true
 
