@@ -1,7 +1,6 @@
 {
   "name": "blockchain",
-  "version": "1.6.1",
-  "description": "",
+  "description": "Blockchain implementation for fun.",
   "main": "app.js",
   "scripts": {
     "test": "jest",
@@ -13,7 +12,7 @@
     "miner": "nodemon --config nodemon.json src/app/miner/index.ts",
     "miner:debug": "nodemon --config nodemon.json --inspect=0.0.0.0:9229 --enable-source-maps src/app/miner/index.ts"
   },
-  "author": "Exilesprx <campbell.andrew86@yahoo.com>",
+  "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "@eventstore/db-client": "^6.0.0",
