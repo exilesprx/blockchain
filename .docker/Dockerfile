@@ -1,7 +1,7 @@
 FROM node:21.3.0-bookworm-slim AS source
 
 RUN corepack enable \
-  && corepack prepare pnpm@latest --activate
+  && corepack prepare pnpm@8.11.0--activate
 
 
 FROM exilesprx/blockchain:source AS main
