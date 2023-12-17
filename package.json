@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.23.5",
+    "@babel/preset-env": "^7.23.6",
     "@babel/preset-typescript": "^7.23.2",
     "@faker-js/faker": "^8.2.0",
     "@tsconfig/recommended": "^1.0.3",
