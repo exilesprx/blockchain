@@ -85,9 +85,8 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
         - ~~broadcast event "block mined"~~
         - ~~add the mined block to the chain from stream~~
         - ~~if previous block hash doesn't match, then a block proceeded it, so throw it out (we're using a stream with guaranteed ordering)~~
-            - NOTE: censensus model - app uses DB/memory - miners use memory
-            - would need to stop current mine process
         - ~~broadcast event "block added"~~
+        - implement consensus model
 - Logger
     - ~~treat as a feature~~
     - ~~add graylog~~
@@ -95,9 +94,9 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
     - ~~wrap logger in support class~~
 - Auditor
     - Transactions
-        - compares "generated transactions" vesus "processed transactions"
-        - should "rebroadcast" so they're added to a chain
-        - happens every X
+        - compare "generated transactions" vesus "processed transactions"
+        - should "rebroadcast" so they're appended to the chain
+        - happens every X seconds/minutes
 - Restoration
     - Application
         - grab the last few block events
@@ -105,19 +104,14 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
     - Miner
 - End to end testing
     - Scheduler
-        - Produces transactions every X secones (start with manual entry at first)
+        - Produces transactions every X seconds (start with manual entry at first)
 - Process
     - ~~update to use nodemon~~
     - ~~update to use ts-node~~
     - ~~update to use npm app and npm app:debug~~
     - ~~remove ts building in container image~~
     - ~~use docker cp or rebuild image to run new changes~~
-    - ~~circleCI~~
-        - ~~workflow~~
-            - ~~build~~
-            - ~~lint the project~~
-            - ~~snyk~~
-            - ~~run the tests~~
+    - ~~transition to github actions~~
 - Tests
     - ~~update the tests to match all the changes made~~
     - ~~add code coverage~~
@@ -131,7 +125,7 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
         - if block mined event is received, so if its currently mining, if so, stop it, and start mining a new block (if reqs are met)
     - Docker build
         - ~~clean up the build process~~
-        - container builds
-            - dev (app and miner)
-            - test
-            - prod (app and miner)
+        - ~~targets for container builds~~
+            - ~~source - foundation of image~~
+            - ~~main - includes development source code from main~~
+            - ~~version - includes production source code from main, tagged, and packaged for a release version~~
