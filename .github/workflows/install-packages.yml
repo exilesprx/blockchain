@@ -7,7 +7,9 @@ jobs:
 
   install-packages:
     runs-on: ubuntu-latest
-    container: exilesprx/blockchain:source
+    container:
+      image: exilesprx/blockchain:source
+      options: --user root
     steps:
       - uses: actions/checkout@v4
 
