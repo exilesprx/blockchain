@@ -6,39 +6,24 @@ RUN corepack enable \
 
 FROM exilesprx/blockchain:source AS main
 
-COPY package.json /usr/app/
-
-COPY pnpm-lock.yaml /usr/app/
-
-COPY babel.config.js /usr/app/
-
-COPY jest.config.ts /usr/app/
-
-COPY src /usr/app/src
-
-COPY node_modules /usr/app/node_modules
-
-COPY tests /usr/app/tests
-
+COPY --chown=node:node --chmod=555 package.json /usr/app/
+COPY --chown=node:node --chmod=555 pnpm-lock.yaml /usr/app/
+COPY --chown=node:node --chmod=555 babel.config.js /usr/app/
+COPY --chown=node:node --chmod=555 jest.config.ts /usr/app/
+COPY --chown=node:node --chmod=555 src /usr/app/src
+COPY --chown=node:node --chmod=555 node_modules /usr/app/node_modules
+COPY --chown=node:node --chmod=555 tests /usr/app/tests
 WORKDIR /usr/app
 
 
 FROM exilesprx/blockchain:source AS version
 
-COPY --from=exilesprx/blockchain:main /usr/app/package.json /usr/app/
-
-COPY --from=exilesprx/blockchain:main /usr/app/pnpm-lock.yaml /usr/app
-
-COPY --from=exilesprx/blockchain:main /usr/app/src /usr/app/src
-
-COPY --from=exilesprx/blockchain:main /usr/app/node_modules /usr/app/node_modules
-
-COPY nodemon.json /usr/app/
-
-COPY tsconfig.json /usr/app/
-
+COPY --chown=node:node --chmod=555 --from=exilesprx/blockchain:main /usr/app/package.json /usr/app/
+COPY --chown=node:node --chmod=555 --from=exilesprx/blockchain:main /usr/app/pnpm-lock.yaml /usr/app
+COPY --chown=node:node --chmod=555 --from=exilesprx/blockchain:main /usr/app/src /usr/app/src
+COPY --chown=node:node --chmod=555 --from=exilesprx/blockchain:main /usr/app/node_modules /usr/app/node_modules
+COPY --chown=node:node --chmod=555 nodemon.json /usr/app/
+COPY --chown=node:node --chmod=555 tsconfig.json /usr/app/
 WORKDIR /usr/app
-
-RUN chown -R node. .
 
 CMD [ "node" ]
