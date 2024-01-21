@@ -1,7 +1,7 @@
 FROM node:21.5.0-bookworm-slim AS source
 
 RUN corepack enable \
-  && corepack prepare pnpm@8.12.1 --activate
+  && corepack prepare pnpm@8.14.1 --activate
 WORKDIR /usr/app
 USER node
 
