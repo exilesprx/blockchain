@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: exilesprx/blockchain:source
-      options: --user root
     steps:
       - uses: actions/checkout@v4
 
