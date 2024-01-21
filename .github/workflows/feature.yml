@@ -14,8 +14,8 @@ jobs:
     needs: install-packages
     container: exilesprx/blockchain:source
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout
+      - uses: actions/download-artifact
         with:
           name: pnpm-packages
 
@@ -28,7 +28,7 @@ jobs:
   lint-docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout
 
       - name: Lint dockerfile
         run: docker run --rm -i -v "$PWD"/hadolint.yml:/.config/hadolint.yaml hadolint/hadolint < .docker/Dockerfile
@@ -40,7 +40,7 @@ jobs:
       - lint-docker
     container: exilesprx/blockchain:source
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout
 
       - name: Audit packages
         run: pnpm audit
@@ -50,8 +50,8 @@ jobs:
     needs: audit
     container: exilesprx/blockchain:source
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout
+      - uses: actions/download-artifact
         with:
           name: pnpm-packages
 
@@ -66,8 +66,8 @@ jobs:
     needs: test
     container: exilesprx/blockchain:source
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout
+      - uses: actions/download-artifact
         with:
           name: pnpm-packages
 
@@ -82,8 +82,8 @@ jobs:
     needs: test
     container: exilesprx/blockchain:source
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout
+      - uses: actions/download-artifact
         with:
           name: pnpm-packages
 
