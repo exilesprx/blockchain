@@ -18,8 +18,8 @@ jobs:
     needs: install-packages
     container: exilesprx/blockchain:source
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
           name: pnpm-packages
 
@@ -35,7 +35,7 @@ jobs:
           apt-get -y install --no-install-recommends curl ca-certificates sudo gpg
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_ORG_TOKEN }}
 
@@ -44,8 +44,8 @@ jobs:
     needs: test
     container: exilesprx/blockchain:source
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
           name: pnpm-packages
 
@@ -60,8 +60,8 @@ jobs:
     needs: test
     container: exilesprx/blockchain:source
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
           name: pnpm-packages
 
@@ -77,8 +77,8 @@ jobs:
       - typescript-build-bank
       - typescript-build-miner
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
           name: pnpm-packages
 
@@ -103,8 +103,8 @@ jobs:
       - typescript-build-miner
       - docker-build-source
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
           name: pnpm-packages
 
