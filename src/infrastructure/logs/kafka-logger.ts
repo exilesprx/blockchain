@@ -9,18 +9,7 @@ export default class KafkaLogger {
   }
 
   public static toWinstonLogLevel(level: any) : string {
-    switch (level) {
-      case logLevel.ERROR:
-      case logLevel.NOTHING:
-        return 'error';
-      case logLevel.WARN:
-        return 'warn';
-      case logLevel.DEBUG:
-        return 'debug';
-      case logLevel.INFO:
-      default:
-        return 'info';
-    }
+    return logLevel[level] || 'info';
   }
 
   public logCreator(info: any) : void {

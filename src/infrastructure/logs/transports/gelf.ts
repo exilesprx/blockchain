@@ -1,6 +1,17 @@
 import Logger from 'gelf-pro';
 import Transport from 'winston-transport';
 
+enum GelfLogLevels {
+  emergency = 0,
+  alert = 1,
+  critical = 2,
+  error = 3,
+  warning = 4,
+  notice = 5,
+  info = 6,
+  debug = 7,
+};
+
 export default class GelfTransport extends Transport {
   private gelf: Logger.Logger;
 
@@ -37,24 +48,6 @@ export default class GelfTransport extends Transport {
   }
 
   private static toGelfLogLevel(level: string) : number {
-    switch (level) {
-      case 'emergency':
-        return 0;
-      case 'alert':
-        return 1;
-      case 'critical':
-        return 2;
-      case 'error':
-        return 3;
-      case 'warning':
-        return 4;
-      case 'notice':
-        return 5;
-      case 'debug':
-        return 7;
-      case 'info':
-      default:
-        return 6;
-    }
+    return GelfLogLevels[level] || GelfLogLevels.info;
   }
 }
