@@ -10,7 +10,7 @@ enum GelfLogLevels {
   notice = 5,
   info = 6,
   debug = 7,
-};
+}
 
 export default class GelfTransport extends Transport {
   private gelf: Logger.Logger;
