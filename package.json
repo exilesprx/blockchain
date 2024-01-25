@@ -14,6 +14,7 @@
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
+  "packageManager": "pnpm@8.14.3+sha256.2d0363bb6c314daa67087ef07743eea1ba2e2d360c835e8fec6b5575e4ed9484",
   "dependencies": {
     "@eventstore/db-client": "^6.1.0",
     "@types/crypto-js": "^4.2.1",
