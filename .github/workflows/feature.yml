@@ -23,9 +23,7 @@ jobs:
         run: tar -xvf pnpm-packages.tar.gz
 
       - name: Lint code
-        run: |
-          pnpm -v
-          pnpm run lint
+        run: pnpm run lint
 
   lint-docker:
     runs-on: ubuntu-latest
