@@ -1,13 +1,13 @@
 import { logLevel } from 'kafkajs';
 import Logger from './logger';
 
-const LogLevelDescriptions: {[index in logLevel]: string} = {
+const LogLevelDescriptions: { [index in logLevel]: string } = {
   [logLevel.NOTHING]: 'error',
   [logLevel.ERROR]: 'error',
   [logLevel.WARN]: 'warn',
   [logLevel.INFO]: 'info',
-  [logLevel.DEBUG]: 'debug'
-}
+  [logLevel.DEBUG]: 'debug',
+};
 
 export default class KafkaLogger {
   private logger: Logger;
