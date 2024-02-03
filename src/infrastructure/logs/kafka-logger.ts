@@ -9,6 +9,7 @@ export default class KafkaLogger {
   }
 
   public static toWinstonLogLevel(level: any) : string {
+    console.log('level', logLevel[level]);
     return logLevel[level] || 'info';
   }
 
