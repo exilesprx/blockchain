@@ -48,6 +48,6 @@ export default class GelfTransport extends Transport {
   }
 
   private static toGelfLogLevel(level: string) : number {
-    return GelfLogLevels[level] || GelfLogLevels.info;
+    return GelfLogLevels[level as keyof typeof GelfLogLevels] || GelfLogLevels.info;
   }
 }
