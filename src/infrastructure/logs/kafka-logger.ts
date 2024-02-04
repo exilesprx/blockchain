@@ -1,6 +1,14 @@
 import { logLevel } from 'kafkajs';
 import Logger from './logger';
 
+const LogLevelDescriptions: { [index in logLevel]: string } = {
+  [logLevel.NOTHING]: 'error',
+  [logLevel.ERROR]: 'error',
+  [logLevel.WARN]: 'warn',
+  [logLevel.INFO]: 'info',
+  [logLevel.DEBUG]: 'debug',
+};
+
 export default class KafkaLogger {
   private logger: Logger;
 
@@ -9,18 +17,7 @@ export default class KafkaLogger {
   }
 
   public static toWinstonLogLevel(level: any) : string {
-    switch (level) {
-      case logLevel.ERROR:
-      case logLevel.NOTHING:
-        return 'error';
-      case logLevel.WARN:
-        return 'warn';
-      case logLevel.DEBUG:
-        return 'debug';
-      case logLevel.INFO:
-      default:
-        return 'info';
-    }
+    return LogLevelDescriptions[level as keyof typeof LogLevelDescriptions] || 'info';
   }
 
   public logCreator(info: any) : void {

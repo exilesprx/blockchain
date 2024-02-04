@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Corepack
+        run: corepack install
+
       - name: Install
         run: pnpm i
 
