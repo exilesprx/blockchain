@@ -51,8 +51,8 @@ dependencies:
     specifier: ^3.11.0
     version: 3.11.0
   winston-transport:
-    specifier: ^4.6.0
-    version: 4.6.0
+    specifier: ^4.7.0
+    version: 4.7.0
 
 devDependencies:
   '@babel/core':
@@ -5657,8 +5657,8 @@ packages:
       isexe: 2.0.0
     dev: true
 
-  /winston-transport@4.6.0:
-    resolution: {integrity: sha512-wbBA9PbPAHxKiygo7ub7BYRiKxms0tpfU2ljtWzb3SjRjv5yl6Ozuy/TkXf00HTAt+Uylo3gSkNwzc4ME0wiIg==}
+  /winston-transport@4.7.0:
+    resolution: {integrity: sha512-ajBj65K5I7denzer2IYW6+2bNIVqLGDHqDw3Ow8Ohh+vdW+rv4MZ6eiDvHoKhfJFZ2auyN8byXieDDJ96ViONg==}
     engines: {node: '>= 12.0.0'}
     dependencies:
       logform: 2.6.0
@@ -5680,7 +5680,7 @@ packages:
       safe-stable-stringify: 2.4.3
       stack-trace: 0.0.10
       triple-beam: 1.4.1
-      winston-transport: 4.6.0
+      winston-transport: 4.7.0
     dev: false
 
   /wrap-ansi@7.0.0:
