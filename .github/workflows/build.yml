@@ -32,7 +32,7 @@ jobs:
       - name: Install deps for codecov
         run: |
           apt-get -y update
-          apt-get -y install --no-install-recommends curl ca-certificates sudo gpg
+          apt-get -y install --no-install-recommends curl ca-certificates sudo gpg git
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
