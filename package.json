@@ -34,7 +34,7 @@
     "winston-transport": "^4.7.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
+    "@babel/core": "^7.24.0",
     "@babel/preset-env": "^7.24.0",
     "@babel/preset-typescript": "^7.23.3",
     "@faker-js/faker": "^8.4.1",
