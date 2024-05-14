@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@eventstore/db-client':
-    specifier: ^6.1.0
-    version: 6.1.0
+    specifier: ^6.2.1
+    version: 6.2.1
   '@types/crypto-js':
     specifier: ^4.2.2
     version: 4.2.2
@@ -1542,8 +1542,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@eventstore/db-client@6.1.0:
-    resolution: {integrity: sha512-zn3hGPL3J7+ofVupKvpdtNS16w7BjWFDGtx0rQfMi5a68tluXcj2MCpFTD3VihTCBbCrEMxw7VUlOoRqtwj32A==}
+  /@eventstore/db-client@6.2.1:
+    resolution: {integrity: sha512-utUkIO3Ns9TzTHOTDg+eVTm2Z/Jj5X3VT/otZEWwgmOm7CgSnrWdOxEsAN1jfMht7oVBRB5iGHYFGA3IiQm/Ng==}
     engines: {node: ^12.18.3 || >=14}
     dependencies:
       '@grpc/grpc-js': 1.9.13
