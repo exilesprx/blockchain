@@ -19,7 +19,7 @@
     "@eventstore/db-client": "^6.2.1",
     "@types/crypto-js": "^4.2.2",
     "@types/express": "^4.17.21",
-    "@types/uuid": "^9.0.8",
+    "@types/uuid": "^10.0.0",
     "crypto-js": "^4.2.0",
     "events": "^3.3.0",
     "express": "^4.19.2",
