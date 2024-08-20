@@ -48,8 +48,8 @@ dependencies:
     specifier: ^10.0.0
     version: 10.0.0
   winston:
-    specifier: ^3.14.1
-    version: 3.14.1
+    specifier: ^3.14.2
+    version: 3.14.2
   winston-transport:
     specifier: ^4.7.1
     version: 4.7.1
@@ -5808,8 +5808,8 @@ packages:
       triple-beam: 1.4.1
     dev: false
 
-  /winston@3.14.1:
-    resolution: {integrity: sha512-CJi4Il/msz8HkdDfXOMu+r5Au/oyEjFiOZzbX2d23hRLY0narGjqfE5lFlrT5hfYJhPtM8b85/GNFsxIML/RVA==}
+  /winston@3.14.2:
+    resolution: {integrity: sha512-CO8cdpBB2yqzEf8v895L+GNKYJiEq8eKlHU38af3snQBQ+sdAIUepjMSguOIJC7ICbzm0ZI+Af2If4vIJrtmOg==}
     engines: {node: '>= 12.0.0'}
     dependencies:
       '@colors/colors': 1.6.0
