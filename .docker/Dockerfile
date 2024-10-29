@@ -1,4 +1,4 @@
-FROM node:23.0.0-bookworm-slim AS source
+FROM node:23.1.0-bookworm-slim AS source
 
 RUN corepack enable
 
