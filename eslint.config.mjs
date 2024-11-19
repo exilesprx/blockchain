@@ -9,62 +9,63 @@ import { FlatCompat } from "@eslint/eslintrc";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
 });
 
-export default [{
+export default [
+  {
     ignores: [
-        "**/node_modules",
-        "**/jest.config.ts",
-        "**/babel.config.js",
-        "build/**/*",
-        "coverage/**/*",
+      "**/node_modules",
+      "**/jest.config.ts",
+      "**/babel.config.js",
+      "build/**/*",
+      "coverage/**/*",
     ],
-}, ...compat.extends("airbnb-base", "airbnb-typescript/base"), {
+  },
+  ...compat.extends( "eslint:recommended", "plugin:prettier/recommended"),
+  {
     plugins: {
-        "@typescript-eslint": typescriptEslint,
+      "@typescript-eslint": typescriptEslint,
     },
 
     languageOptions: {
-        globals: {
-            ...globals.node,
-        },
+      globals: {
+        ...globals.node,
+      },
 
-        parser: tsParser,
-        ecmaVersion: "latest",
-        sourceType: "module",
+      parser: tsParser,
+      ecmaVersion: "latest",
+      sourceType: "module",
 
-        parserOptions: {
-            project: "tsconfig.eslint.json",
-        },
+      parserOptions: {
+        project: "tsconfig.eslint.json",
+      },
     },
 
     settings: {
-        "import/resolver": {
-            node: {
-                extensions: [".js", ".ts"],
-            },
+      "import/resolver": {
+        node: {
+          extensions: [".js", ".ts"],
         },
+      },
     },
 
     rules: {
-        "no-console": 2,
-
-        "import/extensions": ["error", "ignorePackages", {
-            js: "never",
-            ts: "never",
-        }],
+      "no-console": 2,
     },
-}, {
+  },
+  {
     files: ["src/**/*/ts"],
-}, {
+  },
+  {
     files: ["**/*.test.ts"],
 
     languageOptions: {
-        globals: {
-            ...globals.jest,
-        },
+      globals: {
+        ...globals.jest,
+      },
     },
-}];
+  },
+];
