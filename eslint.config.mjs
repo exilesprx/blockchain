@@ -22,9 +22,11 @@ export default [
       "**/babel.config.js",
       "build/**/*",
       "coverage/**/*",
+      "eslint.config.mjs",
+      "**/setEnvVars.js",
     ],
   },
-  ...compat.extends( "eslint:recommended", "plugin:prettier/recommended"),
+  ...compat.extends("eslint:recommended", "plugin:prettier/recommended"),
   {
     plugins: {
       "@typescript-eslint": typescriptEslint,
@@ -40,7 +42,8 @@ export default [
       sourceType: "module",
 
       parserOptions: {
-        project: "tsconfig.eslint.json",
+        project: true,
+        tsconfigRootDir: __dirname,
       },
     },
 
