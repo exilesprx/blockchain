@@ -1,5 +1,0 @@
-node_modules
-jest.config.ts
-babel.config.js
-build/**
-coverage/**
