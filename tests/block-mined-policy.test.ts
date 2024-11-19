@@ -1,11 +1,11 @@
-import BlockMinedPolicy from '../src/domain/policies/block-mined-policy';
+import BlockMinedPolicy from "../src/domain/policies/block-mined-policy";
 
-describe('Block mined policy', () => {
-  test('it expects the hash not to be mined', () => {
-    expect(BlockMinedPolicy.containsSuccessiveChars('test', 2)).toBeFalsy();
+describe("Block mined policy", () => {
+  test("it expects the hash not to be mined", () => {
+    expect(BlockMinedPolicy.containsSuccessiveChars("test", 2)).toBeFalsy();
   });
 
-  test('it expects the hash to be mined', () => {
-    expect(BlockMinedPolicy.containsSuccessiveChars('00FF', 2)).toBeTruthy();
+  test("it expects the hash to be mined", () => {
+    expect(BlockMinedPolicy.containsSuccessiveChars("00FF", 2)).toBeTruthy();
   });
 });

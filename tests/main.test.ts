@@ -1,33 +1,33 @@
-import Application from '../src/app/bank/main';
-import TransactionRoute from '../src/app/routes/transaction';
-import Server from '../src/app/server';
-import Database from '../src/infrastructure/database';
-import Blockchain from '../src/domain/chain/blockchain';
-import Link from '../src/domain/chain/specifications/link';
-import Emitter from '../src/app/events/abstract-emitter';
-import Consumer from '../src/infrastructure/stream/consumer';
-import Producer from '../src/infrastructure/stream/producer';
-import Amount from '../src/domain/wallet/specifications/amount';
-import Receiver from '../src/domain/wallet/specifications/receiver';
-import SameWallet from '../src/domain/wallet/specifications/same-wallet';
-import Sender from '../src/domain/wallet/specifications/sender';
-import TransactionPool from '../src/domain/wallet/transaction-pool';
-import BlockMined from '../src/domain/chain/specifications/mined';
+import Application from "../src/app/bank/main";
+import TransactionRoute from "../src/app/routes/transaction";
+import Server from "../src/app/server";
+import Database from "../src/infrastructure/database";
+import Blockchain from "../src/domain/chain/blockchain";
+import Link from "../src/domain/chain/specifications/link";
+import Emitter from "../src/app/events/abstract-emitter";
+import Consumer from "../src/infrastructure/stream/consumer";
+import Producer from "../src/infrastructure/stream/producer";
+import Amount from "../src/domain/wallet/specifications/amount";
+import Receiver from "../src/domain/wallet/specifications/receiver";
+import SameWallet from "../src/domain/wallet/specifications/same-wallet";
+import Sender from "../src/domain/wallet/specifications/sender";
+import TransactionPool from "../src/domain/wallet/transaction-pool";
+import BlockMined from "../src/domain/chain/specifications/mined";
 
-jest.mock('../src/app/events/abstract-emitter');
-jest.mock('../src/domain/wallet/transaction-pool');
-jest.mock('../src/domain/chain/blockchain');
-jest.mock('../src/infrastructure/database');
-jest.mock('../src/infrastructure/stream/producer');
-jest.mock('../src/infrastructure/stream/consumer');
-jest.mock('../src/app/routes/transaction');
-jest.mock('../src/app/server');
+jest.mock("../src/app/events/abstract-emitter");
+jest.mock("../src/domain/wallet/transaction-pool");
+jest.mock("../src/domain/chain/blockchain");
+jest.mock("../src/infrastructure/database");
+jest.mock("../src/infrastructure/stream/producer");
+jest.mock("../src/infrastructure/stream/consumer");
+jest.mock("../src/app/routes/transaction");
+jest.mock("../src/app/server");
 
 const addSpecForPool = jest.fn();
 
 const addSpecForChain = jest.fn();
 
-describe('Main', () => {
+describe("Main", () => {
   beforeAll(() => {
     Emitter.mockClear();
 
@@ -51,20 +51,23 @@ describe('Main', () => {
       getAction: jest.fn(),
     }));
 
-    TransactionRoute.getName = jest.fn().mockReturnValue('test');
+    TransactionRoute.getName = jest.fn().mockReturnValue("test");
   });
 
-  test('it expect events to be registered', () => {
+  test("it expect events to be registered", () => {
     const application = new Application();
 
     application.registerEvents();
 
     expect(Emitter.mock.instances[0].register).toBeCalledTimes(1);
 
-    expect(Emitter.mock.instances[0].register).toBeCalledWith('TransactionAdded', expect.any(Function));
+    expect(Emitter.mock.instances[0].register).toBeCalledWith(
+      "TransactionAdded",
+      expect.any(Function),
+    );
   });
 
-  test('it expects specifications added', () => {
+  test("it expects specifications added", () => {
     const application = new Application();
 
     application.init();
@@ -88,7 +91,7 @@ describe('Main', () => {
     );
   });
 
-  test('it expects connections for database, producer, and consumer', async () => {
+  test("it expects connections for database, producer, and consumer", async () => {
     const application = new Application();
 
     application.boot();
@@ -104,7 +107,7 @@ describe('Main', () => {
     expect(Server.mock.instances[0].create).toBeCalledTimes(1);
   });
 
-  test('it expects routes to be registered', () => {
+  test("it expects routes to be registered", () => {
     const application = new Application();
 
     application.registerRoutes();
@@ -112,7 +115,7 @@ describe('Main', () => {
     expect(Server.mock.instances[0].post).toBeCalled();
 
     expect(Server.mock.instances[0].post).toBeCalledWith(
-      'test',
+      "test",
       expect.any(Function),
     );
   });
