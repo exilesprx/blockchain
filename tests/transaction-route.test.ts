@@ -1,13 +1,13 @@
-import TransactionRoute from '../src/app/routes/transaction';
-import Database from '../src/infrastructure/database/index';
-import Logger from '../src/infrastructure/logs/logger';
-import AddTransactionFromRequest from '../src/app/commands/add-transaction-from-request';
+import TransactionRoute from "../src/app/routes/transaction";
+import Database from "../src/infrastructure/database/index";
+import Logger from "../src/infrastructure/logs/logger";
+import AddTransactionFromRequest from "../src/app/commands/add-transaction-from-request";
 
-jest.mock('../src/infrastructure/database/index');
-jest.mock('../src/infrastructure/logs/logger');
-jest.mock('../src/app/commands/add-transaction-from-request');
+jest.mock("../src/infrastructure/database/index");
+jest.mock("../src/infrastructure/logs/logger");
+jest.mock("../src/app/commands/add-transaction-from-request");
 
-describe('Transaction route', () => {
+describe("Transaction route", () => {
   beforeAll(() => {
     Database.mockClear();
 
@@ -16,7 +16,7 @@ describe('Transaction route', () => {
     Logger.mockClear();
   });
 
-  test('it expects to add a transition to the bank and persist it', () => {
+  test("it expects to add a transition to the bank and persist it", () => {
     const action = new AddTransactionFromRequest(jest.fn(), jest.fn());
     const route = new TransactionRoute(action, jest.fn());
     const res = {
@@ -26,8 +26,8 @@ describe('Transaction route', () => {
 
     const req = {
       body: {
-        to: 'test',
-        from: 'test',
+        to: "test",
+        from: "test",
         amount: 1,
       },
     };
@@ -37,7 +37,7 @@ describe('Transaction route', () => {
     expect(AddTransactionFromRequest.mock.instances[0].execute).toBeCalled();
   });
 
-  test('it expects to aend a 401 response', () => {
+  test("it expects to aend a 401 response", () => {
     const action = new AddTransactionFromRequest(jest.fn(), jest.fn());
     const log = new Logger();
     const spy = jest.fn();

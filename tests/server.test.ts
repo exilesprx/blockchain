@@ -1,7 +1,7 @@
-import express from 'express';
-import Server from '../src/app/server';
+import express from "express";
+import Server from "../src/app/server";
 
-jest.mock('express');
+jest.mock("express");
 
 const expressUse = jest.fn();
 
@@ -11,7 +11,7 @@ const expressPost = jest.fn();
 
 const expressGet = jest.fn();
 
-describe('Server', () => {
+describe("Server", () => {
   beforeAll(() => {
     express.mockImplementation(() => ({
       use: expressUse,
@@ -20,7 +20,7 @@ describe('Server', () => {
       get: expressGet,
     }));
   });
-  test('it expects to accept handlers are passed to the express framework', () => {
+  test("it expects to accept handlers are passed to the express framework", () => {
     const handler = jest.fn();
 
     const server = new Server(process.env.APP_PORT);
@@ -32,7 +32,7 @@ describe('Server', () => {
     expect(expressUse).toBeCalledWith(expect.arrayContaining([handler]));
   });
 
-  test('it expects to call with a port and a callback', () => {
+  test("it expects to call with a port and a callback", () => {
     const server = new Server(process.env.APP_PORT);
 
     const spy = jest.fn();
@@ -41,38 +41,44 @@ describe('Server', () => {
 
     expect(expressListen).toBeCalled();
 
-    expect(expressListen).toHaveBeenCalledWith('8888', expect.any(Function));
+    expect(expressListen).toHaveBeenCalledWith("8888", expect.any(Function));
   });
 
-  test('it expects to accept multiple handlers for post calls', () => {
+  test("it expects to accept multiple handlers for post calls", () => {
     const server = new Server(process.env.APP_PORT);
 
     const handlers: any[] = [jest.fn(), jest.fn()];
 
-    server.post('test', handlers.at(0), handlers.at(1));
+    server.post("test", handlers.at(0), handlers.at(1));
 
     expect(expressPost).toBeCalledTimes(1);
 
-    expect(expressPost).toBeCalledWith('test', expect.arrayContaining([handlers.at(0), handlers.at(1)]));
+    expect(expressPost).toBeCalledWith(
+      "test",
+      expect.arrayContaining([handlers.at(0), handlers.at(1)]),
+    );
   });
 
-  test('it expects to accept multiple handlers for get calls', () => {
+  test("it expects to accept multiple handlers for get calls", () => {
     const server = new Server(process.env.APP_PORT);
 
     const handlers: any[] = [jest.fn(), jest.fn()];
 
-    server.get('test', handlers.at(0), handlers.at(1));
+    server.get("test", handlers.at(0), handlers.at(1));
 
     expect(expressGet).toBeCalledTimes(1);
 
-    expect(expressGet).toBeCalledWith('test', expect.arrayContaining([handlers.at(0), handlers.at(1)]));
+    expect(expressGet).toBeCalledWith(
+      "test",
+      expect.arrayContaining([handlers.at(0), handlers.at(1)]),
+    );
   });
 
-  test('it expects an exception if port is undefined', () => {
+  test("it expects an exception if port is undefined", () => {
     const server = new Server(undefined);
 
     expect(() => server.getPort()).toThrow(Error);
 
-    expect(() => server.getPort()).toThrow('Port is not configured');
+    expect(() => server.getPort()).toThrow("Port is not configured");
   });
 });

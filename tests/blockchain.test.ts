@@ -1,34 +1,34 @@
-import Blockchain from '../src/domain/chain/blockchain';
-import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
-import Block from '../src/domain/chain/block';
-import Link from '../src/domain/chain/specifications/link';
-import Emitter from '../src/app/events/abstract-emitter';
-import BlockMined from '../src/domain/chain/specifications/mined';
-import BlockAdded from '../src/domain/events/block-added';
+import Blockchain from "../src/domain/chain/blockchain";
+import BlockLimitPolicy from "../src/domain/policies/block-limit-policy";
+import Block from "../src/domain/chain/block";
+import Link from "../src/domain/chain/specifications/link";
+import Emitter from "../src/app/events/abstract-emitter";
+import BlockMined from "../src/domain/chain/specifications/mined";
+import BlockAdded from "../src/domain/events/block-added";
 
-jest.mock('../src/domain/policies/block-limit-policy');
-jest.mock('../src/app/events/abstract-emitter');
+jest.mock("../src/domain/policies/block-limit-policy");
+jest.mock("../src/app/events/abstract-emitter");
 
-describe('Blockchain', () => {
+describe("Blockchain", () => {
   beforeAll(() => {
     Emitter.mockClear();
   });
 
-  test('it expects to have one block', () => {
+  test("it expects to have one block", () => {
     const chain = new Blockchain(jest.fn());
 
     expect(chain.length()).toBe(1);
   });
 
-  test('it expects to remove a block from the beginning when limit is reached', () => {
+  test("it expects to remove a block from the beginning when limit is reached", () => {
     const chain = new Blockchain();
 
-    jest.spyOn(chain, 'removeFirstBlock');
+    jest.spyOn(chain, "removeFirstBlock");
 
     // The default is false, but we want to "fake" the chain being full
     BlockLimitPolicy.reachedLimit.mockReturnValueOnce(true);
 
-    chain.addBlock(new Block(1, 1, 1, 'test', [], 0));
+    chain.addBlock(new Block(1, 1, 1, "test", [], 0));
 
     expect(BlockLimitPolicy.reachedLimit).toHaveBeenCalled();
 
@@ -41,12 +41,12 @@ describe('Blockchain', () => {
     expect(events.at(0)).toBeInstanceOf(BlockAdded);
   });
 
-  test('it expects to add a block', () => {
+  test("it expects to add a block", () => {
     const chain = new Blockchain();
 
     expect(chain.length()).toBe(1);
 
-    chain.addBlock(new Block(1, 1, 1, 'test', [], 0));
+    chain.addBlock(new Block(1, 1, 1, "test", [], 0));
 
     // TODO: update to flush events and check length and type
     expect(chain.length()).toBe(2);
@@ -55,14 +55,15 @@ describe('Blockchain', () => {
     expect(events.at(0)).toBeInstanceOf(BlockAdded);
   });
 
-  test('it expects a specification to pass and add a new block', () => {
+  test("it expects a specification to pass and add a new block", () => {
     const chain = new Blockchain();
 
     const link = new Link();
 
-    const block = new Block(1, 1, 1, 'test', [], 0);
+    const block = new Block(1, 1, 1, "test", [], 0);
 
-    const spy = jest.spyOn(link, 'isSatisfiedBy')
+    const spy = jest
+      .spyOn(link, "isSatisfiedBy")
       .mockImplementation(() => true);
 
     chain.addSpecification(link);
@@ -73,10 +74,7 @@ describe('Blockchain', () => {
 
     expect(chain.length()).toBe(2);
 
-    expect(spy).toBeCalledWith(
-      expect.any(Block),
-      block,
-    );
+    expect(spy).toBeCalledWith(expect.any(Block), block);
 
     // TODO: update to flush events and check length and type
     const events = chain.flushEvents();
@@ -84,12 +82,14 @@ describe('Blockchain', () => {
     expect(events.at(0)).toBeInstanceOf(BlockAdded);
   });
 
-  test('it expects a specification to fail and a block is not added', () => {
+  test("it expects a specification to fail and a block is not added", () => {
     const chain = new Blockchain();
 
     chain.addSpecification(new Link());
 
-    expect(() => chain.addBlock(new Block(1, 1, 1, 'test', [], 0))).toThrowError();
+    expect(() =>
+      chain.addBlock(new Block(1, 1, 1, "test", [], 0)),
+    ).toThrowError();
 
     // TODO: update to flush events and check length and type
     expect(chain.length()).toBe(1);
@@ -98,11 +98,11 @@ describe('Blockchain', () => {
     expect(events.length).toBe(0);
   });
 
-  test('it expects an unmined block to be rejected from the chain', () => {
+  test("it expects an unmined block to be rejected from the chain", () => {
     const chain = new Blockchain();
-    const block = new Block(1, 1, 1, 'test', [], 0);
+    const block = new Block(1, 1, 1, "test", [], 0);
 
-    jest.spyOn(block, 'isMined').mockReturnValue(false);
+    jest.spyOn(block, "isMined").mockReturnValue(false);
 
     chain.addSpecification(new BlockMined());
 
@@ -111,15 +111,14 @@ describe('Blockchain', () => {
     expect(chain.length()).toBe(1);
   });
 
-  test('it expects the ability to add multiple specs at once', () => {
+  test("it expects the ability to add multiple specs at once", () => {
     const chain = new Blockchain();
 
     const link = new Link();
 
-    const block = new Block(1, 1, 1, 'test', [], 0);
+    const block = new Block(1, 1, 1, "test", [], 0);
 
-    const spy = jest.spyOn(link, 'isSatisfiedBy')
-      .mockReturnValue(true);
+    const spy = jest.spyOn(link, "isSatisfiedBy").mockReturnValue(true);
 
     chain.addSpecification(link, link, link);
 
@@ -127,16 +126,13 @@ describe('Blockchain', () => {
 
     expect(spy).toBeCalledTimes(3);
 
-    expect(spy).toBeCalledWith(
-      expect.any(Block),
-      block,
-    );
+    expect(spy).toBeCalledWith(expect.any(Block), block);
 
     // TODO: update to flush events and check length and type
   });
-  test('it flushes the events', () => {
+  test("it flushes the events", () => {
     const chain = new Blockchain();
-    const block = new Block(1, 1, 1, 'test', [], 0);
+    const block = new Block(1, 1, 1, "test", [], 0);
     chain.addBlock(block);
 
     expect(chain.flushEvents().length).toBe(1);

@@ -1,18 +1,18 @@
-import Events from 'events';
-import Block from '../src/domain/chain/block';
-import Emitter from '../src/app/events/emitter';
-import KafkaLogger from '../src/infrastructure/logs/kafka-logger';
-import Logger from '../src/infrastructure/logs/logger';
-import Producer from '../src/infrastructure/stream/producer';
-import Stream from '../src/infrastructure/stream/stream';
-import Transaction from '../src/domain/wallet/transaction';
+import Events from "events";
+import Block from "../src/domain/chain/block";
+import Emitter from "../src/app/events/emitter";
+import KafkaLogger from "../src/infrastructure/logs/kafka-logger";
+import Logger from "../src/infrastructure/logs/logger";
+import Producer from "../src/infrastructure/stream/producer";
+import Stream from "../src/infrastructure/stream/stream";
+import Transaction from "../src/domain/wallet/transaction";
 
-jest.mock('events');
-jest.mock('kafkajs');
-jest.mock('../src/infrastructure/logs/logger');
-jest.mock('../src/infrastructure/logs/kafka-logger');
-jest.mock('../src/infrastructure/stream/stream');
-jest.mock('../src/infrastructure/stream/producer');
+jest.mock("events");
+jest.mock("kafkajs");
+jest.mock("../src/infrastructure/logs/logger");
+jest.mock("../src/infrastructure/logs/kafka-logger");
+jest.mock("../src/infrastructure/stream/stream");
+jest.mock("../src/infrastructure/stream/producer");
 
 const events: Events = new Events();
 
@@ -24,7 +24,7 @@ const stream: Stream = new Stream(kafkaLogger);
 
 const producer: Producer = new Producer(stream);
 
-describe('Emitter', () => {
+describe("Emitter", () => {
   beforeAll(() => {
     Events.mockClear();
 
@@ -33,22 +33,22 @@ describe('Emitter', () => {
     Producer.mockClear();
   });
 
-  test('it expects the listeners can be configured', () => {
+  test("it expects the listeners can be configured", () => {
     const emitter = new Emitter(events, producer, logger);
 
     const spy = jest.fn();
 
-    emitter.register('test', spy);
+    emitter.register("test", spy);
 
     expect(events.on).toHaveBeenCalledTimes(1);
 
-    expect(events.on).toBeCalledWith('test', spy);
+    expect(events.on).toBeCalledWith("test", spy);
   });
 
-  test('it expects a log and kafka message when adding a block', () => {
+  test("it expects a log and kafka message when adding a block", () => {
     const emitter = new Emitter(events, producer, logger);
 
-    const block = new Block(1, 0, 0, 'test', [], 0);
+    const block = new Block(1, 0, 0, "test", [], 0);
 
     emitter.blockAdded(block);
 
@@ -57,10 +57,10 @@ describe('Emitter', () => {
     expect(logger.info).toBeCalledWith(`Block added: ${block.getHash()}`);
   });
 
-  test('it expects a log and kafka message when adding a transaction', () => {
+  test("it expects a log and kafka message when adding a transaction", () => {
     const emitter = new Emitter(events, producer, logger);
 
-    const transaction = new Transaction('1', '2', 50);
+    const transaction = new Transaction("1", "2", 50);
 
     emitter.transactionAdded(transaction);
 
@@ -69,11 +69,11 @@ describe('Emitter', () => {
     expect(producer.sendTransaction).toHaveBeenLastCalledWith(transaction);
   });
 
-  test('it expects to call emit on EventEmitter', () => {
+  test("it expects to call emit on EventEmitter", () => {
     const emitter = new Emitter(events, producer, logger);
 
-    emitter.emit('test', 1);
+    emitter.emit("test", 1);
 
-    expect(events.emit).toHaveBeenLastCalledWith('test', 1);
+    expect(events.emit).toHaveBeenLastCalledWith("test", 1);
   });
 });
