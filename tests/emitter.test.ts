@@ -53,7 +53,11 @@ describe("Emitter", () => {
 
     expect(logger.info).toHaveBeenCalledWith(`Block added: ${block.getHash()}`);
     expect(producer.sendBlock).toHaveBeenCalledWith(
-      expect.objectContaining({ id: 1, hash: block.getHash() }),
+      expect.objectContaining({
+        id: 1,
+        hash: block.getHash(),
+        previousHash: "test",
+      }),
     );
   });
 
@@ -89,7 +93,9 @@ describe("Emitter", () => {
 
     emitter.transactionAdded(event);
 
-    expect(producer.sendTransaction).toHaveBeenCalledWith(transaction);
+    expect(producer.sendTransaction).toHaveBeenCalledWith(
+      expect.objectContaining({ id: "1", to: "2", from: "50", amount: 3 }),
+    );
   });
 
   test("it expects to call emit on EventEmitter", () => {
