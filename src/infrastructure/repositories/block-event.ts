@@ -16,7 +16,7 @@ export default class BlockEventRepository {
   public persist(chain: Blockchain): void {
     this.repo.persist(chain);
     chain.flushEvents().forEach((event: Event) => {
-      this.emitter.emit(event.toString(), event.toJson());
+      this.emitter.emit(event.toString(), event);
     });
   }
 }
