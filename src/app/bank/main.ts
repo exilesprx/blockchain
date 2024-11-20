@@ -25,7 +25,6 @@ import AddTransactionFromRequest from "../commands/add-transaction-from-request"
 import Emitter from "../events/emitter";
 import TransactionRoute from "../routes/transaction";
 import Server from "../server";
-import { Transaction as TransactionContract } from "../../infrastructure/database/models/transaction";
 
 export default class Application {
   private server: Server;
@@ -90,8 +89,7 @@ export default class Application {
   public registerEvents() {
     this.emitter.register(
       TransactionAdded.toString(),
-      (transaction: TransactionContract) =>
-        this.emitter.transactionAdded(transaction),
+      (event: TransactionAdded) => this.emitter.transactionAdded(event),
     );
   }
 
