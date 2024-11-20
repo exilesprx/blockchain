@@ -62,9 +62,9 @@ describe("Kafka Logger", () => {
 
     kafkaLogger.logCreator(arg);
 
-    expect(logger.log).toBeCalledTimes(1);
+    expect(logger.log).toHaveBeenCalledTimes(1);
 
-    expect(logger.log).toBeCalledWith({
+    expect(logger.log).toHaveBeenCalledWith({
       extra: {
         comment: arg.log.comment,
       },

@@ -65,6 +65,6 @@ describe("Transaction pool", () => {
 
     pool.fill(transaction);
 
-    expect(spy).toBeCalledTimes(3);
+    expect(spy).toHaveBeenCalledTimes(3);
   });
 });

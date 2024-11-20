@@ -59,9 +59,9 @@ describe("Main", () => {
 
     application.registerEvents();
 
-    expect(Emitter.mock.instances[0].register).toBeCalledTimes(1);
+    expect(Emitter.mock.instances[0].register).toHaveBeenCalledTimes(1);
 
-    expect(Emitter.mock.instances[0].register).toBeCalledWith(
+    expect(Emitter.mock.instances[0].register).toHaveBeenCalledWith(
       "TransactionAdded",
       expect.any(Function),
     );
@@ -72,20 +72,20 @@ describe("Main", () => {
 
     application.init();
 
-    expect(Server.mock.instances[0].use).toBeCalledTimes(1);
+    expect(Server.mock.instances[0].use).toHaveBeenCalledTimes(1);
 
-    expect(addSpecForPool).toBeCalledTimes(1);
+    expect(addSpecForPool).toHaveBeenCalledTimes(1);
 
-    expect(addSpecForPool).toBeCalledWith(
+    expect(addSpecForPool).toHaveBeenCalledWith(
       expect.any(Amount),
       expect.any(Receiver),
       expect.any(Sender),
       expect.any(SameWallet),
     );
 
-    expect(addSpecForChain).toBeCalledTimes(1);
+    expect(addSpecForChain).toHaveBeenCalledTimes(1);
 
-    expect(addSpecForChain).toBeCalledWith(
+    expect(addSpecForChain).toHaveBeenCalledWith(
       expect.any(Link),
       expect.any(BlockMined),
     );
@@ -96,15 +96,15 @@ describe("Main", () => {
 
     application.boot();
 
-    expect(Database.mock.instances[0].connect).toBeCalled();
+    expect(Database.mock.instances[0].connect).toHaveBeenCalled();
 
-    await expect(Producer.mock.instances[0].connect).toBeCalled();
+    await expect(Producer.mock.instances[0].connect).toHaveBeenCalled();
 
-    await expect(Consumer.mock.instances[0].connect).toBeCalled();
+    await expect(Consumer.mock.instances[0].connect).toHaveBeenCalled();
 
-    await expect(Consumer.mock.instances[0].run).toBeCalled();
+    await expect(Consumer.mock.instances[0].run).toHaveBeenCalled();
 
-    expect(Server.mock.instances[0].create).toBeCalledTimes(1);
+    expect(Server.mock.instances[0].create).toHaveBeenCalledTimes(1);
   });
 
   test("it expects routes to be registered", () => {
@@ -112,9 +112,9 @@ describe("Main", () => {
 
     application.registerRoutes();
 
-    expect(Server.mock.instances[0].post).toBeCalled();
+    expect(Server.mock.instances[0].post).toHaveBeenCalled();
 
-    expect(Server.mock.instances[0].post).toBeCalledWith(
+    expect(Server.mock.instances[0].post).toHaveBeenCalledWith(
       "test",
       expect.any(Function),
     );

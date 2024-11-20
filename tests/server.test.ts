@@ -27,9 +27,9 @@ describe("Server", () => {
 
     server.use(handler);
 
-    expect(expressUse).toBeCalledTimes(1);
+    expect(expressUse).toHaveBeenCalledTimes(1);
 
-    expect(expressUse).toBeCalledWith(expect.arrayContaining([handler]));
+    expect(expressUse).toHaveBeenCalledWith(expect.arrayContaining([handler]));
   });
 
   test("it expects to call with a port and a callback", () => {
@@ -39,7 +39,7 @@ describe("Server", () => {
 
     server.create(spy);
 
-    expect(expressListen).toBeCalled();
+    expect(expressListen).toHaveBeenCalled();
 
     expect(expressListen).toHaveBeenCalledWith("8888", expect.any(Function));
   });
@@ -51,9 +51,9 @@ describe("Server", () => {
 
     server.post("test", handlers.at(0), handlers.at(1));
 
-    expect(expressPost).toBeCalledTimes(1);
+    expect(expressPost).toHaveBeenCalledTimes(1);
 
-    expect(expressPost).toBeCalledWith(
+    expect(expressPost).toHaveBeenCalledWith(
       "test",
       expect.arrayContaining([handlers.at(0), handlers.at(1)]),
     );
@@ -66,9 +66,9 @@ describe("Server", () => {
 
     server.get("test", handlers.at(0), handlers.at(1));
 
-    expect(expressGet).toBeCalledTimes(1);
+    expect(expressGet).toHaveBeenCalledTimes(1);
 
-    expect(expressGet).toBeCalledWith(
+    expect(expressGet).toHaveBeenCalledWith(
       "test",
       expect.arrayContaining([handlers.at(0), handlers.at(1)]),
     );
