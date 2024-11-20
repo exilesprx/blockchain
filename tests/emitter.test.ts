@@ -52,7 +52,7 @@ describe("Emitter", () => {
     emitter.blockAdded(event);
 
     expect(logger.info).toHaveBeenCalledWith(`Block added: ${block.getHash()}`);
-    expect(producer.sendBlock).toHaveBeenLastCalledWith(event.toJson());
+    expect(producer.sendBlock).toHaveBeenCalledWith(event.toJson());
   });
 
   test("it expects a log when a block is mined", () => {
@@ -84,7 +84,7 @@ describe("Emitter", () => {
 
     emitter.transactionAdded(event);
 
-    expect(producer.sendTransaction).toHaveBeenLastCalledWith(transaction);
+    expect(producer.sendTransaction).toHaveBeenCalledWith(transaction);
   });
 
   test("it expects to call emit on EventEmitter", () => {
@@ -92,6 +92,6 @@ describe("Emitter", () => {
 
     emitter.emit("test", 1);
 
-    expect(events.emit).toHaveBeenLastCalledWith("test", 1);
+    expect(events.emit).toHaveBeenCalledWith("test", 1);
   });
 });
