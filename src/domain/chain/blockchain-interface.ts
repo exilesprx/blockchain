@@ -1,7 +1,7 @@
 interface BlockchainInterface {
-  length() : number;
+  length(): number;
 
-  flushEvents() : any[];
+  flushEvents(): any[];
 }
 
 export default BlockchainInterface;

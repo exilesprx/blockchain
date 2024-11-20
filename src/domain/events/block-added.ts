@@ -1,6 +1,6 @@
-import Block from '../chain/block';
-import Transaction from '../wallet/transaction';
-import Event from './event';
+import Block from "../chain/block";
+import Transaction from "../wallet/transaction";
+import Event from "./event";
 
 export default class BlockAdded extends Event {
   private id: any;

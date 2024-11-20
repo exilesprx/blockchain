@@ -1,5 +1,5 @@
-import Block from '../chain/block';
-import Event from './event';
+import Block from "../chain/block";
+import Event from "./event";
 
 export default class MineFailed extends Event {
   private id: any;

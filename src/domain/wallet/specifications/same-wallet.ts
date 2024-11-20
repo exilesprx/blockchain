@@ -1,8 +1,8 @@
-import Transaction from '../transaction';
-import Specification from './specification';
+import Transaction from "../transaction";
+import Specification from "./specification";
 
 export default class SameWallet implements Specification {
-  private message = 'Cannot send to same wallet';
+  private message = "Cannot send to same wallet";
 
   public isSatisfiedBy(transaction: Transaction): void {
     if (transaction.getSender() === transaction.getReceiver()) {

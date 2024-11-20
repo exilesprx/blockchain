@@ -1,6 +1,6 @@
-import Blockchain from '../../domain/chain/blockchain';
-import Transaction from '../../domain/wallet/transaction';
-import TransactionPool from '../../domain/wallet/transaction-pool';
+import Blockchain from "../../domain/chain/blockchain";
+import Transaction from "../../domain/wallet/transaction";
+import TransactionPool from "../../domain/wallet/transaction-pool";
 
 export default class AddTransactionFromConsumer {
   private pool: TransactionPool;
@@ -13,7 +13,7 @@ export default class AddTransactionFromConsumer {
     this.pool = pool;
   }
 
-  public execute(transaction: Transaction) : void {
+  public execute(transaction: Transaction): void {
     this.pool.fill(transaction);
 
     if (this.pool.shouldCreateNewBlock()) {

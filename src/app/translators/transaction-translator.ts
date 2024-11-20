@@ -1,9 +1,13 @@
-import { v4 } from 'uuid';
-import Transaction from '../../domain/wallet/transaction';
-import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction';
+import { v4 } from "uuid";
+import Transaction from "../../domain/wallet/transaction";
+import { Transaction as TransactionContract } from "../../infrastructure/database/models/transaction";
 
 export default class TransactionTranslator {
-  public static fromRequest(params: { to: string, from: string, amount: number }) : Transaction {
+  public static fromRequest(params: {
+    to: string;
+    from: string;
+    amount: number;
+  }): Transaction {
     return new Transaction(
       v4(),
       params.to,
@@ -13,7 +17,7 @@ export default class TransactionTranslator {
     );
   }
 
-  public static fromObject(message: TransactionContract) : Transaction {
+  public static fromObject(message: TransactionContract): Transaction {
     return new Transaction(
       message.id,
       message.to,
@@ -23,16 +27,14 @@ export default class TransactionTranslator {
     );
   }
 
-  public static fromObjectForMany(transactions: TransactionContract[]) : Transaction[] {
+  public static fromObjectForMany(
+    transactions: TransactionContract[],
+  ): Transaction[] {
     const messageTransactions: Transaction[] = [];
 
-    transactions.forEach(
-      (transaction: TransactionContract) => {
-        messageTransactions.push(
-          TransactionTranslator.fromObject(transaction),
-        );
-      },
-    );
+    transactions.forEach((transaction: TransactionContract) => {
+      messageTransactions.push(TransactionTranslator.fromObject(transaction));
+    });
 
     return messageTransactions;
   }

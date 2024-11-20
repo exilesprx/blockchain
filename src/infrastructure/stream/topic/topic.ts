@@ -5,7 +5,7 @@ export default abstract class Topic {
     this.name = name;
   }
 
-  public toString() : string {
+  public toString(): string {
     return this.name;
   }
 }

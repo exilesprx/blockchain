@@ -1,17 +1,17 @@
-import Events from 'events';
-import Blockchain from '../../domain/chain/blockchain';
-import BlockAdded from '../../domain/events/block-added';
-import MineFailed from '../../domain/events/mine-failed';
-import KafkaLogger from '../../infrastructure/logs/kafka-logger';
-import Logger from '../../infrastructure/logs/logger';
-import TransactionPool from '../../domain/wallet/transaction-pool';
-import Producer from '../../infrastructure/stream/producer';
-import Stream from '../../infrastructure/stream/stream';
-import BlockMined from '../../domain/events/block-mined';
-import TransactionConsumer from '../../infrastructure/stream/transaction-consumer';
-import AddTransactionFromConsumer from '../commands/add-transaction-from-consumer';
-import Emitter from '../events/emitter';
-import { Block as BlockContract } from '../../infrastructure/database/models/block';
+import Events from "events";
+import Blockchain from "../../domain/chain/blockchain";
+import BlockAdded from "../../domain/events/block-added";
+import MineFailed from "../../domain/events/mine-failed";
+import KafkaLogger from "../../infrastructure/logs/kafka-logger";
+import Logger from "../../infrastructure/logs/logger";
+import TransactionPool from "../../domain/wallet/transaction-pool";
+import Producer from "../../infrastructure/stream/producer";
+import Stream from "../../infrastructure/stream/stream";
+import BlockMined from "../../domain/events/block-mined";
+import TransactionConsumer from "../../infrastructure/stream/transaction-consumer";
+import AddTransactionFromConsumer from "../commands/add-transaction-from-consumer";
+import Emitter from "../events/emitter";
+import { Block as BlockContract } from "../../infrastructure/database/models/block";
 
 export default class Miner {
   private emitter: Emitter;
@@ -38,24 +38,21 @@ export default class Miner {
     this.consumer = new TransactionConsumer(action, stream);
   }
 
-  public registerEvents() : void {
-    this.emitter.register(
-      BlockAdded.toString(),
-      (block: BlockContract) => this.emitter.blockAdded(block),
+  public registerEvents(): void {
+    this.emitter.register(BlockAdded.toString(), (block: BlockContract) =>
+      this.emitter.blockAdded(block),
     );
 
-    this.emitter.register(
-      BlockMined.toString(),
-      (block: BlockContract) => this.emitter.blockMined(block),
+    this.emitter.register(BlockMined.toString(), (block: BlockContract) =>
+      this.emitter.blockMined(block),
     );
 
-    this.emitter.register(
-      MineFailed.toString(),
-      (block: BlockContract) => this.emitter.mineFailed(block),
+    this.emitter.register(MineFailed.toString(), (block: BlockContract) =>
+      this.emitter.mineFailed(block),
     );
   }
 
-  public async boot() : Promise<void> {
+  public async boot(): Promise<void> {
     await this.consumer.connect();
 
     await this.consumer.run();

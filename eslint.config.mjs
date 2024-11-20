@@ -57,10 +57,13 @@ export default [
 
     rules: {
       "no-console": 2,
+
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["error"],
     },
   },
   {
-    files: ["src/**/*/ts"],
+    files: ["src/**/*/**.ts"],
   },
   {
     files: ["**/*.test.ts"],

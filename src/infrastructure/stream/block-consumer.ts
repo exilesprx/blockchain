@@ -1,9 +1,9 @@
-import { EachMessagePayload } from 'kafkajs';
-import AddBlockFromConsumer from '../../app/commands/add-block-from-consumer';
-import Consumer from './consumer';
-import Stream from './stream';
-import BlockTopic from './topic/block';
-import BlockTranslator from './translators/block-translator';
+import { EachMessagePayload } from "kafkajs";
+import AddBlockFromConsumer from "../../app/commands/add-block-from-consumer";
+import Consumer from "./consumer";
+import Stream from "./stream";
+import BlockTopic from "./topic/block";
+import BlockTranslator from "./translators/block-translator";
 
 export default class BlockConsumer extends Consumer {
   private action: AddBlockFromConsumer;
@@ -14,11 +14,11 @@ export default class BlockConsumer extends Consumer {
     this.action = action;
   }
 
-  public async run() : Promise<void> {
+  public async run(): Promise<void> {
     super.run(new BlockTopic().toString());
   }
 
-  protected async transformMessage(payload: EachMessagePayload) : Promise<void> {
+  protected async transformMessage(payload: EachMessagePayload): Promise<void> {
     const { value } = payload.message;
 
     if (!value) {

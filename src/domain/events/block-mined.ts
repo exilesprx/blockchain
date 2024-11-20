@@ -1,7 +1,7 @@
-import Block from '../chain/block';
-import Transaction from '../wallet/transaction';
-import Event from './event';
-import { Block as BlockContract } from '../../infrastructure/database/models/block';
+import Block from "../chain/block";
+import Transaction from "../wallet/transaction";
+import Event from "./event";
+import { Block as BlockContract } from "../../infrastructure/database/models/block";
 
 export default class BlockMined extends Event {
   private id: any;
@@ -30,10 +30,12 @@ export default class BlockMined extends Event {
     this.date = block.getDate();
   }
 
-  public toJson() : BlockContract {
+  public toJson(): BlockContract {
     return {
       id: this.id,
-      transactions: this.transactions.map((transaction: Transaction) => transaction.toJson()),
+      transactions: this.transactions.map((transaction: Transaction) =>
+        transaction.toJson(),
+      ),
       nounce: this.nounce,
       difficulty: this.difficulty,
       previousHash: this.previousHash,

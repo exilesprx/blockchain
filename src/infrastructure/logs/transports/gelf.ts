@@ -1,5 +1,5 @@
-import Logger from 'gelf-pro';
-import Transport from 'winston-transport';
+import Logger from "gelf-pro";
+import Transport from "winston-transport";
 
 enum GelfLogLevels {
   emergency = 0,
@@ -23,7 +23,7 @@ export default class GelfTransport extends Transport {
 
   public log(info: any, callback: () => void) {
     setImmediate(() => {
-      this.emit('logged', info);
+      this.emit("logged", info);
     });
 
     const { message, extra, level } = info;
@@ -33,21 +33,24 @@ export default class GelfTransport extends Transport {
     callback();
   }
 
-  private static getConfig() : Partial<Logger.Settings> {
+  private static getConfig(): Partial<Logger.Settings> {
     return {
       fields: {
         facility: `${process.env.APP_NAME}`,
         owner: `${process.env.HOSTNAME}`,
       },
-      adapterName: 'udp', // optional; currently supported "udp", "tcp" and "tcp-tls"; default: udp
-      adapterOptions: { // this object is passed to the adapter.connect() method
+      adapterName: "udp", // optional; currently supported "udp", "tcp" and "tcp-tls"; default: udp
+      adapterOptions: {
+        // this object is passed to the adapter.connect() method
         host: `${process.env.GRAYLOG_HOST}`, // optional; default: 127.0.0.1
         port: Number(`${process.env.GRAYLOG_PORT}`), // optional; default: 12201
       },
     };
   }
 
-  private static toGelfLogLevel(level: string) : number {
-    return GelfLogLevels[level as keyof typeof GelfLogLevels] || GelfLogLevels.info;
+  private static toGelfLogLevel(level: string): number {
+    return (
+      GelfLogLevels[level as keyof typeof GelfLogLevels] || GelfLogLevels.info
+    );
   }
 }

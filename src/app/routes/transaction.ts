@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
-import Logger from '../../infrastructure/logs/logger';
-import AddTransactionFromRequest from '../commands/add-transaction-from-request';
-import TransactionTranslator from '../translators/transaction-translator';
+import { Request, Response } from "express";
+import Logger from "../../infrastructure/logs/logger";
+import AddTransactionFromRequest from "../commands/add-transaction-from-request";
+import TransactionTranslator from "../translators/transaction-translator";
 
 export default class Transaction {
   private action: AddTransactionFromRequest;
@@ -14,11 +14,14 @@ export default class Transaction {
     this.logger = logger;
   }
 
-  public static getName() : string {
-    return '/transaction';
+  public static getName(): string {
+    return "/transaction";
   }
 
-  public getAction(req: Request, res: Response) : Response<any, Record<string, any>> {
+  public getAction(
+    req: Request,
+    res: Response,
+  ): Response<any, Record<string, any>> {
     const params = req.body;
 
     try {

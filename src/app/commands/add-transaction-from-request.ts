@@ -1,6 +1,6 @@
-import Transaction from '../../domain/wallet/transaction';
-import TransactionPool from '../../domain/wallet/transaction-pool';
-import TransactionEventRepository from '../../infrastructure/repositories/transaction-events';
+import Transaction from "../../domain/wallet/transaction";
+import TransactionPool from "../../domain/wallet/transaction-pool";
+import TransactionEventRepository from "../../infrastructure/repositories/transaction-events";
 
 export default class AddTransactionFromRequest {
   private pool: TransactionPool;
@@ -13,7 +13,7 @@ export default class AddTransactionFromRequest {
     this.repo = repo;
   }
 
-  public execute(transaction: Transaction) : string {
+  public execute(transaction: Transaction): string {
     this.pool.fill(transaction);
 
     this.repo.persist(this.pool);
