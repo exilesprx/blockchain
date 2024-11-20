@@ -45,7 +45,7 @@ describe("Block", () => {
 
     await block.mine();
 
-    expect(BlockMinedPolicy.containsSuccessiveChars).toBeCalledWith(
+    expect(BlockMinedPolicy.containsSuccessiveChars).toHaveBeenCalledWith(
       expect.any(String),
       expect.any(Number),
     );

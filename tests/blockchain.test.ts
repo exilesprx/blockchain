@@ -70,11 +70,11 @@ describe("Blockchain", () => {
 
     chain.addBlock(block);
 
-    expect(spy).toBeCalled();
+    expect(spy).toHaveBeenCalled();
 
     expect(chain.length()).toBe(2);
 
-    expect(spy).toBeCalledWith(expect.any(Block), block);
+    expect(spy).toHaveBeenCalledWith(expect.any(Block), block);
 
     // TODO: update to flush events and check length and type
     const events = chain.flushEvents();
@@ -87,9 +87,7 @@ describe("Blockchain", () => {
 
     chain.addSpecification(new Link());
 
-    expect(() =>
-      chain.addBlock(new Block(1, 1, 1, "test", [], 0)),
-    ).toThrowError();
+    expect(() => chain.addBlock(new Block(1, 1, 1, "test", [], 0))).toThrow();
 
     // TODO: update to flush events and check length and type
     expect(chain.length()).toBe(1);
@@ -106,7 +104,7 @@ describe("Blockchain", () => {
 
     chain.addSpecification(new BlockMined());
 
-    expect(() => chain.addBlock(block)).toThrowError();
+    expect(() => chain.addBlock(block)).toThrow();
 
     expect(chain.length()).toBe(1);
   });
@@ -124,9 +122,9 @@ describe("Blockchain", () => {
 
     chain.addBlock(block);
 
-    expect(spy).toBeCalledTimes(3);
+    expect(spy).toHaveBeenCalledTimes(3);
 
-    expect(spy).toBeCalledWith(expect.any(Block), block);
+    expect(spy).toHaveBeenCalledWith(expect.any(Block), block);
 
     // TODO: update to flush events and check length and type
   });

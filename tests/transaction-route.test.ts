@@ -34,7 +34,9 @@ describe("Transaction route", () => {
 
     route.getAction(req, res);
 
-    expect(AddTransactionFromRequest.mock.instances[0].execute).toBeCalled();
+    expect(
+      AddTransactionFromRequest.mock.instances[0].execute,
+    ).toHaveBeenCalled();
   });
 
   test("it expects to aend a 401 response", () => {
@@ -50,6 +52,6 @@ describe("Transaction route", () => {
 
     route.getAction(req, res);
 
-    expect(spy).toBeCalledWith(401);
+    expect(spy).toHaveBeenCalledWith(401);
   });
 });

@@ -16,7 +16,14 @@ describe("Link specification", () => {
 
   test("it expects specification to succeed", () => {
     const previousBlock = new Block(1, 1, 1, "", [], 0);
-    const currentBlock = new Block(1, 1, 1, previousBlock.getHash(), []);
+    const currentBlock = new Block(
+      1,
+      1,
+      1,
+      previousBlock.getHash(),
+      [],
+      20241120,
+    );
     const link = new Link();
 
     expect(() => link.isSatisfiedBy(previousBlock, currentBlock)).not.toThrow();
