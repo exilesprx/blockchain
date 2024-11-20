@@ -63,10 +63,10 @@ export default [
     },
   },
   {
-    files: ["src/**/*/**.ts"],
+    files: ["src/**/*/*.ts"],
   },
   {
-    files: ["**/*.test.ts"],
+    files: ["tests/**/*.test.ts"],
 
     languageOptions: {
       globals: {
