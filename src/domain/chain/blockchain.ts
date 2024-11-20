@@ -44,7 +44,7 @@ export default class Blockchain implements BlockchainInterface {
       this.addBlock(block);
       this.events.push(new BlockMined(block));
     } catch (error: any) {
-      this.events.push(new MineFailed(block));
+      this.events.push(new MineFailed(block, error));
     }
   }
 

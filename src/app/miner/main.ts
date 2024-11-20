@@ -12,6 +12,7 @@ import TransactionConsumer from "../../infrastructure/stream/transaction-consume
 import AddTransactionFromConsumer from "../commands/add-transaction-from-consumer";
 import Emitter from "../events/emitter";
 import { Block as BlockContract } from "../../infrastructure/database/models/block";
+import Event from "../../domain/events/event";
 
 export default class Miner {
   private emitter: Emitter;
@@ -39,16 +40,16 @@ export default class Miner {
   }
 
   public registerEvents(): void {
-    this.emitter.register(BlockAdded.toString(), (block: BlockContract) =>
-      this.emitter.blockAdded(block),
+    this.emitter.register(BlockAdded.toString(), (event: BlockAdded) =>
+      this.emitter.blockAdded(event),
     );
 
-    this.emitter.register(BlockMined.toString(), (block: BlockContract) =>
-      this.emitter.blockMined(block),
+    this.emitter.register(BlockMined.toString(), (event: BlockMined) =>
+      this.emitter.blockMined(event),
     );
 
-    this.emitter.register(MineFailed.toString(), (block: BlockContract) =>
-      this.emitter.mineFailed(block),
+    this.emitter.register(MineFailed.toString(), (event: MineFailed) =>
+      this.emitter.mineFailed(event),
     );
   }
 
