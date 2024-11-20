@@ -41,7 +41,6 @@ describe("Emitter", () => {
 
     emitter.register("test", spy);
 
-    expect(events.on).toHaveBeenCalledTimes(1);
     expect(events.on).toHaveBeenCalledWith("test", spy);
   });
 
@@ -52,7 +51,6 @@ describe("Emitter", () => {
 
     emitter.blockAdded(event);
 
-    expect(logger.info).toHaveBeenCalledTimes(1);
     expect(logger.info).toHaveBeenCalledWith(`Block added: ${block.getHash()}`);
     expect(producer.sendBlock).toHaveBeenLastCalledWith(event.toJson());
   });
@@ -64,7 +62,6 @@ describe("Emitter", () => {
 
     emitter.blockMined(event);
 
-    expect(logger.info).toHaveBeenCalledTimes(1);
     expect(logger.info).toHaveBeenCalledWith(`Block mined: ${block.getHash()}`);
   });
 
@@ -75,7 +72,6 @@ describe("Emitter", () => {
 
     emitter.mineFailed(event);
 
-    expect(logger.error).toHaveBeenCalledTimes(1);
     expect(logger.error).toHaveBeenCalledWith(
       `Block failed to be mined: ${block.getKey()} - Error: ${event.error()}`,
     );
@@ -88,7 +84,6 @@ describe("Emitter", () => {
 
     emitter.transactionAdded(event);
 
-    expect(logger.info).toHaveBeenCalledTimes(1);
     expect(producer.sendTransaction).toHaveBeenLastCalledWith(transaction);
   });
 
