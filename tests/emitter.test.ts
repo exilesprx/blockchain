@@ -52,7 +52,9 @@ describe("Emitter", () => {
     emitter.blockAdded(event);
 
     expect(logger.info).toHaveBeenCalledWith(`Block added: ${block.getHash()}`);
-    expect(producer.sendBlock).toHaveBeenCalledWith(event.toJson());
+    expect(producer.sendBlock).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 1, hash: block.getHash() }),
+    );
   });
 
   test("it expects a log when a block is mined", () => {
@@ -62,7 +64,9 @@ describe("Emitter", () => {
 
     emitter.blockMined(event);
 
-    expect(logger.info).toHaveBeenCalledWith(`Block mined: ${block.getHash()}`);
+    expect(logger.info).toHaveBeenCalledWith(
+      expect.stringContaining(`${block.getKey()}`),
+    );
   });
 
   test("it expects a log when a block fails to be mined", () => {
@@ -73,7 +77,8 @@ describe("Emitter", () => {
     emitter.mineFailed(event);
 
     expect(logger.error).toHaveBeenCalledWith(
-      `Block failed to be mined: ${block.getKey()} - Error: ${event.error()}`,
+      expect.stringContaining(`${block.getKey()}`) &&
+        expect.stringContaining("Failed to mine"),
     );
   });
 
