@@ -11,8 +11,6 @@ import BlockMined from "../../domain/events/block-mined";
 import TransactionConsumer from "../../infrastructure/stream/transaction-consumer";
 import AddTransactionFromConsumer from "../commands/add-transaction-from-consumer";
 import Emitter from "../events/emitter";
-import { Block as BlockContract } from "../../infrastructure/database/models/block";
-import Event from "../../domain/events/event";
 
 export default class Miner {
   private emitter: Emitter;
