@@ -1,4 +1,4 @@
-import Miner from './main';
+import Miner from "./main";
 
 const miner = new Miner();
 

@@ -1,10 +1,10 @@
-import { SHA256 } from 'crypto-js';
-import BlockMinedPolicy from '../policies/block-mined-policy';
-import Transaction from '../wallet/transaction';
-import BlockState from './state/block-state';
-import Mined from './state/mined';
-import Unmined from './state/unmined';
-import { Block as BlockContract } from '../../infrastructure/database/models/block';
+import { SHA256 } from "crypto-js";
+import BlockMinedPolicy from "../policies/block-mined-policy";
+import Transaction from "../wallet/transaction";
+import BlockState from "./state/block-state";
+import Mined from "./state/mined";
+import Unmined from "./state/unmined";
+import { Block as BlockContract } from "../../infrastructure/database/models/block";
 
 export default class Block {
   private transactions: Transaction[];
@@ -41,12 +41,14 @@ export default class Block {
     this.state = this.determineState(this.hash);
   }
 
-  public static genesis() : Block {
-    return new this('genesis block', 0, 0, '0'.repeat(32), [], 0);
+  public static genesis(): Block {
+    return new this("genesis block", 0, 0, "0".repeat(32), [], 0);
   }
 
-  public async mine() : Promise<void> {
-    while (!BlockMinedPolicy.containsSuccessiveChars(this.hash, this.difficulty)) {
+  public async mine(): Promise<void> {
+    while (
+      !BlockMinedPolicy.containsSuccessiveChars(this.hash, this.difficulty)
+    ) {
       this.nounce += 1;
 
       this.hash = this.generateHash();
@@ -57,49 +59,51 @@ export default class Block {
     return Promise.resolve();
   }
 
-  public getHash() : string {
+  public getHash(): string {
     return this.hash;
   }
 
-  public getPreviousHash() : string {
+  public getPreviousHash(): string {
     return this.previousHash;
   }
 
-  public getKey() : any {
+  public getKey(): any {
     return this.id;
   }
 
-  public getTransactions() : Transaction[] {
+  public getTransactions(): Transaction[] {
     return this.transactions;
   }
 
-  public getDate() : number {
+  public getDate(): number {
     return this.date;
   }
 
-  public getNounce() : number {
+  public getNounce(): number {
     return this.nounce;
   }
 
-  public getDifficulty() : number {
+  public getDifficulty(): number {
     return this.difficulty;
   }
 
-  public isMined() : boolean {
+  public isMined(): boolean {
     return Mined.sameInstance(this.state);
   }
 
-  private generateHash() : string {
-    let transactionHashes = '';
+  private generateHash(): string {
+    let transactionHashes = "";
 
     this.transactions.forEach((transaction) => {
       transactionHashes += transaction.getHash();
     });
 
-    return SHA256(`${transactionHashes}${this.id}${this.nounce}${this.difficulty}${this.previousHash}${this.difficulty}${this.date}`).toString();
+    return SHA256(
+      `${transactionHashes}${this.id}${this.nounce}${this.difficulty}${this.previousHash}${this.difficulty}${this.date}`,
+    ).toString();
   }
 
-  protected determineState(hash: string) : BlockState {
+  protected determineState(hash: string): BlockState {
     if (BlockMinedPolicy.containsSuccessiveChars(hash, this.difficulty)) {
       return new Mined();
     }
@@ -110,7 +114,9 @@ export default class Block {
   public toJson(): BlockContract {
     return {
       id: this.id,
-      transactions: this.transactions.map((transaction: Transaction) => transaction.toJson()),
+      transactions: this.transactions.map((transaction: Transaction) =>
+        transaction.toJson(),
+      ),
       nounce: this.nounce,
       difficulty: this.difficulty,
       previousHash: this.previousHash,

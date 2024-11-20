@@ -1,8 +1,8 @@
-import TransactionAdded from '../events/transaction-added';
-import NewBlockPolicy from '../policies/new-block-policy';
-import Specification from './specifications/specification';
-import Transaction from './transaction';
-import Event from '../events/event';
+import TransactionAdded from "../events/transaction-added";
+import NewBlockPolicy from "../policies/new-block-policy";
+import Specification from "./specifications/specification";
+import Transaction from "./transaction";
+import Event from "../events/event";
 
 export default class TransactionPool {
   private events: Event[];
@@ -19,7 +19,7 @@ export default class TransactionPool {
     this.transactions = [];
   }
 
-  public fill(transaction: Transaction) : void {
+  public fill(transaction: Transaction): void {
     this.specifications.forEach((spec: Specification) => {
       spec.isSatisfiedBy(transaction);
     });
@@ -29,19 +29,19 @@ export default class TransactionPool {
     this.events.push(new TransactionAdded(transaction));
   }
 
-  public addSpecification(...specification: Specification[]) : void {
+  public addSpecification(...specification: Specification[]): void {
     this.specifications.push(...specification);
   }
 
-  public isEmpty() : boolean {
+  public isEmpty(): boolean {
     return this.transactions.length === 0;
   }
 
-  public shouldCreateNewBlock() : boolean {
+  public shouldCreateNewBlock(): boolean {
     return NewBlockPolicy.shouldCreateNewBlock(this.transactions);
   }
 
-  public flush() : Transaction[] {
+  public flush(): Transaction[] {
     const transactions: Transaction[] = [...this.transactions];
 
     this.transactions = [];

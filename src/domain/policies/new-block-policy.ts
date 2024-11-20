@@ -1,13 +1,13 @@
-import Transaction from '../wallet/transaction';
+import Transaction from "../wallet/transaction";
 
 export default class NewBlockPolicy {
   private static blockLimit = 20;
 
-  public static shouldCreateNewBlock(transactions: Transaction[]) : boolean {
+  public static shouldCreateNewBlock(transactions: Transaction[]): boolean {
     return transactions.length === this.blockLimit;
   }
 
-  public static getBlockLimit() : number {
+  public static getBlockLimit(): number {
     return this.blockLimit;
   }
 }

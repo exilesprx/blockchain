@@ -1,13 +1,13 @@
-import { v4 } from 'uuid';
-import BlockAdded from '../events/block-added';
-import MineFailed from '../events/mine-failed';
-import BlockMined from '../events/block-mined';
-import BlockLimitPolicy from '../policies/block-limit-policy';
-import Transaction from '../wallet/transaction';
-import Block from './block';
-import BlockchainInterface from './blockchain-interface';
-import Specification from './specifications/specifications';
-import Event from '../events/event';
+import { v4 } from "uuid";
+import BlockAdded from "../events/block-added";
+import MineFailed from "../events/mine-failed";
+import BlockMined from "../events/block-mined";
+import BlockLimitPolicy from "../policies/block-limit-policy";
+import Transaction from "../wallet/transaction";
+import Block from "./block";
+import BlockchainInterface from "./blockchain-interface";
+import Specification from "./specifications/specifications";
+import Event from "../events/event";
 
 export default class Blockchain implements BlockchainInterface {
   private events: Event[];
@@ -26,7 +26,7 @@ export default class Blockchain implements BlockchainInterface {
     this.specifications = [];
   }
 
-  public async mineBlock(transactions: Transaction[]) : Promise<void> {
+  public async mineBlock(transactions: Transaction[]): Promise<void> {
     const difficulty = 1;
 
     const block = new Block(
@@ -48,7 +48,7 @@ export default class Blockchain implements BlockchainInterface {
     }
   }
 
-  public addBlock(block: Block) : void {
+  public addBlock(block: Block): void {
     this.specifications.forEach((spec: Specification) => {
       spec.isSatisfiedBy(this.getPreviousBlock(), block);
     });
@@ -62,23 +62,23 @@ export default class Blockchain implements BlockchainInterface {
     this.events.push(new BlockAdded(block));
   }
 
-  public length() : number {
+  public length(): number {
     return this.chain.length;
   }
 
-  public addSpecification(...specification: Specification[]) : void {
+  public addSpecification(...specification: Specification[]): void {
     this.specifications.push(...specification);
   }
 
-  public getPreviousBlock() : Block {
+  public getPreviousBlock(): Block {
     return this.chain[this.chain.length - 1];
   }
 
-  private removeFirstBlock() : Block | undefined {
+  private removeFirstBlock(): Block | undefined {
     return this.chain.shift();
   }
 
-  private getPreviousHash() : string {
+  private getPreviousHash(): string {
     return this.getPreviousBlock().getHash();
   }
 

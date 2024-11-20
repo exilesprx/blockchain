@@ -1,4 +1,4 @@
-import { EventData, EventStoreDBClient } from '@eventstore/db-client';
+import { EventData, EventStoreDBClient } from "@eventstore/db-client";
 
 export default class Database {
   private client: EventStoreDBClient | null;
