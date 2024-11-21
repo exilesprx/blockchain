@@ -3,14 +3,12 @@ import Logger from "../src/infrastructure/logs/logger";
 import KafkaLogger from "../src/infrastructure/logs/kafka-logger";
 
 jest.mock("../src/infrastructure/logs/logger");
-
 const logger: Logger = new Logger();
-
 const kafkaLogger: KafkaLogger = new KafkaLogger(logger);
 
 describe("Kafka Logger", () => {
   beforeAll(() => {
-    Logger.mockClear();
+    jest.clearAllMocks();
   });
 
   test("it expects the level to be debug", () => {
@@ -63,7 +61,6 @@ describe("Kafka Logger", () => {
     kafkaLogger.logCreator(arg);
 
     expect(logger.log).toHaveBeenCalledTimes(1);
-
     expect(logger.log).toHaveBeenCalledWith({
       extra: {
         comment: arg.log.comment,

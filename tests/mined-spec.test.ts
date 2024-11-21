@@ -5,9 +5,9 @@ describe("Mined Specification", () => {
   test("it expects the specification is not satisfied", () => {
     const block = new Block(1, 1, 1, "test", [], 0);
     const spec = new BlockMined();
+    const fakeBlock = jest.mocked<Block>({});
+    jest.spyOn(block, "isMined").mockImplementation(() => false);
 
-    jest.spyOn(block, "isMined").mockReturnValue(false);
-
-    expect(() => spec.isSatisfiedBy(jest.fn(), block)).toThrow();
+    expect(() => spec.isSatisfiedBy(fakeBlock, block)).toThrow();
   });
 });

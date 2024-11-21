@@ -24,7 +24,6 @@ jest.mock("../src/app/routes/transaction");
 jest.mock("../src/app/server");
 
 const addSpecForPool = jest.fn();
-
 const addSpecForChain = jest.fn();
 
 describe("Main", () => {

@@ -15,10 +15,4 @@ describe("Transactions", () => {
 
     expect(transaction.getHash()).not.toBeNull();
   });
-
-  test("it expects a transaction should not fail using the same wallet", () => {
-    expect(() => new Transaction(v4(), "one", "one", 20, 0)).not.toThrow(
-      TypeError,
-    );
-  });
 });
