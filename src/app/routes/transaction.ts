@@ -5,12 +5,10 @@ import TransactionTranslator from "../translators/transaction-translator";
 
 export default class Transaction {
   private action: AddTransactionFromRequest;
-
   private logger: Logger;
 
   public constructor(action: AddTransactionFromRequest, logger: Logger) {
     this.action = action;
-
     this.logger = logger;
   }
 
@@ -27,7 +25,6 @@ export default class Transaction {
     try {
       // Create a new transaction, add it to the pool, and broadcast it
       const transaction = TransactionTranslator.fromRequest(params);
-
       const hash = this.action.execute(transaction);
 
       return res.send(`Transaction ${hash} accepted.`);
