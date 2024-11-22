@@ -83,7 +83,7 @@ describe("Main", () => {
   test("it expects routes to be registered", () => {
     const application = new Application();
     const server = jest.mocked(Server).mock.instances[0];
-    jest.mocked(TransactionRoute).getName = jest.fn(() => "test");
+    jest.mocked(TransactionRoute.getName).mockImplementation(() => "test");
 
     application.registerRoutes();
 
