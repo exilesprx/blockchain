@@ -7,7 +7,7 @@ jest.mock("../src/app/events/abstract-emitter");
 
 describe("Transaction pool", () => {
   test("it expects the pool to be empty when initialized", () => {
-    const pool = new TransactionPool(jest.fn());
+    const pool = new TransactionPool();
 
     expect(pool.isEmpty()).toBeTruthy();
   });
@@ -48,7 +48,9 @@ describe("Transaction pool", () => {
     const pool = new TransactionPool();
     const transaction = new Transaction(v4(), "to", "from", 5, 0);
     const amountSpec = new Amount();
-    const spy = jest.spyOn(amountSpec, "isSatisfiedBy").mockReturnValue(true);
+    const spy = jest
+      .spyOn(amountSpec, "isSatisfiedBy")
+      .mockImplementation(() => true);
 
     pool.addSpecification(amountSpec, amountSpec, amountSpec);
     pool.fill(transaction);

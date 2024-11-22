@@ -31,8 +31,8 @@ describe("Block", () => {
   test("it expects the block to be mined after 2 attempts", async () => {
     const block = builder.withNoTransactions().build();
     const hash = block.getHash();
-    BlockMinedPolicy.containsSuccessiveChars = jest
-      .fn()
+    jest
+      .mocked(BlockMinedPolicy.containsSuccessiveChars)
       .mockImplementationOnce(() => false)
       .mockImplementationOnce(() => true);
 
