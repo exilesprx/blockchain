@@ -1,3 +1,5 @@
+import { describe, expect, jest, test } from "@jest/globals";
+
 import { logLevel } from "kafkajs";
 import Logger from "../src/infrastructure/logs/logger";
 import KafkaLogger from "../src/infrastructure/logs/kafka-logger";

@@ -1,3 +1,5 @@
+import { describe, test } from "@jest/globals";
+
 describe("Block repository test", () => {
   test("it flushes events from the blockchain", () => {});
   test("it dispatches events", () => {});

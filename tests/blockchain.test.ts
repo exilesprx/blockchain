@@ -1,8 +1,9 @@
+import { describe, expect, jest, test } from "@jest/globals";
+
 import Blockchain from "../src/domain/chain/blockchain";
 import BlockLimitPolicy from "../src/domain/policies/block-limit-policy";
 import Block from "../src/domain/chain/block";
 import Link from "../src/domain/chain/specifications/link";
-import Emitter from "../src/app/events/abstract-emitter";
 import BlockMined from "../src/domain/chain/specifications/mined";
 import BlockAdded from "../src/domain/events/block-added";
 

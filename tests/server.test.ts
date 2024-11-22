@@ -1,3 +1,5 @@
+import { describe, expect, jest, test } from "@jest/globals";
+
 import express from "express";
 import Server from "../src/app/server";
 
@@ -9,22 +11,18 @@ const expressPost = jest.fn();
 const expressGet = jest.fn();
 
 describe("Server", () => {
-  beforeAll(() => {
-    express.mockImplementation(() => ({
-      use: expressUse,
-      listen: expressListen,
-      post: expressPost,
-      get: expressGet,
-    }));
-  });
+  beforeAll(() => {});
   test("it expects to accept handlers are passed to the express framework", () => {
     const handler = jest.fn();
     const server = new Server(process.env.APP_PORT);
+    const expressMock = jest.spyOn(express, "use").mockImplementation(() => 1);
 
     server.use(handler);
 
-    expect(expressUse).toHaveBeenCalledTimes(1);
-    expect(expressUse).toHaveBeenCalledWith(expect.arrayContaining([handler]));
+    expect(expressMock.use).toHaveBeenCalledTimes(1);
+    expect(expressMock.use).toHaveBeenCalledWith(
+      expect.arrayContaining([handler]),
+    );
   });
 
   test("it expects to call with a port and a callback", () => {

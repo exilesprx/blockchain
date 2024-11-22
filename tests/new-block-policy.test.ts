@@ -1,3 +1,5 @@
+import { describe, expect, test } from "@jest/globals";
+
 import NewBlockPolicy from "../src/domain/policies/new-block-policy";
 import Transaction from "../src/domain/wallet/transaction";
 

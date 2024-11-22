@@ -1,3 +1,5 @@
+import { describe, expect, jest, test } from "@jest/globals";
+
 import Events from "events";
 import Block from "../src/domain/chain/block";
 import Emitter from "../src/app/events/emitter";

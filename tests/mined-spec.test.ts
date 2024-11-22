@@ -1,3 +1,5 @@
+import { describe, expect, jest, test } from "@jest/globals";
+
 import Block from "../src/domain/chain/block";
 import BlockMined from "../src/domain/chain/specifications/mined";
 

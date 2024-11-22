@@ -1,3 +1,5 @@
+import { describe, expect, test } from "@jest/globals";
+
 import ConsumerTransactionTranslator from "../src/infrastructure/stream/translators/transaction-translator";
 import data from "./stubs/transaction.json";
 

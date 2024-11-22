@@ -1,3 +1,5 @@
+import { describe, expect, jest, test } from "@jest/globals";
+
 import BlockMinedPolicy from "../src/domain/policies/block-mined-policy";
 import BlockBuilder from "./builders/block";
 
