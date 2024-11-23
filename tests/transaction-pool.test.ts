@@ -50,13 +50,13 @@ describe("Transaction pool", () => {
     const pool = new TransactionPool();
     const transaction = new Transaction(v4(), "to", "from", 5, 0);
     const amountSpec = new Amount();
-    const spy = jest
+    const isSatisfiedBy = jest
       .spyOn(amountSpec, "isSatisfiedBy")
       .mockImplementation(() => true);
 
     pool.addSpecification(amountSpec, amountSpec, amountSpec);
     pool.fill(transaction);
 
-    expect(spy).toHaveBeenCalledTimes(3);
+    expect(isSatisfiedBy).toHaveBeenCalledTimes(3);
   });
 });
