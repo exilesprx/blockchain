@@ -1,13 +1,9 @@
 import { describe, expect, jest, test } from "@jest/globals";
 
-import express, { Express } from "express";
+import express from "express";
 import Server from "../src/app/server";
 
 jest.mock("express");
-
-const expressListen = jest.fn();
-const expressPost = jest.fn();
-const expressGet = jest.fn();
 
 describe("Server", () => {
   beforeAll(() => {});
