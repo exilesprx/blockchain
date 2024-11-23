@@ -16,44 +16,27 @@ describe("Transaction route", () => {
   });
 
   test("it expects to add a transition to the bank and persist it", () => {
-    const executeSpy = jest.fn();
-    const action = jest.mocked<Partial<AddTransactionFromRequest>>({
-      execute: executeSpy,
-    }) as Partial<AddTransactionFromRequest>;
-    const logger = jest.mocked<Partial<Logger>>({}) as Partial<Logger>;
-    const route = new TransactionRoute(
-      action as AddTransactionFromRequest,
-      logger as Logger,
-    );
-    const req = jest.mocked<Partial<Request>>({
-      body: { to: "one", from: "two" },
-    });
-    const res = jest.mocked<Partial<Response>>({
-      send: jest.fn().mockImplementation(() => true),
-    });
+    const action = {
+      execute: jest.fn(),
+    } as unknown as AddTransactionFromRequest;
+    const actionSpy = jest.spyOn(action, "execute");
+    const logger = {} as Logger;
+    const route = new TransactionRoute(action, logger);
+    const req = { body: { to: "one", from: "two" } } as Request;
+    const res = { send: jest.fn(() => 200) } as unknown as Response;
 
-    expect(route.getAction(req as Request, res as Response)).toBe(true);
-    expect(executeSpy).toHaveBeenCalledTimes(1);
+    expect(route.getAction(req, res)).toBe(200);
+    expect(actionSpy).toHaveBeenCalledTimes(1);
   });
 
-  test("it expects to aend a 401 response", () => {
-    const action = jest.mocked<Partial<AddTransactionFromRequest>>({
-      execute: jest.fn(),
-    }) as Partial<AddTransactionFromRequest>;
-    const logger = jest.mocked<Partial<Logger>>({
-      error: jest.fn(),
-    }) as Partial<Logger>;
+  test("it expects to send a 401 response when request is missing data", () => {
     const route = new TransactionRoute(
-      action as AddTransactionFromRequest,
-      logger as Logger,
+      { execute: jest.fn() } as unknown as AddTransactionFromRequest,
+      { error: jest.fn() } as unknown as Logger,
     );
-    const req = jest.mocked<Partial<Request>>({
-      body: { to: "one", from: "two" },
-    });
-    const res = jest.mocked<Partial<Response>>({
-      sendStatus: jest.fn().mockImplementation(() => 401),
-    });
+    const req = {} as Request;
+    const res = { sendStatus: jest.fn(() => 401) } as unknown as Response;
 
-    expect(route.getAction(req as Request, res as Response)).toBe(401);
+    expect(route.getAction(req, res)).toBe(401);
   });
 });
