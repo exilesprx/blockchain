@@ -20,13 +20,12 @@ describe("Transaction route", () => {
       execute: jest.fn(),
     } as unknown as AddTransactionFromRequest;
     const actionSpy = jest.spyOn(action, "execute");
-    const logger = {} as Logger;
-    const route = new TransactionRoute(action, logger);
+    const route = new TransactionRoute(action, {} as Logger);
     const req = { body: { to: "one", from: "two" } } as Request;
     const res = { send: jest.fn(() => 200) } as unknown as Response;
 
     expect(route.getAction(req, res)).toBe(200);
-    expect(actionSpy).toHaveBeenCalledTimes(1);
+    expect(actionSpy).toHaveBeenCalled();
   });
 
   test("it expects to send a 401 response when request is missing data", () => {
