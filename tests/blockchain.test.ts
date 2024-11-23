@@ -75,14 +75,14 @@ describe("Blockchain", () => {
     const chain = new Blockchain();
     const link = new Link();
     const block = new Block(1, 1, 1, "test", [], 0);
-    const spy = jest
+    const isSatisfiedBy = jest
       .spyOn(link, "isSatisfiedBy")
       .mockImplementation(() => true);
 
     chain.addSpecification(link, link, link);
     chain.addBlock(block);
 
-    expect(spy).toHaveBeenCalledTimes(3);
+    expect(isSatisfiedBy).toHaveBeenCalledTimes(3);
   });
 
   test("it flushes the events", () => {
