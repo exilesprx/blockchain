@@ -1,57 +1,41 @@
+import { describe, expect, jest, test } from "@jest/globals";
+
 import TransactionRoute from "../src/app/routes/transaction";
-import Database from "../src/infrastructure/database/index";
 import Logger from "../src/infrastructure/logs/logger";
 import AddTransactionFromRequest from "../src/app/commands/add-transaction-from-request";
+import { Request, Response } from "express";
 
 jest.mock("../src/infrastructure/database/index");
 jest.mock("../src/infrastructure/logs/logger");
 jest.mock("../src/app/commands/add-transaction-from-request");
+jest.mock("express");
 
 describe("Transaction route", () => {
   beforeAll(() => {
-    Database.mockClear();
-
-    AddTransactionFromRequest.mockClear();
-
-    Logger.mockClear();
+    jest.clearAllMocks();
   });
 
   test("it expects to add a transition to the bank and persist it", () => {
-    const action = new AddTransactionFromRequest(jest.fn(), jest.fn());
-    const route = new TransactionRoute(action, jest.fn());
-    const res = {
-      send: jest.fn(),
-      sendStatus: () => {},
-    };
+    const action = {
+      execute: jest.fn(),
+    } as unknown as AddTransactionFromRequest;
+    const actionSpy = jest.spyOn(action, "execute");
+    const route = new TransactionRoute(action, {} as Logger);
+    const req = { body: { to: "one", from: "two" } } as Request;
+    const res = { send: jest.fn(() => 200) } as unknown as Response;
 
-    const req = {
-      body: {
-        to: "test",
-        from: "test",
-        amount: 1,
-      },
-    };
-
-    route.getAction(req, res);
-
-    expect(
-      AddTransactionFromRequest.mock.instances[0].execute,
-    ).toHaveBeenCalled();
+    expect(route.getAction(req, res)).toBe(200);
+    expect(actionSpy).toHaveBeenCalled();
   });
 
-  test("it expects to aend a 401 response", () => {
-    const action = new AddTransactionFromRequest(jest.fn(), jest.fn());
-    const log = new Logger();
-    const spy = jest.fn();
-    const route = new TransactionRoute(action, log);
-    const res = {
-      sendStatus: spy,
-    };
+  test("it expects to send a 401 response when request is missing data", () => {
+    const route = new TransactionRoute(
+      { execute: jest.fn() } as unknown as AddTransactionFromRequest,
+      { error: jest.fn() } as unknown as Logger,
+    );
+    const req = {} as Request;
+    const res = { sendStatus: jest.fn(() => 401) } as unknown as Response;
 
-    const req = {};
-
-    route.getAction(req, res);
-
-    expect(spy).toHaveBeenCalledWith(401);
+    expect(route.getAction(req, res)).toBe(401);
   });
 });

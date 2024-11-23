@@ -3,12 +3,10 @@ import express, { Express } from "express";
 
 export default class Server {
   private framework: Express;
-
   private port: String | undefined;
 
   public constructor(port: String | undefined) {
     this.framework = express();
-
     this.port = port;
   }
 

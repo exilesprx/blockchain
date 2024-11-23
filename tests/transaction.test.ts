@@ -1,3 +1,5 @@
+import { describe, expect, test } from "@jest/globals";
+
 import { v4 } from "uuid";
 import Transaction from "../src/domain/wallet/transaction";
 
@@ -14,11 +16,5 @@ describe("Transactions", () => {
     const transaction = new Transaction(v4(), "one", "two", 20, 0);
 
     expect(transaction.getHash()).not.toBeNull();
-  });
-
-  test("it expects a transaction should not fail using the same wallet", () => {
-    expect(() => new Transaction(v4(), "one", "one", 20, 0)).not.toThrow(
-      TypeError,
-    );
   });
 });

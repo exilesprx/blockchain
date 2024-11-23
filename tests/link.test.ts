@@ -1,3 +1,5 @@
+import { describe, expect, test } from "@jest/globals";
+
 import Block from "../src/domain/chain/block";
 import Link from "../src/domain/chain/specifications/link";
 

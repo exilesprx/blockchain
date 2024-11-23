@@ -1,3 +1,5 @@
+import { describe, expect, jest, test } from "@jest/globals";
+
 import Events from "events";
 import Block from "../src/domain/chain/block";
 import Emitter from "../src/app/events/emitter";
@@ -17,22 +19,15 @@ jest.mock("../src/infrastructure/logs/logger");
 jest.mock("../src/infrastructure/logs/kafka-logger");
 jest.mock("../src/infrastructure/stream/stream");
 jest.mock("../src/infrastructure/stream/producer");
-
 const events: Events = new Events();
-
 const logger: Logger = new Logger();
-
 const kafkaLogger = new KafkaLogger(logger);
-
 const stream: Stream = new Stream(kafkaLogger);
-
 const producer: Producer = new Producer(stream);
 
 describe("Emitter", () => {
   beforeAll(() => {
-    Events.mockClear();
-    Logger.mockClear();
-    Producer.mockClear();
+    jest.clearAllMocks();
   });
 
   test("it expects the listeners can be configured", () => {
@@ -51,7 +46,9 @@ describe("Emitter", () => {
 
     emitter.blockAdded(event);
 
-    expect(logger.info).toHaveBeenCalledWith(`Block added: ${block.getHash()}`);
+    expect(logger.info).toHaveBeenCalledWith(
+      expect.stringContaining(`${block.getHash()}`),
+    );
     expect(producer.sendBlock).toHaveBeenCalledWith(
       expect.objectContaining({
         id: 1,

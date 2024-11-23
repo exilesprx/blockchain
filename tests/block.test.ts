@@ -1,15 +1,14 @@
+import { describe, expect, jest, test } from "@jest/globals";
+
 import BlockMinedPolicy from "../src/domain/policies/block-mined-policy";
 import BlockBuilder from "./builders/block";
 
 jest.mock("../src/domain/policies/block-mined-policy");
-
-let builder: BlockBuilder;
+let builder: BlockBuilder = new BlockBuilder();
 
 describe("Block", () => {
   beforeAll(() => {
-    builder = new BlockBuilder();
-
-    BlockMinedPolicy.mockClear();
+    jest.clearAllMocks();
   });
 
   test("it expects to have zero transactions", () => {
@@ -26,7 +25,6 @@ describe("Block", () => {
 
   test("it expects two different blocks to have unique hashes", () => {
     const firstBlock = builder.withNoTransactions().build();
-
     const secondBlock = builder.withNoTransactions().build();
 
     expect(firstBlock.getHash()).not.toBe(secondBlock.getHash());
@@ -34,24 +32,20 @@ describe("Block", () => {
 
   test("it expects the block to be mined after 2 attempts", async () => {
     const block = builder.withNoTransactions().build();
-
     const hash = block.getHash();
-
-    BlockMinedPolicy.containsSuccessiveChars
-      .mockReturnValueOnce(false)
-      .mockReturnValueOnce(true);
+    jest
+      .mocked(BlockMinedPolicy.containsSuccessiveChars)
+      .mockImplementationOnce(() => false)
+      .mockImplementationOnce(() => true);
 
     expect(block.isMined()).toBe(false);
 
     await block.mine();
-
     expect(BlockMinedPolicy.containsSuccessiveChars).toHaveBeenCalledWith(
       expect.any(String),
       expect.any(Number),
     );
-
     expect(block.getHash()).not.toEqual(hash);
-
     expect(block.isMined()).toBe(true);
   });
 

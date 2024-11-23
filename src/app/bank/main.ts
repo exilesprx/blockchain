@@ -28,40 +28,27 @@ import Server from "../server";
 
 export default class Application {
   private server: Server;
-
   private emitter: Emitter;
-
   private chain: Blockchain;
-
   private pool: TransactionPool;
-
   private database: Database;
-
   private producer: Producer;
-
   private consumer: BlockConsumer;
-
   private logger: Logger;
 
   constructor() {
     this.logger = new Logger();
-
     this.server = new Server(process.env.APP_PORT);
 
     const stream = new Stream(new KafkaLogger(this.logger));
-
     this.database = new Database(
       String(process.env.DB_HOST),
       Number(process.env.DB_PORT),
       Boolean(process.env.DB_INSECURE),
     );
-
     this.producer = new Producer(stream);
-
     this.emitter = new Emitter(new Events(), this.producer, this.logger);
-
     this.chain = new Blockchain();
-
     this.pool = new TransactionPool();
 
     const repo = new BlockEventRepository(
@@ -69,20 +56,17 @@ export default class Application {
       new BlockRepository(this.database),
     );
     const action = new AddBlockFromConsumer(this.chain, repo);
-
     this.consumer = new BlockConsumer(action, stream);
   }
 
   public init() {
     this.server.use(express.json(), helmet());
-
     this.pool.addSpecification(
       new Amount(),
       new Receiver(),
       new Sender(),
       new SameWallet(),
     );
-
     this.chain.addSpecification(new Link(), new BlockMined());
   }
 
@@ -95,7 +79,6 @@ export default class Application {
 
   public async boot() {
     this.database.connect();
-
     await this.producer.connect();
 
     /**
@@ -104,9 +87,7 @@ export default class Application {
      */
 
     await this.consumer.connect();
-
     await this.consumer.run();
-
     this.server.create(() => this.onConnect());
   }
 
@@ -116,7 +97,6 @@ export default class Application {
       new TransactionRepository(this.database),
     );
     const action = new AddTransactionFromRequest(this.pool, repository);
-
     const transactionRoute = new TransactionRoute(action, this.logger);
 
     this.server.post(

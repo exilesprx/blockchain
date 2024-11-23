@@ -1,3 +1,5 @@
+import { describe, expect, test } from "@jest/globals";
+
 import Block from "../src/domain/chain/block";
 import Transaction from "../src/domain/wallet/transaction";
 import BlockTranslator from "../src/infrastructure/stream/translators/block-translator";

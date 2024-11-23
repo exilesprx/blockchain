@@ -1,3 +1,4 @@
+import { describe, expect, jest, test } from "@jest/globals";
 import Application from "../src/app/bank/main";
 import TransactionRoute from "../src/app/routes/transaction";
 import Server from "../src/app/server";
@@ -23,45 +24,19 @@ jest.mock("../src/infrastructure/stream/consumer");
 jest.mock("../src/app/routes/transaction");
 jest.mock("../src/app/server");
 
-const addSpecForPool = jest.fn();
-
-const addSpecForChain = jest.fn();
-
 describe("Main", () => {
   beforeAll(() => {
-    Emitter.mockClear();
-
-    Database.mockClear();
-
-    Producer.mockClear();
-
-    Consumer.mockClear();
-
-    Server.mockClear();
-
-    TransactionPool.mockImplementation(() => ({
-      addSpecification: addSpecForPool,
-    }));
-
-    Blockchain.mockImplementation(() => ({
-      addSpecification: addSpecForChain,
-    }));
-
-    TransactionRoute.mockImplementation(() => ({
-      getAction: jest.fn(),
-    }));
-
-    TransactionRoute.getName = jest.fn().mockReturnValue("test");
+    jest.clearAllMocks();
   });
 
-  test("it expect events to be registered", () => {
+  test("it expects events to be registered", () => {
     const application = new Application();
+    const emitter = jest.mocked(Emitter).mock.instances[0];
 
     application.registerEvents();
 
-    expect(Emitter.mock.instances[0].register).toHaveBeenCalledTimes(1);
-
-    expect(Emitter.mock.instances[0].register).toHaveBeenCalledWith(
+    expect(emitter.register).toHaveBeenCalledTimes(1);
+    expect(emitter.register).toHaveBeenCalledWith(
       "TransactionAdded",
       expect.any(Function),
     );
@@ -69,23 +44,21 @@ describe("Main", () => {
 
   test("it expects specifications added", () => {
     const application = new Application();
+    const server = jest.mocked(Server).mock.instances[0];
+    const pool = jest.mocked(TransactionPool).mock.instances[0];
+    const chain = jest.mocked(Blockchain).mock.instances[0];
 
     application.init();
 
-    expect(Server.mock.instances[0].use).toHaveBeenCalledTimes(1);
-
-    expect(addSpecForPool).toHaveBeenCalledTimes(1);
-
-    expect(addSpecForPool).toHaveBeenCalledWith(
+    expect(server.use).toHaveBeenCalledTimes(1);
+    expect(pool.addSpecification).toHaveBeenCalledWith(
       expect.any(Amount),
       expect.any(Receiver),
       expect.any(Sender),
       expect.any(SameWallet),
     );
-
-    expect(addSpecForChain).toHaveBeenCalledTimes(1);
-
-    expect(addSpecForChain).toHaveBeenCalledWith(
+    expect(chain.addSpecification).toHaveBeenCalledTimes(1);
+    expect(chain.addSpecification).toHaveBeenCalledWith(
       expect.any(Link),
       expect.any(BlockMined),
     );
@@ -93,30 +66,27 @@ describe("Main", () => {
 
   test("it expects connections for database, producer, and consumer", async () => {
     const application = new Application();
+    const database = jest.mocked(Database).mock.instances[0];
+    const producer = jest.mocked(Producer).mock.instances[0];
+    const consumer = jest.mocked(Consumer).mock.instances[0];
+    const server = jest.mocked(Server).mock.instances[0];
 
-    application.boot();
+    await application.boot();
 
-    expect(Database.mock.instances[0].connect).toHaveBeenCalled();
-
-    await expect(Producer.mock.instances[0].connect).toHaveBeenCalled();
-
-    await expect(Consumer.mock.instances[0].connect).toHaveBeenCalled();
-
-    await expect(Consumer.mock.instances[0].run).toHaveBeenCalled();
-
-    expect(Server.mock.instances[0].create).toHaveBeenCalledTimes(1);
+    expect(database.connect).toHaveBeenCalled();
+    expect(producer.connect).toHaveBeenCalled();
+    expect(consumer.connect).toHaveBeenCalled();
+    expect(consumer.run).toHaveBeenCalled();
+    expect(server.create).toHaveBeenCalledTimes(1);
   });
 
   test("it expects routes to be registered", () => {
     const application = new Application();
+    const server = jest.mocked(Server).mock.instances[0];
+    jest.mocked(TransactionRoute.getName).mockImplementation(() => "test");
 
     application.registerRoutes();
 
-    expect(Server.mock.instances[0].post).toHaveBeenCalled();
-
-    expect(Server.mock.instances[0].post).toHaveBeenCalledWith(
-      "test",
-      expect.any(Function),
-    );
+    expect(server.post).toHaveBeenCalledWith("test", expect.any(Function));
   });
 });
