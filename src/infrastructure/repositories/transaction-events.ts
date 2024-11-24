@@ -5,7 +5,6 @@ import TransactionRepository from "./transaction";
 
 export default class TransactionEventRepository {
   private emitter: Emitter;
-
   private repo: TransactionRepository;
 
   public constructor(emitter: Emitter, repo: TransactionRepository) {

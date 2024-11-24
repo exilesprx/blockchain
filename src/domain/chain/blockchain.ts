@@ -11,24 +11,18 @@ import Event from "../events/event";
 
 export default class Blockchain implements BlockchainInterface {
   private events: Event[];
-
   private chain: Block[];
-
   private specifications: Specification[];
-
   private static startingNounce: number = 0;
 
   constructor() {
     this.events = [];
-
     this.chain = [Block.genesis()];
-
     this.specifications = [];
   }
 
   public async mineBlock(transactions: Transaction[]): Promise<void> {
     const difficulty = 1;
-
     const block = new Block(
       v4(),
       Blockchain.startingNounce,
@@ -40,7 +34,6 @@ export default class Blockchain implements BlockchainInterface {
 
     try {
       await block.mine();
-
       this.addBlock(block);
       this.events.push(new BlockMined(block));
     } catch (error: any) {
@@ -56,9 +49,7 @@ export default class Blockchain implements BlockchainInterface {
     if (BlockLimitPolicy.reachedLimit(this)) {
       this.removeFirstBlock();
     }
-
     this.chain.push(block);
-
     this.events.push(new BlockAdded(block));
   }
 

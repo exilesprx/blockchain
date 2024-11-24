@@ -4,19 +4,12 @@ import Event from "./event";
 
 export default class BlockAdded extends Event {
   private id: any;
-
   private transactions: Transaction[];
-
   private nounce: number;
-
   private difficulty: number;
-
   private previousHash: string;
-
   private hash: string;
-
   private date: number;
-
   public constructor(block: Block) {
     super();
 

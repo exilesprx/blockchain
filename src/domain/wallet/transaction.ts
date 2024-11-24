@@ -3,15 +3,10 @@ import { Transaction as TransactionContract } from "../../infrastructure/databas
 
 export default class Transaction {
   private to: string;
-
   private from: string;
-
   private amount: number;
-
   private id: any;
-
   private date: number;
-
   private hash: string;
 
   constructor(

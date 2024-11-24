@@ -16,7 +16,6 @@ export default class BlockRepository {
       type: "block",
       data,
     });
-
     await this.database.persist(event);
   }
 }

@@ -6,16 +6,12 @@ import Event from "../events/event";
 
 export default class TransactionPool {
   private events: Event[];
-
   private specifications: Specification[];
-
   private transactions: Transaction[];
 
   public constructor() {
     this.events = [];
-
     this.specifications = [];
-
     this.transactions = [];
   }
 
@@ -23,9 +19,7 @@ export default class TransactionPool {
     this.specifications.forEach((spec: Specification) => {
       spec.isSatisfiedBy(transaction);
     });
-
     this.transactions.push(transaction);
-
     this.events.push(new TransactionAdded(transaction));
   }
 
@@ -43,7 +37,6 @@ export default class TransactionPool {
 
   public flush(): Transaction[] {
     const transactions: Transaction[] = [...this.transactions];
-
     this.transactions = [];
 
     return transactions;

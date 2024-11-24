@@ -1,6 +1,5 @@
 interface BlockchainInterface {
   length(): number;
-
   flushEvents(): any[];
 }
 

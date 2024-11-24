@@ -25,7 +25,6 @@ export default class KafkaLogger {
   public logCreator(info: any): void {
     const { level, log } = info;
     const { message, ...extra } = log;
-
     this.logger.log({
       level: KafkaLogger.toWinstonLogLevel(level),
       message,

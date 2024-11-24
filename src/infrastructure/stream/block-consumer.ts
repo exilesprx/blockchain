@@ -20,11 +20,9 @@ export default class BlockConsumer extends Consumer {
 
   protected async transformMessage(payload: EachMessagePayload): Promise<void> {
     const { value } = payload.message;
-
     if (!value) {
       return;
     }
-
     const block = BlockTranslator.fromMessage(value);
 
     this.action.execute(block);

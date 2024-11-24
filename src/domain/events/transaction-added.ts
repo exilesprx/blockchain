@@ -4,15 +4,10 @@ import Event from "./event";
 
 export default class TransactionAdded extends Event {
   private id: any;
-
   private to: string;
-
   private from: string;
-
   private amount: number;
-
   private date: number;
-
   private hash: string;
 
   public constructor(transaction: Transaction) {

@@ -5,17 +5,11 @@ import { Block as BlockContract } from "../../infrastructure/database/models/blo
 
 export default class BlockMined extends Event {
   private id: any;
-
   private transactions: Transaction[];
-
   private nounce: number;
-
   private difficulty: number;
-
   private previousHash: string;
-
   private hash: string;
-
   private date: number;
 
   public constructor(block: Block) {

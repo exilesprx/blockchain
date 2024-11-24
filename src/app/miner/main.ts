@@ -14,26 +14,17 @@ import Emitter from "../events/emitter";
 
 export default class Miner {
   private emitter: Emitter;
-
   private consumer: TransactionConsumer;
-
   private producer: Producer;
 
   public constructor() {
     const logger = new Logger();
-
-    const stream = new Stream(new KafkaLogger(logger));
-
-    this.producer = new Producer(stream);
-
-    this.emitter = new Emitter(new Events(), this.producer, logger);
-
     const chain = new Blockchain();
-
     const pool = new TransactionPool();
-
+    const stream = new Stream(new KafkaLogger(logger));
     const action = new AddTransactionFromConsumer(chain, pool);
-
+    this.producer = new Producer(stream);
+    this.emitter = new Emitter(new Events(), this.producer, logger);
     this.consumer = new TransactionConsumer(action, stream);
   }
 
@@ -41,11 +32,9 @@ export default class Miner {
     this.emitter.register(BlockAdded.toString(), (event: BlockAdded) =>
       this.emitter.blockAdded(event),
     );
-
     this.emitter.register(BlockMined.toString(), (event: BlockMined) =>
       this.emitter.blockMined(event),
     );
-
     this.emitter.register(MineFailed.toString(), (event: MineFailed) =>
       this.emitter.mineFailed(event),
     );
@@ -53,9 +42,7 @@ export default class Miner {
 
   public async boot(): Promise<void> {
     await this.consumer.connect();
-
     await this.consumer.run();
-
     await this.producer.connect();
   }
 }
