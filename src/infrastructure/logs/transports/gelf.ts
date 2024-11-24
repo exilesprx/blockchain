@@ -27,9 +27,7 @@ export default class GelfTransport extends Transport {
     });
 
     const { message, extra, level } = info;
-
     this.gelf.message(message, GelfTransport.toGelfLogLevel(level), extra);
-
     callback();
   }
 

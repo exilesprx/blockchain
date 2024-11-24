@@ -8,19 +8,12 @@ import { Block as BlockContract } from "../../infrastructure/database/models/blo
 
 export default class Block {
   private transactions: Transaction[];
-
   private id: any;
-
   private nounce: number;
-
   private difficulty: number;
-
   private previousHash: string;
-
   private hash: any;
-
   private date: number;
-
   private state: BlockState;
 
   constructor(
@@ -50,10 +43,8 @@ export default class Block {
       !BlockMinedPolicy.containsSuccessiveChars(this.hash, this.difficulty)
     ) {
       this.nounce += 1;
-
       this.hash = this.generateHash();
     }
-
     this.state = new Mined();
 
     return Promise.resolve();
@@ -93,7 +84,6 @@ export default class Block {
 
   private generateHash(): string {
     let transactionHashes = "";
-
     this.transactions.forEach((transaction) => {
       transactionHashes += transaction.getHash();
     });

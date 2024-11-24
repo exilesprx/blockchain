@@ -16,7 +16,6 @@ export default class TransactionRepository {
       type: "transaction",
       data,
     });
-
     await this.database.persist(event);
   }
 }

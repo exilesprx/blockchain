@@ -4,12 +4,10 @@ import TransactionPool from "../../domain/wallet/transaction-pool";
 
 export default class AddTransactionFromConsumer {
   private pool: TransactionPool;
-
   private chain: Blockchain;
 
   public constructor(chain: Blockchain, pool: TransactionPool) {
     this.chain = chain;
-
     this.pool = pool;
   }
 

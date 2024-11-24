@@ -20,11 +20,9 @@ export default class TransactionConsumer extends Consumer {
 
   protected async transformMessage(payload: EachMessagePayload): Promise<void> {
     const { value } = payload.message;
-
     if (!value) {
       return;
     }
-
     const transaction = TransactionTranslator.fromMessage(value);
 
     this.action.execute(transaction);

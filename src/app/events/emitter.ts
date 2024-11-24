@@ -7,14 +7,12 @@ export default class Emitter extends BaseEmitter {
   public transactionAdded(event: TransactionAdded): void {
     let transaction = event.toJson();
     this.logger.info(`Transaction added: ${transaction.hash}`);
-
     this.producer.sendTransaction(transaction);
   }
 
   public blockAdded(event: Event): void {
     let block = event.toJson();
     this.logger.info(`Block added: ${block.hash}`);
-
     this.producer.sendBlock(block);
   }
 

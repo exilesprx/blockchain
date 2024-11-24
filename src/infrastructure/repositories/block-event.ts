@@ -5,7 +5,6 @@ import BlockRepository from "./block";
 
 export default class BlockEventRepository {
   private emitter: Emitter;
-
   private repo: BlockRepository;
 
   public constructor(emitter: Emitter, repo: BlockRepository) {

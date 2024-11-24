@@ -6,16 +6,12 @@ import TransactionAdded from "../../domain/events/transaction-added";
 
 export default abstract class Emitter {
   protected producer: Producer;
-
   protected logger: Logger;
-
   protected emitter: Events;
 
   constructor(emitter: Events, producer: Producer, logger: Logger) {
     this.emitter = emitter;
-
     this.producer = producer;
-
     this.logger = logger;
   }
 
@@ -28,10 +24,7 @@ export default abstract class Emitter {
   }
 
   public abstract blockAdded(event: Event): void;
-
   public abstract blockMined(event: Event): void;
-
   public abstract mineFailed(event: Event): void;
-
   public abstract transactionAdded(event: TransactionAdded): void;
 }

@@ -31,7 +31,6 @@ export default class TransactionTranslator {
     transactions: TransactionContract[],
   ): Transaction[] {
     const messageTransactions: Transaction[] = [];
-
     transactions.forEach((transaction: TransactionContract) => {
       messageTransactions.push(TransactionTranslator.fromObject(transaction));
     });
