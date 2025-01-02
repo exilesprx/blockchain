@@ -14,7 +14,7 @@
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
-  "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387",
+  "packageManager": "pnpm@9.15.2+sha512.93e57b0126f0df74ce6bff29680394c0ba54ec47246b9cf321f0121d8d9bb03f750a705f24edc3c1180853afd7c2c3b94196d0a3d53d3e069d9e2793ef11f321",
   "dependencies": {
     "@eventstore/db-client": "^6.2.1",
     "@types/crypto-js": "^4.2.2",
@@ -41,7 +41,7 @@
     "@jest/globals": "^29.7.0",
     "@tsconfig/recommended": "^1.0.8",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.3",
     "@typescript-eslint/eslint-plugin": "^8.19.0",
     "@typescript-eslint/parser": "^8.19.0",
     "babel-jest": "^29.7.0",
