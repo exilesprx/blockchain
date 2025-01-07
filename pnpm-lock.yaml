@@ -30,8 +30,8 @@ importers:
         specifier: ^4.21.2
         version: 4.21.2
       gelf-pro:
-        specifier: ^1.3.12
-        version: 1.3.12
+        specifier: ^1.4.0
+        version: 1.4.0
       helmet:
         specifier: ^8.0.0
         version: 8.0.0
@@ -1775,8 +1775,8 @@ packages:
   functions-have-names@1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
 
-  gelf-pro@1.3.12:
-    resolution: {integrity: sha512-gZcOmLA26WbszShVHhDwjONMZZFvtpctibjY3Mu84sAzMg8VJscFp94UOO4zGLoCfepOWvcysdu+IZT0mWfL6Q==}
+  gelf-pro@1.4.0:
+    resolution: {integrity: sha512-VXQ1DHQjQr8/Xil83hHgozqeCcVrggGAA6A8hgjojQSatiF6PErR+nnYv/DCBxFBolO6licomD7Abaj0Iec7Qg==}
 
   gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
@@ -5172,7 +5172,7 @@ snapshots:
 
   functions-have-names@1.2.3: {}
 
-  gelf-pro@1.3.12:
+  gelf-pro@1.4.0:
     dependencies:
       lodash: 4.17.21
 
