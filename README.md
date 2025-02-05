@@ -129,3 +129,6 @@ Using ts-node allows us to remove compilation of TypeScript files. So we can set
             - ~~source - foundation of image~~
             - ~~main - includes development source code from main~~
             - ~~version - includes production source code from main, tagged, and packaged for a release version~~
+- Pipelines
+  - update feature.yml to build and use local docker containers because when/if the docker image changes, the code changes need to run against them
+  - ~~update the build.yml to build the docker source image first and push, then the following steps can use the newly built and pushed images~~
