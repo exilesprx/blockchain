@@ -18,10 +18,8 @@ jobs:
     needs: build-docker
     steps:
       - uses: actions/checkout@v4
-      - name: Build source image
-        run: docker compose -f docker-compose.build.yml build main
       - name: Install
-        run: docker compose -f docker-compose.build.yml -v $PWD:/usr/app run main corepack install && pnpm i
+        run: docker compose -f docker-compose.build.yml -v $PWD:/usr/app run main sh -c "corepack install && pnpm i"
       - name: Compress files
         run: tar -czf pnpm-packages.tar.gz node_modules
       - name: Upload artifacts
@@ -41,15 +39,8 @@ jobs:
           name: pnpm-packages
       - name: Extract artifacts
         run: tar -xvf pnpm-packages.tar.gz
-      - name: Download blockchain image
-        uses: actions/download-artifact@v4
-        with:
-          name: blockchain-image
-          path: /tmp
-      - name: Load blockchain image
-        run: docker load < /tmp/blockchain-image.tar
       - name: Lint code
-        run: docker run --rm blockchain:source -v $PWD:/usr/app pnpm run lint
+        run: docker compose -f docker-compose.build.yml -v $PWD:/usr/app run main sh -c "pnpm run lint"
 
   audit:
     runs-on: ubuntu-latest
