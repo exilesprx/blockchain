@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install
-        run: docker compose -f docker-compose.build.yml -v $PWD:/usr/app run main sh -c "corepack install && pnpm i"
+        run: docker compose -f docker-compose.build.yml run -v $PWD:/usr/app main sh -c "corepack install && pnpm i"
       - name: Compress files
         run: tar -czf pnpm-packages.tar.gz node_modules
       - name: Upload artifacts
@@ -40,7 +40,7 @@ jobs:
       - name: Extract artifacts
         run: tar -xvf pnpm-packages.tar.gz
       - name: Lint code
-        run: docker compose -f docker-compose.build.yml -v $PWD:/usr/app run main sh -c "pnpm run lint"
+        run: docker compose -f docker-compose.build.yml run -v $PWD:/usr/app main sh -c "pnpm run lint"
 
   audit:
     runs-on: ubuntu-latest
