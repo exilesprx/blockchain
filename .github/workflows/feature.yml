@@ -6,60 +6,91 @@ on:
       - "main"
 
 jobs:
-  install-packages:
-    uses: ./.github/workflows/install-packages.yml
-
-  lint-typescript:
-    runs-on: ubuntu-latest
-    needs: install-packages
-    container: exilesprx/blockchain:source
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          name: pnpm-packages
-
-      - name: Extract artifacts
-        run: tar -xvf pnpm-packages.tar.gz
-
-      - name: Lint code
-        run: pnpm run lint
-
   lint-docker:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Lint dockerfile
         run: docker run --rm -i -v "$PWD"/hadolint.yml:/.config/hadolint.yaml hadolint/hadolint < .docker/Dockerfile
 
+  build-docker:
+    runs-on: ubuntu-latest
+    needs: lint-docker
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build source
+        run: |
+          docker build -t blockchain:source -f .docker/Dockerfile
+          docker save -o /tmp/blockchain-image.tar blockchain:source
+      - name: Upload image as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: blockchain-image
+          path: /tmp/blockchain-image.tar
+
+  install-packages:
+    runs-on: ubuntu-latest
+    needs: build-docker
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download blockchain image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: blockchain-image
+          path: /tmp
+      - name: Load blockchain image
+        run: docker load < /tmp/blockchain-image.tar
+      - name: Install
+        run: docker run --rm blockchain:source -v $PWD:/usr/app pnpm i #do I need corepack install
+      - name: Compress files
+        run: tar -czf pnpm-packages.tar.gz node_modules
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pnpm-packages
+          path: pnpm-packages.tar.gz
+
+  lint-typescript:
+    runs-on: ubuntu-latest
+    needs: install-packages
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download application artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: pnpm-packages
+      - name: Extract artifacts
+        run: tar -xvf pnpm-packages.tar.gz
+      - name: Download blockchain image
+        uses: actions/download-artifact@v4
+        with:
+          name: blockchain-image
+          path: /tmp
+      - name: Load blockchain image
+        run: docker load < /tmp/blockchain-image.tar
+      - name: Lint code
+        run: docker run --rm blockchain:source -v $PWD:/usr/app pnpm run lint
+
   audit:
     runs-on: ubuntu-latest
-    needs:
-      - lint-typescript
-      - lint-docker
+    needs: lint-typescript
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v4
-
       - name: Audit packages
         run: pnpm audit
 
   test:
     runs-on: ubuntu-latest
-    needs:
-      - lint-typescript
-      - lint-docker
+    needs: lint-typescript
     container: exilesprx/blockchain:source
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           name: pnpm-packages
-
       - name: Extract artifacts
         run: tar -xvf pnpm-packages.tar.gz
-
       - name: Test code
         run: pnpm run test
 
@@ -72,10 +103,8 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: pnpm-packages
-
       - name: Extract artifacts
         run: tar -xvf pnpm-packages.tar.gz
-
       - name: Build
         run: pnpm run build:bank
 
@@ -88,10 +117,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: pnpm-packages
-
       - name: Extract artifacts
         run: tar -xvf pnpm-packages.tar.gz
-
       - name: Build
         run: pnpm run build:miner
-
