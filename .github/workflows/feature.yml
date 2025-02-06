@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build source
         run: |
-          docker build -t blockchain:source -f .docker/Dockerfile
+          docker build -t blockchain:source -f .docker/Dockerfile .
           docker save -o /tmp/blockchain-image.tar blockchain:source
       - name: Upload image as artifact
         uses: actions/upload-artifact@v4
