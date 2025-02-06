@@ -5,6 +5,7 @@ on:
     branches-ignore:
       - "main"
 
+#I'm not a fan of redundant builds since it increases build times, but artifacts are also costly
 jobs:
   lint-docker:
     runs-on: ubuntu-latest
