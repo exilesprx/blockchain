@@ -7,10 +7,10 @@
     "lint": "eslint .",
     "build:bank": "tsc --project src/app/bank/tsconfig.json",
     "build:miner": "tsc --project src/app/miner/tsconfig.json",
-    "bank": "nodemon --config nodemon.json src/app/bank/index.ts",
-    "bank:debug": "nodemon --config nodemon.json --inspect=0.0.0.0:9229 --enable-source-maps src/app/bank/index.ts",
-    "miner": "nodemon --config nodemon.json src/app/miner/index.ts",
-    "miner:debug": "nodemon --config nodemon.json --inspect=0.0.0.0:9229 --enable-source-maps src/app/miner/index.ts"
+    "bank": "ts-node src/app/bank/index.ts",
+    "bank:debug": "ts-node --inspect=0.0.0.0:9229 --enable-source-maps src/app/bank/index.ts",
+    "miner": "ts-node src/app/miner/index.ts",
+    "miner:debug": "ts-node --inspect=0.0.0.0:9229 --enable-source-maps src/app/miner/index.ts"
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
@@ -26,7 +26,6 @@
     "gelf-pro": "^1.4.0",
     "helmet": "^8.0.0",
     "kafkajs": "^2.2.4",
-    "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "uuid": "^11.0.5",
