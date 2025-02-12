@@ -7,10 +7,10 @@
     "lint": "eslint .",
     "build:bank": "tsc --project src/app/bank/tsconfig.json",
     "build:miner": "tsc --project src/app/miner/tsconfig.json",
-    "bank": "ts-node src/app/bank/index.ts",
-    "bank:debug": "ts-node --inspect=0.0.0.0:9229 --enable-source-maps src/app/bank/index.ts",
-    "miner": "ts-node src/app/miner/index.ts",
-    "miner:debug": "ts-node --inspect=0.0.0.0:9229 --enable-source-maps src/app/miner/index.ts"
+    "bank": "tsx src/app/bank/index.ts",
+    "bank:debug": "tsx --inspect=0.0.0.0:9229 --enable-source-maps src/app/bank/index.ts",
+    "miner": "tsx src/app/miner/index.ts",
+    "miner:debug": "tsx --inspect=0.0.0.0:9229 --enable-source-maps src/app/miner/index.ts"
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
@@ -53,6 +53,7 @@
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-promise": "^7.2.1",
     "globals": "^15.14.0",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "tsx": "^4.19.2"
   }
 }
