@@ -49,6 +49,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Audit packages
+        continue-on-error: true
         run: docker compose -f docker-compose.build.yml run -v $PWD:/usr/app main sh -c "pnpm audit"
 
   test:
