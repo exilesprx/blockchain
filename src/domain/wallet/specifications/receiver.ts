@@ -5,7 +5,7 @@ export default class Receiver implements Specification {
   private message = "Receiver not allowed.";
 
   public isSatisfiedBy(transaction: Transaction): void {
-    if (typeof transaction.getReceiver() !== "string") {
+    if (transaction.getReceiver() == transaction.getSender()) {
       throw new Error(this.message);
     }
   }
