@@ -5,8 +5,6 @@ import Server from "../src/app/server";
 import Database from "../src/infrastructure/database";
 import Blockchain from "../src/domain/chain/blockchain";
 import Link from "../src/domain/chain/specifications/link";
-import Emitter from "../src/app/events/abstract-emitter";
-import Consumer from "../src/infrastructure/stream/consumer";
 import Producer from "../src/infrastructure/stream/producer";
 import Amount from "../src/domain/wallet/specifications/amount";
 import Receiver from "../src/domain/wallet/specifications/receiver";
@@ -15,12 +13,32 @@ import Sender from "../src/domain/wallet/specifications/sender";
 import TransactionPool from "../src/domain/wallet/transaction-pool";
 import BlockMined from "../src/domain/chain/specifications/mined";
 
-jest.mock("../src/app/events/abstract-emitter");
+// Abstract class are mocked differently then normal classes
+const emitter = {
+  register: jest.fn(),
+};
+const consumer = {
+  run: jest.fn(),
+  connect: jest.fn(),
+};
+jest.mock("../src/app/events/abstract-emitter", () => {
+  return {
+    __esModule: true,
+    default: jest.fn().mockImplementation(() => emitter),
+  };
+});
+jest.mock("../src/infrastructure/stream/consumer", () => {
+  return {
+    __esModule: true,
+    default: jest.fn().mockImplementation(() => consumer),
+  };
+});
+// End abstract class mocks
+
 jest.mock("../src/domain/wallet/transaction-pool");
 jest.mock("../src/domain/chain/blockchain");
 jest.mock("../src/infrastructure/database");
 jest.mock("../src/infrastructure/stream/producer");
-jest.mock("../src/infrastructure/stream/consumer");
 jest.mock("../src/app/routes/transaction");
 jest.mock("../src/app/server");
 
@@ -31,7 +49,6 @@ describe("Main", () => {
 
   test("it expects events to be registered", () => {
     const application = new Application();
-    const emitter = jest.mocked(Emitter).mock.instances[0];
 
     application.registerEvents();
 
@@ -68,7 +85,6 @@ describe("Main", () => {
     const application = new Application();
     const database = jest.mocked(Database).mock.instances[0];
     const producer = jest.mocked(Producer).mock.instances[0];
-    const consumer = jest.mocked(Consumer).mock.instances[0];
     const server = jest.mocked(Server).mock.instances[0];
 
     await application.boot();
