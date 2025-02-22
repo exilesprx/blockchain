@@ -20,7 +20,7 @@ export default class BlockBuilder {
       v4(),
       faker.finance.litecoinAddress(),
       faker.finance.litecoinAddress(),
-      Number(faker.finance.amount(0, 100)),
+      Number(faker.finance.amount({ min: 0, max: 100 })),
       Date.now(),
     );
 

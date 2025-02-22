@@ -5,12 +5,12 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
-    "build:bank": "tsc --project src/app/bank/tsconfig.json",
-    "build:miner": "tsc --project src/app/miner/tsconfig.json",
-    "bank": "tsx src/app/bank/index.ts",
-    "bank:debug": "tsx --inspect=0.0.0.0:9229 --enable-source-maps src/app/bank/index.ts",
-    "miner": "tsx src/app/miner/index.ts",
-    "miner:debug": "tsx --inspect=0.0.0.0:9229 --enable-source-maps src/app/miner/index.ts"
+    "build:bank": "tsc --project src/app/bank/tsconfig.json --noEmit",
+    "build:miner": "tsc --project src/app/miner/tsconfig.json --noEmit",
+    "run:bank": "tsx src/app/bank/index.ts",
+    "run:miner": "tsx src/app/miner/index.ts",
+    "debug:bank": "tsx --inspect=0.0.0.0:9229 --enable-source-maps src/app/bank/index.ts",
+    "debug:miner": "tsx --inspect=0.0.0.0:9229 --enable-source-maps src/app/miner/index.ts"
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
@@ -26,16 +26,13 @@
     "gelf-pro": "^1.4.0",
     "helmet": "^8.0.0",
     "kafkajs": "^2.2.4",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "uuid": "^11.0.5",
     "winston": "^3.17.0",
     "winston-transport": "^4.9.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.9",
-    "@babel/preset-env": "^7.26.8",
-    "@babel/preset-typescript": "^7.26.0",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.20.0",
     "@faker-js/faker": "^9.4.0",
@@ -45,7 +42,6 @@
     "@types/node": "^22.13.4",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.1",
-    "babel-jest": "^29.7.0",
     "eslint": "^9.20.1",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "^2.31.0",
@@ -54,6 +50,6 @@
     "eslint-plugin-promise": "^7.2.1",
     "globals": "^15.15.0",
     "jest": "^29.7.0",
-    "tsx": "^4.19.2"
+    "ts-jest": "^29.2.5"
   }
 }

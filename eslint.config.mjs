@@ -19,7 +19,6 @@ export default [
     ignores: [
       "**/node_modules",
       "**/jest.config.ts",
-      "**/babel.config.js",
       "build/**/*",
       "coverage/**/*",
       "eslint.config.mjs",

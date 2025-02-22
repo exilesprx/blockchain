@@ -166,7 +166,7 @@ services:
       - graylog
     env_file:
       - .env
-    command: pnpm run bank:debug
+    command: pnpm run debug:bank
 
   miner:
     image: exilesprx/blockchain:${APP_VERION:-latest}
@@ -178,7 +178,7 @@ services:
       - graylog
     env_file:
       - .env
-    command: pnpm run miner:debug
+    command: pnpm run debug:miner
 
   eventstore.db:
     image: eventstore/eventstore:20.10.2-buster-slim
