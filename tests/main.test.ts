@@ -69,7 +69,6 @@ describe("Main", () => {
 
     application.init();
 
-    expect(server.use).toHaveBeenCalledTimes(1);
     expect(pool.addSpecification).toHaveBeenCalledWith(
       expect.any(Amount),
       expect.any(Receiver),

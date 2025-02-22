@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { H3Event, readBody, setResponseStatus } from "h3";
 import Logger from "../../infrastructure/logs/logger";
 import AddTransactionFromRequest from "../commands/add-transaction-from-request";
 import TransactionTranslator from "../translators/transaction-translator";
@@ -16,21 +16,19 @@ export default class Transaction {
     return "/transaction";
   }
 
-  public getAction(
-    req: Request,
-    res: Response,
-  ): Response<any, Record<string, any>> {
-    const params = req.body;
+  public async getAction(event: H3Event): Promise<object> {
+    let body = await readBody(event);
 
     try {
       // Create a new transaction, add it to the pool, and broadcast it
-      const transaction = TransactionTranslator.fromRequest(params);
+      const transaction = TransactionTranslator.fromRequest(body);
       const hash = this.action.execute(transaction);
 
-      return res.send(`Transaction ${hash} accepted.`);
+      return { message: `Transaction ${hash} accepted.` };
     } catch (error) {
       this.logger.error(`Error occurred: ${error}`);
-      return res.sendStatus(401);
+      setResponseStatus(event, 400);
+      return {};
     }
   }
 }

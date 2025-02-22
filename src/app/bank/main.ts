@@ -1,6 +1,5 @@
+import { App } from "h3";
 import Events from "events";
-import express, { Request, Response } from "express";
-import helmet from "helmet";
 import Blockchain from "../../domain/chain/blockchain";
 import Link from "../../domain/chain/specifications/link";
 import BlockMined from "../../domain/chain/specifications/mined";
@@ -38,7 +37,7 @@ export default class Application {
 
   constructor() {
     this.logger = new Logger();
-    this.server = new Server(process.env.APP_PORT);
+    this.server = new Server();
 
     const stream = new Stream(new KafkaLogger(this.logger));
     this.database = new Database(
@@ -60,7 +59,6 @@ export default class Application {
   }
 
   public init() {
-    this.server.use(express.json(), helmet());
     this.pool.addSpecification(
       new Amount(),
       new Receiver(),
@@ -77,7 +75,7 @@ export default class Application {
     );
   }
 
-  public async boot() {
+  public async boot(): Promise<App> {
     this.database.connect();
     await this.producer.connect();
 
@@ -88,7 +86,7 @@ export default class Application {
 
     await this.consumer.connect();
     await this.consumer.run();
-    this.server.create(() => this.onConnect());
+    return this.server.instance();
   }
 
   public registerRoutes() {
@@ -99,13 +97,6 @@ export default class Application {
     const action = new AddTransactionFromRequest(this.pool, repository);
     const transactionRoute = new TransactionRoute(action, this.logger);
 
-    this.server.post(
-      TransactionRoute.getName(),
-      (req: Request, res: Response) => transactionRoute.getAction(req, res),
-    );
-  }
-
-  private onConnect(): void {
-    this.logger.info(`App listening on port ${this.server.getPort()}`);
+    this.server.post(TransactionRoute.getName(), [transactionRoute.getAction]);
   }
 }

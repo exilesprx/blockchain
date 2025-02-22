@@ -1,6 +1,7 @@
 import { describe, expect, jest, test } from "@jest/globals";
 
-import Server from "../src/app/server";
+import { EventHandler } from "h3";
+import Server from "@/app/server";
 
 const use = jest.fn();
 const listen = jest.fn();
@@ -19,27 +20,18 @@ describe("Server", () => {
   beforeAll(() => {});
   test("it expects to accept handlers are passed to the express framework", () => {
     const handler = jest.fn();
-    const server = new Server(process.env.APP_PORT);
+    const server = new Server();
 
     server.use(handler);
 
     expect(use).toHaveBeenCalledWith(expect.arrayContaining([handler]));
   });
 
-  test("it expects to call with a port and a callback", () => {
-    const spy = jest.fn();
-    const server = new Server(process.env.APP_PORT);
-
-    server.create(spy);
-
-    expect(listen).toHaveBeenCalledWith("8888", spy);
-  });
-
   test("it expects to accept multiple handlers for post calls", () => {
-    const handlers: any[] = [jest.fn(), jest.fn()];
-    const server = new Server(process.env.APP_PORT);
+    const handlers: EventHandler[] = [jest.fn(), jest.fn()];
+    const server = new Server();
 
-    server.post("test", handlers.at(0), handlers.at(1));
+    server.post("test", [handlers.at(0)!, handlers.at(1)!]);
 
     expect(post).toHaveBeenCalledWith(
       "test",
@@ -48,21 +40,14 @@ describe("Server", () => {
   });
 
   test("it expects to accept multiple handlers for get calls", () => {
-    const handlers: any[] = [jest.fn(), jest.fn()];
-    const server = new Server(process.env.APP_PORT);
+    const handlers: EventHandler[] = [jest.fn(), jest.fn()];
+    const server = new Server();
 
-    server.get("test", handlers.at(0), handlers.at(1));
+    server.get("test", [handlers.at(0)!, handlers.at(1)!]);
 
     expect(get).toHaveBeenCalledWith(
       "test",
       expect.arrayContaining([handlers.at(0), handlers.at(1)]),
     );
-  });
-
-  test("it expects an exception if port is undefined", () => {
-    const server = new Server(undefined);
-
-    expect(() => server.getPort()).toThrow(Error);
-    expect(() => server.getPort()).toThrow("Port is not configured");
   });
 });

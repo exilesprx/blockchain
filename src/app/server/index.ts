@@ -1,35 +1,45 @@
-import { Server as HttpServer } from "http";
-import express, { Express } from "express";
+import {
+  App,
+  Router,
+  EventHandler,
+  H3Event,
+  createApp,
+  createRouter,
+  defineEventHandler,
+} from "h3";
+
+export type ServerHooks = {
+  onError: (error: Error) => void;
+  onRequest: (event: H3Event) => void;
+};
 
 export default class Server {
-  private framework: Express;
-  private port: String | undefined;
+  private framework: App;
+  private router: Router;
 
-  public constructor(port: String | undefined) {
-    this.framework = express();
-    this.port = port;
+  public constructor(options?: ServerHooks) {
+    this.framework = createApp(options);
+    this.router = createRouter();
+    this.framework.use(this.router);
   }
 
   public use(...handlers: any[]): void {
     this.framework.use(handlers);
   }
 
-  public create(onConnect: () => void): HttpServer {
-    return this.framework.listen(this.port, onConnect);
+  public post(path: string, handlers: EventHandler[]): void {
+    handlers.map((handler) =>
+      this.router.post(path, defineEventHandler(handler)),
+    );
   }
 
-  public post(path: string, ...handlers: any): void {
-    this.framework.post(path, handlers);
+  public get(path: string, handlers: EventHandler[]): void {
+    handlers.map((handler) =>
+      this.router.get(path, defineEventHandler(handler)),
+    );
   }
 
-  public get(path: string, ...handlers: any[]): void {
-    this.framework.get(path, handlers);
-  }
-
-  public getPort(): String {
-    if (this.port === undefined) {
-      throw new Error("Port is not configured");
-    }
-    return this.port;
+  public instance(): App {
+    return this.framework;
   }
 }

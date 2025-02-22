@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
-    "app:bank": "tsx src/app/bank/index.ts",
+    "app:bank": "listhen -w src/app/bank/index.ts",
     "app:miner": "tsx src/app/miner/index.ts",
     "build:bank": "tsc --project src/app/bank/tsconfig.json --noEmit",
     "build:miner": "tsc --project src/app/miner/tsconfig.json --noEmit",
@@ -24,6 +24,7 @@
     "gelf-pro": "^1.4.0",
     "h3": "^1.15.1",
     "kafkajs": "^2.2.4",
+    "listhen": "^1.9.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "uuid": "^11.0.5",
