@@ -5,7 +5,7 @@ RUN corepack enable
 FROM source AS main
 COPY --chown=node:node --chmod=555 package.json /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-lock.yaml /usr/app/
-COPY --chown=node:node --chmod=555 babel.config.js /usr/app/
+COPY --chown=node:node --chmod=555 tsconfig.json /usr/app/
 COPY --chown=node:node --chmod=555 jest.config.ts /usr/app/
 COPY --chown=node:node --chmod=555 src /usr/app/src
 COPY --chown=node:node --chmod=555 node_modules /usr/app/node_modules
