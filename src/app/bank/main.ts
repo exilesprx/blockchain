@@ -1,6 +1,5 @@
+import { App, H3Event } from "h3";
 import Events from "events";
-import express, { Request, Response } from "express";
-import helmet from "helmet";
 import Blockchain from "../../domain/chain/blockchain";
 import Link from "../../domain/chain/specifications/link";
 import BlockMined from "../../domain/chain/specifications/mined";
@@ -24,7 +23,7 @@ import AddBlockFromConsumer from "../commands/add-block-from-consumer";
 import AddTransactionFromRequest from "../commands/add-transaction-from-request";
 import Emitter from "../events/emitter";
 import TransactionRoute from "../routes/transaction";
-import Server from "../server";
+import Server, { ServerHooks } from "../server";
 
 export default class Application {
   private server: Server;
@@ -38,7 +37,7 @@ export default class Application {
 
   constructor() {
     this.logger = new Logger();
-    this.server = new Server(process.env.APP_PORT);
+    this.server = new Server(this.serverOptions());
 
     const stream = new Stream(new KafkaLogger(this.logger));
     this.database = new Database(
@@ -60,7 +59,6 @@ export default class Application {
   }
 
   public init() {
-    this.server.use(express.json(), helmet());
     this.pool.addSpecification(
       new Amount(),
       new Receiver(),
@@ -77,7 +75,7 @@ export default class Application {
     );
   }
 
-  public async boot() {
+  public async boot(): Promise<App> {
     this.database.connect();
     await this.producer.connect();
 
@@ -88,7 +86,7 @@ export default class Application {
 
     await this.consumer.connect();
     await this.consumer.run();
-    this.server.create(() => this.onConnect());
+    return this.server.instance();
   }
 
   public registerRoutes() {
@@ -99,13 +97,24 @@ export default class Application {
     const action = new AddTransactionFromRequest(this.pool, repository);
     const transactionRoute = new TransactionRoute(action, this.logger);
 
-    this.server.post(
-      TransactionRoute.getName(),
-      (req: Request, res: Response) => transactionRoute.getAction(req, res),
-    );
+    this.server.post(TransactionRoute.getName(), [transactionRoute.getAction]);
   }
 
-  private onConnect(): void {
-    this.logger.info(`App listening on port ${this.server.getPort()}`);
+  private serverOptions(): ServerHooks {
+    let debug = process.env.NODE_ENV === "development";
+    let options: ServerHooks = {
+      debug: debug,
+    };
+
+    if (debug) {
+      options.onError = (error: Error) => {
+        this.logger.error(error.message);
+      };
+    }
+
+    options.onRequest = (event: H3Event) => {
+      this.logger.error("Request:" + event.path);
+    };
+    return options;
   }
 }

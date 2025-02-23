@@ -63,13 +63,11 @@ describe("Main", () => {
 
   test("it expects specifications added", () => {
     const application = new Application();
-    const server = jest.mocked(Server).mock.instances[0];
     const pool = jest.mocked(TransactionPool).mock.instances[0];
     const chain = jest.mocked(Blockchain).mock.instances[0];
 
     application.init();
 
-    expect(server.use).toHaveBeenCalledTimes(1);
     expect(pool.addSpecification).toHaveBeenCalledWith(
       expect.any(Amount),
       expect.any(Receiver),
@@ -87,7 +85,6 @@ describe("Main", () => {
     const application = new Application();
     const database = jest.mocked(Database).mock.instances[0];
     const producer = jest.mocked(Producer).mock.instances[0];
-    const server = jest.mocked(Server).mock.instances[0];
 
     await application.boot();
 
@@ -95,7 +92,6 @@ describe("Main", () => {
     expect(producer.connect).toHaveBeenCalled();
     expect(consumer.connect).toHaveBeenCalled();
     expect(consumer.run).toHaveBeenCalled();
-    expect(server.create).toHaveBeenCalledTimes(1);
   });
 
   test("it expects routes to be registered", () => {
@@ -105,6 +101,6 @@ describe("Main", () => {
 
     application.registerRoutes();
 
-    expect(server.post).toHaveBeenCalledWith("test", expect.any(Function));
+    expect(server.post).toHaveBeenCalledWith("test", expect.any(Array));
   });
 });

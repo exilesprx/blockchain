@@ -5,6 +5,8 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "resolveJsonModule": true,
+    "strict": true,
+    "strictNullChecks": true,
     "paths": {
       "@/*": ["src/*"]
     }

@@ -3,6 +3,7 @@ import { describe, expect, test } from "@jest/globals";
 import TransactionTranslator from "../src/app/translators/transaction-translator";
 import Transaction from "../src/domain/wallet/transaction";
 import data from "./stubs/transaction.json";
+import { v4 } from "uuid";
 
 describe("Transaction Translator", () => {
   test("it expects to translate an object into a Transaction", () => {
@@ -34,8 +35,12 @@ describe("Transaction Translator", () => {
   });
 
   test("it expects to translate to a transaction from a request body", () => {
-    const request = { to: "123", from: "321", amount: 2 };
-    const transaction = TransactionTranslator.fromRequest(request);
+    const request = { to: v4(), from: v4(), amount: 2 };
+    const transaction = TransactionTranslator.fromRequest(
+      request.to,
+      request.from,
+      request.amount,
+    );
 
     expect(transaction.getAmount()).toBe(request.amount);
     expect(transaction.getSender()).toBe(request.from);

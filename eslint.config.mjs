@@ -22,7 +22,6 @@ export default [
       "build/**/*",
       "coverage/**/*",
       "eslint.config.mjs",
-      "**/setEnvVars.js",
     ],
   },
   ...compat.extends("eslint:recommended", "plugin:prettier/recommended"),
