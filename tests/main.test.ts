@@ -1,6 +1,5 @@
 import { describe, expect, jest, test } from "@jest/globals";
 
-import { App } from "h3";
 import Application from "@/app/bank/main";
 import TransactionRoute from "@/app/routes/transaction";
 import Server from "@/app/server";
@@ -64,7 +63,6 @@ describe("Main", () => {
 
   test("it expects specifications added", () => {
     const application = new Application();
-    const server = jest.mocked(Server).mock.instances[0];
     const pool = jest.mocked(TransactionPool).mock.instances[0];
     const chain = jest.mocked(Blockchain).mock.instances[0];
 
