@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
-    "app:bank": "listhen -w src/app/bank/index.ts",
+    "app:bank": "tsx src/app/bank/server.ts",
     "app:miner": "tsx src/app/miner/index.ts",
     "build:bank": "tsc --project src/app/bank/tsconfig.json --noEmit",
     "build:miner": "tsc --project src/app/miner/tsconfig.json --noEmit",
