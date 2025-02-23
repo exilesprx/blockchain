@@ -9,8 +9,9 @@ import {
 } from "h3";
 
 export type ServerHooks = {
-  onError: (error: Error) => void;
-  onRequest: (event: H3Event) => void;
+  onError?: (error: Error) => void;
+  onRequest?: (event: H3Event) => void;
+  debug: boolean;
 };
 
 export default class Server {

@@ -1,4 +1,4 @@
-import { App } from "h3";
+import { App, H3Event } from "h3";
 import Events from "events";
 import Blockchain from "../../domain/chain/blockchain";
 import Link from "../../domain/chain/specifications/link";
@@ -23,7 +23,7 @@ import AddBlockFromConsumer from "../commands/add-block-from-consumer";
 import AddTransactionFromRequest from "../commands/add-transaction-from-request";
 import Emitter from "../events/emitter";
 import TransactionRoute from "../routes/transaction";
-import Server from "../server";
+import Server, { ServerHooks } from "../server";
 
 export default class Application {
   private server: Server;
@@ -37,7 +37,7 @@ export default class Application {
 
   constructor() {
     this.logger = new Logger();
-    this.server = new Server();
+    this.server = new Server(this.serverOptions());
 
     const stream = new Stream(new KafkaLogger(this.logger));
     this.database = new Database(
@@ -98,5 +98,23 @@ export default class Application {
     const transactionRoute = new TransactionRoute(action, this.logger);
 
     this.server.post(TransactionRoute.getName(), [transactionRoute.getAction]);
+  }
+
+  private serverOptions(): ServerHooks {
+    let debug = process.env.NODE_ENV === "development";
+    let options: ServerHooks = {
+      debug: debug,
+    };
+
+    if (debug) {
+      options.onError = (error: Error) => {
+        this.logger.error(error.message);
+      };
+    }
+
+    options.onRequest = (event: H3Event) => {
+      this.logger.error("Request:" + event.path);
+    };
+    return options;
   }
 }
