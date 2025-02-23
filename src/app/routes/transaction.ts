@@ -17,11 +17,15 @@ export default class Transaction {
   }
 
   public async getAction(event: H3Event): Promise<object> {
-    let body = await readBody(event);
-
     try {
+      let body = await readBody(event);
+
       // Create a new transaction, add it to the pool, and broadcast it
-      const transaction = TransactionTranslator.fromRequest(body);
+      const transaction = TransactionTranslator.fromRequest(
+        body.to,
+        body.from,
+        body.amount,
+      );
       const hash = this.action.execute(transaction);
 
       return { message: `Transaction ${hash} accepted.` };

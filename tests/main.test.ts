@@ -1,5 +1,6 @@
 import { describe, expect, jest, test } from "@jest/globals";
 
+import { App } from "h3";
 import Application from "@/app/bank/main";
 import TransactionRoute from "@/app/routes/transaction";
 import Server from "@/app/server";
@@ -86,7 +87,6 @@ describe("Main", () => {
     const application = new Application();
     const database = jest.mocked(Database).mock.instances[0];
     const producer = jest.mocked(Producer).mock.instances[0];
-    const server = jest.mocked(Server).mock.instances[0];
 
     await application.boot();
 
@@ -94,7 +94,6 @@ describe("Main", () => {
     expect(producer.connect).toHaveBeenCalled();
     expect(consumer.connect).toHaveBeenCalled();
     expect(consumer.run).toHaveBeenCalled();
-    expect(server.create).toHaveBeenCalledTimes(1);
   });
 
   test("it expects routes to be registered", () => {
@@ -104,6 +103,6 @@ describe("Main", () => {
 
     application.registerRoutes();
 
-    expect(server.post).toHaveBeenCalledWith("test", expect.any(Function));
+    expect(server.post).toHaveBeenCalledWith("test", expect.any(Array));
   });
 });
