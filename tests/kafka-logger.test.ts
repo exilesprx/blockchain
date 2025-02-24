@@ -5,7 +5,7 @@ import Logger from "../src/infrastructure/logs/logger";
 import KafkaLogger from "../src/infrastructure/logs/kafka-logger";
 
 jest.mock("../src/infrastructure/logs/logger");
-const logger: Logger = new Logger();
+const logger: Logger = new Logger([]);
 const kafkaLogger: KafkaLogger = new KafkaLogger(logger);
 
 describe("Kafka Logger", () => {

@@ -1,14 +1,13 @@
 import winston, { LogEntry, Logger as WinstonLogger } from "winston";
-import GelfTransport from "./transports/gelf";
 
 export default class Logger {
   private logger: WinstonLogger;
 
-  public constructor() {
+  public constructor(transports: any[]) {
     this.logger = winston.createLogger({
       exitOnError: false,
       format: winston.format.combine(winston.format.errors({ stack: true })),
-      transports: [new GelfTransport()],
+      transports: transports,
     });
   }
 

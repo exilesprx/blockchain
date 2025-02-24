@@ -25,8 +25,11 @@ import AddTransactionFromRequest from "../commands/add-transaction-from-request"
 import Emitter from "../events/emitter";
 import TransactionRoute from "../routes/transaction";
 import Server, { ServerHooks } from "../server";
+import GelfTransport from "../../infrastructure/logs/transports/gelf";
+import Console from "../../infrastructure/logs/transports/console";
 
 export default class Application {
+  private isDev: boolean;
   private server: Server;
   private emitter: Emitter;
   private chain: Blockchain;
@@ -37,7 +40,8 @@ export default class Application {
   private logger: Logger;
 
   constructor() {
-    this.logger = new Logger();
+    this.isDev = process.env.NODE_ENV === "development";
+    this.logger = new Logger(this.logTransports());
     this.server = new Server(this.serverOptions());
 
     const stream = new Stream(new KafkaLogger(this.logger));
@@ -102,12 +106,11 @@ export default class Application {
   }
 
   private serverOptions(): ServerHooks {
-    let debug = process.env.NODE_ENV === "development";
     let options: ServerHooks = {
-      debug: debug,
+      debug: this.isDev,
     };
 
-    if (debug) {
+    if (this.isDev) {
       options.onError = (error: Error) => {
         this.logger.error(error.message);
       };
@@ -117,5 +120,13 @@ export default class Application {
       this.logger.error("Request:" + event.path);
     };
     return options;
+  }
+
+  private logTransports(): any[] {
+    if (this.isDev) {
+      return [new Console()];
+    }
+
+    return [new GelfTransport()];
   }
 }
