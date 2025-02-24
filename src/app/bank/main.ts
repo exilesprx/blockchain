@@ -1,4 +1,5 @@
 import { App, H3Event } from "h3";
+import { process } from "std-env";
 import Events from "events";
 import Blockchain from "../../domain/chain/blockchain";
 import Link from "../../domain/chain/specifications/link";

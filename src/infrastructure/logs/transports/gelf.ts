@@ -1,5 +1,6 @@
 import Logger from "gelf-pro";
 import Transport from "winston-transport";
+import { process } from "std-env";
 
 enum GelfLogLevels {
   emergency = 0,

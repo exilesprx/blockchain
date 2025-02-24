@@ -1,5 +1,6 @@
 import { Consumer as KafkaConsumer, EachMessagePayload } from "kafkajs";
 import Stream from "./stream";
+import { process } from "std-env";
 
 export default abstract class Consumer {
   protected consumer: KafkaConsumer;

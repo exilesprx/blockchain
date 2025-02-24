@@ -1,5 +1,6 @@
 import { Consumer, Kafka, Producer } from "kafkajs";
 import KafkaLogger from "../logs/kafka-logger";
+import { process } from "std-env";
 
 export default class Stream {
   private kafka: Kafka;
