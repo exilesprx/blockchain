@@ -1,6 +1,6 @@
-import { Consumer, Kafka, Producer } from "kafkajs";
-import KafkaLogger from "../logs/kafka-logger";
-import { process } from "std-env";
+import { Consumer, Kafka, Producer } from 'kafkajs';
+import KafkaLogger from '../logs/kafka-logger';
+import { process } from 'std-env';
 
 export default class Stream {
   private kafka: Kafka;
@@ -9,7 +9,7 @@ export default class Stream {
     this.kafka = new Kafka({
       clientId: process.env.KAFKA_CLIENT_ID,
       brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`],
-      logCreator: () => (info) => kafkaLogger.logCreator(info),
+      logCreator: () => (info) => kafkaLogger.logCreator(info)
     });
   }
 

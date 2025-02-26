@@ -1,25 +1,25 @@
-import { describe, expect, jest, test } from "@jest/globals";
+import { describe, expect, jest, test } from '@jest/globals';
 
-import { EventHandler } from "h3";
-import Server from "@/app/server";
+import { EventHandler } from 'h3';
+import Server from '@/app/server';
 
 const use = jest.fn();
 const get = jest.fn();
 const post = jest.fn();
-jest.mock("h3", () => ({
+jest.mock('h3', () => ({
   createApp: jest.fn().mockImplementation(() => ({
-    use,
+    use
   })),
   createRouter: jest.fn().mockImplementation(() => ({
     get,
-    post,
+    post
   })),
-  defineEventHandler: (f: any) => f,
+  defineEventHandler: (f: any) => f
 }));
 
-describe("Server", () => {
+describe('Server', () => {
   beforeAll(() => {});
-  test("it expects to accept handlers are passed to the express framework", () => {
+  test('it expects to accept handlers are passed to the express framework', () => {
     const handler = jest.fn();
     const server = new Server();
 
@@ -28,23 +28,23 @@ describe("Server", () => {
     expect(use).toHaveBeenCalledWith(expect.arrayContaining([handler]));
   });
 
-  test("it expects to accept multiple handlers for post calls", () => {
+  test('it expects to accept multiple handlers for post calls', () => {
     const handlers: EventHandler[] = [jest.fn(), jest.fn()];
     const server = new Server();
 
-    server.post("test", [handlers.at(0)!, handlers.at(1)!]);
+    server.post('test', [handlers.at(0)!, handlers.at(1)!]);
 
-    expect(post).toHaveBeenCalledWith("test", handlers.at(0));
-    expect(post).toHaveBeenCalledWith("test", handlers.at(1));
+    expect(post).toHaveBeenCalledWith('test', handlers.at(0));
+    expect(post).toHaveBeenCalledWith('test', handlers.at(1));
   });
 
-  test("it expects to accept multiple handlers for get calls", () => {
+  test('it expects to accept multiple handlers for get calls', () => {
     const handlers: EventHandler[] = [jest.fn(), jest.fn()];
     const server = new Server();
 
-    server.get("test", [handlers.at(0)!, handlers.at(1)!]);
+    server.get('test', [handlers.at(0)!, handlers.at(1)!]);
 
-    expect(get).toHaveBeenCalledWith("test", handlers.at(0));
-    expect(get).toHaveBeenCalledWith("test", handlers.at(1));
+    expect(get).toHaveBeenCalledWith('test', handlers.at(0));
+    expect(get).toHaveBeenCalledWith('test', handlers.at(1));
   });
 });

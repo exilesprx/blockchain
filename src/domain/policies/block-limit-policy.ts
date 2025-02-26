@@ -1,4 +1,4 @@
-import BlockchainInterface from "../chain/blockchain-interface";
+import BlockchainInterface from '../chain/blockchain-interface';
 
 export default class BlockLimitPolicy {
   private static limit = 10;

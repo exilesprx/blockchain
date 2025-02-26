@@ -5,8 +5,8 @@ import {
   H3Event,
   createApp,
   createRouter,
-  defineEventHandler,
-} from "h3";
+  defineEventHandler
+} from 'h3';
 
 export type ServerHooks = {
   onError?: (error: Error) => void;
@@ -30,13 +30,13 @@ export default class Server {
 
   public post(path: string, handlers: EventHandler[]): void {
     handlers.map((handler) =>
-      this.router.post(path, defineEventHandler(handler)),
+      this.router.post(path, defineEventHandler(handler))
     );
   }
 
   public get(path: string, handlers: EventHandler[]): void {
     handlers.map((handler) =>
-      this.router.get(path, defineEventHandler(handler)),
+      this.router.get(path, defineEventHandler(handler))
     );
   }
 

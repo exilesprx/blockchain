@@ -1,16 +1,16 @@
-import Events from "events";
-import Blockchain from "../../domain/chain/blockchain";
-import BlockAdded from "../../domain/events/block-added";
-import MineFailed from "../../domain/events/mine-failed";
-import KafkaLogger from "../../infrastructure/logs/kafka-logger";
-import Logger from "../../infrastructure/logs/logger";
-import TransactionPool from "../../domain/wallet/transaction-pool";
-import Producer from "../../infrastructure/stream/producer";
-import Stream from "../../infrastructure/stream/stream";
-import BlockMined from "../../domain/events/block-mined";
-import TransactionConsumer from "../../infrastructure/stream/transaction-consumer";
-import AddTransactionFromConsumer from "../commands/add-transaction-from-consumer";
-import Emitter from "../events/emitter";
+import Events from 'events';
+import Blockchain from '../../domain/chain/blockchain';
+import BlockAdded from '../../domain/events/block-added';
+import MineFailed from '../../domain/events/mine-failed';
+import KafkaLogger from '../../infrastructure/logs/kafka-logger';
+import Logger from '../../infrastructure/logs/logger';
+import TransactionPool from '../../domain/wallet/transaction-pool';
+import Producer from '../../infrastructure/stream/producer';
+import Stream from '../../infrastructure/stream/stream';
+import BlockMined from '../../domain/events/block-mined';
+import TransactionConsumer from '../../infrastructure/stream/transaction-consumer';
+import AddTransactionFromConsumer from '../commands/add-transaction-from-consumer';
+import Emitter from '../events/emitter';
 
 export default class Miner {
   private emitter: Emitter;
@@ -30,13 +30,13 @@ export default class Miner {
 
   public registerEvents(): void {
     this.emitter.register(BlockAdded.toString(), (event: BlockAdded) =>
-      this.emitter.blockAdded(event),
+      this.emitter.blockAdded(event)
     );
     this.emitter.register(BlockMined.toString(), (event: BlockMined) =>
-      this.emitter.blockMined(event),
+      this.emitter.blockMined(event)
     );
     this.emitter.register(MineFailed.toString(), (event: MineFailed) =>
-      this.emitter.mineFailed(event),
+      this.emitter.mineFailed(event)
     );
   }
 

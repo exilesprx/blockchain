@@ -1,4 +1,4 @@
-import { EventData, EventStoreDBClient } from "@eventstore/db-client";
+import { EventData, EventStoreDBClient } from '@eventstore/db-client';
 
 export default class Database {
   private client: EventStoreDBClient | null;
@@ -16,11 +16,11 @@ export default class Database {
   public connect() {
     this.client = new EventStoreDBClient(
       {
-        endpoint: `${this.host}:${this.port}`,
+        endpoint: `${this.host}:${this.port}`
       },
       {
-        insecure: this.insecure,
-      },
+        insecure: this.insecure
+      }
     );
   }
 

@@ -1,6 +1,6 @@
-import Transaction from "../../../domain/wallet/transaction";
-import { Transaction as TransactionContract } from "../../database/models/transaction";
-import { destr } from "destr";
+import Transaction from '../../../domain/wallet/transaction';
+import { Transaction as TransactionContract } from '../../database/models/transaction';
+import { destr } from 'destr';
 
 export default class TransactionTranslator {
   public static fromMessage(value: Buffer): Transaction {
@@ -11,7 +11,7 @@ export default class TransactionTranslator {
       message.to,
       message.from,
       message.amount,
-      message.date,
+      message.date
     );
   }
 }

@@ -1,4 +1,4 @@
-import Block from "../block";
+import Block from '../block';
 
 type Specification = {
   isSatisfiedBy(prevous: Block, current: Block): void;

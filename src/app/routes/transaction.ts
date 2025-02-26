@@ -1,7 +1,7 @@
-import { H3Event, readBody, setResponseStatus } from "h3";
-import Logger from "../../infrastructure/logs/logger";
-import AddTransactionFromRequest from "../commands/add-transaction-from-request";
-import TransactionTranslator from "../translators/transaction-translator";
+import { H3Event, readBody, setResponseStatus } from 'h3';
+import Logger from '../../infrastructure/logs/logger';
+import AddTransactionFromRequest from '../commands/add-transaction-from-request';
+import TransactionTranslator from '../translators/transaction-translator';
 
 export default class Transaction {
   private action: AddTransactionFromRequest;
@@ -13,7 +13,7 @@ export default class Transaction {
   }
 
   public static getName(): string {
-    return "/transaction";
+    return '/transaction';
   }
 
   public async getAction(event: H3Event): Promise<object> {
@@ -24,7 +24,7 @@ export default class Transaction {
       const transaction = TransactionTranslator.fromRequest(
         body.to,
         body.from,
-        body.amount,
+        body.amount
       );
       const hash = this.action.execute(transaction);
 

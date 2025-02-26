@@ -1,13 +1,13 @@
-import { v4 } from "uuid";
-import BlockAdded from "../events/block-added";
-import MineFailed from "../events/mine-failed";
-import BlockMined from "../events/block-mined";
-import BlockLimitPolicy from "../policies/block-limit-policy";
-import Transaction from "../wallet/transaction";
-import Block from "./block";
-import BlockchainInterface from "./blockchain-interface";
-import Specification from "./specifications/specifications";
-import Event from "../events/event";
+import { v4 } from 'uuid';
+import BlockAdded from '../events/block-added';
+import MineFailed from '../events/mine-failed';
+import BlockMined from '../events/block-mined';
+import BlockLimitPolicy from '../policies/block-limit-policy';
+import Transaction from '../wallet/transaction';
+import Block from './block';
+import BlockchainInterface from './blockchain-interface';
+import Specification from './specifications/specifications';
+import Event from '../events/event';
 
 export default class Blockchain implements BlockchainInterface {
   private events: Event[];
@@ -29,7 +29,7 @@ export default class Blockchain implements BlockchainInterface {
       difficulty,
       this.getPreviousHash(),
       transactions,
-      Date.now(),
+      Date.now()
     );
 
     try {

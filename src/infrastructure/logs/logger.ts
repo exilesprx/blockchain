@@ -1,4 +1,4 @@
-import winston, { LogEntry, Logger as WinstonLogger } from "winston";
+import winston, { LogEntry, Logger as WinstonLogger } from 'winston';
 
 export default class Logger {
   private logger: WinstonLogger;
@@ -7,7 +7,7 @@ export default class Logger {
     this.logger = winston.createLogger({
       exitOnError: false,
       format: winston.format.combine(winston.format.errors({ stack: true })),
-      transports: transports,
+      transports: transports
     });
   }
 

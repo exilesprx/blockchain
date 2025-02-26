@@ -1,7 +1,7 @@
-import { jsonEvent } from "@eventstore/db-client";
-import TransactionPool from "../../domain/wallet/transaction-pool";
-import Database from "../database";
-import TransactionEvent from "../database/models/transaction";
+import { jsonEvent } from '@eventstore/db-client';
+import TransactionPool from '../../domain/wallet/transaction-pool';
+import Database from '../database';
+import TransactionEvent from '../database/models/transaction';
 
 export default class TransactionRepository {
   private database: Database;
@@ -13,8 +13,8 @@ export default class TransactionRepository {
   public async persist(pool: TransactionPool) {
     const data = pool.lastTransaction().toJson();
     const event = jsonEvent<TransactionEvent>({
-      type: "transaction",
-      data,
+      type: 'transaction',
+      data
     });
     await this.database.persist(event);
   }

@@ -1,9 +1,9 @@
-import { Producer as KafkaProducer } from "kafkajs";
-import Stream from "./stream";
-import BlockTopic from "./topic/block";
-import TransactionTopic from "./topic/transaction";
-import { Block as BlockContract } from "../database/models/block";
-import { Transaction as TransactionContract } from "../database/models/transaction";
+import { Producer as KafkaProducer } from 'kafkajs';
+import Stream from './stream';
+import BlockTopic from './topic/block';
+import TransactionTopic from './topic/transaction';
+import { Block as BlockContract } from '../database/models/block';
+import { Transaction as TransactionContract } from '../database/models/transaction';
 
 export default class Producer {
   private producer: KafkaProducer;
@@ -19,14 +19,14 @@ export default class Producer {
   public sendTransaction(transaction: TransactionContract): void {
     this.producer.send({
       topic: new TransactionTopic().toString(),
-      messages: [{ key: transaction.id, value: JSON.stringify(transaction) }],
+      messages: [{ key: transaction.id, value: JSON.stringify(transaction) }]
     });
   }
 
   public sendBlock(block: BlockContract): void {
     this.producer.send({
       topic: new BlockTopic().toString(),
-      messages: [{ key: block.id, value: JSON.stringify(block) }],
+      messages: [{ key: block.id, value: JSON.stringify(block) }]
     });
   }
 }

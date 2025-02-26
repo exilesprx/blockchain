@@ -1,9 +1,9 @@
-import { EachMessagePayload } from "kafkajs";
-import TransactionTranslator from "./translators/transaction-translator";
-import AddTransaction from "../../app/commands/add-transaction-from-consumer";
-import Consumer from "./consumer";
-import Stream from "./stream";
-import TransactionTopic from "./topic/transaction";
+import { EachMessagePayload } from 'kafkajs';
+import TransactionTranslator from './translators/transaction-translator';
+import AddTransaction from '../../app/commands/add-transaction-from-consumer';
+import Consumer from './consumer';
+import Stream from './stream';
+import TransactionTopic from './topic/transaction';
 
 export default class TransactionConsumer extends Consumer {
   private action: AddTransaction;

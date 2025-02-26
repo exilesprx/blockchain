@@ -1,4 +1,4 @@
-import Transaction from "../transaction";
+import Transaction from '../transaction';
 
 interface Specification {
   isSatisfiedBy(transaction: Transaction): void;

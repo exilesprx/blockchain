@@ -1,8 +1,8 @@
-import TransactionAdded from "../events/transaction-added";
-import NewBlockPolicy from "../policies/new-block-policy";
-import Specification from "./specifications/specification";
-import Transaction from "./transaction";
-import Event from "../events/event";
+import TransactionAdded from '../events/transaction-added';
+import NewBlockPolicy from '../policies/new-block-policy';
+import Specification from './specifications/specification';
+import Transaction from './transaction';
+import Event from '../events/event';
 
 export default class TransactionPool {
   private events: Event[];

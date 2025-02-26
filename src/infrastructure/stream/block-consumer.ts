@@ -1,9 +1,9 @@
-import { EachMessagePayload } from "kafkajs";
-import AddBlockFromConsumer from "../../app/commands/add-block-from-consumer";
-import Consumer from "./consumer";
-import Stream from "./stream";
-import BlockTopic from "./topic/block";
-import BlockTranslator from "./translators/block-translator";
+import { EachMessagePayload } from 'kafkajs';
+import AddBlockFromConsumer from '../../app/commands/add-block-from-consumer';
+import Consumer from './consumer';
+import Stream from './stream';
+import BlockTopic from './topic/block';
+import BlockTranslator from './translators/block-translator';
 
 export default class BlockConsumer extends Consumer {
   private action: AddBlockFromConsumer;

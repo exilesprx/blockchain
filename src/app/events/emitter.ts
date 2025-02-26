@@ -1,7 +1,7 @@
-import BaseEmitter from "./abstract-emitter";
-import Event from "../../domain/events/event";
-import MineFailed from "../../domain/events/mine-failed";
-import TransactionAdded from "../../domain/events/transaction-added";
+import BaseEmitter from './abstract-emitter';
+import Event from '../../domain/events/event';
+import MineFailed from '../../domain/events/mine-failed';
+import TransactionAdded from '../../domain/events/transaction-added';
 
 export default class Emitter extends BaseEmitter {
   public transactionAdded(event: TransactionAdded): void {
@@ -24,7 +24,7 @@ export default class Emitter extends BaseEmitter {
   public mineFailed(event: MineFailed): void {
     let block = event.toJson();
     this.logger.error(
-      `Block failed to be mined: ${block.id} - Error: ${event.error()}`,
+      `Block failed to be mined: ${block.id} - Error: ${event.error()}`
     );
     // TODO: Notify the auditor
   }

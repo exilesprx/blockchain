@@ -1,13 +1,13 @@
-import { Consumer as KafkaConsumer, EachMessagePayload } from "kafkajs";
-import Stream from "./stream";
-import { process } from "std-env";
+import { Consumer as KafkaConsumer, EachMessagePayload } from 'kafkajs';
+import Stream from './stream';
+import { process } from 'std-env';
 
 export default abstract class Consumer {
   protected consumer: KafkaConsumer;
 
   public constructor(stream: Stream) {
     this.consumer = stream.createConsumer(
-      `${process.env.KAFKA_GROUP_ID}-${process.env.HOSTNAME}`,
+      `${process.env.KAFKA_GROUP_ID}-${process.env.HOSTNAME}`
     );
   }
 
@@ -23,11 +23,11 @@ export default abstract class Consumer {
     await this.consumer.subscribe({ topic, fromBeginning: false });
     await this.consumer.run({
       eachMessage: (payload: EachMessagePayload) =>
-        this.transformMessage(payload),
+        this.transformMessage(payload)
     });
   }
 
   protected abstract transformMessage(
-    payload: EachMessagePayload,
+    payload: EachMessagePayload
   ): Promise<void>;
 }
