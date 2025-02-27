@@ -44,7 +44,7 @@ describe('Transaction route', () => {
     const execute = jest.spyOn(action, 'execute').mockImplementation(() => {
       throw new Error('some');
     });
-    const logger = new Logger();
+    const logger = new Logger([]);
     const err = jest.spyOn(logger, 'error');
     const route = new TransactionRoute(action, logger);
     const event = { req: { method: 'POST' } } as H3Event;

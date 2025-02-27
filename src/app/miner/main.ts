@@ -18,7 +18,7 @@ export default class Miner {
   private producer: Producer;
 
   public constructor() {
-    const logger = new Logger();
+    const logger = new Logger([]);
     const chain = new Blockchain();
     const pool = new TransactionPool();
     const stream = new Stream(new KafkaLogger(logger));
