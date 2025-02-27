@@ -1,4 +1,4 @@
-import Transaction from "../wallet/transaction";
+import Transaction from '../wallet/transaction';
 
 export default class NewBlockPolicy {
   private static blockLimit = 20;

@@ -1,12 +1,12 @@
-import { logLevel } from "kafkajs";
-import Logger from "./logger";
+import { logLevel } from 'kafkajs';
+import Logger from './logger';
 
 const LogLevelDescriptions: { [index in logLevel]: string } = {
-  [logLevel.NOTHING]: "error",
-  [logLevel.ERROR]: "error",
-  [logLevel.WARN]: "warn",
-  [logLevel.INFO]: "info",
-  [logLevel.DEBUG]: "debug",
+  [logLevel.NOTHING]: 'error',
+  [logLevel.ERROR]: 'error',
+  [logLevel.WARN]: 'warn',
+  [logLevel.INFO]: 'info',
+  [logLevel.DEBUG]: 'debug'
 };
 
 export default class KafkaLogger {
@@ -18,7 +18,7 @@ export default class KafkaLogger {
 
   public static toWinstonLogLevel(level: any): string {
     return (
-      LogLevelDescriptions[level as keyof typeof LogLevelDescriptions] || "info"
+      LogLevelDescriptions[level as keyof typeof LogLevelDescriptions] || 'info'
     );
   }
 
@@ -28,7 +28,7 @@ export default class KafkaLogger {
     this.logger.log({
       level: KafkaLogger.toWinstonLogLevel(level),
       message,
-      extra,
+      extra
     });
   }
 }

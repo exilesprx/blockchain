@@ -1,8 +1,8 @@
-import Block from "../block";
-import Specification from "./specifications";
+import Block from '../block';
+import Specification from './specifications';
 
 export default class Link implements Specification {
-  private message = "Incorrect block reference.";
+  private message = 'Incorrect block reference.';
 
   public isSatisfiedBy(prevous: Block, current: Block): void {
     if (prevous.getHash() !== current.getPreviousHash()) {

@@ -1,6 +1,6 @@
-import Transaction from "../wallet/transaction";
-import { Transaction as TransactionContract } from "../../infrastructure/database/models/transaction";
-import Event from "./event";
+import Transaction from '../wallet/transaction';
+import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction';
+import Event from './event';
 
 export default class TransactionAdded extends Event {
   private id: any;
@@ -28,7 +28,7 @@ export default class TransactionAdded extends Event {
       from: this.from,
       amount: this.amount,
       date: this.date,
-      hash: this.hash,
+      hash: this.hash
     };
   }
 }

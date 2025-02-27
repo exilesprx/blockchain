@@ -1,6 +1,6 @@
-import Block from "../chain/block";
-import Transaction from "../wallet/transaction";
-import Event from "./event";
+import Block from '../chain/block';
+import Transaction from '../wallet/transaction';
+import Event from './event';
 
 export default class BlockAdded extends Event {
   private id: any;
@@ -30,7 +30,7 @@ export default class BlockAdded extends Event {
       difficulty: this.difficulty,
       previousHash: this.previousHash,
       hash: this.hash,
-      date: this.date,
+      date: this.date
     };
   }
 }

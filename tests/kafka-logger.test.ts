@@ -1,63 +1,63 @@
-import { describe, expect, jest, test } from "@jest/globals";
+import { describe, expect, jest, test } from '@jest/globals';
 
-import { logLevel } from "kafkajs";
-import Logger from "../src/infrastructure/logs/logger";
-import KafkaLogger from "../src/infrastructure/logs/kafka-logger";
+import { logLevel } from 'kafkajs';
+import Logger from '../src/infrastructure/logs/logger';
+import KafkaLogger from '../src/infrastructure/logs/kafka-logger';
 
-jest.mock("../src/infrastructure/logs/logger");
-const logger: Logger = new Logger();
+jest.mock('../src/infrastructure/logs/logger');
+const logger: Logger = new Logger([]);
 const kafkaLogger: KafkaLogger = new KafkaLogger(logger);
 
-describe("Kafka Logger", () => {
+describe('Kafka Logger', () => {
   beforeAll(() => {
     jest.clearAllMocks();
   });
 
-  test("it expects the level to be debug", () => {
+  test('it expects the level to be debug', () => {
     const level = KafkaLogger.toWinstonLogLevel(logLevel.DEBUG);
 
-    expect(level).toBe("debug");
+    expect(level).toBe('debug');
   });
 
-  test("it expects the level to be error", () => {
+  test('it expects the level to be error', () => {
     const level = KafkaLogger.toWinstonLogLevel(logLevel.ERROR);
 
-    expect(level).toBe("error");
+    expect(level).toBe('error');
   });
 
-  test("it expects the level to be info", () => {
+  test('it expects the level to be info', () => {
     const level = KafkaLogger.toWinstonLogLevel(logLevel.INFO);
 
-    expect(level).toBe("info");
+    expect(level).toBe('info');
   });
 
-  test("it expects the level to be error", () => {
+  test('it expects the level to be error', () => {
     const level = KafkaLogger.toWinstonLogLevel(logLevel.NOTHING);
 
-    expect(level).toBe("error");
+    expect(level).toBe('error');
   });
 
-  test("it expects the level to be warn", () => {
+  test('it expects the level to be warn', () => {
     const level = KafkaLogger.toWinstonLogLevel(logLevel.WARN);
 
-    expect(level).toBe("warn");
+    expect(level).toBe('warn');
   });
 
-  test("it expects the level to be info", () => {
+  test('it expects the level to be info', () => {
     const level = KafkaLogger.toWinstonLogLevel(null);
 
-    expect(level).toBe("info");
+    expect(level).toBe('info');
   });
 
-  test("it expects", () => {
+  test('it expects', () => {
     const arg = {
-      namespace: "a",
-      level: "info",
-      label: "test",
+      namespace: 'a',
+      level: 'info',
+      label: 'test',
       log: {
-        message: "test",
-        comment: "this is testing",
-      },
+        message: 'test',
+        comment: 'this is testing'
+      }
     };
 
     kafkaLogger.logCreator(arg);
@@ -65,10 +65,10 @@ describe("Kafka Logger", () => {
     expect(logger.log).toHaveBeenCalledTimes(1);
     expect(logger.log).toHaveBeenCalledWith({
       extra: {
-        comment: arg.log.comment,
+        comment: arg.log.comment
       },
       level: arg.level,
-      message: arg.log.message,
+      message: arg.log.message
     });
   });
 });

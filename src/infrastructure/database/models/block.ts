@@ -1,5 +1,5 @@
-import { JSONEventType } from "@eventstore/db-client";
-import { Transaction as TransactionContract } from "./transaction";
+import { JSONEventType } from '@eventstore/db-client';
+import { Transaction as TransactionContract } from './transaction';
 
 export type Block = {
   id: string;
@@ -11,6 +11,6 @@ export type Block = {
   date: number;
 };
 
-type BlockEvent = JSONEventType<"block", Block>;
+type BlockEvent = JSONEventType<'block', Block>;
 
 export default BlockEvent;

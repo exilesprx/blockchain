@@ -1,10 +1,10 @@
-import { SHA256 } from "crypto-js";
-import BlockMinedPolicy from "../policies/block-mined-policy";
-import Transaction from "../wallet/transaction";
-import BlockState from "./state/block-state";
-import Mined from "./state/mined";
-import Unmined from "./state/unmined";
-import { Block as BlockContract } from "../../infrastructure/database/models/block";
+import { SHA256 } from 'crypto-js';
+import BlockMinedPolicy from '../policies/block-mined-policy';
+import Transaction from '../wallet/transaction';
+import BlockState from './state/block-state';
+import Mined from './state/mined';
+import Unmined from './state/unmined';
+import { Block as BlockContract } from '../../infrastructure/database/models/block';
 
 export default class Block {
   private transactions: Transaction[];
@@ -22,7 +22,7 @@ export default class Block {
     difficulty: number,
     previousHash: string,
     transactions: Transaction[],
-    date: number,
+    date: number
   ) {
     this.id = id;
     this.nounce = nounce;
@@ -35,7 +35,7 @@ export default class Block {
   }
 
   public static genesis(): Block {
-    return new this("genesis block", 0, 0, "0".repeat(32), [], 0);
+    return new this('genesis block', 0, 0, '0'.repeat(32), [], 0);
   }
 
   public async mine(): Promise<void> {
@@ -83,13 +83,13 @@ export default class Block {
   }
 
   private generateHash(): string {
-    let transactionHashes = "";
+    let transactionHashes = '';
     this.transactions.forEach((transaction) => {
       transactionHashes += transaction.getHash();
     });
 
     return SHA256(
-      `${transactionHashes}${this.id}${this.nounce}${this.difficulty}${this.previousHash}${this.difficulty}${this.date}`,
+      `${transactionHashes}${this.id}${this.nounce}${this.difficulty}${this.previousHash}${this.difficulty}${this.date}`
     ).toString();
   }
 
@@ -105,13 +105,13 @@ export default class Block {
     return {
       id: this.id,
       transactions: this.transactions.map((transaction: Transaction) =>
-        transaction.toJson(),
+        transaction.toJson()
       ),
       nounce: this.nounce,
       difficulty: this.difficulty,
       previousHash: this.previousHash,
       hash: this.hash,
-      date: this.date,
+      date: this.date
     };
   }
 }

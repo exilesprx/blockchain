@@ -17,9 +17,15 @@ importers:
       '@types/uuid':
         specifier: ^10.0.0
         version: 10.0.0
+      consola:
+        specifier: ^3.4.0
+        version: 3.4.0
       crypto-js:
         specifier: ^4.2.0
         version: 4.2.0
+      destr:
+        specifier: ^2.0.3
+        version: 2.0.3
       events:
         specifier: ^3.3.0
         version: 3.3.0
@@ -35,6 +41,9 @@ importers:
       listhen:
         specifier: ^1.9.0
         version: 1.9.0
+      std-env:
+        specifier: ^3.8.0
+        version: 3.8.0
       tsx:
         specifier: ^4.19.2
         version: 4.19.2

@@ -1,5 +1,5 @@
-import Block from "../chain/block";
-import Event from "./event";
+import Block from '../chain/block';
+import Event from './event';
 
 export default class MineFailed extends Event {
   private id: any;
@@ -18,7 +18,7 @@ export default class MineFailed extends Event {
 
   public toJson() {
     return {
-      id: this.id,
+      id: this.id
     };
   }
 }

@@ -1,7 +1,7 @@
-import Emitter from "../../app/events/abstract-emitter";
-import Event from "../../domain/events/event";
-import TransactionPool from "../../domain/wallet/transaction-pool";
-import TransactionRepository from "./transaction";
+import Emitter from '../../app/events/abstract-emitter';
+import Event from '../../domain/events/event';
+import TransactionPool from '../../domain/wallet/transaction-pool';
+import TransactionRepository from './transaction';
 
 export default class TransactionEventRepository {
   private emitter: Emitter;

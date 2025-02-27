@@ -1,19 +1,19 @@
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from '@jest/globals';
 
-import TransactionTranslator from "../src/app/translators/transaction-translator";
-import Transaction from "../src/domain/wallet/transaction";
-import data from "./stubs/transaction.json";
-import { v4 } from "uuid";
+import TransactionTranslator from '../src/app/translators/transaction-translator';
+import Transaction from '../src/domain/wallet/transaction';
+import data from './stubs/transaction.json';
+import { v4 } from 'uuid';
 
-describe("Transaction Translator", () => {
-  test("it expects to translate an object into a Transaction", () => {
+describe('Transaction Translator', () => {
+  test('it expects to translate an object into a Transaction', () => {
     const transaction = TransactionTranslator.fromObject(data);
 
     expect(transaction.getHash()).not.toBe(data.hash);
     expect(transaction).toBeInstanceOf(Transaction);
   });
 
-  test("it expects to translate an array of transactions", () => {
+  test('it expects to translate an array of transactions', () => {
     const transactions = [data, data];
     const convertedTransactions =
       TransactionTranslator.fromObjectForMany(transactions);
@@ -23,7 +23,7 @@ describe("Transaction Translator", () => {
     });
   });
 
-  test("it expects transaction properties to match values parsed", () => {
+  test('it expects transaction properties to match values parsed', () => {
     const transaction = TransactionTranslator.fromObject(data);
 
     expect(transaction).toBeInstanceOf(Transaction);
@@ -34,12 +34,12 @@ describe("Transaction Translator", () => {
     expect(transaction.getAmount()).toBe(data.amount);
   });
 
-  test("it expects to translate to a transaction from a request body", () => {
+  test('it expects to translate to a transaction from a request body', () => {
     const request = { to: v4(), from: v4(), amount: 2 };
     const transaction = TransactionTranslator.fromRequest(
       request.to,
       request.from,
-      request.amount,
+      request.amount
     );
 
     expect(transaction.getAmount()).toBe(request.amount);

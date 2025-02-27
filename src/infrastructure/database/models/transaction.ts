@@ -1,4 +1,4 @@
-import { JSONEventType } from "@eventstore/db-client";
+import { JSONEventType } from '@eventstore/db-client';
 
 export type Transaction = {
   id: string;
@@ -9,6 +9,6 @@ export type Transaction = {
   hash: string;
 };
 
-type TransactionEvent = JSONEventType<"transaction", Transaction>;
+type TransactionEvent = JSONEventType<'transaction', Transaction>;
 
 export default TransactionEvent;

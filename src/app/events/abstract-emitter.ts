@@ -1,8 +1,8 @@
-import Events from "events";
-import Logger from "../../infrastructure/logs/logger";
-import Producer from "../../infrastructure/stream/producer";
-import Event from "../../domain/events/event";
-import TransactionAdded from "../../domain/events/transaction-added";
+import Events from 'events';
+import Logger from '../../infrastructure/logs/logger';
+import Producer from '../../infrastructure/stream/producer';
+import Event from '../../domain/events/event';
+import TransactionAdded from '../../domain/events/transaction-added';
 
 export default abstract class Emitter {
   protected producer: Producer;

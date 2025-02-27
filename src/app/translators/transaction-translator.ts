@@ -1,12 +1,12 @@
-import { v4 } from "uuid";
-import Transaction from "../../domain/wallet/transaction";
-import { Transaction as TransactionContract } from "../../infrastructure/database/models/transaction";
+import { v4 } from 'uuid';
+import Transaction from '../../domain/wallet/transaction';
+import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction';
 
 export default class TransactionTranslator {
   public static fromRequest(
     to: string,
     from: string,
-    amount: number,
+    amount: number
   ): Transaction {
     if (!to || !from || !amount) {
       throw new Error('Missing required properties: "to", "from", or "amount"');
@@ -21,12 +21,12 @@ export default class TransactionTranslator {
       message.to,
       message.from,
       message.amount,
-      message.date,
+      message.date
     );
   }
 
   public static fromObjectForMany(
-    transactions: TransactionContract[],
+    transactions: TransactionContract[]
   ): Transaction[] {
     const messageTransactions: Transaction[] = [];
     transactions.forEach((transaction: TransactionContract) => {

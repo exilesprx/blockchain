@@ -1,6 +1,6 @@
-import Blockchain from "../../domain/chain/blockchain";
-import Transaction from "../../domain/wallet/transaction";
-import TransactionPool from "../../domain/wallet/transaction-pool";
+import Blockchain from '../../domain/chain/blockchain';
+import Transaction from '../../domain/wallet/transaction';
+import TransactionPool from '../../domain/wallet/transaction-pool';
 
 export default class AddTransactionFromConsumer {
   private pool: TransactionPool;
