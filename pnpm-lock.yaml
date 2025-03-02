@@ -29,6 +29,9 @@ importers:
       events:
         specifier: ^3.3.0
         version: 3.3.0
+      fast-json-stable-stringify:
+        specifier: ^2.1.0
+        version: 2.1.0
       gelf-pro:
         specifier: ^1.4.0
         version: 1.4.0
