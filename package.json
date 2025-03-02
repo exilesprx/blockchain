@@ -23,6 +23,7 @@
     "crypto-js": "^4.2.0",
     "destr": "^2.0.3",
     "events": "^3.3.0",
+    "fast-json-stable-stringify": "^2.1.0",
     "gelf-pro": "^1.4.0",
     "h3": "^1.15.1",
     "kafkajs": "^2.2.4",
