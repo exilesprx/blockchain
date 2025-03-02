@@ -4,7 +4,7 @@ import BlockTopic from './topic/block';
 import TransactionTopic from './topic/transaction';
 import { Block as BlockContract } from '../database/models/block';
 import { Transaction as TransactionContract } from '../database/models/transaction';
-import stringify from "fast-json-stable-stringify";
+import stringify from 'fast-json-stable-stringify';
 
 export default class Producer {
   private producer: KafkaProducer;

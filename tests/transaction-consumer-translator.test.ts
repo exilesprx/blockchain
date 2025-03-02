@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 
 import ConsumerTransactionTranslator from '../src/infrastructure/stream/translators/transaction-translator';
-import stringify from "fast-json-stable-stringify";
+import stringify from 'fast-json-stable-stringify';
 import data from './stubs/transaction.json';
 
 describe('Transaction Consumer Translator', () => {
