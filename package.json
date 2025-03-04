@@ -42,7 +42,7 @@
     "@jest/globals": "^29.7.0",
     "@tsconfig/recommended": "^1.0.8",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.13.4",
+    "@types/node": "^22.13.9",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "@typescript-eslint/parser": "^8.24.1",
     "eslint": "^9.20.1",
