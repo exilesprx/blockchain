@@ -70,8 +70,8 @@ importers:
         specifier: ^9.21.0
         version: 9.21.0
       '@faker-js/faker':
-        specifier: ^9.5.0
-        version: 9.5.0
+        specifier: ^9.6.0
+        version: 9.6.0
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
@@ -488,10 +488,9 @@ packages:
     resolution: {integrity: sha512-utUkIO3Ns9TzTHOTDg+eVTm2Z/Jj5X3VT/otZEWwgmOm7CgSnrWdOxEsAN1jfMht7oVBRB5iGHYFGA3IiQm/Ng==}
     engines: {node: ^12.18.3 || >=14}
 
-  '@faker-js/faker@9.5.0':
-    resolution: {integrity: sha512-3qbjLv+fzuuCg3umxc9/7YjrEXNaKwHgmig949nfyaTx8eL4FAsvFbu+1JcFUj1YAXofhaDn6JdEUBTYuk0Ssw==}
+  '@faker-js/faker@9.6.0':
+    resolution: {integrity: sha512-3vm4by+B5lvsFPSyep3ELWmZfE3kicDtmemVpuwl1yH7tqtnHdsA6hG8fbXedMVdkzgtvzWoRgjSB4Q+FHnZiw==}
     engines: {node: '>=18.0.0', npm: '>=9.0.0'}
-    deprecated: Please update to a newer version
 
   '@grpc/grpc-js@1.12.5':
     resolution: {integrity: sha512-d3iiHxdpg5+ZcJ6jnDSOT8Z0O0VMVGy34jAnYLUX8yd36b1qn8f1TwOA/Lc7TsOh03IkPJ38eGI5qD2EjNkoEA==}
@@ -3199,7 +3198,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@faker-js/faker@9.5.0': {}
+  '@faker-js/faker@9.6.0': {}
 
   '@grpc/grpc-js@1.12.5':
     dependencies:
