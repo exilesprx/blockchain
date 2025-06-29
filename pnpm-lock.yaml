@@ -75,9 +75,9 @@ importers:
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
-      '@tsconfig/recommended':
-        specifier: ^1.0.10
-        version: 1.0.10
+      '@tsconfig/node24':
+        specifier: ^24.0.1
+        version: 24.0.1
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -856,8 +856,8 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  '@tsconfig/recommended@1.0.10':
-    resolution: {integrity: sha512-cGvydvg03lONp5Z9yaplW493Vw9/um7k588mvDkm+VFPF2PZUVPx0uswq4PFpeEySsLbQRETrDRhzh4Dmxaslw==}
+  '@tsconfig/node24@24.0.1':
+    resolution: {integrity: sha512-3+IXshza3bIrT0tbHBr9CixQDVf4iBf0HTR0hCYowhpLqkzJjswu3UY8aZWjRXZep31kYB+o2SQeD8KwIoUHYw==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -3618,7 +3618,7 @@ snapshots:
   '@tsconfig/node16@1.0.4':
     optional: true
 
-  '@tsconfig/recommended@1.0.10': {}
+  '@tsconfig/node24@24.0.1': {}
 
   '@types/babel__core@7.20.5':
     dependencies:
