@@ -1,16 +1,14 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
+  "extends": "@tsconfig/node24/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "inlineSourceMap": true,
     "inlineSources": true,
-    "lib": ["ES2022", "DOM"],
     "paths": {
       "@/*": ["src/*"]
     },
     "resolveJsonModule": true,
     "strict": true,
-    "strictNullChecks": true,
-    "target": "ES2022"
+    "strictNullChecks": true
   }
 }
