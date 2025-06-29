@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "inlineSourceMap": true,
     "inlineSources": true,
+    "isolatedModules": true,
     "paths": {
       "@/*": ["src/*"]
     },
