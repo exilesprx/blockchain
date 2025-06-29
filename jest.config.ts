@@ -3,7 +3,13 @@
  * https://jestjs.io/docs/configuration
  */
 import { pathsToModuleNameMapper } from 'ts-jest';
-import { compilerOptions } from './tsconfig.json';
+import * as fs from 'fs';
+import * as path from 'path';
+
+const tsconfig = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'tsconfig.json'), 'utf8')
+);
+const { compilerOptions } = tsconfig;
 
 export default {
   // All imported modules in your tests should be mocked automatically
