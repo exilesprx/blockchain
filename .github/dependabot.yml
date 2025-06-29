@@ -2,6 +2,11 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
+    groups:
+      types:
+        patterns:
+          - "@tsconfig/*"
+          - "@types/node"
     schedule:
       interval: "weekly"
       time: "21:00"
