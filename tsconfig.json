@@ -4,11 +4,13 @@
     "baseUrl": ".",
     "inlineSourceMap": true,
     "inlineSources": true,
+    "lib": ["ES2022", "DOM"],
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "resolveJsonModule": true,
     "strict": true,
     "strictNullChecks": true,
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "target": "ES2022"
   }
 }
