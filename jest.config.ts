@@ -2,6 +2,7 @@
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/configuration
  */
+import type { JestConfigWithTsJest } from 'ts-jest';
 import { pathsToModuleNameMapper } from 'ts-jest';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -10,7 +11,7 @@ const { compilerOptions } = JSON.parse(
   fs.readFileSync(path.join(process.cwd(), 'tsconfig.json'), 'utf8')
 );
 
-export default {
+const config: JestConfigWithTsJest = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -85,10 +86,15 @@ export default {
   //   "node"
   // ],
 
-  // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-    prefix: '<rootDir>/'
-  }),
+  // A map from regular expressions to module names or to arrays of module names that allow to stub out resources
+  // Fix for ESM import paths ending with .js when transpiled from TS
+  // See: https://kulshekhar.github.io/ts-jest/docs/guides/esm-support/
+  moduleNameMapper: {
+    // Keep existing TS path aliases
+    ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+    // Support ESM path imports rewritten by TS with .js extension
+    '^(\\.{1,2}/.*)\\.js$': '$1'
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -99,8 +105,8 @@ export default {
   // An enum that specifies notification mode. Requires { notify: true }
   // notifyMode: "failure-change",
 
-  // A preset that is used as a base for Jest's configuration
-  preset: 'ts-jest',
+  // Use ts-jest in ESM mode to mirror the Node runtime (tsx) and allow ESM-only deps
+  preset: 'ts-jest/presets/default-esm',
 
   // Run tests from one or more projects
   // projects: undefined,
@@ -144,6 +150,9 @@ export default {
   // The test environment that will be used for testing
   testEnvironment: 'node',
 
+  // Treat TS as ESM so Jest uses Node ESM loader semantics
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
+
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
 
@@ -178,14 +187,25 @@ export default {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+.tsx?$': ['ts-jest', {}]
+    '^.+\\.[tj]sx?$': [
+      'ts-jest',
+      {
+        useESM: true,
+        tsconfig: {
+          // Ensure ESM semantics consistent with runtime
+          module: 'NodeNext',
+          esModuleInterop: true,
+          allowSyntheticDefaultImports: true
+        },
+        diagnostics: true,
+        allowJs: true
+      }
+    ]
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  // transformIgnorePatterns: [
-  //   "\\\\node_modules\\\\",
-  //   "\\.pnp\\.[^\\\\]+$"
-  // ],
+  // Transform ESM packages in node_modules that ship untranspiled ESM (keep others ignored)
+  transformIgnorePatterns: [],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
@@ -199,3 +219,5 @@ export default {
   // Whether to use watchman for file crawling
   // watchman: true,
 };
+
+export default config;
