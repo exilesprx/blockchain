@@ -18,7 +18,7 @@
   "dependencies": {
     "@eventstore/db-client": "^6.2.1",
     "@types/crypto-js": "^4.2.2",
-    "@types/uuid": "^10.0.0",
+    "@types/uuid": "^11.0.0",
     "consola": "^3.4.2",
     "crypto-js": "^4.2.0",
     "destr": "^2.0.5",
