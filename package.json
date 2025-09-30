@@ -14,7 +14,7 @@
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
-  "packageManager": "pnpm@10.16.1+sha512.0e155aa2629db8672b49e8475da6226aa4bdea85fdcdfdc15350874946d4f3c91faaf64cbdc4a5d1ab8002f473d5c3fcedcd197989cf0390f9badd3c04678706",
+  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a",
   "dependencies": {
     "@eventstore/db-client": "^6.2.1",
     "@types/crypto-js": "^4.2.2",
@@ -32,7 +32,7 @@
     "tsx": "^4.20.6",
     "typescript": "^5.9.2",
     "uuid": "^13.0.0",
-    "winston": "^3.17.0",
+    "winston": "^3.18.2",
     "winston-transport": "^4.9.0"
   },
   "devDependencies": {
@@ -43,7 +43,7 @@
     "@tsconfig/node24": "^24.0.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.6.0",
-    "@typescript-eslint/eslint-plugin": "^8.44.1",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.45.0",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
@@ -52,7 +52,7 @@
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-promise": "^7.2.1",
     "globals": "^16.4.0",
-    "jest": "^30.1.3",
+    "jest": "^30.2.0",
     "ts-jest": "^29.4.4"
   }
 }
