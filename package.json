@@ -14,7 +14,7 @@
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
-  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a",
+  "packageManager": "pnpm@10.18.2+sha512.9fb969fa749b3ade6035e0f109f0b8a60b5d08a1a87fdf72e337da90dcc93336e2280ca4e44f2358a649b83c17959e9993e777c2080879f3801e6f0d999ad3dd",
   "dependencies": {
     "@eventstore/db-client": "^6.2.1",
     "@types/crypto-js": "^4.2.2",
@@ -30,7 +30,7 @@
     "listhen": "^1.9.0",
     "std-env": "^3.9.0",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "uuid": "^13.0.0",
     "winston": "^3.18.3",
     "winston-transport": "^4.9.0"
@@ -42,8 +42,8 @@
     "@jest/globals": "^30.2.0",
     "@tsconfig/node24": "^24.0.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.7.0",
-    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@types/node": "^24.7.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
     "@typescript-eslint/parser": "^8.46.0",
     "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
@@ -53,6 +53,6 @@
     "eslint-plugin-promise": "^7.2.1",
     "globals": "^16.4.0",
     "jest": "^30.2.0",
-    "ts-jest": "^29.4.4"
+    "ts-jest": "^29.4.5"
   }
 }
