@@ -70,8 +70,8 @@ importers:
         specifier: ^9.38.0
         version: 9.38.0
       '@faker-js/faker':
-        specifier: ^9.9.0
-        version: 9.9.0
+        specifier: ^10.1.0
+        version: 10.1.0
       '@jest/globals':
         specifier: ^30.2.0
         version: 30.2.0
@@ -507,9 +507,9 @@ packages:
     resolution: {integrity: sha512-utUkIO3Ns9TzTHOTDg+eVTm2Z/Jj5X3VT/otZEWwgmOm7CgSnrWdOxEsAN1jfMht7oVBRB5iGHYFGA3IiQm/Ng==}
     engines: {node: ^12.18.3 || >=14}
 
-  '@faker-js/faker@9.9.0':
-    resolution: {integrity: sha512-OEl393iCOoo/z8bMezRlJu+GlRGlsKbUAN7jKB6LhnKoqKve5DXRpalbItIIcwnCjs1k/FOPjFzcA6Qn+H+YbA==}
-    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
+  '@faker-js/faker@10.1.0':
+    resolution: {integrity: sha512-C3mrr3b5dRVlKPJdfrAXS8+dq+rq8Qm5SNRazca0JKgw1HQERFmrVb0towvMmw5uu8hHKNiQasMaR/tydf3Zsg==}
+    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
   '@grpc/grpc-js@1.14.0':
     resolution: {integrity: sha512-N8Jx6PaYzcTRNzirReJCtADVoq4z7+1KQ4E70jTg/koQiMoUSN1kbNjPOqpPbhMFhfU1/l7ixspPl8dNY+FoUg==}
@@ -3402,7 +3402,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@faker-js/faker@9.9.0': {}
+  '@faker-js/faker@10.1.0': {}
 
   '@grpc/grpc-js@1.14.0':
     dependencies:
