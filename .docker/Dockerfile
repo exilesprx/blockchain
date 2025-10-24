@@ -1,5 +1,4 @@
 FROM node:25.0.0-bookworm-slim AS source
-RUN corepack enable
 
 
 FROM source AS main
