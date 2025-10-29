@@ -13,3 +13,5 @@
 !pnpm-lock.yaml
 !tsconfig.json
 !pnpm-workspace.yaml
+!eslint.config.mjs
+!tsconfig.eslint.json
