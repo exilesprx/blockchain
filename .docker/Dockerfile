@@ -42,7 +42,7 @@ COPY --chown=node:node --chmod=555 pnpm-workspace.yaml /usr/app/
 COPY --chown=node:node --chmod=555 tsconfig.json /usr/app/
 COPY --chown=node:node --chmod=555 jest.config.ts /usr/app/
 COPY --chown=node:node --chmod=555 src /usr/app/src
-COPY --chown=node:node --chmod=555 node_modules /usr/app/node_modules
+COPY --chown=node:node --chmod=555 --from=install node_modules /usr/app/node_modules
 COPY --chown=node:node --chmod=555 tests /usr/app/tests
 
 
