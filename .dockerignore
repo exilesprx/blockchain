@@ -12,3 +12,4 @@
 !package.json
 !pnpm-lock.yaml
 !tsconfig.json
+!pnpm-workspace.yaml
