@@ -6,12 +6,9 @@ on:
       - 'v*.*.*'
 
 jobs:
-  install-packages:
-    uses: ./.github/workflows/install-packages.yml
 
   docker-build-release:
     runs-on: ubuntu-latest
-    needs: install-packages
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -24,12 +21,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Extract artifacts
-        run: tar -xvf pnpm-packages.tar.gz
-
       - name: Build
         env:
           VERSION: ${{ github.ref_name }}
         run: |
-          docker compose -f docker-compose.version.yml build --pull version
+          docker compose -f docker-compose.version.yml build version
           docker compose -f docker-compose.version.yml push version
