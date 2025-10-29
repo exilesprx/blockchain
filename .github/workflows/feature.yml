@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Lint code
         run: |
-          docker compose -f docker-compose.build.yml build install
+          docker compose -f docker-compose.build.yml build main
           docker compose -f docker-compose.build.yml run main sh -c "pnpm run lint"
 
   audit:
@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Audit packages
         run: |
-          docker compose -f docker-compose.build.yml build install
+          docker compose -f docker-compose.build.yml build main
           docker compose -f docker-compose.build.yml run main sh -c "pnpm audit"
   test:
     runs-on: ubuntu-latest
