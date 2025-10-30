@@ -23,8 +23,9 @@ jobs:
           sudo apt-get -y update
           sudo apt-get -y install --no-install-recommends gpg
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
+          directory: ./coverage
           token: ${{ secrets.CODECOV_ORG_TOKEN }}
 
   typescript-build-bank:
