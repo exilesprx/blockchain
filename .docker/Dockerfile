@@ -30,7 +30,8 @@ COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /usr/loca
 COPY --from=install --chmod=755 --chown=node:node /usr/app/node_modules/ /usr/app/node_modules/
 COPY --chmod=755 --chown=node:node . /usr/app/
 RUN pnpm run test \
-  && pnpm run build
+  && pnpm run build:bank \
+  && pnpm run build:miner
 
 
 FROM base AS main
