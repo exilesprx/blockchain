@@ -16,11 +16,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run tests
         run: |
+          mkdir -p coverage
+          sudo chown -R 1000:1000 coverage
           docker compose -f docker-compose.build.yml build prerelease
-          docker compose -f docker-compose.build.yml run -v "$PWD/coverage:/usr/app/coverage" prerelease
+          docker compose -f docker-compose.build.yml run -v "$PWD"/coverage:/usr/app/coverage" prerelease
       - name: Install deps for codecov
         run: |
-          ls -la
           sudo apt-get -y update
           sudo apt-get -y install --no-install-recommends gpg
       - name: Upload coverage to Codecov
