@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests
-        run: docker compose -f docker-compose.build.yml -v "$PWD"/coverage:/usr/app/coverage build prerelease
+        run: docker compose -f docker-compose.build.yml -v "$PWD"/coverage:/usr/app/coverage build main
       - name: Install deps for codecov
         run: |
           apt-get -y update
