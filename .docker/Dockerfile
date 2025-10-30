@@ -46,6 +46,7 @@ COPY --chown=node:node --chmod=555 jest.config.ts /usr/app/
 COPY --chown=node:node --chmod=555 tests /usr/app/tests
 COPY --chown=node:node --chmod=755 eslint.config.mjs /usr/app/
 COPY --chown=node:node --chmod=755 tsconfig.eslint.json /usr/app/
+COPY --chown=node:node --chmod=755 .prettierrc.json /usr/app/
 
 
 FROM base AS version
