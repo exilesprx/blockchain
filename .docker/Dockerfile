@@ -29,8 +29,8 @@ ENV NODE_ENV=production
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /usr/local/bin/
 COPY --from=install --chmod=755 --chown=node:node /usr/app/node_modules/ /usr/app/node_modules/
 COPY --chmod=755 --chown=node:node . /usr/app/
-RUN pnpm run build \
-  && pnpm run test
+RUN pnpm run test \
+  && pnpm run build
 
 
 FROM base AS main
@@ -40,10 +40,12 @@ COPY --chown=node:node --chmod=555 package.json /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-lock.yaml /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-workspace.yaml /usr/app/
 COPY --chown=node:node --chmod=555 tsconfig.json /usr/app/
-COPY --chown=node:node --chmod=555 jest.config.ts /usr/app/
 COPY --chown=node:node --chmod=555 src /usr/app/src
 COPY --chown=node:node --chmod=755 --from=install /usr/app/node_modules /usr/app/node_modules
+COPY --chown=node:node --chmod=555 jest.config.ts /usr/app/
 COPY --chown=node:node --chmod=555 tests /usr/app/tests
+COPY --chown=node:node --chmod=755 eslint.config.mjs /usr/app/
+COPY --chown=node:node --chmod=755 tsconfig.eslint.json /usr/app/
 
 
 FROM base AS version
