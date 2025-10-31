@@ -18,8 +18,8 @@ jobs:
         run: |
           mkdir -p coverage
           sudo chown -R 1000:1000 coverage
-          docker compose -f docker-compose.build.yml build prerelease
-          docker compose -f docker-compose.build.yml run -v "$PWD"/coverage:/usr/app/coverage prerelease
+          docker compose -f docker-compose.build.yml build compile
+          docker compose -f docker-compose.build.yml run -v "$PWD"/coverage:/usr/app/coverage compile
       - name: Install deps for codecov
         run: |
           sudo apt-get -y update

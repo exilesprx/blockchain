@@ -24,7 +24,7 @@ COPY --chmod=555 --chown=node:node pnpm-workspace.yaml /usr/app/
 RUN pnpm install --frozen-lockfile
 
 
-FROM base AS prerelease
+FROM base AS compile
 ENV NODE_ENV=production
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /usr/local/bin/
 COPY --from=install --chmod=755 --chown=node:node /usr/app/node_modules/ /usr/app/node_modules/

@@ -6,11 +6,11 @@ services:
       dockerfile: .docker/Dockerfile
       target: base
 
-  prerelease:
+  compile:
     build:
       context: .
       dockerfile: .docker/Dockerfile
-      target: prerelease
+      target: compile
 
   main:
     image: exilesprx/blockchain:main

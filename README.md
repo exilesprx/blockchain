@@ -15,7 +15,7 @@ Images for this project can be found: https://hub.docker.com/r/exilesprx/blockch
 - base: the stage that contains the very basic configurations for all other stages. Ex: user, working directory
 - pnpm: the stage that installs pnpm. Pnpm can be copied from this stage to other images if needed
 - install: the stage that installs all dependencies for the application. Dependencies can be copied from this stage to other stages if needed
-- prerelease: the stage that prepares the source code for distribution (ex: test and build)
+- compile: the stage that prepares the source code for distribution (ex: test and build)
 - main: the stage that contains the source code and tools necessary for tasks such as linting, auditing, building, and/or testing
 - version: the stage that contains the built source code for a specific version/release. Should never contain development tools
 
