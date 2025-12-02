@@ -53,6 +53,6 @@
     "eslint-plugin-promise": "^7.2.1",
     "globals": "^16.5.0",
     "jest": "^30.2.0",
-    "ts-jest": "^29.4.5"
+    "ts-jest": "^29.4.6"
   }
 }
