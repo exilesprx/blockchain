@@ -32,7 +32,7 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "uuid": "^13.0.0",
-    "winston": "^3.18.3",
+    "winston": "^3.19.0",
     "winston-transport": "^4.9.0"
   },
   "devDependencies": {
@@ -43,8 +43,8 @@
     "@tsconfig/node24": "^24.0.3",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.10.1",
-    "@typescript-eslint/eslint-plugin": "^8.48.0",
-    "@typescript-eslint/parser": "^8.48.0",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
