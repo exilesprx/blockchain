@@ -1,4 +1,4 @@
-FROM node:25.2.1-bookworm-slim AS source
+FROM node:25.3.0-bookworm-slim AS source
 FROM source AS base
 ENV NODE_ENV=development
 USER node
