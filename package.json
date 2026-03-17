@@ -41,7 +41,7 @@
     "@jest/globals": "^30.3.0",
     "@tsconfig/node24": "^24.0.4",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.4.0",
+    "@types/node": "^25.5.0",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
     "@typescript-eslint/parser": "^8.57.0",
     "eslint": "^9.39.4",
