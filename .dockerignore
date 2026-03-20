@@ -14,3 +14,4 @@
 !pnpm-workspace.yaml
 !.oxfmtrc.json
 !.oxlintrc.json
+!.gitignore
