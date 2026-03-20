@@ -1,16 +1,16 @@
-import { describe, expect, jest, test } from '@jest/globals';
+import { describe, expect, vi, test } from 'vitest';
 
 import { logLevel } from 'kafkajs';
 import Logger from '../src/infrastructure/logs/logger';
 import KafkaLogger from '../src/infrastructure/logs/kafka-logger';
 
-jest.mock('../src/infrastructure/logs/logger');
+vi.mock('../src/infrastructure/logs/logger');
 const logger: Logger = new Logger([]);
 const kafkaLogger: KafkaLogger = new KafkaLogger(logger);
 
 describe('Kafka Logger', () => {
   beforeAll(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('it expects the level to be debug', () => {

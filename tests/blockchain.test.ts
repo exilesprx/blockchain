@@ -1,4 +1,4 @@
-import { describe, expect, jest, test } from '@jest/globals';
+import { beforeAll, describe, expect, vi, test } from 'vitest';
 
 import Blockchain from '../src/domain/chain/blockchain';
 import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
@@ -7,12 +7,12 @@ import Link from '../src/domain/chain/specifications/link';
 import BlockMined from '../src/domain/chain/specifications/mined';
 import BlockAdded from '../src/domain/events/block-added';
 
-jest.mock('../src/domain/policies/block-limit-policy');
-jest.mock('../src/app/events/abstract-emitter');
+vi.mock('../src/domain/policies/block-limit-policy');
+vi.mock('../src/app/events/abstract-emitter');
 
 describe('Blockchain', () => {
   beforeAll(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('it expects to have one block', () => {
@@ -24,7 +24,7 @@ describe('Blockchain', () => {
   test('it expects to remove a block from the beginning when limit is reached', () => {
     const chain = new Blockchain();
     // The default is false, but we want to "fake" the chain being full
-    jest
+    vi
       .mocked(BlockLimitPolicy.reachedLimit)
       .mockImplementationOnce(() => true);
 
@@ -44,7 +44,7 @@ describe('Blockchain', () => {
     const chain = new Blockchain();
     const link = new Link();
     const block = new Block(1, 1, 1, 'test', [], 0);
-    jest.spyOn(link, 'isSatisfiedBy').mockImplementation(() => true);
+    vi.spyOn(link, 'isSatisfiedBy').mockImplementation(() => true);
 
     chain.addSpecification(link);
     chain.addBlock(block);
@@ -63,7 +63,7 @@ describe('Blockchain', () => {
   test('it expects an unmined block to be rejected from the chain', () => {
     const chain = new Blockchain();
     const block = new Block(1, 1, 1, 'test', [], 0);
-    jest.spyOn(block, 'isMined').mockImplementation(() => false);
+    vi.spyOn(block, 'isMined').mockImplementation(() => false);
 
     chain.addSpecification(new BlockMined());
 
@@ -75,7 +75,7 @@ describe('Blockchain', () => {
     const chain = new Blockchain();
     const link = new Link();
     const block = new Block(1, 1, 1, 'test', [], 0);
-    const isSatisfiedBy = jest
+    const isSatisfiedBy = vi
       .spyOn(link, 'isSatisfiedBy')
       .mockImplementation(() => true);
 

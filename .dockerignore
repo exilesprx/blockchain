@@ -7,7 +7,7 @@
 !tests/
 
 !babel.config.js
-!jest.config.ts
+!vitest.config.ts
 !nodemon.json
 !package.json
 !pnpm-lock.yaml

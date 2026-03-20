@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test } from 'vitest';
 
 import TransactionTranslator from '../src/app/translators/transaction-translator';
 import Transaction from '../src/domain/wallet/transaction';

@@ -1,14 +1,14 @@
-import { describe, expect, jest, test } from '@jest/globals';
+import { beforeAll, describe, expect, vi, test } from 'vitest';
 
 import BlockMinedPolicy from '../src/domain/policies/block-mined-policy';
 import BlockBuilder from './builders/block';
 
-jest.mock('../src/domain/policies/block-mined-policy');
+vi.mock('../src/domain/policies/block-mined-policy');
 let builder: BlockBuilder = new BlockBuilder();
 
 describe('Block', () => {
   beforeAll(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('it expects to have zero transactions', () => {
@@ -33,7 +33,7 @@ describe('Block', () => {
   test('it expects the block to be mined after 2 attempts', async () => {
     const block = builder.withNoTransactions().build();
     const hash = block.getHash();
-    jest
+    vi
       .mocked(BlockMinedPolicy.containsSuccessiveChars)
       .mockImplementationOnce(() => false)
       .mockImplementationOnce(() => true);

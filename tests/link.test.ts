@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test } from 'vitest';
 
 import Block from '../src/domain/chain/block';
 import Link from '../src/domain/chain/specifications/link';

@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test } from 'vitest';
 
 import NewBlockPolicy from '../src/domain/policies/new-block-policy';
 import Transaction from '../src/domain/wallet/transaction';

@@ -1,4 +1,4 @@
-import { describe, expect, jest, test } from '@jest/globals';
+import { beforeAll, describe, expect, vi, test } from 'vitest';
 
 import Events from 'events';
 import Block from '../src/domain/chain/block';
@@ -12,25 +12,25 @@ import BlockAdded from '../src/domain/events/block-added';
 import BlockMined from '../src/domain/events/block-mined';
 import TransactionAdded from '../src/domain/events/transaction-added';
 
-jest.mock('events');
-jest.mock('kafkajs');
-jest.mock('../src/infrastructure/logs/logger');
-jest.mock('../src/infrastructure/logs/kafka-logger');
-jest.mock('../src/infrastructure/stream/stream');
-jest.mock('../src/infrastructure/stream/producer');
+vi.mock('events');
+vi.mock('kafkajs');
+vi.mock('../src/infrastructure/logs/logger');
+vi.mock('../src/infrastructure/logs/kafka-logger');
+vi.mock('../src/infrastructure/stream/stream');
+vi.mock('../src/infrastructure/stream/producer');
 
 describe('Emitter', () => {
   beforeAll(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('it expects the listeners can be configured', () => {
-    const producer = jest.mocked(Producer).mock.instances[0];
-    const logger = jest.mocked(Logger).mock.instances[0];
+    const producer = vi.mocked(Producer).mock.instances[0];
+    const logger = vi.mocked(Logger).mock.instances[0];
     const events = new Events();
-    const on = jest.spyOn(events, 'on');
+    const on = vi.spyOn(events, 'on');
     const emitter = new Emitter(events, producer, logger);
-    const fake = jest.fn();
+    const fake = vi.fn();
 
     emitter.register('test', fake);
 
@@ -39,10 +39,10 @@ describe('Emitter', () => {
 
   test('it expects a log and kafka message when adding a block', () => {
     const producer = new Producer({} as Stream);
-    const sendBlock = jest.spyOn(producer, 'sendBlock');
+    const sendBlock = vi.spyOn(producer, 'sendBlock');
     const logger = new Logger([]);
-    const info = jest.spyOn(logger, 'info');
-    const events = jest.mocked(Events).mock.instances[0];
+    const info = vi.spyOn(logger, 'info');
+    const events = new Events();
     const emitter = new Emitter(events, producer, logger);
     const block = new Block(1, 0, 0, 'test', [], 0);
     const event = new BlockAdded(block);
@@ -63,9 +63,9 @@ describe('Emitter', () => {
 
   test('it expects a log when a block is mined', () => {
     const logger = new Logger([]);
-    const info = jest.spyOn(logger, 'info');
-    const producer = jest.mocked(Producer).mock.instances[0];
-    const events = jest.mocked(Events).mock.instances[0];
+    const info = vi.spyOn(logger, 'info');
+    const producer = vi.mocked(Producer).mock.instances[0];
+    const events = new Events();
     const emitter = new Emitter(events, producer, logger);
     const block = new Block(1, 0, 0, 'test', [], 0);
     const event = new BlockMined(block);
@@ -78,10 +78,10 @@ describe('Emitter', () => {
   });
 
   test('it expects a log when a block fails to be mined', () => {
-    const producer = jest.mocked(Producer).mock.instances[0];
+    const producer = vi.mocked(Producer).mock.instances[0];
     const logger = new Logger([]);
-    const err = jest.spyOn(logger, 'error');
-    const events = jest.mocked(Events).mock.instances[0];
+    const err = vi.spyOn(logger, 'error');
+    const events = new Events();
     const emitter = new Emitter(events, producer, logger);
     const block = new Block(1, 0, 0, 'test', [], 0);
     const event = new MineFailed(block, 'Failed to mine');
@@ -96,9 +96,9 @@ describe('Emitter', () => {
 
   test('it expects a log and kafka message when adding a transaction', () => {
     const producer = new Producer({} as Stream);
-    const sendTransaction = jest.spyOn(producer, 'sendTransaction');
+    const sendTransaction = vi.spyOn(producer, 'sendTransaction');
     const logger = new Logger([]);
-    const events = jest.mocked(Events).mock.instances[0];
+    const events = new Events();
     const emitter = new Emitter(events, producer, logger);
     const transaction = new Transaction('1', '2', '50', 3, 20241119);
     const event = new TransactionAdded(transaction);
@@ -111,10 +111,10 @@ describe('Emitter', () => {
   });
 
   test('it expects to call emit on EventEmitter', () => {
-    const producer = jest.mocked(Producer).mock.instances[0];
-    const logger = jest.mocked(Logger).mock.instances[0];
+    const producer = vi.mocked(Producer).mock.instances[0];
+    const logger = vi.mocked(Logger).mock.instances[0];
     const events = new Events();
-    const emit = jest.spyOn(events, 'emit');
+    const emit = vi.spyOn(events, 'emit');
     const emitter = new Emitter(events, producer, logger);
 
     emitter.emit('test', 1);

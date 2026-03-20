@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test } from 'vitest';
 
 import ConsumerTransactionTranslator from '../src/infrastructure/stream/translators/transaction-translator';
 import stringify from 'fast-json-stable-stringify';

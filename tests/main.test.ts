@@ -1,4 +1,4 @@
-import { describe, expect, jest, test } from '@jest/globals';
+import { beforeAll, describe, expect, vi, test } from 'vitest';
 
 import Application from '@/app/bank/main';
 import TransactionRoute from '@/app/routes/transaction';
@@ -16,37 +16,48 @@ import BlockMined from '@/domain/chain/specifications/mined';
 
 // Abstract class are mocked differently then normal classes
 const emitter = {
-  register: jest.fn()
+  register: vi.fn()
 };
 const consumer = {
-  run: jest.fn(),
-  connect: jest.fn()
+  run: vi.fn(),
+  connect: vi.fn()
 };
-jest.mock('@/app/events/abstract-emitter', () => {
+vi.mock('@/app/events/abstract-emitter', () => {
   return {
     __esModule: true,
-    default: jest.fn().mockImplementation(() => emitter)
+    default: class {
+      register = vi.fn();
+      constructor() {
+        Object.assign(this, emitter);
+      }
+    }
   };
 });
 
-jest.mock('@/infrastructure/stream/consumer', () => {
+vi.mock('@/infrastructure/stream/consumer', () => {
   return {
     __esModule: true,
-    default: jest.fn().mockImplementation(() => consumer)
+    default: class {
+      run = vi.fn();
+      connect = vi.fn();
+      constructor() {
+        Object.assign(this, consumer);
+      }
+    }
   };
 });
 // End abstract class mocks
 
-jest.mock('@/domain/wallet/transaction-pool');
-jest.mock('@/domain/chain/blockchain');
-jest.mock('@/infrastructure/database');
-jest.mock('@/infrastructure/stream/producer');
-jest.mock('@/app/routes/transaction');
-jest.mock('@/app/server');
+vi.mock('@/domain/wallet/transaction-pool');
+vi.mock('@/domain/chain/blockchain');
+vi.mock('@/infrastructure/database');
+vi.mock('@/infrastructure/stream/producer');
+vi.mock('@/app/routes/transaction');
+vi.mock('@/app/server');
 
 describe('Main', () => {
   beforeAll(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('it expects events to be registered', () => {
@@ -63,8 +74,8 @@ describe('Main', () => {
 
   test('it expects specifications added', () => {
     const application = new Application();
-    const pool = jest.mocked(TransactionPool).mock.instances[0];
-    const chain = jest.mocked(Blockchain).mock.instances[0];
+    const pool = vi.mocked(TransactionPool).mock.instances[0];
+    const chain = vi.mocked(Blockchain).mock.instances[0];
 
     application.init();
 
@@ -83,8 +94,8 @@ describe('Main', () => {
 
   test('it expects connections for database, producer, and consumer', async () => {
     const application = new Application();
-    const database = jest.mocked(Database).mock.instances[0];
-    const producer = jest.mocked(Producer).mock.instances[0];
+    const database = vi.mocked(Database).mock.instances[0];
+    const producer = vi.mocked(Producer).mock.instances[0];
 
     await application.boot();
 
@@ -96,8 +107,8 @@ describe('Main', () => {
 
   test('it expects routes to be registered', () => {
     const application = new Application();
-    const server = jest.mocked(Server).mock.instances[0];
-    jest.mocked(TransactionRoute.getName).mockImplementation(() => 'test');
+    const server = vi.mocked(Server).mock.instances[0];
+    vi.mocked(TransactionRoute.getName).mockImplementation(() => 'test');
 
     application.registerRoutes();
 
