@@ -8,6 +8,8 @@
     "test:ui": "vitest --ui",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "fmt": "oxfmt --check",
+    "fmt:fix": "oxfmt",
     "app:bank": "tsx src/app/bank/server.ts",
     "app:miner": "tsx src/app/miner/index.ts",
     "build:bank": "tsc --project src/app/bank/tsconfig.json --noEmit",
@@ -54,6 +56,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-promise": "^7.2.1",
     "globals": "^17.4.0",
+    "oxfmt": "^0.41.0",
     "vitest": "^4.1.0"
   }
 }

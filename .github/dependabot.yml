@@ -1,20 +1,20 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     groups:
       types:
         patterns:
-          - "@tsconfig/*"
-          - "@types/node"
+          - '@tsconfig/*'
+          - '@types/node'
     schedule:
-      interval: "weekly"
-      time: "21:00"
-      timezone: "America/New_York"
+      interval: 'weekly'
+      time: '21:00'
+      timezone: 'America/New_York'
 
-  - package-ecosystem: "docker"
-    directory: ".docker/"
+  - package-ecosystem: 'docker'
+    directory: '.docker/'
     schedule:
-      interval: "weekly"
-      time: "21:00"
-      timezone: "America/New_York"
+      interval: 'weekly'
+      time: '21:00'
+      timezone: 'America/New_York'
