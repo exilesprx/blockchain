@@ -45,10 +45,8 @@ COPY --chown=node:node --chmod=555 src /usr/app/src
 COPY --chown=node:node --chmod=755 --from=install /usr/app/node_modules /usr/app/node_modules
 COPY --chown=node:node --chmod=555 vitest.config.ts /usr/app/
 COPY --chown=node:node --chmod=555 tests /usr/app/tests
-COPY --chown=node:node --chmod=755 eslint.config.mjs /usr/app/
-COPY --chown=node:node --chmod=755 tsconfig.eslint.json /usr/app/
-COPY --chown=node:node --chmod=755 .prettierrc.json /usr/app/
-
+COPY --chown=node:node --chmod=555 .oxlintrc.json /usr/app/
+COPY --chown=node:node --chmod=555 .oxfmtrc.json /usr/app/
 
 FROM base AS version
 ENV NODE_ENV=production
