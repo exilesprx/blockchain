@@ -10,25 +10,32 @@ export default class BlockBuilder {
     this.block = new Block(v4(), 0, 1, faker.string.alpha(20), [], Date.now());
   }
 
-  public withNoTransactions() : BlockBuilder {
+  public withNoTransactions(): BlockBuilder {
     this.block = new Block(v4(), 0, 1, faker.string.alpha(20), [], Date.now());
     return this;
   }
 
-  public withOneTransaction() : BlockBuilder {
+  public withOneTransaction(): BlockBuilder {
     const transaction = new Transaction(
       v4(),
       faker.finance.litecoinAddress(),
       faker.finance.litecoinAddress(),
       Number(faker.finance.amount({ min: 0, max: 100 })),
-      Date.now(),
+      Date.now()
     );
 
-    this.block = new Block(v4(), 0, 1, faker.string.alpha(20), [transaction], 0);
+    this.block = new Block(
+      v4(),
+      0,
+      1,
+      faker.string.alpha(20),
+      [transaction],
+      0
+    );
     return this;
   }
 
-  public build() : Block {
+  public build(): Block {
     return this.block;
   }
 }
