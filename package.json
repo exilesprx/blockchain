@@ -19,7 +19,7 @@
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
-  "packageManager": "pnpm@10.32.0",
+  "packageManager": "pnpm@10.32.1",
   "dependencies": {
     "@eventstore/db-client": "^6.2.1",
     "@types/crypto-js": "^4.2.2",
