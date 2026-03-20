@@ -33,8 +33,7 @@ describe('Block', () => {
   test('it expects the block to be mined after 2 attempts', async () => {
     const block = builder.withNoTransactions().build();
     const hash = block.getHash();
-    vi
-      .mocked(BlockMinedPolicy.containsSuccessiveChars)
+    vi.mocked(BlockMinedPolicy.containsSuccessiveChars)
       .mockImplementationOnce(() => false)
       .mockImplementationOnce(() => true);
 
