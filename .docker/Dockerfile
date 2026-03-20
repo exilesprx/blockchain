@@ -47,6 +47,7 @@ COPY --chown=node:node --chmod=555 vitest.config.ts /usr/app/
 COPY --chown=node:node --chmod=555 tests /usr/app/tests
 COPY --chown=node:node --chmod=555 .oxlintrc.json /usr/app/
 COPY --chown=node:node --chmod=555 .oxfmtrc.json /usr/app/
+COPY --chown=node:node --chmod=555 .gitignore /usr/app/
 
 FROM base AS version
 ENV NODE_ENV=production
