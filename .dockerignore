@@ -6,13 +6,11 @@
 !src/
 !tests/
 
-!babel.config.js
 !vitest.config.ts
 !nodemon.json
 !package.json
 !pnpm-lock.yaml
 !tsconfig.json
 !pnpm-workspace.yaml
-!eslint.config.mjs
-!tsconfig.eslint.json
-!.prettierrc.json
+!.oxfmtrc.json
+!.oxlintrc.json
