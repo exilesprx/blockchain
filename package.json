@@ -7,6 +7,7 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "app:bank": "tsx src/app/bank/server.ts",
     "app:miner": "tsx src/app/miner/index.ts",
     "build:bank": "tsc --project src/app/bank/tsconfig.json --noEmit",

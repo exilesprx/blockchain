@@ -24,9 +24,7 @@ describe('Blockchain', () => {
   test('it expects to remove a block from the beginning when limit is reached', () => {
     const chain = new Blockchain();
     // The default is false, but we want to "fake" the chain being full
-    vi
-      .mocked(BlockLimitPolicy.reachedLimit)
-      .mockImplementationOnce(() => true);
+    vi.mocked(BlockLimitPolicy.reachedLimit).mockImplementationOnce(() => true);
 
     chain.addBlock(new Block(1, 1, 1, 'test', [], 0));
 

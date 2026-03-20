@@ -15,9 +15,9 @@ describe('Block limt policy', () => {
 
   test('it expects limit is reached', () => {
     const chain: Blockchain = new Blockchain();
-    vi
-      .spyOn(chain, 'length')
-      .mockImplementation(() => BlockLimitPolicy.getLimit());
+    vi.spyOn(chain, 'length').mockImplementation(() =>
+      BlockLimitPolicy.getLimit()
+    );
 
     expect(BlockLimitPolicy.reachedLimit(chain)).toBeTruthy();
   });
