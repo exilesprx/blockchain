@@ -1,16 +1,16 @@
-import { describe, expect, jest, test } from '@jest/globals';
+import { describe, expect, vi, test } from 'vitest';
 
 import { EventHandler } from 'h3';
 import Server from '@/app/server';
 
-const use = jest.fn();
-const get = jest.fn();
-const post = jest.fn();
-jest.mock('h3', () => ({
-  createApp: jest.fn().mockImplementation(() => ({
+const use = vi.fn();
+const get = vi.fn();
+const post = vi.fn();
+vi.mock('h3', () => ({
+  createApp: vi.fn().mockImplementation(() => ({
     use
   })),
-  createRouter: jest.fn().mockImplementation(() => ({
+  createRouter: vi.fn().mockImplementation(() => ({
     get,
     post
   })),
@@ -20,7 +20,7 @@ jest.mock('h3', () => ({
 describe('Server', () => {
   beforeAll(() => {});
   test('it expects to accept handlers are passed to the express framework', () => {
-    const handler = jest.fn();
+    const handler = vi.fn();
     const server = new Server();
 
     server.use(handler);
@@ -29,7 +29,7 @@ describe('Server', () => {
   });
 
   test('it expects to accept multiple handlers for post calls', () => {
-    const handlers: EventHandler[] = [jest.fn(), jest.fn()];
+    const handlers: EventHandler[] = [vi.fn(), vi.fn()];
     const server = new Server();
 
     server.post('test', [handlers.at(0)!, handlers.at(1)!]);
@@ -39,7 +39,7 @@ describe('Server', () => {
   });
 
   test('it expects to accept multiple handlers for get calls', () => {
-    const handlers: EventHandler[] = [jest.fn(), jest.fn()];
+    const handlers: EventHandler[] = [vi.fn(), vi.fn()];
     const server = new Server();
 
     server.get('test', [handlers.at(0)!, handlers.at(1)!]);

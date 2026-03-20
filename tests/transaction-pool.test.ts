@@ -1,11 +1,11 @@
-import { describe, expect, jest, test } from '@jest/globals';
+import { describe, expect, vi, test } from 'vitest';
 
 import { v4 } from 'uuid';
 import Amount from '../src/domain/wallet/specifications/amount';
 import Transaction from '../src/domain/wallet/transaction';
 import TransactionPool from '../src/domain/wallet/transaction-pool';
 
-jest.mock('../src/app/events/abstract-emitter');
+vi.mock('../src/app/events/abstract-emitter');
 
 describe('Transaction pool', () => {
   test('it expects the pool to be empty when initialized', () => {
@@ -50,7 +50,7 @@ describe('Transaction pool', () => {
     const pool = new TransactionPool();
     const transaction = new Transaction(v4(), 'to', 'from', 5, 0);
     const amountSpec = new Amount();
-    const isSatisfiedBy = jest
+    const isSatisfiedBy = vi
       .spyOn(amountSpec, 'isSatisfiedBy')
       .mockImplementation(() => true);
 

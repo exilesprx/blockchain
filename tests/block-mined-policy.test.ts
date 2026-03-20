@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test } from 'vitest';
 import BlockMinedPolicy from '../src/domain/policies/block-mined-policy';
 
 describe('Block mined policy', () => {

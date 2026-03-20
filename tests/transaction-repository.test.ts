@@ -1,4 +1,4 @@
-import { describe, test } from '@jest/globals';
+import { describe, test } from 'vitest';
 
 describe('Transaction repository test', () => {
   test('it flushes events from the pool', () => {});

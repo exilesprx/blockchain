@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test } from 'vitest';
 
 import { v4 } from 'uuid';
 import Amount from '../src/domain/wallet/specifications/amount';

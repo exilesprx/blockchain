@@ -1,4 +1,4 @@
-import { describe, expect, jest, test } from '@jest/globals';
+import { describe, expect, vi, test } from 'vitest';
 
 import { H3Event, readBody } from 'h3';
 import TransactionRoute from '../src/app/routes/transaction';
@@ -7,17 +7,17 @@ import AddTransactionFromRequest from '../src/app/commands/add-transaction-from-
 import TransactionPool from '../src/domain/wallet/transaction-pool';
 import TransactionEventRepository from '../src/infrastructure/repositories/transaction-events';
 
-jest.mock('h3', () => ({
-  readBody: jest.fn(),
-  setResponseStatus: jest.fn()
+vi.mock('h3', () => ({
+  readBody: vi.fn(),
+  setResponseStatus: vi.fn()
 }));
-jest.mock('../src/infrastructure/database/index');
-jest.mock('../src/infrastructure/logs/logger');
-jest.mock('../src/app/commands/add-transaction-from-request');
+vi.mock('../src/infrastructure/database/index');
+vi.mock('../src/infrastructure/logs/logger');
+vi.mock('../src/app/commands/add-transaction-from-request');
 
 describe('Transaction route', () => {
   beforeAll(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('it expects to add a transition to the bank and persist it', async () => {
@@ -25,10 +25,10 @@ describe('Transaction route', () => {
       {} as TransactionPool,
       {} as TransactionEventRepository
     );
-    const execute = jest.spyOn(action, 'execute');
+    const execute = vi.spyOn(action, 'execute');
     const route = new TransactionRoute(action, {} as Logger);
     const event = { req: { method: 'POST' } } as H3Event;
-    (readBody as jest.Mock).mockImplementationOnce(() =>
+    (readBody as vi.Mock).mockImplementationOnce(() =>
       Promise.resolve({ to: 'someone', from: 'someone-else', amount: 10 })
     );
 
@@ -41,14 +41,14 @@ describe('Transaction route', () => {
       {} as TransactionPool,
       {} as TransactionEventRepository
     );
-    const execute = jest.spyOn(action, 'execute').mockImplementation(() => {
+    const execute = vi.spyOn(action, 'execute').mockImplementation(() => {
       throw new Error('some');
     });
     const logger = new Logger([]);
-    const err = jest.spyOn(logger, 'error');
+    const err = vi.spyOn(logger, 'error');
     const route = new TransactionRoute(action, logger);
     const event = { req: { method: 'POST' } } as H3Event;
-    (readBody as jest.Mock).mockImplementationOnce(() =>
+    (readBody as vi.Mock).mockImplementationOnce(() =>
       Promise.resolve({ to: 'someone' })
     );
 
