@@ -1,13 +1,13 @@
 import { Consumer as KafkaConsumer, EachMessagePayload } from 'kafkajs';
 import Stream from './stream';
-import { process } from 'std-env';
+import { env } from 'std-env';
 
 export default abstract class Consumer {
   protected consumer: KafkaConsumer;
 
   public constructor(stream: Stream) {
     this.consumer = stream.createConsumer(
-      `${process.env.KAFKA_GROUP_ID}-${process.env.HOSTNAME}`
+      `${env.KAFKA_GROUP_ID}-${env.HOSTNAME}`
     );
   }
 

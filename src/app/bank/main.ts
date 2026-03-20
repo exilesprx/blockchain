@@ -1,5 +1,5 @@
 import { App, H3Event } from 'h3';
-import { process } from 'std-env';
+import { env } from 'std-env';
 import Events from 'events';
 import Blockchain from '../../domain/chain/blockchain';
 import Link from '../../domain/chain/specifications/link';
@@ -40,15 +40,15 @@ export default class Application {
   private logger: Logger;
 
   constructor() {
-    this.isDev = process.env.NODE_ENV === 'development';
+    this.isDev = env.NODE_ENV === 'development';
     this.logger = new Logger(this.logTransports());
     this.server = new Server(this.serverOptions());
 
     const stream = new Stream(new KafkaLogger(this.logger));
     this.database = new Database(
-      String(process.env.DB_HOST),
-      Number(process.env.DB_PORT),
-      Boolean(process.env.DB_INSECURE)
+      String(env.DB_HOST),
+      Number(env.DB_PORT),
+      Boolean(env.DB_INSECURE)
     );
     this.producer = new Producer(stream);
     this.emitter = new Emitter(new Events(), this.producer, this.logger);
