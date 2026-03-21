@@ -17,20 +17,22 @@ RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(whic
 
 
 FROM base AS install
-COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /usr/local/bin/
-COPY --chmod=555 --chown=node:node package.json /usr/app/
-COPY --chmod=555 --chown=node:node pnpm-lock.yaml /usr/app/
-COPY --chmod=555 --chown=node:node pnpm-workspace.yaml /usr/app/
-COPY --chmod=555 --chown=node:node packages/common/package.json /usr/app/packages/common/
-COPY --chmod=555 --chown=node:node packages/bank/package.json /usr/app/packages/bank/
-COPY --chmod=555 --chown=node:node packages/miner/package.json /usr/app/packages/miner/
+ENV PATH="/home/node/.local/share/pnpm:$PATH"
+COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
+COPY --chmod=644 --chown=node:node package.json /usr/app/
+COPY --chmod=644 --chown=node:node pnpm-lock.yaml /usr/app/
+COPY --chmod=644 --chown=node:node pnpm-workspace.yaml /usr/app/
+COPY --chmod=644 --chown=node:node packages/common/package.json /usr/app/packages/common/
+COPY --chmod=644 --chown=node:node packages/bank/package.json /usr/app/packages/bank/
+COPY --chmod=644 --chown=node:node packages/miner/package.json /usr/app/packages/miner/
 RUN pnpm install --frozen-lockfile
 
 
 FROM base AS compile
 ENV NODE_ENV=production
-COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /usr/local/bin/
-COPY --from=install --chmod=755 --chown=node:node /usr/app/node_modules/ /usr/app/node_modules/
+ENV PATH="/home/node/.local/share/pnpm:$PATH"
+COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
+COPY --chmod=755 --chown=node:node --from=install /usr/app/node_modules/ /usr/app/node_modules/
 COPY --chmod=755 --chown=node:node . /usr/app/
 RUN pnpm run test \
   && pnpm run build:bank \
@@ -39,7 +41,8 @@ RUN pnpm run test \
 
 FROM base AS main
 ENV NODE_ENV=production
-COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /usr/local/bin/
+ENV PATH="/home/node/.local/share/pnpm:$PATH"
+COPY --chown=node:node --chmod=755 --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
 COPY --chown=node:node --chmod=555 package.json /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-lock.yaml /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-workspace.yaml /usr/app/
@@ -60,7 +63,8 @@ COPY --chown=node:node --chmod=555 .gitignore /usr/app/
 
 FROM base AS version
 ENV NODE_ENV=production
-COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /usr/local/bin/
+ENV PATH="/home/node/.local/share/pnpm:$PATH"
+COPY --chown=node:node --chmod=755 --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
 COPY --chown=node:node --chmod=555 package.json /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-lock.yaml /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-workspace.yaml /usr/app/
