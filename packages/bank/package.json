@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx src/server.ts",
-    "build": "echo 'Build check skipped - using tsx runtime'",
+    "serve": "tsx src/server.ts",
+    "build": "tsc src/tsconfig.json",
     "debug": "NODE_ENV=development listhen -w src/index.ts"
   },
   "dependencies": {
