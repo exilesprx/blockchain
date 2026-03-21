@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import ConsumerTransactionTranslator from '../src/infrastructure/stream/translators/transaction-translator';
+import ConsumerTransactionTranslator from '@/infrastructure/stream/translators/transaction-translator';
 import stringify from 'fast-json-stable-stringify';
 import data from './stubs/transaction.json';
 

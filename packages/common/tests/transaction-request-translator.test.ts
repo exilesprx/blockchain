@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
-import TransactionTranslator from '../src/translators/transaction-translator';
-import Transaction from '../src/domain/wallet/transaction';
+import TransactionTranslator from '@/translators/transaction-translator';
+import Transaction from '@/domain/wallet/transaction';
 import data from './stubs/transaction.json';
 import { v4 } from 'uuid';
 

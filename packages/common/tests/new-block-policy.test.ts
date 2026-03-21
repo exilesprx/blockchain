@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
-import NewBlockPolicy from '../src/domain/policies/new-block-policy';
-import Transaction from '../src/domain/wallet/transaction';
+import NewBlockPolicy from '@/domain/policies/new-block-policy';
+import Transaction from '@/domain/wallet/transaction';
 
 describe('New block limt policy', () => {
   test('it expects not to create a new block', () => {

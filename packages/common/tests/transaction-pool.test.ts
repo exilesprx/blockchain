@@ -1,11 +1,11 @@
 import { describe, expect, vi, test } from 'vitest';
 
 import { v4 } from 'uuid';
-import Amount from '../src/domain/wallet/specifications/amount';
-import Transaction from '../src/domain/wallet/transaction';
-import TransactionPool from '../src/domain/wallet/transaction-pool';
+import Amount from '@/domain/wallet/specifications/amount';
+import Transaction from '@/domain/wallet/transaction';
+import TransactionPool from '@/domain/wallet/transaction-pool';
 
-vi.mock('../src/events/abstract-emitter');
+vi.mock('@/events/abstract-emitter');
 
 describe('Transaction pool', () => {
   test('it expects the pool to be empty when initialized', () => {

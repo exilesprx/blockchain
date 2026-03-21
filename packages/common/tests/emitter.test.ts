@@ -1,23 +1,23 @@
 import { beforeAll, describe, expect, vi, test } from 'vitest';
 
 import Events from 'events';
-import Block from '../src/domain/chain/block';
-import Emitter from '../src/events/emitter';
-import Logger from '../src/infrastructure/logs/logger';
-import Producer from '../src/infrastructure/stream/producer';
-import Stream from '../src/infrastructure/stream/stream';
-import Transaction from '../src/domain/wallet/transaction';
-import MineFailed from '../src/domain/events/mine-failed';
-import BlockAdded from '../src/domain/events/block-added';
-import BlockMined from '../src/domain/events/block-mined';
-import TransactionAdded from '../src/domain/events/transaction-added';
+import Block from '@/domain/chain/block';
+import Emitter from '@/events/emitter';
+import Logger from '@/infrastructure/logs/logger';
+import Producer from '@/infrastructure/stream/producer';
+import Stream from '@/infrastructure/stream/stream';
+import Transaction from '@/domain/wallet/transaction';
+import MineFailed from '@/domain/events/mine-failed';
+import BlockAdded from '@/domain/events/block-added';
+import BlockMined from '@/domain/events/block-mined';
+import TransactionAdded from '@/domain/events/transaction-added';
 
 vi.mock('events');
 vi.mock('kafkajs');
-vi.mock('../src/infrastructure/logs/logger');
-vi.mock('../src/infrastructure/logs/kafka-logger');
-vi.mock('../src/infrastructure/stream/stream');
-vi.mock('../src/infrastructure/stream/producer');
+vi.mock('@/infrastructure/logs/logger');
+vi.mock('@/infrastructure/logs/kafka-logger');
+vi.mock('@/infrastructure/stream/stream');
+vi.mock('@/infrastructure/stream/producer');
 
 describe('Emitter', () => {
   beforeAll(() => {

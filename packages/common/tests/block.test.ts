@@ -1,9 +1,9 @@
 import { beforeAll, describe, expect, vi, test } from 'vitest';
 
-import BlockMinedPolicy from '../src/domain/policies/block-mined-policy';
+import BlockMinedPolicy from '@/domain/policies/block-mined-policy';
 import BlockBuilder from './builders/block';
 
-vi.mock('../src/domain/policies/block-mined-policy');
+vi.mock('@/domain/policies/block-mined-policy');
 let builder: BlockBuilder = new BlockBuilder();
 
 describe('Block', () => {

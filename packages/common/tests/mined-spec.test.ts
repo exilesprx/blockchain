@@ -1,7 +1,7 @@
 import { describe, expect, vi, test } from 'vitest';
 
-import Block from '../src/domain/chain/block';
-import BlockMined from '../src/domain/chain/specifications/mined';
+import Block from '@/domain/chain/block';
+import BlockMined from '@/domain/chain/specifications/mined';
 
 describe('Mined Specification', () => {
   test('it expects the specification is not satisfied', () => {

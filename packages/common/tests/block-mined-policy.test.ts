@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import BlockMinedPolicy from '../src/domain/policies/block-mined-policy';
+import BlockMinedPolicy from '@/domain/policies/block-mined-policy';
 
 describe('Block mined policy', () => {
   test('it expects the hash not to be mined', () => {

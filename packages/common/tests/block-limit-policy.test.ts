@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, vi, test } from 'vitest';
-import Blockchain from '../src/domain/chain/blockchain';
-import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
+import Blockchain from '@/domain/chain/blockchain';
+import BlockLimitPolicy from '@/domain/policies/block-limit-policy';
 
 describe('Block limt policy', () => {
   beforeAll(() => {

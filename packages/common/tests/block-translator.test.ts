@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest';
 
-import Block from '../src/domain/chain/block';
-import Transaction from '../src/domain/wallet/transaction';
-import BlockTranslator from '../src/infrastructure/stream/translators/block-translator';
+import Block from '@/domain/chain/block';
+import Transaction from '@/domain/wallet/transaction';
+import BlockTranslator from '@/infrastructure/stream/translators/block-translator';
 import stringify from 'fast-json-stable-stringify';
 import data from './stubs/block.json';
 
