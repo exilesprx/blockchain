@@ -21,6 +21,9 @@ COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /usr/loca
 COPY --chmod=555 --chown=node:node package.json /usr/app/
 COPY --chmod=555 --chown=node:node pnpm-lock.yaml /usr/app/
 COPY --chmod=555 --chown=node:node pnpm-workspace.yaml /usr/app/
+COPY --chmod=555 --chown=node:node packages/common/package.json /usr/app/packages/common/
+COPY --chmod=555 --chown=node:node packages/bank/package.json /usr/app/packages/bank/
+COPY --chmod=555 --chown=node:node packages/miner/package.json /usr/app/packages/miner/
 RUN pnpm install --frozen-lockfile
 
 
@@ -41,7 +44,13 @@ COPY --chown=node:node --chmod=555 package.json /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-lock.yaml /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-workspace.yaml /usr/app/
 COPY --chown=node:node --chmod=555 tsconfig.json /usr/app/
-COPY --chown=node:node --chmod=555 src /usr/app/src
+COPY --chown=node:node --chmod=555 packages/common/package.json /usr/app/packages/common/
+COPY --chown=node:node --chmod=555 packages/bank/package.json /usr/app/packages/bank/
+COPY --chown=node:node --chmod=555 packages/miner/package.json /usr/app/packages/miner/
+COPY --chown=node:node --chmod=555 packages/common/tsconfig.json /usr/app/packages/common/
+COPY --chown=node:node --chmod=555 packages/bank/tsconfig.json /usr/app/packages/bank/
+COPY --chown=node:node --chmod=555 packages/miner/tsconfig.json /usr/app/packages/miner/
+COPY --chown=node:node --chmod=555 packages /usr/app/packages
 COPY --chown=node:node --chmod=755 --from=install /usr/app/node_modules /usr/app/node_modules
 COPY --chown=node:node --chmod=555 vitest.config.ts /usr/app/
 COPY --chown=node:node --chmod=555 tests /usr/app/tests
@@ -56,5 +65,11 @@ COPY --chown=node:node --chmod=555 package.json /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-lock.yaml /usr/app/
 COPY --chown=node:node --chmod=555 pnpm-workspace.yaml /usr/app/
 COPY --chown=node:node --chmod=555 tsconfig.json /usr/app/
-COPY --chown=node:node --chmod=555 src /usr/app/src
+COPY --chown=node:node --chmod=555 packages/common/package.json /usr/app/packages/common/
+COPY --chown=node:node --chmod=555 packages/bank/package.json /usr/app/packages/bank/
+COPY --chown=node:node --chmod=555 packages/miner/package.json /usr/app/packages/miner/
+COPY --chown=node:node --chmod=555 packages/common/tsconfig.json /usr/app/packages/common/
+COPY --chown=node:node --chmod=555 packages/bank/tsconfig.json /usr/app/packages/bank/
+COPY --chown=node:node --chmod=555 packages/miner/tsconfig.json /usr/app/packages/miner/
+COPY --chown=node:node --chmod=555 packages /usr/app/packages
 COPY --chown=node:node --chmod=755 --from=install /usr/app/node_modules /usr/app/node_modules

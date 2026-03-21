@@ -7,58 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@eventstore/db-client':
-        specifier: ^6.2.1
-        version: 6.2.1
-      '@types/crypto-js':
-        specifier: ^4.2.2
-        version: 4.2.2
-      consola:
-        specifier: ^3.4.2
-        version: 3.4.2
-      crypto-js:
-        specifier: ^4.2.0
-        version: 4.2.0
-      destr:
-        specifier: ^2.0.5
-        version: 2.0.5
-      events:
-        specifier: ^3.3.0
-        version: 3.3.0
-      fast-json-stable-stringify:
-        specifier: ^2.1.0
-        version: 2.1.0
-      gelf-pro:
-        specifier: ^1.4.0
-        version: 1.4.0
-      h3:
-        specifier: ^1.15.10
-        version: 1.15.10
-      kafkajs:
-        specifier: ^2.2.4
-        version: 2.2.4
-      listhen:
-        specifier: ^1.9.0
-        version: 1.9.0
-      std-env:
-        specifier: ^4.0.0
-        version: 4.0.0
-      tsx:
-        specifier: ^4.21.0
-        version: 4.21.0
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-      uuid:
-        specifier: ^13.0.0
-        version: 13.0.0
-      winston:
-        specifier: ^3.19.0
-        version: 3.19.0
-      winston-transport:
-        specifier: ^4.9.0
-        version: 4.9.0
     devDependencies:
       '@faker-js/faker':
         specifier: ^10.4.0
@@ -84,9 +32,111 @@ importers:
       oxlint:
         specifier: ^1.57.0
         version: 1.57.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^4.1.2
         version: 4.1.2(@types/node@25.5.0)(@vitest/ui@4.1.2)(vite@8.0.1(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@25.5.0)(esbuild@0.27.4)(jiti@2.6.1)(tsx@4.21.0))
+
+  packages/bank:
+    dependencies:
+      '@blockchain/common':
+        specifier: workspace:*
+        version: link:../common
+      h3:
+        specifier: ^1.15.9
+        version: 1.15.10
+      listhen:
+        specifier: ^1.9.0
+        version: 1.9.0
+      std-env:
+        specifier: ^4.0.0
+        version: 4.0.0
+      tsx:
+        specifier: ^4.21.0
+        version: 4.21.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.5.0
+        version: 25.5.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^4.1.0
+        version: 4.1.2(@types/node@25.5.0)(@vitest/ui@4.1.2)(vite@8.0.1(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@25.5.0)(esbuild@0.27.4)(jiti@2.6.1)(tsx@4.21.0))
+
+  packages/common:
+    dependencies:
+      '@eventstore/db-client':
+        specifier: ^6.2.1
+        version: 6.2.1
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
+      consola:
+        specifier: ^3.4.2
+        version: 3.4.2
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
+      destr:
+        specifier: ^2.0.5
+        version: 2.0.5
+      events:
+        specifier: ^3.3.0
+        version: 3.3.0
+      fast-json-stable-stringify:
+        specifier: ^2.1.0
+        version: 2.1.0
+      gelf-pro:
+        specifier: ^1.4.0
+        version: 1.4.0
+      kafkajs:
+        specifier: ^2.2.4
+        version: 2.2.4
+      std-env:
+        specifier: ^4.0.0
+        version: 4.0.0
+      uuid:
+        specifier: ^13.0.0
+        version: 13.0.0
+      winston:
+        specifier: ^3.19.0
+        version: 3.19.0
+      winston-transport:
+        specifier: ^4.9.0
+        version: 4.9.0
+    devDependencies:
+      '@faker-js/faker':
+        specifier: ^10.3.0
+        version: 10.4.0
+      '@types/node':
+        specifier: ^25.5.0
+        version: 25.5.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^4.1.0
+        version: 4.1.2(@types/node@25.5.0)(@vitest/ui@4.1.2)(vite@8.0.1(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@25.5.0)(esbuild@0.27.4)(jiti@2.6.1)(tsx@4.21.0))
+
+  packages/miner:
+    dependencies:
+      '@blockchain/common':
+        specifier: workspace:*
+        version: link:../common
+      tsx:
+        specifier: ^4.21.0
+        version: 4.21.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.5.0
+        version: 25.5.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
 
 packages:
 

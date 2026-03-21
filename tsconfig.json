@@ -5,8 +5,12 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "paths": {
-      "@/*": ["src/*"]
+      "@blockchain/common/*": ["packages/common/src/*"],
+      "@blockchain/bank/*": ["packages/bank/src/*"],
+      "@blockchain/miner/*": ["packages/miner/src/*"]
     },
     "resolveJsonModule": true,
     "strict": true,

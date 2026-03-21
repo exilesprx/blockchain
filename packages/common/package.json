@@ -1,0 +1,26 @@
+{
+  "name": "@blockchain/common",
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "@eventstore/db-client": "^6.2.1",
+    "@types/crypto-js": "^4.2.2",
+    "consola": "^3.4.2",
+    "crypto-js": "^4.2.0",
+    "destr": "^2.0.5",
+    "events": "^3.3.0",
+    "fast-json-stable-stringify": "^2.1.0",
+    "gelf-pro": "^1.4.0",
+    "kafkajs": "^2.2.4",
+    "std-env": "^4.0.0",
+    "uuid": "^13.0.0",
+    "winston": "^3.19.0",
+    "winston-transport": "^4.9.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.3.0",
+    "@types/node": "^25.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}

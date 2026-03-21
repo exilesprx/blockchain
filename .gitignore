@@ -8,3 +8,9 @@ build/
 .env.graylog
 coverage/
 .dccache
+
+# TypeScript build info (not needed since we use tsx runtime)
+*.tsbuildinfo
+
+# Workspace dist directories (if we build in the future)
+packages/*/dist/

@@ -1,0 +1,18 @@
+{
+  "name": "@blockchain/miner",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "echo 'Build check skipped - using tsx runtime'",
+    "debug": "tsx --inspect=0.0.0.0:9229 --enable-source-maps src/index.ts"
+  },
+  "dependencies": {
+    "@blockchain/common": "workspace:*",
+    "tsx": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^5.9.3"
+  }
+}

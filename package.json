@@ -10,35 +10,16 @@
     "lint:fix": "oxlint . --fix",
     "fmt": "oxfmt --check",
     "fmt:fix": "oxfmt",
-    "app:bank": "tsx src/app/bank/server.ts",
-    "app:miner": "tsx src/app/miner/index.ts",
-    "build:bank": "tsc --project src/app/bank/tsconfig.json --noEmit",
-    "build:miner": "tsc --project src/app/miner/tsconfig.json --noEmit",
-    "debug:bank": "NODE_ENV=development listhen -w src/app/bank/index.ts",
-    "debug:miner": "tsx --inspect=0.0.0.0:9229 --enable-source-maps src/app/miner/index.ts"
+    "app:bank": "pnpm --filter @blockchain/bank dev",
+    "app:miner": "pnpm --filter @blockchain/miner dev",
+    "build:bank": "pnpm --filter @blockchain/bank build",
+    "build:miner": "pnpm --filter @blockchain/miner build",
+    "debug:bank": "pnpm --filter @blockchain/bank debug",
+    "debug:miner": "pnpm --filter @blockchain/miner debug"
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
-  "dependencies": {
-    "@eventstore/db-client": "^6.2.1",
-    "@types/crypto-js": "^4.2.2",
-    "consola": "^3.4.2",
-    "crypto-js": "^4.2.0",
-    "destr": "^2.0.5",
-    "events": "^3.3.0",
-    "fast-json-stable-stringify": "^2.1.0",
-    "gelf-pro": "^1.4.0",
-    "h3": "^1.15.10",
-    "kafkajs": "^2.2.4",
-    "listhen": "^1.9.0",
-    "std-env": "^4.0.0",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "uuid": "^13.0.0",
-    "winston": "^3.19.0",
-    "winston-transport": "^4.9.0"
-  },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
     "@tsconfig/node24": "^24.0.4",
@@ -48,6 +29,7 @@
     "globals": "^17.4.0",
     "oxfmt": "^0.42.0",
     "oxlint": "^1.57.0",
+    "typescript": "^5.9.3",
     "vitest": "^4.1.2"
   }
 }
