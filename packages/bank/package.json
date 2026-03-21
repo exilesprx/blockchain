@@ -1,0 +1,22 @@
+{
+  "name": "@blockchain/bank",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "build": "echo 'Build check skipped - using tsx runtime'",
+    "debug": "NODE_ENV=development listhen -w src/index.ts"
+  },
+  "dependencies": {
+    "@blockchain/common": "workspace:*",
+    "h3": "^1.15.9",
+    "listhen": "^1.9.0",
+    "std-env": "^4.0.0",
+    "tsx": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}

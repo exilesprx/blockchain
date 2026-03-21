@@ -3,11 +3,10 @@
 
 # Allow
 !node_modules/
-!src/
+!packages/
 !tests/
 
 !vitest.config.ts
-!nodemon.json
 !package.json
 !pnpm-lock.yaml
 !tsconfig.json
