@@ -1,8 +1,8 @@
 import { beforeAll, describe, expect, vi, test } from 'vitest';
 
-import Application from '../src/main';
-import TransactionRoute from '../src/routes/transaction';
-import Server from '../src/server/index';
+import Application from '@/main';
+import TransactionRoute from '@/routes/transaction';
+import Server from '@/server/index';
 import Database from '@blockchain/common/infrastructure/database';
 import Blockchain from '@blockchain/common/domain/chain/blockchain';
 import Link from '@blockchain/common/domain/chain/specifications/link';
@@ -52,8 +52,8 @@ vi.mock('@blockchain/common/domain/wallet/transaction-pool');
 vi.mock('@blockchain/common/domain/chain/blockchain');
 vi.mock('@blockchain/common/infrastructure/database');
 vi.mock('@blockchain/common/infrastructure/stream/producer');
-vi.mock('../src/routes/transaction');
-vi.mock('../src/server/index');
+vi.mock('@/routes/transaction');
+vi.mock('@/server/index');
 
 describe('Main', () => {
   beforeAll(() => {

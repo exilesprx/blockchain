@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
-import Block from '../src/domain/chain/block';
-import Link from '../src/domain/chain/specifications/link';
+import Block from '@/domain/chain/block';
+import Link from '@/domain/chain/specifications/link';
 
 describe('Link specification', () => {
   beforeAll(() => {

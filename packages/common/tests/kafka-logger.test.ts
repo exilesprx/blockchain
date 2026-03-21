@@ -1,10 +1,10 @@
 import { describe, expect, vi, test, beforeAll } from 'vitest';
 
 import { logLevel } from 'kafkajs';
-import Logger from '../src/infrastructure/logs/logger';
-import KafkaLogger from '../src/infrastructure/logs/kafka-logger';
+import Logger from '@/infrastructure/logs/logger';
+import KafkaLogger from '@/infrastructure/logs/kafka-logger';
 
-vi.mock('../src/infrastructure/logs/logger');
+vi.mock('@/infrastructure/logs/logger');
 const logger: Logger = new Logger([]);
 const kafkaLogger: KafkaLogger = new KafkaLogger(logger);
 

@@ -1,7 +1,7 @@
 import { describe, expect, vi, test, beforeAll } from 'vitest';
 
 import { EventHandler } from 'h3';
-import Server from '../src/server/index';
+import Server from '@/server/index';
 
 const use = vi.fn();
 const get = vi.fn();

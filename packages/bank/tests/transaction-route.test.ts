@@ -1,7 +1,7 @@
 import { describe, expect, vi, test, beforeAll } from 'vitest';
 
 import { H3Event, readBody } from 'h3';
-import TransactionRoute from '../src/routes/transaction';
+import TransactionRoute from '@/routes/transaction';
 import Logger from '@blockchain/common/infrastructure/logs/logger';
 import AddTransactionFromRequest from '@blockchain/common/commands/add-transaction-from-request';
 import TransactionPool from '@blockchain/common/domain/wallet/transaction-pool';

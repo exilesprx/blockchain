@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { v4 } from 'uuid';
-import Block from '../../src/domain/chain/block';
-import Transaction from '../../src/domain/wallet/transaction';
+import Block from '@/domain/chain/block';
+import Transaction from '@/domain/wallet/transaction';
 
 export default class BlockBuilder {
   private block: Block;

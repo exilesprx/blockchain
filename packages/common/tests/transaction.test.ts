@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { v4 } from 'uuid';
-import Transaction from '../src/domain/wallet/transaction';
+import Transaction from '@/domain/wallet/transaction';
 
 describe('Transactions', () => {
   test('it expect to have a valid transaction', () => {

@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
 
 import { v4 } from 'uuid';
-import Amount from '../src/domain/wallet/specifications/amount';
-import Receiver from '../src/domain/wallet/specifications/receiver';
-import SameWallet from '../src/domain/wallet/specifications/same-wallet';
-import Sender from '../src/domain/wallet/specifications/sender';
-import Transaction from '../src/domain/wallet/transaction';
+import Amount from '@/domain/wallet/specifications/amount';
+import Receiver from '@/domain/wallet/specifications/receiver';
+import SameWallet from '@/domain/wallet/specifications/same-wallet';
+import Sender from '@/domain/wallet/specifications/sender';
+import Transaction from '@/domain/wallet/transaction';
 
 describe('Specifications', () => {
   test('it expects amount is satisfied by amount of 1', () => {

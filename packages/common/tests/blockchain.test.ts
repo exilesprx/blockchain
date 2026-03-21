@@ -1,14 +1,14 @@
 import { beforeAll, describe, expect, vi, test } from 'vitest';
 
-import Blockchain from '../src/domain/chain/blockchain';
-import BlockLimitPolicy from '../src/domain/policies/block-limit-policy';
-import Block from '../src/domain/chain/block';
-import Link from '../src/domain/chain/specifications/link';
-import BlockMined from '../src/domain/chain/specifications/mined';
-import BlockAdded from '../src/domain/events/block-added';
+import Blockchain from '@/domain/chain/blockchain';
+import BlockLimitPolicy from '@/domain/policies/block-limit-policy';
+import Block from '@/domain/chain/block';
+import Link from '@/domain/chain/specifications/link';
+import BlockMined from '@/domain/chain/specifications/mined';
+import BlockAdded from '@/domain/events/block-added';
 
-vi.mock('../src/domain/policies/block-limit-policy');
-vi.mock('../src/events/abstract-emitter');
+vi.mock('@/domain/policies/block-limit-policy');
+vi.mock('@/events/abstract-emitter');
 
 describe('Blockchain', () => {
   beforeAll(() => {
