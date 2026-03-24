@@ -11,12 +11,3 @@ services:
       context: .
       dockerfile: .docker/Dockerfile
       target: compile
-
-  main:
-    image: exilesprx/blockchain:main
-    build:
-      context: .
-      dockerfile: .docker/Dockerfile
-      target: main
-      cache_from:
-        - exilesprx/blockchain:base

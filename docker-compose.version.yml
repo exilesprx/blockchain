@@ -1,9 +1,17 @@
 services:
-  version:
-    image: exilesprx/blockchain:${VERSION}
+  bank:
+    image: exilesprx/blockchain:bank-${VERSION}
     build:
       context: .
       dockerfile: .docker/Dockerfile
-      target: version
+      target: bank
+      cache_from:
+        - exilesprx/blockchain:source
+  miner:
+    image: exilesprx/blockchain:miner-${VERSION}
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: miner
       cache_from:
         - exilesprx/blockchain:source
