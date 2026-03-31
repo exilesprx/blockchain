@@ -1,9 +1,9 @@
 import { Producer as KafkaProducer } from 'kafkajs';
-import Stream from './stream.js';
-import BlockTopic from './topic/block.js';
-import TransactionTopic from './topic/transaction.js';
-import { Block as BlockContract } from '../database/models/block.js';
-import { Transaction as TransactionContract } from '../database/models/transaction.js';
+import Stream from '@blockchain/common/infrastructure/stream/stream';
+import BlockTopic from '@blockchain/common/infrastructure/stream/topic/block';
+import TransactionTopic from '@blockchain/common/infrastructure/stream/topic/transaction';
+import { Block as BlockContract } from '@blockchain/common/infrastructure/database/models/block';
+import { Transaction as TransactionContract } from '@blockchain/common/infrastructure/database/models/transaction';
 import stringify from 'fast-json-stable-stringify';
 
 export default class Producer {

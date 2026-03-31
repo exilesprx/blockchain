@@ -1,7 +1,7 @@
-import Blockchain from '../../domain/chain/blockchain.js';
-import Emitter from '../../events/abstract-emitter.js';
-import Event from '../../domain/events/event.js';
-import BlockRepository from './block.js';
+import Blockchain from '@blockchain/common/domain/chain/blockchain';
+import Emitter from '@blockchain/common/events/abstract-emitter';
+import Event from '@blockchain/common/domain/events/event';
+import BlockRepository from '@blockchain/common/infrastructure/repositories/block';
 
 export default class BlockEventRepository {
   private emitter: Emitter;

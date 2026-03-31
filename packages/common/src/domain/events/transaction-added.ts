@@ -1,6 +1,6 @@
-import Transaction from '../wallet/transaction.js';
-import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction.js';
-import Event from './event.js';
+import Transaction from '@blockchain/common/domain/wallet/transaction';
+import { Transaction as TransactionContract } from '@blockchain/common/infrastructure/database/models/transaction';
+import Event from '@blockchain/common/domain/events/event';
 
 export default class TransactionAdded extends Event {
   private id: any;

@@ -1,7 +1,7 @@
-import BaseEmitter from './abstract-emitter.js';
-import Event from '../domain/events/event.js';
-import MineFailed from '../domain/events/mine-failed.js';
-import TransactionAdded from '../domain/events/transaction-added.js';
+import BaseEmitter from '@blockchain/common/events/abstract-emitter';
+import Event from '@blockchain/common/domain/events/event';
+import MineFailed from '@blockchain/common/domain/events/mine-failed';
+import TransactionAdded from '@blockchain/common/domain/events/transaction-added';
 
 export default class Emitter extends BaseEmitter {
   public transactionAdded(event: TransactionAdded): void {

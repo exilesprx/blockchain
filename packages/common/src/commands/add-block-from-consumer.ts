@@ -1,6 +1,6 @@
-import Block from '../domain/chain/block.js';
-import Blockchain from '../domain/chain/blockchain.js';
-import BlockEventRepository from '../infrastructure/repositories/block-event.js';
+import Block from '@blockchain/common/domain/chain/block';
+import Blockchain from '@blockchain/common/domain/chain/blockchain';
+import BlockEventRepository from '@blockchain/common/infrastructure/repositories/block-event';
 
 export default class AddBlockFromConsumer {
   private chain: Blockchain;

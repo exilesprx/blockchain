@@ -1,5 +1,5 @@
 import { JSONEventType } from '@eventstore/db-client';
-import { Transaction as TransactionContract } from './transaction.js';
+import { Transaction as TransactionContract } from '@blockchain/common/infrastructure/database/models/transaction';
 
 export type Block = {
   id: string;

@@ -1,5 +1,5 @@
 import SHA256 from 'crypto-js/sha256';
-import { Transaction as TransactionContract } from '../../infrastructure/database/models/transaction.js';
+import { Transaction as TransactionContract } from '@blockchain/common/infrastructure/database/models/transaction';
 
 export default class Transaction {
   private to: string;

@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
-import Transaction from '../domain/wallet/transaction.js';
-import { Transaction as TransactionContract } from '../infrastructure/database/models/transaction.js';
+import Transaction from '@blockchain/common/domain/wallet/transaction';
+import { Transaction as TransactionContract } from '@blockchain/common/infrastructure/database/models/transaction';
 
 export default class TransactionTranslator {
   public static fromRequest(

@@ -1,5 +1,5 @@
-import Transaction from '../../../domain/wallet/transaction.js';
-import { Transaction as TransactionContract } from '../../database/models/transaction.js';
+import Transaction from '@blockchain/common/domain/wallet/transaction';
+import { Transaction as TransactionContract } from '@blockchain/common/infrastructure/database/models/transaction';
 import { destr } from 'destr';
 
 export default class TransactionTranslator {

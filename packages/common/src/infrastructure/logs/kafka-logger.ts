@@ -1,5 +1,5 @@
 import { logLevel } from 'kafkajs';
-import Logger from './logger.js';
+import Logger from '@blockchain/common/infrastructure/logs/logger';
 
 const LogLevelDescriptions: { [index in logLevel]: string } = {
   [logLevel.NOTHING]: 'error',

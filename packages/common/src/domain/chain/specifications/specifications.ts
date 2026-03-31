@@ -1,4 +1,4 @@
-import Block from '../block.js';
+import Block from '@blockchain/common/domain/chain/block';
 
 type Specification = {
   isSatisfiedBy(prevous: Block, current: Block): void;

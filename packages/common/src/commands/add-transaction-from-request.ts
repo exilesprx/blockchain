@@ -1,6 +1,6 @@
-import Transaction from '../domain/wallet/transaction.js';
-import TransactionPool from '../domain/wallet/transaction-pool.js';
-import TransactionEventRepository from '../infrastructure/repositories/transaction-events.js';
+import Transaction from '@blockchain/common/domain/wallet/transaction';
+import TransactionPool from '@blockchain/common/domain/wallet/transaction-pool';
+import TransactionEventRepository from '@blockchain/common/infrastructure/repositories/transaction-events';
 
 export default class AddTransactionFromRequest {
   private pool: TransactionPool;

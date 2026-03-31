@@ -1,7 +1,7 @@
-import Emitter from '../../events/abstract-emitter.js';
-import Event from '../../domain/events/event.js';
-import TransactionPool from '../../domain/wallet/transaction-pool.js';
-import TransactionRepository from './transaction.js';
+import Emitter from '@blockchain/common/events/abstract-emitter';
+import Event from '@blockchain/common/domain/events/event';
+import TransactionPool from '@blockchain/common/domain/wallet/transaction-pool';
+import TransactionRepository from '@blockchain/common/infrastructure/repositories/transaction';
 
 export default class TransactionEventRepository {
   private emitter: Emitter;

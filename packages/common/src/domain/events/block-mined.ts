@@ -1,7 +1,7 @@
-import Block from '../chain/block.js';
-import Transaction from '../wallet/transaction.js';
-import Event from './event.js';
-import { Block as BlockContract } from '../../infrastructure/database/models/block.js';
+import Block from '@blockchain/common/domain/chain/block';
+import Transaction from '@blockchain/common/domain/wallet/transaction';
+import Event from '@blockchain/common/domain/events/event';
+import { Block as BlockContract } from '@blockchain/common/infrastructure/database/models/block';
 
 export default class BlockMined extends Event {
   private id: any;
