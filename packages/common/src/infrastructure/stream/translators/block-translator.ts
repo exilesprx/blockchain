@@ -7,9 +7,8 @@ import { destr } from 'destr';
 export default class BlockTranslator {
   public static fromMessage(value: Buffer): Block {
     const message: BlockContract = destr(value.toString());
-    const transactions: Transaction[] = TransactionRequestTranslator.fromObjectForMany(
-      message.transactions
-    );
+    const transactions: Transaction[] =
+      TransactionRequestTranslator.fromObjectForMany(message.transactions);
 
     return new Block(
       message.id,
