@@ -40,7 +40,7 @@ jobs:
           VERSION: main
         run: |
           docker compose -f docker-compose.version.yml build bank
-          docker compose -f docker-compose.version.yml run bank sh -c "pnpm run build:bank"
+          docker compose -f docker-compose.version.yml run bank sh -c "pnpm run typecheck:bank"
 
   typescript-build-miner:
     runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
           VERSION: main
         run: |
           docker compose -f docker-compose.version.yml build miner
-          docker compose -f docker-compose.version.yml run miner sh -c "pnpm run build:miner"
+          docker compose -f docker-compose.version.yml run miner sh -c "pnpm run typecheck:miner"
 
   docker-build-main:
     runs-on: ubuntu-latest
