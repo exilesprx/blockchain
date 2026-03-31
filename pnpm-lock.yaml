@@ -56,22 +56,12 @@ importers:
       tsx:
         specifier: ^4.21.0
         version: 4.21.0
-    devDependencies:
-      '@types/node':
-        specifier: ^25.5.0
-        version: 25.5.0
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
 
   packages/common:
     dependencies:
       '@eventstore/db-client':
         specifier: ^6.2.1
         version: 6.2.1
-      '@types/crypto-js':
-        specifier: ^4.2.2
-        version: 4.2.2
       consola:
         specifier: ^3.4.2
         version: 3.4.2
@@ -81,9 +71,6 @@ importers:
       destr:
         specifier: ^2.0.5
         version: 2.0.5
-      events:
-        specifier: ^3.3.0
-        version: 3.3.0
       fast-json-stable-stringify:
         specifier: ^2.1.0
         version: 2.1.0
@@ -109,12 +96,9 @@ importers:
       '@faker-js/faker':
         specifier: ^10.3.0
         version: 10.4.0
-      '@types/node':
-        specifier: ^25.5.0
-        version: 25.5.0
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
 
   packages/miner:
     dependencies:
@@ -124,13 +108,6 @@ importers:
       tsx:
         specifier: ^4.21.0
         version: 4.21.0
-    devDependencies:
-      '@types/node':
-        specifier: ^25.5.0
-        version: 25.5.0
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
 
 packages:
 
@@ -1043,10 +1020,6 @@ packages:
 
   estree-walker@3.0.3:
     resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
-
-  events@3.3.0:
-    resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
-    engines: {node: '>=0.8.x'}
 
   execa@8.0.1:
     resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
@@ -2320,8 +2293,6 @@ snapshots:
   estree-walker@3.0.3:
     dependencies:
       '@types/estree': 1.0.8
-
-  events@3.3.0: {}
 
   execa@8.0.1:
     dependencies:

@@ -1,6 +1,6 @@
 import { App, H3Event } from 'h3';
 import { env } from 'std-env';
-import Events from 'events';
+import Events from 'node:events';
 import Blockchain from '@blockchain/common/domain/chain/blockchain';
 import Link from '@blockchain/common/domain/chain/specifications/link';
 import BlockMined from '@blockchain/common/domain/chain/specifications/mined';
@@ -117,12 +117,12 @@ export default class Application {
     }
 
     options.onRequest = (event: H3Event) => {
-      this.logger.error('Request:' + event.path);
+      this.logger.info('Request:' + event.path);
     };
     return options;
   }
 
-  private logTransports(): any[] {
+  private logTransports(): (Console | GelfTransport)[] {
     if (this.isDev) {
       return [new Console()];
     }

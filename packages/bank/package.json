@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "serve": "tsx src/server.ts",
-    "build": "tsc --project tsconfig.json",
+    "typecheck": "tsc --project tsconfig.json",
+    "test": "vitest run",
     "debug": "NODE_ENV=development listhen -w src/index.ts"
   },
   "dependencies": {
@@ -14,8 +15,5 @@
     "std-env": "^4.0.0",
     "tsx": "^4.21.0"
   },
-  "devDependencies": {
-    "@types/node": "^25.5.0",
-    "typescript": "^5.9.3"
-  }
+  "devDependencies": {}
 }

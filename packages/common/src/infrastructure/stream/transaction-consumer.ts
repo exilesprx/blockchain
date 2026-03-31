@@ -1,5 +1,5 @@
 import { EachMessagePayload } from 'kafkajs';
-import TransactionTranslator from '@blockchain/common/infrastructure/stream/translators/transaction-translator';
+import TransactionStreamTranslator from '@blockchain/common/infrastructure/stream/translators/transaction-stream-translator';
 import AddTransaction from '@blockchain/common/commands/add-transaction-from-consumer';
 import Consumer from '@blockchain/common/infrastructure/stream/consumer';
 import Stream from '@blockchain/common/infrastructure/stream/stream';
@@ -23,7 +23,7 @@ export default class TransactionConsumer extends Consumer {
     if (!value) {
       return;
     }
-    const transaction = TransactionTranslator.fromMessage(value);
+    const transaction = TransactionStreamTranslator.fromMessage(value);
 
     this.action.execute(transaction);
   }

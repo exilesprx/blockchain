@@ -1,7 +1,7 @@
 import { H3Event, readBody, setResponseStatus } from 'h3';
 import Logger from '@blockchain/common/infrastructure/logs/logger';
 import AddTransactionFromRequest from '@blockchain/common/commands/add-transaction-from-request';
-import TransactionTranslator from '@blockchain/common/translators/transaction-translator';
+import TransactionRequestTranslator from '@blockchain/common/translators/transaction-request-translator';
 
 export default class Transaction {
   private action: AddTransactionFromRequest;
@@ -21,7 +21,7 @@ export default class Transaction {
       let body = await readBody(event);
 
       // Create a new transaction, add it to the pool, and broadcast it
-      const transaction = TransactionTranslator.fromRequest(
+      const transaction = TransactionRequestTranslator.fromRequest(
         body.to,
         body.from,
         body.amount

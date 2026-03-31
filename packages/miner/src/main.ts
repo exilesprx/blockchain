@@ -1,4 +1,4 @@
-import Events from 'events';
+import Events from 'node:events';
 import Blockchain from '@blockchain/common/domain/chain/blockchain';
 import BlockAdded from '@blockchain/common/domain/events/block-added';
 import MineFailed from '@blockchain/common/domain/events/mine-failed';

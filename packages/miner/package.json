@@ -4,15 +4,12 @@
   "type": "module",
   "scripts": {
     "serve": "tsx src/index.ts",
-    "build": "tsc --project tsconfig.json",
+    "typecheck": "tsc --project tsconfig.json",
     "debug": "tsx --inspect=0.0.0.0:9229 --enable-source-maps src/index.ts"
   },
   "dependencies": {
     "@blockchain/common": "workspace:*",
     "tsx": "^4.21.0"
   },
-  "devDependencies": {
-    "@types/node": "^25.5.0",
-    "typescript": "^5.9.3"
-  }
+  "devDependencies": {}
 }
