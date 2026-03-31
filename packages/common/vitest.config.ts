@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitest/config';
-import path from 'path';
 
 export default defineConfig({
   test: {
@@ -16,11 +15,6 @@ export default defineConfig({
     clearMocks: true
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@blockchain/common': path.resolve(__dirname, './src'),
-      '@blockchain/bank': path.resolve(__dirname, '../bank/src'),
-      '@blockchain/miner': path.resolve(__dirname, '../miner/src')
-    }
+    tsconfigPaths: true
   }
 });
