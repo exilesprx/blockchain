@@ -30,7 +30,9 @@ export default class TransactionRequestTranslator {
   ): Transaction[] {
     const messageTransactions: Transaction[] = [];
     transactions.forEach((transaction: TransactionContract) => {
-      messageTransactions.push(TransactionRequestTranslator.fromObject(transaction));
+      messageTransactions.push(
+        TransactionRequestTranslator.fromObject(transaction)
+      );
     });
 
     return messageTransactions;
