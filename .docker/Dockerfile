@@ -33,8 +33,8 @@ COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/no
 COPY --chmod=755 --chown=node:node . /usr/app/
 RUN pnpm install --frozen-lockfile \
   && pnpm run test \
-  && pnpm run build:bank \
-  && pnpm run build:miner
+  && pnpm run typecheck:bank \
+  && pnpm run typecheck:miner
 
 
 FROM base AS bank

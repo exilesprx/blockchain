@@ -12,8 +12,8 @@
     "fmt:fix": "oxfmt",
     "app:bank": "pnpm --filter @blockchain/bank serve",
     "app:miner": "pnpm --filter @blockchain/miner serve",
-    "build:bank": "pnpm --filter @blockchain/bank typecheck",
-    "build:miner": "pnpm --filter @blockchain/miner typecheck",
+    "typecheck:bank": "pnpm --filter @blockchain/bank typecheck",
+    "typecheck:miner": "pnpm --filter @blockchain/miner typecheck",
     "debug:bank": "pnpm --filter @blockchain/bank debug",
     "debug:miner": "pnpm --filter @blockchain/miner debug"
   },
