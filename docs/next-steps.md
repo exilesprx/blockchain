@@ -5,6 +5,7 @@ This document outlines potential improvements and next steps for the blockchain 
 ## Immediate Priorities
 
 ### 1. Test Docker Images
+
 **Status:** Not tested since final Option B implementation  
 **Priority:** High
 
@@ -18,6 +19,7 @@ This document outlines potential improvements and next steps for the blockchain 
 - [ ] Verify inter-service communication works
 
 ### 2. Update Documentation
+
 **Status:** Partial - migration plan documented  
 **Priority:** Medium
 
@@ -29,6 +31,7 @@ This document outlines potential improvements and next steps for the blockchain 
 - [ ] Add examples of common development workflows
 
 ### 3. Remove .pnpmrc if Not Needed
+
 **Status:** Created but may not be necessary  
 **Priority:** Low
 
@@ -39,6 +42,7 @@ This document outlines potential improvements and next steps for the blockchain 
 ## Docker Optimizations
 
 ### 4. Optimize Docker Layer Caching
+
 **Status:** Basic multi-stage setup complete  
 **Priority:** Medium
 
@@ -48,6 +52,7 @@ This document outlines potential improvements and next steps for the blockchain 
 - [ ] Measure build times with and without cache
 
 ### 5. Add Docker Health Checks
+
 **Status:** Not implemented  
 **Priority:** Medium
 
@@ -63,6 +68,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Test health checks in docker-compose
 
 ### 6. Reduce Image Sizes Further
+
 **Status:** Current sizes ~295-347MB  
 **Priority:** Low
 
@@ -74,6 +80,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ## Code Quality & Testing
 
 ### 7. Add Package-Specific Linting Configurations
+
 **Status:** Using root oxlint configuration  
 **Priority:** Low
 
@@ -82,6 +89,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Document any package-specific lint rules
 
 ### 8. Improve Test Coverage
+
 **Status:** 76/76 tests passing  
 **Priority:** Medium
 
@@ -92,6 +100,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Set up coverage thresholds per package
 
 ### 9. Add E2E Testing
+
 **Status:** Not implemented  
 **Priority:** Medium
 
@@ -103,6 +112,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ## CI/CD Improvements
 
 ### 10. Set Up CI/CD Pipeline
+
 **Status:** Compile stage exists but no CI configured  
 **Priority:** High
 
@@ -114,6 +124,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Set up automated deployments
 
 ### 11. Optimize CI Build Times
+
 **Status:** N/A - no CI yet  
 **Priority:** Medium (after CI setup)
 
@@ -123,6 +134,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Only test affected packages on changes
 
 ### 12. Add Package-Specific CI Jobs
+
 **Status:** N/A  
 **Priority:** Low
 
@@ -133,6 +145,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ## Developer Experience
 
 ### 13. Add Development Scripts
+
 **Status:** Basic scripts exist  
 **Priority:** Medium
 
@@ -143,6 +156,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Add commit linting with commitlint
 
 ### 14. Improve Workspace Dependency Management
+
 **Status:** Manual updates required  
 **Priority:** Medium
 
@@ -152,6 +166,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Document version bumping strategy for workspace packages
 
 ### 15. Add VSCode Workspace Configuration
+
 **Status:** Not configured  
 **Priority:** Low
 
@@ -163,6 +178,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ## Architecture Improvements
 
 ### 16. Evaluate Shared Code Organization
+
 **Status:** All shared code in common package  
 **Priority:** Low
 
@@ -175,6 +191,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Document decision and rationale
 
 ### 17. Add API Documentation
+
 **Status:** Not documented  
 **Priority:** Medium
 
@@ -184,6 +201,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Add JSDoc comments to public APIs
 
 ### 18. Add Observability
+
 **Status:** Not implemented  
 **Priority:** Medium
 
@@ -196,6 +214,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ## Security
 
 ### 19. Security Audit
+
 **Status:** Not performed  
 **Priority:** High
 
@@ -207,6 +226,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Review and update `.dockerignore`
 
 ### 20. Add Security Headers
+
 **Status:** Not implemented  
 **Priority:** Medium
 
@@ -218,6 +238,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ## Performance
 
 ### 21. Performance Testing
+
 **Status:** Not implemented  
 **Priority:** Low
 
@@ -227,6 +248,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Set performance budgets
 
 ### 22. Migrate from tsx Runtime to Compiled JavaScript
+
 **Status:** Currently using tsx runtime (no compilation)  
 **Priority:** Medium-High
 
@@ -235,6 +257,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 **Implementation Steps:**
 
 - [ ] **Update tsconfig.json for each package**
+
   ```json
   {
     "compilerOptions": {
@@ -254,6 +277,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   - Miner: `"build": "tsc --project tsconfig.json"`
 
 - [ ] **Update package.json main/module/types fields**
+
   ```json
   {
     "main": "./dist/index.js",
@@ -277,6 +301,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   - Miner: `command: node /usr/app/packages/miner/dist/index.js`
 
 - [ ] **Add dist/ to .gitignore**
+
   ```
   # Build output
   dist/
@@ -284,11 +309,12 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   ```
 
 - [ ] **Update .dockerignore to exclude source but include dist**
+
   ```
   # Exclude source TypeScript files in production builds
   **/*.ts
   !**/*.d.ts
-  
+
   # Include compiled output
   !**/dist/**
   ```
@@ -320,6 +346,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   - Document troubleshooting for build errors
 
 **Expected Benefits:**
+
 - 🚀 Faster startup time (~3-5x faster)
 - 📦 Smaller Docker images (no tsx + esbuild dependencies ~40-60MB savings)
 - 💾 Lower memory usage in production
@@ -328,12 +355,14 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - 🔒 Production code is immutable (compiled once)
 
 **Migration Risks:**
+
 - Import paths may need adjustment
 - Build step adds complexity to development workflow
 - Need to ensure source maps work for debugging
 - CI/CD pipeline becomes slightly more complex
 
 **Rollback Plan:**
+
 - Keep tsx as devDependency for development
 - Can revert Dockerfile changes to use tsx if needed
 - Maintain both approaches during transition period
@@ -341,6 +370,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ## Future Considerations
 
 ### 23. Evaluate Build Tools
+
 **Status:** Using tsx for runtime execution  
 **Priority:** Low
 
@@ -350,6 +380,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Document tooling decisions
 
 ### 24. Database Migrations
+
 **Status:** Unknown if applicable  
 **Priority:** Depends on requirements
 
@@ -359,6 +390,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Test migrations in CI
 
 ### 25. Kubernetes Deployment
+
 **Status:** Using docker-compose only  
 **Priority:** Low
 
@@ -370,6 +402,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ## Documentation Tasks
 
 ### 26. Architecture Decision Records (ADRs)
+
 **Status:** Not created  
 **Priority:** Medium
 
@@ -380,6 +413,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Create ADR template for future decisions
 
 ### 27. Troubleshooting Guide
+
 **Status:** Not created  
 **Priority:** Medium
 
@@ -392,6 +426,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ## Cleanup
 
 ### 28. Remove Deprecated Code
+
 **Status:** Old src/ directory already removed  
 **Priority:** High
 
@@ -402,6 +437,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 - [ ] Clean up any temporary files
 
 ### 29. Verify .gitignore
+
 **Status:** Needs review  
 **Priority:** Medium
 
@@ -414,22 +450,26 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ## Timeline Suggestions
 
 ### Week 1 (Critical)
+
 1. Test Docker Images (#1)
 2. Security Audit (#19)
 3. Update Documentation (#2)
 
 ### Week 2-3 (Important)
+
 4. Set Up CI/CD Pipeline (#10)
 5. Migrate from tsx to Compiled JavaScript (#22) - **New priority**
 6. Improve Test Coverage (#8)
 7. Add API Documentation (#17)
 
 ### Month 2 (Medium Priority)
+
 8. Add E2E Testing (#9)
 9. Add Observability (#18)
 10. Add Docker Health Checks (#5)
 
 ### Ongoing
+
 - Monitor performance (#21)
 - Keep dependencies updated (#14)
 - Review and update documentation as needed

@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "serve": "tsx src/server.ts",
-    "build": "tsc src/tsconfig.json",
+    "build": "tsc --project tsconfig.json",
     "debug": "NODE_ENV=development listhen -w src/index.ts"
   },
   "dependencies": {
