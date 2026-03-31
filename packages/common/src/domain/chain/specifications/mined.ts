@@ -1,5 +1,5 @@
-import Block from '../block.js';
-import Specification from './specifications.js';
+import Block from '@blockchain/common/domain/chain/block';
+import Specification from '@blockchain/common/domain/chain/specifications/specifications';
 
 export default class BlockMined implements Specification {
   private message = 'Block is not mined.';

@@ -1,13 +1,13 @@
 import { v4 } from 'uuid';
-import BlockAdded from '../events/block-added.js';
-import MineFailed from '../events/mine-failed.js';
-import BlockMined from '../events/block-mined.js';
-import BlockLimitPolicy from '../policies/block-limit-policy.js';
-import Transaction from '../wallet/transaction.js';
-import Block from './block.js';
-import BlockchainInterface from './blockchain-interface.js';
-import Specification from './specifications/specifications.js';
-import Event from '../events/event.js';
+import BlockAdded from '@blockchain/common/domain/events/block-added';
+import MineFailed from '@blockchain/common/domain/events/mine-failed';
+import BlockMined from '@blockchain/common/domain/events/block-mined';
+import BlockLimitPolicy from '@blockchain/common/domain/policies/block-limit-policy';
+import Transaction from '@blockchain/common/domain/wallet/transaction';
+import Block from '@blockchain/common/domain/chain/block';
+import BlockchainInterface from '@blockchain/common/domain/chain/blockchain-interface';
+import Specification from '@blockchain/common/domain/chain/specifications/specifications';
+import Event from '@blockchain/common/domain/events/event';
 
 export default class Blockchain implements BlockchainInterface {
   private events: Event[];

@@ -23,8 +23,8 @@ import Stream from '@blockchain/common/infrastructure/stream/stream';
 import AddBlockFromConsumer from '@blockchain/common/commands/add-block-from-consumer';
 import AddTransactionFromRequest from '@blockchain/common/commands/add-transaction-from-request';
 import Emitter from '@blockchain/common/events/emitter';
-import TransactionRoute from './routes/transaction';
-import Server, { ServerHooks } from './server/index';
+import TransactionRoute from '@/routes/transaction';
+import Server, { ServerHooks } from '@/server/index';
 import GelfTransport from '@blockchain/common/infrastructure/logs/transports/gelf';
 import Console from '@blockchain/common/infrastructure/logs/transports/console';
 

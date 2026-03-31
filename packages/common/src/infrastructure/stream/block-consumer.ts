@@ -1,9 +1,9 @@
 import { EachMessagePayload } from 'kafkajs';
-import AddBlockFromConsumer from '../../commands/add-block-from-consumer.js';
-import Consumer from './consumer.js';
-import Stream from './stream.js';
-import BlockTopic from './topic/block.js';
-import BlockTranslator from './translators/block-translator.js';
+import AddBlockFromConsumer from '@blockchain/common/commands/add-block-from-consumer';
+import Consumer from '@blockchain/common/infrastructure/stream/consumer';
+import Stream from '@blockchain/common/infrastructure/stream/stream';
+import BlockTopic from '@blockchain/common/infrastructure/stream/topic/block';
+import BlockTranslator from '@blockchain/common/infrastructure/stream/translators/block-translator';
 
 export default class BlockConsumer extends Consumer {
   private action: AddBlockFromConsumer;

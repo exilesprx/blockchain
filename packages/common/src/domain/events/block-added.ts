@@ -1,6 +1,6 @@
-import Block from '../chain/block.js';
-import Transaction from '../wallet/transaction.js';
-import Event from './event.js';
+import Block from '@blockchain/common/domain/chain/block';
+import Transaction from '@blockchain/common/domain/wallet/transaction';
+import Event from '@blockchain/common/domain/events/event';
 
 export default class BlockAdded extends Event {
   private id: any;

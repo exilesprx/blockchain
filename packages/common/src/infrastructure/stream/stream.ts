@@ -1,5 +1,5 @@
 import { Consumer, Kafka, Producer } from 'kafkajs';
-import KafkaLogger from '../logs/kafka-logger.js';
+import KafkaLogger from '@blockchain/common/infrastructure/logs/kafka-logger';
 import { env } from 'std-env';
 
 export default class Stream {

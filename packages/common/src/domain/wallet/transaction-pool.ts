@@ -1,8 +1,8 @@
-import TransactionAdded from '../events/transaction-added.js';
-import NewBlockPolicy from '../policies/new-block-policy.js';
-import Specification from './specifications/specification.js';
-import Transaction from './transaction.js';
-import Event from '../events/event.js';
+import TransactionAdded from '@blockchain/common/domain/events/transaction-added';
+import NewBlockPolicy from '@blockchain/common/domain/policies/new-block-policy';
+import Specification from '@blockchain/common/domain/wallet/specifications/specification';
+import Transaction from '@blockchain/common/domain/wallet/transaction';
+import Event from '@blockchain/common/domain/events/event';
 
 export default class TransactionPool {
   private events: Event[];

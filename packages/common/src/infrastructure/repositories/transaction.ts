@@ -1,7 +1,7 @@
 import { jsonEvent } from '@eventstore/db-client';
-import TransactionPool from '../../domain/wallet/transaction-pool.js';
-import Database from '../database/index.js';
-import TransactionEvent from '../database/models/transaction.js';
+import TransactionPool from '@blockchain/common/domain/wallet/transaction-pool';
+import Database from '@blockchain/common/infrastructure/database/index';
+import TransactionEvent from '@blockchain/common/infrastructure/database/models/transaction';
 
 export default class TransactionRepository {
   private database: Database;

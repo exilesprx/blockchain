@@ -1,9 +1,9 @@
 import { EachMessagePayload } from 'kafkajs';
-import TransactionTranslator from './translators/transaction-translator.js';
-import AddTransaction from '../../commands/add-transaction-from-consumer.js';
-import Consumer from './consumer.js';
-import Stream from './stream.js';
-import TransactionTopic from './topic/transaction.js';
+import TransactionTranslator from '@blockchain/common/infrastructure/stream/translators/transaction-translator';
+import AddTransaction from '@blockchain/common/commands/add-transaction-from-consumer';
+import Consumer from '@blockchain/common/infrastructure/stream/consumer';
+import Stream from '@blockchain/common/infrastructure/stream/stream';
+import TransactionTopic from '@blockchain/common/infrastructure/stream/topic/transaction';
 
 export default class TransactionConsumer extends Consumer {
   private action: AddTransaction;

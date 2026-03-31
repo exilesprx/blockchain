@@ -1,7 +1,7 @@
 import { jsonEvent } from '@eventstore/db-client';
-import Blockchain from '../../domain/chain/blockchain.js';
-import Database from '../database/index.js';
-import BlockEvent from '../database/models/block.js';
+import Blockchain from '@blockchain/common/domain/chain/blockchain';
+import Database from '@blockchain/common/infrastructure/database/index';
+import BlockEvent from '@blockchain/common/infrastructure/database/models/block';
 
 export default class BlockRepository {
   private database: Database;

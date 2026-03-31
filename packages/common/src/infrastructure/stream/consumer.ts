@@ -1,5 +1,5 @@
 import { Consumer as KafkaConsumer, EachMessagePayload } from 'kafkajs';
-import Stream from './stream.js';
+import Stream from '@blockchain/common/infrastructure/stream/stream';
 import { env } from 'std-env';
 
 export default abstract class Consumer {

@@ -1,5 +1,5 @@
-import Block from '../chain/block.js';
-import Event from './event.js';
+import Block from '@blockchain/common/domain/chain/block';
+import Event from '@blockchain/common/domain/events/event';
 
 export default class MineFailed extends Event {
   private id: any;

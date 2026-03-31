@@ -1,8 +1,8 @@
 import Events from 'events';
-import Logger from '../infrastructure/logs/logger.js';
-import Producer from '../infrastructure/stream/producer.js';
-import Event from '../domain/events/event.js';
-import TransactionAdded from '../domain/events/transaction-added.js';
+import Logger from '@blockchain/common/infrastructure/logs/logger';
+import Producer from '@blockchain/common/infrastructure/stream/producer';
+import Event from '@blockchain/common/domain/events/event';
+import TransactionAdded from '@blockchain/common/domain/events/transaction-added';
 
 export default abstract class Emitter {
   protected producer: Producer;

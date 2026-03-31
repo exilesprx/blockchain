@@ -1,10 +1,10 @@
 import CryptoJS from 'crypto-js';
-import BlockMinedPolicy from '../policies/block-mined-policy.js';
-import Transaction from '../wallet/transaction.js';
-import BlockState from './state/block-state.js';
-import Mined from './state/mined.js';
-import Unmined from './state/unmined.js';
-import { Block as BlockContract } from '../../infrastructure/database/models/block.js';
+import BlockMinedPolicy from '@blockchain/common/domain/policies/block-mined-policy';
+import Transaction from '@blockchain/common/domain/wallet/transaction';
+import BlockState from '@blockchain/common/domain/chain/state/block-state';
+import Mined from '@blockchain/common/domain/chain/state/mined';
+import Unmined from '@blockchain/common/domain/chain/state/unmined';
+import { Block as BlockContract } from '@blockchain/common/infrastructure/database/models/block';
 
 export default class Block {
   private transactions: Transaction[];
