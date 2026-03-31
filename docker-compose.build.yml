@@ -6,8 +6,8 @@ services:
       dockerfile: .docker/Dockerfile
       target: base
 
-  compile:
+  dev:
     build:
       context: .
       dockerfile: .docker/Dockerfile
-      target: compile
+      target: dev
