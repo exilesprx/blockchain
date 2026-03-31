@@ -7,6 +7,7 @@ Migrate a TypeScript blockchain monorepo from a single `src/` directory structur
 ## Migration Requirements
 
 ### Initial Structure
+
 - Use pnpm workspaces with 3 packages: `@blockchain/common`, `@blockchain/bank`, `@blockchain/miner`
 - Perform all migration at once (low risk approach acceptable)
 - Keep Docker files shared (Dockerfile stays as-is, only paths updated)
@@ -18,11 +19,13 @@ Migrate a TypeScript blockchain monorepo from a single `src/` directory structur
 - Import paths should NOT include `/src/` in them (e.g., `@blockchain/common/domain/chain/blockchain`)
 
 ### Test Organization
+
 - Move tests into workspace packages to avoid dependency version mismatches
 - Organize by domain/feature: domain/infrastructure tests → common, bank-specific tests → bank
 - Each workspace manages its own test dependencies
 
 ### Path Alias Pattern
+
 - Use `@/` alias within each package pointing to `./src`
 - Tests use `@/domain/...` instead of `../src/domain/...`
 - Keep workspace aliases (`@blockchain/common/*`) for cross-package imports
@@ -30,22 +33,26 @@ Migrate a TypeScript blockchain monorepo from a single `src/` directory structur
 ## Discoveries
 
 ### Project Tooling
+
 - Uses oxlint (not ESLint), oxfmt (not Prettier), Vitest (not Jest)
 - Uses pnpm 10.32.1
 - Node.js 25+ does NOT include Corepack anymore (it's opt-in)
 - Using TypeScript with `module: "ESNext"` and `moduleResolution: "bundler"`
 
 ### ESM Requirements
+
 - Relative imports within packages need `.js` file extensions for ESM compatibility
 - crypto-js requires default import: `import CryptoJS from 'crypto-js'` then use `CryptoJS.SHA256()`
 - Files in `packages/common/src/commands/`, `events/`, `translators/` are siblings to `domain/` and `infrastructure/`, so they use `../domain/...` not `../../domain/...`
 
 ### Vitest 4 Changes
+
 - Use `test.projects` instead of deprecated `test.workspace`
 - Workspace configuration: root config defines projects array pointing to package directories
 - Each package has its own `vitest.config.ts` with package-specific aliases
 
 ### Docker/pnpm Installation
+
 - The pnpm binary at `/root/.local/share/pnpm/pnpm` is a shell script wrapper
 - It calls the real executable at `/root/.local/share/pnpm/.tools/pnpm-exe/10.32.1/pnpm`
 - Must copy entire `/root/.local/share/pnpm/` directory structure, not just the binary
@@ -53,6 +60,7 @@ Migrate a TypeScript blockchain monorepo from a single `src/` directory structur
 - Add `/home/node/.local/share/pnpm` to PATH with `ENV PATH="/home/node/.local/share/pnpm:$PATH"`
 
 ### Docker Permission Issues
+
 - Getting `EACCES: permission denied, mkdir '/usr/app/packages/bank/node_modules'` when running `pnpm install`
 - The `install` stage runs as `USER node` (from base stage)
 - Files are copied with `--chown=node:node` but some have `--chmod=555` (read-only)
@@ -63,6 +71,7 @@ Migrate a TypeScript blockchain monorepo from a single `src/` directory structur
 ## Accomplished Tasks
 
 ### ✅ Workspace Migration Complete
+
 1. Created workspace structure with 3 packages
 2. Moved 51 TypeScript files to appropriate packages
 3. Added `.js` extensions to 111+ relative imports for ESM
@@ -73,6 +82,7 @@ Migrate a TypeScript blockchain monorepo from a single `src/` directory structur
 8. Deleted old `src/` directory
 
 ### ✅ Test Organization Complete
+
 1. Moved 17 tests to `packages/common/tests/`
 2. Moved 3 tests to `packages/bank/tests/`
 3. Moved builders and stubs to `packages/common/tests/`
@@ -82,12 +92,14 @@ Migrate a TypeScript blockchain monorepo from a single `src/` directory structur
 7. Updated root vitest config to use `test.projects` (Vitest 4 format)
 
 ### ✅ Path Aliases Complete
+
 1. Added `@/*` alias to both workspace tsconfigs pointing to `./src`
 2. Updated 50 import statements in tests to use `@/` alias
 3. Both workspace tsconfigs include `tests/**/*` in includes
 4. Each workspace vitest config has `@/` alias configured
 
 ### ✅ Docker Build Fixed
+
 1. Fixed permission issue by using `--chmod=644` for package.json files
 2. Created separate `bank` and `miner` build stages for isolated images
 3. Bank image contains only common + bank packages
@@ -174,16 +186,16 @@ docker build -f .docker/Dockerfile --target miner -t blockchain-miner .
 
 ```typescript
 // ✅ Correct: Relative imports with .js extension
-import { Block } from '../domain/chain/block.js'
+import { Block } from '../domain/chain/block.js';
 
 // ✅ Correct: Workspace imports (no .js needed)
-import { Block } from '@blockchain/common/domain/chain/block'
+import { Block } from '@blockchain/common/domain/chain/block';
 
 // ✅ Correct: Intra-package alias imports (no .js needed)
-import { Block } from '@/domain/chain/block'
+import { Block } from '@/domain/chain/block';
 
 // ❌ Wrong: Relative import without .js
-import { Block } from '../domain/chain/block'
+import { Block } from '../domain/chain/block';
 ```
 
 ### pnpm Deploy Command
