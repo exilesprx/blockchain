@@ -17,7 +17,6 @@ RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(whic
 
 
 FROM base AS dev
-ENV NODE_ENV=production
 ENV PATH="/home/node/.local/share/pnpm:$PATH"
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
 COPY --chmod=755 --chown=node:node . /usr/app/
