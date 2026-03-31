@@ -1,0 +1,71 @@
+### TODO
+
+- Database
+  - ~~use eventstoreDB~~
+  - ~~persist transactions submitted (from API)~~
+  - persist transactiosn verified (from auditor)
+  - ~~persist mined blocks (from miner)~~
+- App
+  - Transactions
+    - ~~added to a pool via API~~
+    - ~~broadcasts event "transaction added"~~
+  - Blockchain
+    - ~~add mined block to chain from stream~~
+    - ~~note: this chain is only present to add another node for a consensus check~~
+- Miner
+  - Transactions
+    - ~~added to a pool via stream~~
+    - ~~determine if we should create a block~~
+      - ~~to start use arbitrary rule of "block count > 20"~~
+    - ~~if yes, create a block and mine~~
+  - Blockchain
+    - ~~broadcast event "block mined"~~
+    - ~~add the mined block to the chain from stream~~
+    - ~~if previous block hash doesn't match, then a block proceeded it, so throw it out (we're using a stream with guaranteed ordering)~~
+    - ~~broadcast event "block added"~~
+    - implement consensus model
+- Logger
+  - ~~treat as a feature~~
+  - ~~add graylog~~
+  - ~~add winston gelf~~
+  - ~~wrap logger in support class~~
+- Auditor
+  - Transactions
+    - compare "generated transactions" vesus "processed transactions"
+    - should "rebroadcast" so they're appended to the chain
+    - happens every X seconds/minutes
+- Restoration
+  - Application
+    - grab the last few block events
+    - restore the chain with the blocks pulled
+  - Miner
+- End to end testing
+  - Scheduler
+    - Produces transactions every X seconds (start with manual entry at first)
+- Process
+  - ~~update to use nodemon~~
+  - ~~update to use ts-node~~
+  - ~~update to use npm app and npm app:debug~~
+  - ~~remove ts building in container image~~
+  - ~~use docker cp or rebuild image to run new changes~~
+  - ~~transition to github actions~~
+- Tests
+  - ~~update the tests to match all the changes made~~
+  - ~~add code coverage~~
+  - increase code coverage with meaningful tests
+- Notes
+  - Consumers/miners
+    - MULTIPLE CONSUMERS MUST BE ON DIFFERENT GROUPS
+  - Transactions dropped
+    - if a transaction is never added to a block, how do we find the transaction? And how do we rebroadcast it?
+  - Miner
+    - if block mined event is received, so if its currently mining, if so, stop it, and start mining a new block (if reqs are met)
+  - Docker build
+    - ~~clean up the build process~~
+    - ~~targets for container builds~~
+      - ~~source - foundation of image~~
+      - ~~main - includes development source code from main~~
+      - ~~version - includes production source code from main, tagged, and packaged for a release version~~
+- Pipelines
+  - ~~update feature.yml to build and use local docker containers because when/if the docker image changes, the code changes need to run against them~~
+  - ~~update the build.yml to build the docker source image first and push, then the following steps can use the newly built and pushed images~~
