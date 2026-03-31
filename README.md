@@ -65,11 +65,11 @@ Images for this project can be found: https://hub.docker.com/r/exilesprx/blockch
 
 ### Stages
 
-- `source` — base Node image (`node:25.8.1-bookworm-slim`)
+- `source` — base Node image (`node:25.8.2-bookworm-slim`)
 - `base` — sets `NODE_ENV`, user, and working directory
 - `pnpm` — installs pnpm
+- `dev` — full install of all dependencies
 - `install` — installs production dependencies only
-- `compile` — full install, runs tests, and type-checks bank and miner
 - `bank` — production image for the bank app
 - `miner` — production image for the miner app
 
