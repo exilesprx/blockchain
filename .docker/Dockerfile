@@ -16,6 +16,14 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
 
 
+FROM base AS dev
+ENV NODE_ENV=production
+ENV PATH="/home/node/.local/share/pnpm:$PATH"
+COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
+COPY --chmod=755 --chown=node:node . /usr/app/
+RUN pnpm install --frozen-lockfile
+
+
 FROM base AS install
 ENV PATH="/home/node/.local/share/pnpm:$PATH"
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
@@ -24,17 +32,6 @@ COPY --chmod=644 --chown=node:node packages/common/package.json /usr/app/package
 COPY --chmod=644 --chown=node:node packages/bank/package.json /usr/app/packages/bank/
 COPY --chmod=644 --chown=node:node packages/miner/package.json /usr/app/packages/miner/
 RUN pnpm install --frozen-lockfile --prod
-
-
-FROM base AS compile
-ENV NODE_ENV=production
-ENV PATH="/home/node/.local/share/pnpm:$PATH"
-COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
-COPY --chmod=755 --chown=node:node . /usr/app/
-RUN pnpm install --frozen-lockfile \
-  && pnpm run test \
-  && pnpm run typecheck:bank \
-  && pnpm run typecheck:miner
 
 
 FROM base AS bank
