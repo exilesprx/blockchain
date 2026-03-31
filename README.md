@@ -5,70 +5,87 @@
 
 This blockchain is for educational purposes only and should not be used for production purposes in its current state. As the application matures and meets standards, then at that point it can be used for production purposes.
 
+## Prerequisites
+
+- Node.js 25.8.1
+- pnpm 10.32.1
+
+## Workspace Structure
+
+This is a pnpm monorepo containing three packages:
+
+```
+packages/
+  common/    @blockchain/common    shared domain logic, infrastructure, and events
+  bank/      @blockchain/bank      HTTP API for submitting transactions
+  miner/     @blockchain/miner     Kafka consumer that mines blocks
+```
+
+## Scripts
+
+Run all scripts from the workspace root.
+
+| Script                 | Description                             |
+| ---------------------- | --------------------------------------- |
+| `pnpm test`            | Run all tests                           |
+| `pnpm test:watch`      | Run tests in watch mode                 |
+| `pnpm test:ui`         | Open the Vitest UI                      |
+| `pnpm lint`            | Lint source files with oxlint           |
+| `pnpm lint:fix`        | Lint and auto-fix                       |
+| `pnpm fmt`             | Check formatting with oxfmt             |
+| `pnpm fmt:fix`         | Auto-format source files                |
+| `pnpm app:bank`        | Start the bank server                   |
+| `pnpm app:miner`       | Start the miner                         |
+| `pnpm typecheck:bank`  | Type-check the bank package             |
+| `pnpm typecheck:miner` | Type-check the miner package            |
+| `pnpm debug:bank`      | Start the bank with the Node inspector  |
+| `pnpm debug:miner`     | Start the miner with the Node inspector |
+
+## Testing
+
+[Vitest](https://vitest.dev) is the test runner. No compilation step is required — tests run directly against the TypeScript source via `tsx`.
+
+Coverage is provided by `@vitest/coverage-v8`.
+
+```bash
+pnpm test          # run once
+pnpm test:watch    # watch mode
+pnpm test:ui       # browser UI
+```
+
+## Compilation
+
+There is no compilation step. The apps run TypeScript source directly at runtime via `tsx`.
+
+`typecheck:bank` and `typecheck:miner` run type-checking only (`tsc --noEmit`) — no JavaScript output is produced. These are used in CI to catch type errors before deployment.
+
 ## Docker
 
 Images for this project can be found: https://hub.docker.com/r/exilesprx/blockchain
 
 ### Stages
 
-- source: the image all other stages are built upon
-- base: the stage that contains the very basic configurations for all other stages. Ex: user, working directory
-- pnpm: the stage that installs pnpm. Pnpm can be copied from this stage to other images if needed
-- install: the stage that installs all dependencies for the application. Dependencies can be copied from this stage to other stages if needed
-- compile: the stage that prepares the source code for distribution (ex: test and build)
-- main: the stage that contains the source code and tools necessary for tasks such as linting, auditing, building, and/or testing
-- version: the stage that contains the built source code for a specific version/release. Should never contain development tools
-
-Helper scripts:
-
-- run-build
-  - this will build an image containing the source files
-  - tag using the current branch name
-  - build the bank and miner to ensure no JavaScript issues
-- run-test
-  - this will build a test image with containing the source files
-  - tag using the current branch name
-  - runs the tests
+- `source` — base Node image (`node:25.8.1-bookworm-slim`)
+- `base` — sets `NODE_ENV`, user, and working directory
+- `pnpm` — installs pnpm
+- `install` — installs production dependencies only
+- `compile` — full install, runs tests, and type-checks bank and miner
+- `bank` — production image for the bank app
+- `miner` — production image for the miner app
 
 ### Run
 
-- nodemon uses ts-node to run typescript removing the extra step of compiling the code before running
-- the build command exists to ensure no errors will present themselves upon run time, so its important to "compile" the source code at some point
+Apps run TypeScript source directly at runtime via `tsx`. No compilation to JavaScript is required.
 
-### Compilation
+### Building images
 
-TypeScript is used for the source code of the application. The source code is then "compiled" into raw JavaScript and placed in the "build" folder. - commands: - build:miner - build:bank
+Use `docker-compose.version.yml` to build versioned images for bank and miner:
 
-See: tsconfig.json
-
-### Jest
-
-Jest is used to test the applicaiton code. However, Babel is required in order to support TypeScript when testing the source code.
-
-## Debugging
-
-Using ts-node allows us to remove compilation of TypeScript files. So we can setup our directories to match.
-
-```JSON
-{
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Blockchain",
-            "type": "node",
-            "request": "attach",
-            "restart": true,
-            "port": 9229,
-            "address": "endeavour",
-            "localRoot": "${workspaceFolder}/src",
-            "remoteRoot": "/usr/app/src",
-            "protocol": "inspector",
-            "sourceMaps": true,
-          }
-    ]
-}
+```bash
+VERSION=1.0.0 docker compose -f docker-compose.version.yml build
 ```
 
+This produces:
+
+- `exilesprx/blockchain:bank-1.0.0`
+- `exilesprx/blockchain:miner-1.0.0`
