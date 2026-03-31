@@ -2,7 +2,7 @@ import { v4 } from 'uuid';
 import Transaction from '@blockchain/common/domain/wallet/transaction';
 import { Transaction as TransactionContract } from '@blockchain/common/infrastructure/database/models/transaction';
 
-export default class TransactionTranslator {
+export default class TransactionRequestTranslator {
   public static fromRequest(
     to: string,
     from: string,
@@ -30,7 +30,7 @@ export default class TransactionTranslator {
   ): Transaction[] {
     const messageTransactions: Transaction[] = [];
     transactions.forEach((transaction: TransactionContract) => {
-      messageTransactions.push(TransactionTranslator.fromObject(transaction));
+      messageTransactions.push(TransactionRequestTranslator.fromObject(transaction));
     });
 
     return messageTransactions;

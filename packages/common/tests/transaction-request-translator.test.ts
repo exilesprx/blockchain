@@ -1,13 +1,13 @@
 import { describe, expect, test } from 'vitest';
 
-import TransactionTranslator from '@/translators/transaction-translator';
+import TransactionRequestTranslator from '@/translators/transaction-request-translator';
 import Transaction from '@/domain/wallet/transaction';
 import data from './stubs/transaction.json';
 import { v4 } from 'uuid';
 
 describe('Transaction Translator', () => {
   test('it expects to translate an object into a Transaction', () => {
-    const transaction = TransactionTranslator.fromObject(data);
+    const transaction = TransactionRequestTranslator.fromObject(data);
 
     expect(transaction.getHash()).not.toBe(data.hash);
     expect(transaction).toBeInstanceOf(Transaction);
@@ -16,7 +16,7 @@ describe('Transaction Translator', () => {
   test('it expects to translate an array of transactions', () => {
     const transactions = [data, data];
     const convertedTransactions =
-      TransactionTranslator.fromObjectForMany(transactions);
+      TransactionRequestTranslator.fromObjectForMany(transactions);
 
     convertedTransactions.forEach((transaction: Transaction) => {
       expect(transaction.getHash()).not.toBe(data.hash);
@@ -24,7 +24,7 @@ describe('Transaction Translator', () => {
   });
 
   test('it expects transaction properties to match values parsed', () => {
-    const transaction = TransactionTranslator.fromObject(data);
+    const transaction = TransactionRequestTranslator.fromObject(data);
 
     expect(transaction).toBeInstanceOf(Transaction);
     expect(transaction.getSender()).toBe(data.from);
@@ -36,7 +36,7 @@ describe('Transaction Translator', () => {
 
   test('it expects to translate to a transaction from a request body', () => {
     const request = { to: v4(), from: v4(), amount: 2 };
-    const transaction = TransactionTranslator.fromRequest(
+    const transaction = TransactionRequestTranslator.fromRequest(
       request.to,
       request.from,
       request.amount

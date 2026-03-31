@@ -1,9 +1,10 @@
 import winston, { LogEntry, Logger as WinstonLogger } from 'winston';
+import Transport from 'winston-transport';
 
 export default class Logger {
   private logger: WinstonLogger;
 
-  public constructor(transports: any[]) {
+  public constructor(transports: Transport[]) {
     this.logger = winston.createLogger({
       exitOnError: false,
       format: winston.format.combine(winston.format.errors({ stack: true })),

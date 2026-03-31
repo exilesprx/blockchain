@@ -1,4 +1,4 @@
-import Events from 'events';
+import Events from 'node:events';
 import Logger from '@blockchain/common/infrastructure/logs/logger';
 import Producer from '@blockchain/common/infrastructure/stream/producer';
 import Event from '@blockchain/common/domain/events/event';
