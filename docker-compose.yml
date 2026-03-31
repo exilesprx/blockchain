@@ -154,7 +154,7 @@ services:
       AUTO_CONNECT_CONNECTION_STRING: zoo1:2181
 
   bank:
-    image: exilesprx/blockchain:${APP_VERSION:-latest}
+    image: exilesprx/blockchain:bank-${APP_VERSION:-latest}
     container_name: bank
     ports:
       - '3000:3000'
@@ -168,7 +168,7 @@ services:
     command: node --import=tsx packages/bank/src/server.ts
 
   miner:
-    image: exilesprx/blockchain:${APP_VERION:-latest}
+    image: exilesprx/blockchain:miner-${APP_VERSION:-latest}
     container_name: miner
     ports:
       - '9230:9229'
