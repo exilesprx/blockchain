@@ -18,6 +18,7 @@ RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(whic
 
 FROM base AS dev
 ENV PATH="/home/node/.local/share/pnpm:$PATH"
+ENV CI=true
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
 COPY --chmod=755 --chown=node:node . /usr/app/
 RUN pnpm install --frozen-lockfile
@@ -25,6 +26,7 @@ RUN pnpm install --frozen-lockfile
 
 FROM base AS install
 ENV PATH="/home/node/.local/share/pnpm:$PATH"
+ENV CI=true
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
 COPY --chmod=644 --chown=node:node package.json pnpm-lock.yaml pnpm-workspace.yaml /usr/app/
 COPY --chmod=644 --chown=node:node packages/common/package.json /usr/app/packages/common/
@@ -36,6 +38,7 @@ RUN pnpm install --frozen-lockfile --prod
 FROM base AS bank
 ENV NODE_ENV=production
 ENV PATH="/home/node/.local/share/pnpm:$PATH"
+ENV CI=true
 COPY --chown=node:node --chmod=755 --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
 COPY --chown=node:node --chmod=555 package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json /usr/app/
 COPY --chown=node:node --chmod=555 packages/common/package.json packages/common/tsconfig.json /usr/app/packages/common/
@@ -48,6 +51,7 @@ COPY --chown=node:node --chmod=755 --from=install /usr/app/node_modules /usr/app
 FROM base AS miner
 ENV NODE_ENV=production
 ENV PATH="/home/node/.local/share/pnpm:$PATH"
+ENV CI=true
 COPY --chown=node:node --chmod=755 --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
 COPY --chown=node:node --chmod=555 package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json /usr/app/
 COPY --chown=node:node --chmod=555 packages/common/package.json packages/common/tsconfig.json /usr/app/packages/common/
