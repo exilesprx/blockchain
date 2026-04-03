@@ -32,9 +32,9 @@ COPY --chown=node:node --chmod=755 --from=pnpm /root/.local/share/pnpm/ /home/no
 COPY --chown=node:node --chmod=755 package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json /usr/app/
 COPY --chown=node:node --chmod=755 packages/common/package.json packages/common/tsconfig.json /usr/app/packages/common/
 COPY --chown=node:node --chmod=755 packages/bank/package.json packages/bank/tsconfig.json /usr/app/packages/bank/
+RUN pnpm install --frozen-lockfile --prod --filter @blockchain/bank...
 COPY --chown=node:node --chmod=755 packages/common/src /usr/app/packages/common/src
 COPY --chown=node:node --chmod=755 packages/bank/src /usr/app/packages/bank/src
-RUN pnpm install --frozen-lockfile --prod --filter @blockchain/bank...
 
 
 FROM base AS miner
@@ -45,6 +45,6 @@ COPY --chown=node:node --chmod=755 --from=pnpm /root/.local/share/pnpm/ /home/no
 COPY --chown=node:node --chmod=755 package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json /usr/app/
 COPY --chown=node:node --chmod=755 packages/common/package.json packages/common/tsconfig.json /usr/app/packages/common/
 COPY --chown=node:node --chmod=755 packages/miner/package.json packages/miner/tsconfig.json /usr/app/packages/miner/
+RUN pnpm install --frozen-lockfile --prod --filter @blockchain/miner...
 COPY --chown=node:node --chmod=755 packages/common/src /usr/app/packages/common/src
 COPY --chown=node:node --chmod=755 packages/miner/src /usr/app/packages/miner/src
-RUN pnpm install --frozen-lockfile --prod --filter @blockchain/miner...

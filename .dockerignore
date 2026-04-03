@@ -2,7 +2,6 @@
 *
 
 # Allow
-!node_modules/
 !packages/
 !tests/
 
