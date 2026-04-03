@@ -165,7 +165,7 @@ services:
       - graylog
     env_file:
       - .env
-    command: node --import=tsx packages/bank/src/server.ts
+    command: pnpm run app:bank
 
   miner:
     image: exilesprx/blockchain:miner-${APP_VERSION:-latest}
@@ -177,7 +177,7 @@ services:
       - graylog
     env_file:
       - .env
-    command: node --import=tsx packages/miner/src/index.ts
+    command: pnpm run app:miner
 
   eventstore.db:
     image: eventstore/eventstore:20.10.2-buster-slim
