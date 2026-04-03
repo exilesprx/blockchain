@@ -10,6 +10,21 @@ This blockchain is for educational purposes only and should not be used for prod
 - Node.js 25.8.1
 - pnpm 10.32.1
 
+## Getting Started
+
+```bash
+git clone https://github.com/exilesprx/blockchain.git
+cd blockchain
+pnpm install
+```
+
+To run the bank or miner locally:
+
+```bash
+pnpm app:bank
+pnpm app:miner
+```
+
 ## Workspace Structure
 
 This is a pnpm monorepo containing three packages:
@@ -53,11 +68,68 @@ pnpm test:watch    # watch mode
 pnpm test:ui       # browser UI
 ```
 
+To run tests for a single package:
+
+```bash
+pnpm --filter @blockchain/common test
+pnpm --filter @blockchain/bank test
+pnpm --filter @blockchain/miner test
+```
+
 ## Compilation
 
 There is no compilation step. The apps run TypeScript source directly at runtime via `tsx`.
 
 `typecheck:bank` and `typecheck:miner` run type-checking only (`tsc --noEmit`) — no JavaScript output is produced. These are used in CI to catch type errors before deployment.
+
+## Common Workflows
+
+**Add a dependency to a specific package:**
+
+```bash
+pnpm --filter @blockchain/bank add <package>
+pnpm --filter @blockchain/common add <package>
+```
+
+**Add a dev dependency to the workspace root:**
+
+```bash
+pnpm add -D <package> -w
+```
+
+**Run a script in a specific package:**
+
+```bash
+pnpm --filter @blockchain/bank <script>
+```
+
+## Adding a Package
+
+1. Create the directory: `packages/<name>/`
+2. Add `packages/<name>/package.json`:
+   ```json
+   {
+     "name": "@blockchain/<name>",
+     "version": "0.1.0",
+     "type": "module",
+     "scripts": {}
+   }
+   ```
+3. Add `packages/<name>/tsconfig.json`:
+   ```json
+   {
+     "extends": "../../tsconfig.json",
+     "compilerOptions": {
+       "noEmit": true,
+       "paths": {
+         "@/*": ["./src/*"]
+       }
+     },
+     "include": ["src/**/*"]
+   }
+   ```
+4. Create `packages/<name>/src/`
+5. Run `pnpm install` from the workspace root
 
 ## Docker
 
@@ -68,8 +140,7 @@ Images for this project can be found: https://hub.docker.com/r/exilesprx/blockch
 - `source` — base Node image (`node:25.8.2-bookworm-slim`)
 - `base` — sets `NODE_ENV`, user, and working directory
 - `pnpm` — installs pnpm
-- `dev` — full install of all dependencies
-- `install` — installs production dependencies only
+- `dev` — full install of all dependencies (used for local development and CI)
 - `bank` — production image for the bank app
 - `miner` — production image for the miner app
 
