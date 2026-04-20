@@ -13,7 +13,7 @@
     "fast-json-stable-stringify": "^2.1.0",
     "gelf-pro": "^1.4.0",
     "kafkajs": "^2.2.4",
-    "std-env": "^4.0.0",
+    "std-env": "^4.1.0",
     "uuid": "^13.0.0",
     "winston": "^3.19.0",
     "winston-transport": "^4.9.0"
