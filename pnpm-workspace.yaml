@@ -5,10 +5,3 @@ allowBuilds:
   '@parcel/watcher': true
   esbuild: true
   protobufjs: true
-
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - '@swc/core'
-  - esbuild
-  - protobufjs
-  - unrs-resolver
