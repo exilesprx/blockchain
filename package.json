@@ -24,7 +24,7 @@
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
-  "packageManager": "pnpm@11.0.9",
+  "packageManager": "pnpm@11.1.1",
   "dependencies": {
     "@tsconfig/node24": "^24.0.4"
   },
