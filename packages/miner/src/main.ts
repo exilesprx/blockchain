@@ -49,7 +49,6 @@ export default class Miner {
     await this.producer.connect();
   }
 
-
   private logTransports(): (Console | GelfTransport)[] {
     if (env.GRAYLOG_HOST == 'undefined' && env.GRAYLOG_PORT == 'undefined') {
       console.log(
