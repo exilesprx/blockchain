@@ -1,4 +1,4 @@
-import Logger from 'gelf-pro';
+import dgram from 'node:dgram';
 import Transport from 'winston-transport';
 import { env } from 'std-env';
 
@@ -14,42 +14,40 @@ enum GelfLogLevels {
 }
 
 export default class GelfTransport extends Transport {
-  private gelf: Logger.Logger;
-
-  public constructor(options?: Transport.TransportStreamOptions) {
-    super(options);
-
-    this.gelf = Logger.setConfig(GelfTransport.getConfig());
-  }
-
-  public log(info: any, callback: () => void) {
+  public log(info: any, callback: () => void): void {
     setImmediate(() => {
       this.emit('logged', info);
     });
 
-    const { message, extra, level } = info;
-    this.gelf.message(message, GelfTransport.toGelfLogLevel(level), extra);
-    callback();
-  }
+    const payload = JSON.stringify({
+      version: '1.1',
+      host: env.HOSTNAME ?? 'unknown',
+      short_message: info.message,
+      level: GelfTransport.toGelfLogLevel(info.level),
+      _facility: env.APP_NAME ?? 'unknown',
+      ...info.extra
+    });
 
-  private static getConfig(): Partial<Logger.Settings> {
-    return {
-      fields: {
-        facility: `${env.APP_NAME}`,
-        owner: `${env.HOSTNAME}`
-      },
-      adapterName: 'udp', // optional; currently supported "udp", "tcp" and "tcp-tls"; default: udp
-      adapterOptions: {
-        // this object is passed to the adapter.connect() method
-        host: `${env.GRAYLOG_HOST}`, // optional; default: 127.0.0.1
-        port: Number(`${env.GRAYLOG_PORT}`) // optional; default: 12201
+    const client = dgram.createSocket('udp4');
+    const buf = Buffer.from(payload);
+
+    client.send(
+      buf,
+      0,
+      buf.length,
+      Number(env.GRAYLOG_PORT),
+      env.GRAYLOG_HOST,
+      () => {
+        client.close();
       }
-    };
+    );
+
+    callback();
   }
 
   private static toGelfLogLevel(level: string): number {
     return (
-      GelfLogLevels[level as keyof typeof GelfLogLevels] || GelfLogLevels.info
+      GelfLogLevels[level as keyof typeof GelfLogLevels] ?? GelfLogLevels.info
     );
   }
 }

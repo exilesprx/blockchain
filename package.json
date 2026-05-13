@@ -10,12 +10,17 @@
     "lint:fix": "oxlint . --fix",
     "fmt": "oxfmt --check",
     "fmt:fix": "oxfmt",
-    "app:bank": "pnpm --filter @blockchain/bank serve",
-    "app:miner": "pnpm --filter @blockchain/miner serve",
+    "dev:bank": "pnpm --filter @blockchain/bank dev",
+    "dev:miner": "pnpm --filter @blockchain/miner dev",
+    "serve:bank": "pnpm --filter @blockchain/bank serve",
+    "serve:miner": "pnpm --filter @blockchain/miner serve",
     "typecheck:bank": "pnpm --filter @blockchain/bank typecheck",
     "typecheck:miner": "pnpm --filter @blockchain/miner typecheck",
     "debug:bank": "pnpm --filter @blockchain/bank debug",
-    "debug:miner": "pnpm --filter @blockchain/miner debug"
+    "debug:miner": "pnpm --filter @blockchain/miner debug",
+    "build": "pnpm --filter common build && pnpm --filter bank build && pnpm --filter miner build",
+    "build:bank": "pnpm --filter @blockchain/bank build",
+    "build:miner": "pnpm --filter @blockchain/miner build"
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
@@ -31,6 +36,7 @@
     "globals": "^17.6.0",
     "oxfmt": "^0.48.0",
     "oxlint": "^1.63.0",
+    "tsup": "^8.5.1",
     "typescript": "^6.0.3",
     "vitest": "^4.1.5"
   }

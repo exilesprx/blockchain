@@ -3,7 +3,7 @@ name: Feature actions
 on:
   push:
     branches-ignore:
-      - "main"
+      - 'main'
 
 #I'm not a fan of redundant builds since it increases build times, but artifacts are also costly
 jobs:
