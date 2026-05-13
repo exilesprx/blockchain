@@ -19,8 +19,8 @@
     "debug:bank": "pnpm --filter @blockchain/bank debug",
     "debug:miner": "pnpm --filter @blockchain/miner debug",
     "build": "pnpm --filter common build && pnpm --filter bank build && pnpm --filter miner build",
-    "build:bank": "pnpm --filter @blockchain/bank build",
-    "build:miner": "pnpm --filter @blockchain/miner build"
+    "build:bank": "pnpm --filter common build && pnpm --filter @blockchain/bank build",
+    "build:miner": "pnpm --filter common build && pnpm --filter @blockchain/miner build"
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
