@@ -7,8 +7,8 @@ This blockchain is for educational purposes only and should not be used for prod
 
 ## Prerequisites
 
-- Node.js 25.8.1
-- pnpm 10.32.1
+- Node.js >= 24
+- pnpm
 
 ## Getting Started
 
@@ -18,11 +18,19 @@ cd blockchain
 pnpm install
 ```
 
-To run the bank or miner locally:
+To run the bank or miner locally, build first then start:
 
 ```bash
+pnpm build
 pnpm app:bank
 pnpm app:miner
+```
+
+For fast local iteration without a build step, use the debug scripts:
+
+```bash
+pnpm debug:bank
+pnpm debug:miner
 ```
 
 ## Workspace Structure
@@ -40,25 +48,26 @@ packages/
 
 Run all scripts from the workspace root.
 
-| Script                 | Description                             |
-| ---------------------- | --------------------------------------- |
-| `pnpm test`            | Run all tests                           |
-| `pnpm test:watch`      | Run tests in watch mode                 |
-| `pnpm test:ui`         | Open the Vitest UI                      |
-| `pnpm lint`            | Lint source files with oxlint           |
-| `pnpm lint:fix`        | Lint and auto-fix                       |
-| `pnpm fmt`             | Check formatting with oxfmt             |
-| `pnpm fmt:fix`         | Auto-format source files                |
-| `pnpm app:bank`        | Start the bank server                   |
-| `pnpm app:miner`       | Start the miner                         |
-| `pnpm typecheck:bank`  | Type-check the bank package             |
-| `pnpm typecheck:miner` | Type-check the miner package            |
-| `pnpm debug:bank`      | Start the bank with the Node inspector  |
-| `pnpm debug:miner`     | Start the miner with the Node inspector |
+| Script                 | Description                                                |
+| ---------------------- | ---------------------------------------------------------- |
+| `pnpm build`           | Compile all packages (common → bank → miner)               |
+| `pnpm test`            | Run all tests                                              |
+| `pnpm test:watch`      | Run tests in watch mode                                    |
+| `pnpm test:ui`         | Open the Vitest UI                                         |
+| `pnpm lint`            | Lint source files with oxlint                              |
+| `pnpm lint:fix`        | Lint and auto-fix                                          |
+| `pnpm fmt`             | Check formatting with oxfmt                                |
+| `pnpm fmt:fix`         | Auto-format source files                                   |
+| `pnpm app:bank`        | Start the bank server (runs compiled `dist/server.js`)     |
+| `pnpm app:miner`       | Start the miner (runs compiled `dist/index.js`)            |
+| `pnpm typecheck:bank`  | Type-check the bank package                                |
+| `pnpm typecheck:miner` | Type-check the miner package                               |
+| `pnpm debug:bank`      | Start the bank via tsx against source with Node inspector  |
+| `pnpm debug:miner`     | Start the miner via tsx against source with Node inspector |
 
 ## Testing
 
-[Vitest](https://vitest.dev) is the test runner. No compilation step is required — tests run directly against the TypeScript source via `tsx`.
+[Vitest](https://vitest.dev) is the test runner. Tests run directly against TypeScript source files — no build step required. Vitest uses esbuild internally for transforms and respects the workspace `tsconfig.json` for path alias resolution.
 
 Coverage is provided by `@vitest/coverage-v8`.
 
@@ -76,11 +85,30 @@ pnpm --filter @blockchain/bank test
 pnpm --filter @blockchain/miner test
 ```
 
-## Compilation
+## Build
 
-There is no compilation step. The apps run TypeScript source directly at runtime via `tsx`.
+All packages are compiled using [tsup](https://tsup.egoist.dev) (esbuild-based). Run from the workspace root:
 
-`typecheck:bank` and `typecheck:miner` run type-checking only (`tsc --noEmit`) — no JavaScript output is produced. These are used in CI to catch type errors before deployment.
+```bash
+pnpm build
+```
+
+This compiles packages in order:
+
+1. **`common`** — compiled as unbundled ESM with `.d.ts` type declarations to `dist/`
+2. **`bank`** — compiled as a single bundled ESM file to `dist/server.js`
+3. **`miner`** — compiled as a single bundled ESM file to `dist/index.js`
+
+`bank` and `miner` bundle all dependencies including `@blockchain/common` into a single self-contained file. The only runtime requirement is Node.js — no `node_modules` directory is needed in production.
+
+`pnpm app:bank` and `pnpm app:miner` run the compiled output directly via `node`. The `debug:bank` and `debug:miner` scripts bypass the build step and run TypeScript source directly via `tsx` for fast local iteration.
+
+Type checking is separate from compilation. Run `tsc` via the typecheck scripts to catch type errors — tsup strips types without checking them:
+
+```bash
+pnpm typecheck:bank
+pnpm typecheck:miner
+```
 
 ## Common Workflows
 
@@ -128,8 +156,9 @@ pnpm --filter @blockchain/bank <script>
      "include": ["src/**/*"]
    }
    ```
-4. Create `packages/<name>/src/`
-5. Run `pnpm install` from the workspace root
+4. If the package needs to be built (i.e. it is consumed by other packages or deployed as a service), add `packages/<name>/tsup.config.ts` and a `build` script to its `package.json`. See `packages/miner/tsup.config.ts` as a reference for a bundled service, or `packages/common/tsup.config.ts` for an unbundled library.
+5. Create `packages/<name>/src/`
+6. Run `pnpm install` from the workspace root
 
 ## Docker
 
@@ -146,7 +175,7 @@ Images for this project can be found: https://hub.docker.com/r/exilesprx/blockch
 
 ### Run
 
-Apps run TypeScript source directly at runtime via `tsx`. No compilation to JavaScript is required.
+Production images run compiled JavaScript directly via `node`. No TypeScript tooling or `node_modules` directory is required in the production image — all dependencies are bundled into a single file at build time.
 
 ### Building images
 
