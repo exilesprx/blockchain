@@ -1,3 +1,4 @@
+import { env } from 'std-env';
 import Events from 'node:events';
 import Blockchain from '@blockchain/common/domain/chain/blockchain';
 import BlockAdded from '@blockchain/common/domain/events/block-added';
@@ -11,6 +12,8 @@ import BlockMined from '@blockchain/common/domain/events/block-mined';
 import TransactionConsumer from '@blockchain/common/infrastructure/stream/transaction-consumer';
 import AddTransactionFromConsumer from '@blockchain/common/commands/add-transaction-from-consumer';
 import Emitter from '@blockchain/common/events/emitter';
+import GelfTransport from '@blockchain/common/infrastructure/logs/transports/gelf';
+import Console from '@blockchain/common/infrastructure/logs/transports/console';
 
 export default class Miner {
   private emitter: Emitter;
@@ -18,7 +21,7 @@ export default class Miner {
   private producer: Producer;
 
   public constructor() {
-    const logger = new Logger([]);
+    const logger = new Logger(this.logTransports());
     const chain = new Blockchain();
     const pool = new TransactionPool();
     const stream = new Stream(new KafkaLogger(logger));
@@ -44,5 +47,19 @@ export default class Miner {
     await this.consumer.connect();
     await this.consumer.run();
     await this.producer.connect();
+  }
+
+
+  private logTransports(): (Console | GelfTransport)[] {
+    if (env.GRAYLOG_HOST == 'undefined' && env.GRAYLOG_PORT == 'undefined') {
+      console.log(
+        'Gelf settings: ',
+        String(env.GRAYLOG_HOST),
+        String(env.GRAYLOG_PORT)
+      );
+      return [new GelfTransport()];
+    }
+
+    return [new Console()];
   }
 }

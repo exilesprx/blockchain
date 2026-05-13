@@ -13,8 +13,7 @@
   "dependencies": {
     "@blockchain/common": "workspace:*",
     "h3": "^1.15.11",
-    "listhen": "^1.10.0",
-    "std-env": "^4.1.0"
+    "listhen": "^1.10.0"
   },
   "devDependencies": {
     "tsx": "^4.21.0"

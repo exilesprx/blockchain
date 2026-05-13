@@ -11,6 +11,9 @@ importers:
       '@tsconfig/node24':
         specifier: ^24.0.4
         version: 24.0.4
+      std-env:
+        specifier: ^4.1.0
+        version: 4.1.0
     devDependencies:
       '@faker-js/faker':
         specifier: ^10.4.0
@@ -54,9 +57,6 @@ importers:
       listhen:
         specifier: ^1.10.0
         version: 1.10.0
-      std-env:
-        specifier: ^4.1.0
-        version: 4.1.0
     devDependencies:
       tsx:
         specifier: ^4.21.0
