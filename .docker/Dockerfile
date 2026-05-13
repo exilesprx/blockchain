@@ -46,15 +46,11 @@ RUN pnpm run build
 
 FROM base AS bank
 ENV NODE_ENV=production
-ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
-ENV CI=true
 COPY --chmod=755 --chown=node:node --from=build /usr/app/packages/bank/dist/ /usr/app/
 ENTRYPOINT ["node", "/usr/app/server.js"]
 
 
 FROM base AS miner
 ENV NODE_ENV=production
-ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
-ENV CI=true
 COPY --chmod=755 --chown=node:node --from=build /usr/app/packages/miner/dist/ /usr/app/
 ENTRYPOINT ["node", "/usr/app/index.js"]
