@@ -95,11 +95,14 @@ pnpm build
 
 This compiles packages in order:
 
-1. **`common`** — compiled as unbundled ESM with `.d.ts` type declarations to `dist/`
-2. **`bank`** — compiled as a single bundled ESM file to `dist/server.js`
-3. **`miner`** — compiled as a single bundled ESM file to `dist/index.js`
+1. **`bank`** — compiled as a single bundled ESM file to `dist/server.js`
+2. **`miner`** — compiled as a single bundled ESM file to `dist/index.js`
 
 `bank` and `miner` bundle all dependencies including `@blockchain/common` into a single self-contained file. The only runtime requirement is Node.js — no `node_modules` directory is needed in production.
+
+It is also possible to compile `common` as an unbundled library with type declarations, which is useful for development and testing. This produces ESM output in `dist/` with accompanying `.d.ts` files, but does not bundle dependencies or produce a single file:
+
+1. **`common`** — compiled as unbundled ESM with `.d.ts` type declarations to `dist/`
 
 `pnpm app:bank` and `pnpm app:miner` run the compiled output directly via `node`. The `debug:bank` and `debug:miner` scripts bypass the build step and run TypeScript source directly via `tsx` for fast local iteration.
 
