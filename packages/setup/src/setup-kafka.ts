@@ -1,5 +1,7 @@
 import { Kafka } from 'kafkajs';
 import { env } from 'std-env';
+import TransactionTopic from '@blockchain/common/infrastructure/stream/topic/transaction';
+import BlockTopic from '@blockchain/common/infrastructure/stream/topic/block';
 
 const kafka = new Kafka({
   clientId: `${env.KAFKA_CLIENT_ID}`,
@@ -7,9 +9,13 @@ const kafka = new Kafka({
 });
 
 const topics = [
-  { topic: 'transaction-added', numPartitions: 1, replicationFactor: 1 },
-  { topic: 'block-added', numPartitions: 1, replicationFactor: 1 }
-]
+  {
+    topic: TransactionTopic.toString(),
+    numPartitions: 1,
+    replicationFactor: 1
+  },
+  { topic: BlockTopic.toString(), numPartitions: 1, replicationFactor: 1 }
+];
 
 const admin = kafka.admin();
 

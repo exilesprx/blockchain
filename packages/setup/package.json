@@ -1,0 +1,10 @@
+{
+  "name": "@blockchain/setup",
+  "type": "module",
+  "scripts": {
+    "setup:kafka": "tsx src/main.ts"
+  },
+  "dependencies": {
+    "@blockchain/common": "workspace:*"
+  }
+}

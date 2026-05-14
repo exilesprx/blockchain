@@ -22,7 +22,7 @@
     "build:bank": "pnpm --filter @blockchain/bank build",
     "build:miner": "pnpm --filter @blockchain/miner build",
     "build:common": "pnpm --filter @blockchain/common build",
-    "setup:topics": "tsx scripts/main.ts"
+    "setup": "pnpm --filter @blockchain/setup setup:kafka"
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
