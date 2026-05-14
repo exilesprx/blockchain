@@ -1,5 +1,6 @@
 import { Kafka } from 'kafkajs';
 import { env } from 'std-env';
+import Logger from '@blockchain/common/infrastructure/logs/logger';
 import TransactionTopic from '@blockchain/common/infrastructure/stream/topic/transaction';
 import BlockTopic from '@blockchain/common/infrastructure/stream/topic/block';
 
@@ -10,16 +11,16 @@ const kafka = new Kafka({
 
 const topics = [
   {
-    topic: TransactionTopic.toString(),
+    topic: new TransactionTopic().toString(),
     numPartitions: 1,
     replicationFactor: 1
   },
-  { topic: BlockTopic.toString(), numPartitions: 1, replicationFactor: 1 }
+  { topic: new BlockTopic().toString(), numPartitions: 1, replicationFactor: 1 }
 ];
 
 const admin = kafka.admin();
 
-async function createTopics(): Promise<void> {
+async function createTopics(logger: Logger): Promise<void> {
   await admin.connect();
 
   try {
@@ -27,7 +28,7 @@ async function createTopics(): Promise<void> {
       waitForLeaders: true,
       topics: topics
     });
-    console.log('Topics created');
+    logger.info('Topics created');
   } finally {
     await admin.disconnect();
   }
