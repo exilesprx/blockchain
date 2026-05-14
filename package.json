@@ -20,7 +20,8 @@
     "debug:miner": "pnpm --filter @blockchain/miner debug",
     "build": "pnpm --filter bank build && pnpm --filter miner build",
     "build:bank": "pnpm --filter @blockchain/bank build",
-    "build:miner": "pnpm --filter @blockchain/miner build"
+    "build:miner": "pnpm --filter @blockchain/miner build",
+    "build:common": "pnpm --filter @blockchain/common build"
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
