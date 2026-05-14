@@ -12,7 +12,6 @@
     "crypto-js": "^4.2.0",
     "destr": "^2.0.5",
     "fast-json-stable-stringify": "^2.1.0",
-    "kafkajs": "^2.2.4",
     "std-env": "^4.1.0",
     "uuid": "^14.0.0",
     "winston": "^3.19.0",

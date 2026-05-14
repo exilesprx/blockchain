@@ -30,6 +30,9 @@ importers:
       globals:
         specifier: ^17.6.0
         version: 17.6.0
+      kafkajs:
+        specifier: ^2.2.4
+        version: 2.2.4
       oxfmt:
         specifier: ^0.48.0
         version: 0.48.0
@@ -79,9 +82,6 @@ importers:
       fast-json-stable-stringify:
         specifier: ^2.1.0
         version: 2.1.0
-      kafkajs:
-        specifier: ^2.2.4
-        version: 2.2.4
       std-env:
         specifier: ^4.1.0
         version: 4.1.0

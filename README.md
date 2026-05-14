@@ -9,6 +9,7 @@ This blockchain is for educational purposes only and should not be used for prod
 
 - Node.js >= 24
 - pnpm
+- docker compose
 
 ## Getting Started
 
@@ -16,6 +17,12 @@ This blockchain is for educational purposes only and should not be used for prod
 git clone https://github.com/exilesprx/blockchain.git
 cd blockchain
 pnpm install
+```
+
+To create the kafka topics, run the following command:
+
+```bash
+pnpm run setup:topics
 ```
 
 To run the bank or miner locally, build first then start:

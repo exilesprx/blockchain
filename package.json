@@ -21,7 +21,8 @@
     "build": "pnpm --filter bank build && pnpm --filter miner build",
     "build:bank": "pnpm --filter @blockchain/bank build",
     "build:miner": "pnpm --filter @blockchain/miner build",
-    "build:common": "pnpm --filter @blockchain/common build"
+    "build:common": "pnpm --filter @blockchain/common build",
+    "setup:topics": "tsx scripts/main.ts"
   },
   "author": "Exilesprx <exiles.prx@gmail.com>",
   "license": "ISC",
@@ -36,6 +37,7 @@
     "@vitest/coverage-v8": "^4.1.5",
     "@vitest/ui": "^4.1.5",
     "globals": "^17.6.0",
+    "kafkajs": "^2.2.4",
     "oxfmt": "^0.48.0",
     "oxlint": "^1.63.0",
     "tsup": "^8.5.1",
