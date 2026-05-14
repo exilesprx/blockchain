@@ -9,26 +9,33 @@ const kafka = new Kafka({
   brokers: [`${env.KAFKA_HOST}:${env.KAFKA_PORT}`]
 });
 
-const topics = [
-  {
-    topic: new TransactionTopic().toString(),
-    numPartitions: 1,
-    replicationFactor: 1
-  },
-  { topic: new BlockTopic().toString(), numPartitions: 1, replicationFactor: 1 }
-];
-
 const admin = kafka.admin();
 
 async function createTopics(logger: Logger): Promise<void> {
   await admin.connect();
 
   try {
-    await admin.createTopics({
+    const existing = await admin.listTopics();
+    const topics = [
+      new TransactionTopic().toString(),
+      new BlockTopic().toString()
+    ]
+      .filter((t) => !existing.includes(t))
+      .map((t) => ({ topic: t, numPartitions: 1, replicationFactor: 1 }));
+
+    if (topics.length === 0) {
+      logger.info('All Kafka topics already exist, no topics created.');
+      return;
+    }
+
+    const created = await admin.createTopics({
       waitForLeaders: true,
       topics: topics
     });
-    logger.info('Topics created');
+
+    if (created) {
+      logger.info(`Topics created: ${topics.map((t) => t.topic).join(',')}`);
+    }
   } finally {
     await admin.disconnect();
   }
