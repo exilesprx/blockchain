@@ -47,7 +47,7 @@ services:
     command: pnpm run app:miner
 
   eventstore.db:
-    image: eventstore/eventstore:20.10.2-buster-slim
+    image: eventstore/eventstore:24.10
     env_file:
       - .env
     ports:
