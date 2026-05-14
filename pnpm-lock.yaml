@@ -14,6 +14,9 @@ importers:
       std-env:
         specifier: ^4.1.0
         version: 4.1.0
+      tsx:
+        specifier: ^4.21.0
+        version: 4.21.0
     devDependencies:
       '@faker-js/faker':
         specifier: ^10.4.0
@@ -60,10 +63,6 @@ importers:
       listhen:
         specifier: ^1.10.0
         version: 1.10.0
-    devDependencies:
-      tsx:
-        specifier: ^4.21.0
-        version: 4.21.0
 
   packages/common:
     dependencies:
@@ -107,10 +106,6 @@ importers:
       '@blockchain/common':
         specifier: workspace:*
         version: link:../common
-    devDependencies:
-      tsx:
-        specifier: ^4.21.0
-        version: 4.21.0
 
   packages/setup:
     dependencies:

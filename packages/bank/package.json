@@ -4,7 +4,6 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts",
-    "serve": "node dist/server.js",
     "typecheck": "tsc --project tsconfig.json",
     "test": "vitest run",
     "debug": "NODE_ENV=development listhen -w src/index.ts",
@@ -14,8 +13,5 @@
     "@blockchain/common": "workspace:*",
     "h3": "^1.15.11",
     "listhen": "^1.10.0"
-  },
-  "devDependencies": {
-    "tsx": "^4.21.0"
   }
 }
