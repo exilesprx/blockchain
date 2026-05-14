@@ -6,5 +6,6 @@ export default defineConfig({
   platform: 'node',
   bundle: false,
   dts: true, // needed since bank and miner import from it
-  clean: true
+  clean: true,
+  minify: true
 });

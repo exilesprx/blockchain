@@ -8,6 +8,7 @@ export default defineConfig({
   noExternal: [/^(?!node:)/],
   clean: true,
   sourcemap: true,
+  minify: true,
   tsconfig: 'tsconfig.json',
   banner: {
     js: `import { createRequire } from 'module'; const require = createRequire(import.meta.url);`
