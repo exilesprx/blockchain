@@ -2,7 +2,9 @@
   "name": "@blockchain/bank",
   "version": "0.1.0",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "serve": "tsx src/server.ts",
     "typecheck": "tsc --project tsconfig.json",

@@ -3,15 +3,9 @@
   "compilerOptions": {
     "noEmit": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@blockchain/common/*": [
-        "../common/src/*"
-      ]
+      "@/*": ["./src/*"],
+      "@blockchain/common/*": ["../common/src/*"]
     }
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

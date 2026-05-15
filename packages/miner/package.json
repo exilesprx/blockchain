@@ -2,7 +2,9 @@
   "name": "@blockchain/miner",
   "version": "0.1.0",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "serve": "tsx src/index.ts",
     "typecheck": "tsc --project tsconfig.json",
