@@ -65,12 +65,12 @@ Run all scripts from the workspace root.
 | `pnpm lint:fix`        | Lint and auto-fix                                          |
 | `pnpm fmt`             | Check formatting with oxfmt                                |
 | `pnpm fmt:fix`         | Auto-format source files                                   |
-| `pnpm app:bank`        | Start the bank server (runs compiled `dist/server.js`)     |
-| `pnpm app:miner`       | Start the miner (runs compiled `dist/index.js`)            |
 | `pnpm typecheck:bank`  | Type-check the bank package                                |
 | `pnpm typecheck:miner` | Type-check the miner package                               |
 | `pnpm debug:bank`      | Start the bank via tsx against source with Node inspector  |
 | `pnpm debug:miner`     | Start the miner via tsx against source with Node inspector |
+| `pnpm serve:bank`      | Start the bank via tsx against source (no inspector)       |
+| `pnpm serve:miner`     | Start the miner via tsx against source (no inspector)      |
 
 ## Testing
 
@@ -110,8 +110,6 @@ This compiles packages in order:
 It is also possible to compile `common` as an unbundled library with type declarations, which is useful for development and testing. This produces ESM output in `dist/` with accompanying `.d.ts` files, but does not bundle dependencies or produce a single file:
 
 1. **`common`** — compiled as unbundled ESM with `.d.ts` type declarations to `dist/`
-
-`pnpm app:bank` and `pnpm app:miner` run the compiled output directly via `node`. The `debug:bank` and `debug:miner` scripts bypass the build step and run TypeScript source directly via `tsx` for fast local iteration.
 
 Type checking is separate from compilation. Run `tsc` via the typecheck scripts to catch type errors — tsup strips types without checking them:
 
@@ -180,6 +178,7 @@ Images for this project can be found: https://hub.docker.com/r/exilesprx/blockch
 - `base` — sets `NODE_ENV`, user, and working directory
 - `pnpm` — installs pnpm
 - `dev` — full install of all dependencies (used for local development and CI)
+- `build` - compiles bank and miner packages via `pnpm build` (used for production builds)
 - `bank` — production image for the bank app
 - `miner` — production image for the miner app
 
