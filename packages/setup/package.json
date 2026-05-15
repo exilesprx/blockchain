@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@blockchain/common": "workspace:*",
-    "kafkajs": "catalog:"
+    "kafkajs": "catalog:",
+    "std-env": "catalog:"
   }
 }
