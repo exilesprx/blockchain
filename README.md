@@ -46,9 +46,10 @@ This is a pnpm monorepo containing three packages:
 
 ```
 packages/
-  common/    @blockchain/common    shared domain logic, infrastructure, and events
+  common/    @blockchain/common    Shared domain logic, infrastructure, and events
   bank/      @blockchain/bank      HTTP API for submitting transactions
   miner/     @blockchain/miner     Kafka consumer that mines blocks
+  setup/     @blockchain/setup     Setup tools for creating Kafka topics and other infrastructure
 ```
 
 ## Scripts
