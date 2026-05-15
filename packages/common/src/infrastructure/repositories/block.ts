@@ -1,4 +1,4 @@
-import { jsonEvent } from '@eventstore/db-client';
+import { jsonEvent } from '@kurrent/kurrentdb-client';
 import Blockchain from '@blockchain/common/domain/chain/blockchain';
 import Database from '@blockchain/common/infrastructure/database/index';
 import BlockEvent from '@blockchain/common/infrastructure/database/models/block';

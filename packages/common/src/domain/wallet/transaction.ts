@@ -1,4 +1,4 @@
-import SHA256 from 'crypto-js/sha256';
+import SHA256 from 'crypto-js/sha256.js';
 import { Transaction as TransactionContract } from '@blockchain/common/infrastructure/database/models/transaction';
 
 export default class Transaction {

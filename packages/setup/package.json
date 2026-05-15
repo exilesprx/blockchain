@@ -5,6 +5,7 @@
     "setup:kafka": "tsx src/main.ts"
   },
   "dependencies": {
-    "@blockchain/common": "workspace:*"
+    "@blockchain/common": "workspace:*",
+    "kafkajs": "catalog:"
   }
 }

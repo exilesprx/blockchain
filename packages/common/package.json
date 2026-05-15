@@ -2,23 +2,27 @@
   "name": "@blockchain/common",
   "version": "0.1.0",
   "type": "module",
+  "exports": {
+    "./infrastructure/database": "./dist/infrastructure/database/index.js",
+    "./*": [
+      "./dist/*.js",
+      "./dist/*/index.js"
+    ]
+  },
   "scripts": {
     "test": "vitest run",
     "build": "tsup"
   },
   "dependencies": {
-    "@eventstore/db-client": "^6.2.1",
+    "@kurrent/kurrentdb-client": "~1.1.2",
     "consola": "^3.4.2",
     "crypto-js": "^4.2.0",
     "destr": "^2.0.5",
     "fast-json-stable-stringify": "^2.1.0",
-    "std-env": "^4.1.0",
+    "kafkajs": "catalog:",
+    "std-env": "catalog:",
     "uuid": "^14.0.0",
     "winston": "^3.19.0",
     "winston-transport": "^4.9.0"
-  },
-  "devDependencies": {
-    "@faker-js/faker": "^10.3.0",
-    "@types/crypto-js": "^4.2.2"
   }
 }

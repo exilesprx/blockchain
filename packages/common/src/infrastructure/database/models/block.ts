@@ -1,4 +1,4 @@
-import { JSONEventType } from '@eventstore/db-client';
+import { JSONEventType } from '@kurrent/kurrentdb-client';
 import { Transaction as TransactionContract } from '@blockchain/common/infrastructure/database/models/transaction';
 
 export type Block = {

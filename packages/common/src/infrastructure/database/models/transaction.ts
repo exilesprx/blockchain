@@ -1,4 +1,4 @@
-import { JSONEventType } from '@eventstore/db-client';
+import { JSONEventType } from '@kurrent/kurrentdb-client';
 
 export type Transaction = {
   id: string;

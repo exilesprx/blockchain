@@ -1,7 +1,7 @@
-import { EventData, EventStoreDBClient } from '@eventstore/db-client';
+import { EventData, KurrentDBClient } from '@kurrent/kurrentdb-client';
 
 export default class Database {
-  private client: EventStoreDBClient | null;
+  private client: KurrentDBClient | null;
   private host: string;
   private port: number;
   private insecure: boolean;
@@ -14,14 +14,7 @@ export default class Database {
   }
 
   public connect() {
-    this.client = new EventStoreDBClient(
-      {
-        endpoint: `${this.host}:${this.port}`
-      },
-      {
-        insecure: this.insecure
-      }
-    );
+    this.client = KurrentDBClient.connectionString`kurrentdb://${this.host}:${this.port}?tls=${this.insecure}`;
   }
 
   public async persist(event: EventData) {

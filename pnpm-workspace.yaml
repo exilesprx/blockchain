@@ -1,6 +1,12 @@
 packages:
   - 'packages/*'
 
+catalog:
+  kafkajs: ^2.2.4
+  std-env: ^4.1.0
+
+injectWorkspacePackages: true
+
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true

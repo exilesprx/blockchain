@@ -42,15 +42,17 @@ COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/bank/node_mo
 COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/miner/node_modules /usr/app/packages/miner/node_modules
 COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/common/node_modules /usr/app/packages/common/node_modules
 RUN pnpm run build
+RUN pnpm --filter @blockchain/bank deploy --prod /usr/app/deploy/bank
+RUN pnpm --filter @blockchain/miner deploy --prod /usr/app/deploy/miner
 
 
 FROM base AS bank
 ENV NODE_ENV=production
-COPY --chmod=755 --chown=node:node --from=build /usr/app/packages/bank/dist/ /usr/app/
-ENTRYPOINT ["node", "/usr/app/server.js"]
+COPY --chmod=755 --chown=node:node --from=build /usr/app/deploy/bank/ /usr/app/
+ENTRYPOINT ["node", "/usr/app/dist/server.js"]
 
 
 FROM base AS miner
 ENV NODE_ENV=production
-COPY --chmod=755 --chown=node:node --from=build /usr/app/packages/miner/dist/ /usr/app/
-ENTRYPOINT ["node", "/usr/app/index.js"]
+COPY --chmod=755 --chown=node:node --from=build /usr/app/deploy/miner/ /usr/app/
+ENTRYPOINT ["node", "/usr/app/dist/index.js"]

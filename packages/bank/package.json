@@ -2,8 +2,9 @@
   "name": "@blockchain/bank",
   "version": "0.1.0",
   "type": "module",
+  "files": ["dist"],
   "scripts": {
-    "dev": "tsx src/server.ts",
+    "serve": "tsx src/server.ts",
     "typecheck": "tsc --project tsconfig.json",
     "test": "vitest run",
     "debug": "NODE_ENV=development listhen -w src/index.ts",
@@ -12,6 +13,7 @@
   "dependencies": {
     "@blockchain/common": "workspace:*",
     "h3": "^1.15.11",
-    "listhen": "^1.10.0"
+    "listhen": "^1.10.0",
+    "std-env": "catalog:"
   }
 }
