@@ -5,7 +5,8 @@ services:
       dockerfile: .docker/Dockerfile
       target: dev
     volumes:
-      - .:/usr/src/app
+      - .:/usr/app
+      - node_modules:/usr/app/node_modules
     entrypoint: pnpm run serve:bank
 
   miner:
@@ -14,5 +15,9 @@ services:
       dockerfile: .docker/Dockerfile
       target: dev
     volumes:
-      - .:/usr/src/app
+      - .:/usr/app
+      - node_modules:/usr/app/node_modules
     entrypoint: pnpm run serve:miner
+
+volumes:
+  node_modules:

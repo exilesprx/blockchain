@@ -20,7 +20,8 @@ FROM base AS dev
 ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
 ENV CI=true
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /home/node/.local/share/pnpm
-RUN pnpm install --frozen-lockfile
+RUN mkdir -p /usr/app/node_modules \
+  && chown -R node:node /usr/app/node_modules
 
 
 FROM base AS install
