@@ -19,15 +19,14 @@ RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(whic
 FROM base AS dev
 ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
 ENV CI=true
-COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
-COPY --chmod=755 --chown=node:node . /usr/app/
+COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /home/node/.local/share/pnpm
 RUN pnpm install --frozen-lockfile
 
 
 FROM base AS install
 ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
 ENV CI=true
-COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
+COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /home/node/.local/share/pnpm
 COPY --chmod=755 --chown=node:node . /usr/app/
 RUN pnpm install --frozen-lockfile
 
