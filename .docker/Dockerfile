@@ -41,9 +41,9 @@ COPY --chmod=755 --chown=node:node --from=install /usr/app/node_modules /usr/app
 COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/bank/node_modules /usr/app/packages/bank/node_modules
 COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/miner/node_modules /usr/app/packages/miner/node_modules
 COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/common/node_modules /usr/app/packages/common/node_modules
-RUN pnpm run build
-RUN pnpm --filter @blockchain/bank deploy --prod /usr/app/deploy/bank
-RUN pnpm --filter @blockchain/miner deploy --prod /usr/app/deploy/miner
+RUN pnpm run build \
+  && pnpm --filter @blockchain/bank deploy --prod /usr/app/deploy/bank \
+  && pnpm --filter @blockchain/miner deploy --prod /usr/app/deploy/miner
 
 
 FROM base AS bank
