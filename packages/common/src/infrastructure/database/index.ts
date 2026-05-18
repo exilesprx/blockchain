@@ -14,7 +14,7 @@ export default class Database {
   }
 
   public connect() {
-    this.client = KurrentDBClient.connectionString`kurrentdb://${this.host}:${this.port}?tls=${this.insecure}`;
+    this.client = KurrentDBClient.connectionString`kurrentdb://${this.host}:${this.port}?tls=${!this.insecure}`;
   }
 
   public async persist(event: EventData) {
