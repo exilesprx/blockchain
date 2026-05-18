@@ -9,6 +9,7 @@
     "serve": "tsx src/server.ts",
     "typecheck": "tsc --project tsconfig.json",
     "test": "vitest run",
+    "test:watch": "vitest watch",
     "debug": "NODE_ENV=development listhen -w src/index.ts",
     "build": "tsup"
   },

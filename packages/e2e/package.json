@@ -1,0 +1,15 @@
+{
+  "name": "@blockchain/e2e",
+  "version": "0.1.0",
+  "description": "End-to-end tests",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "devDependencies": {
+    "fast-json-stable-stringify": "catalog:",
+    "@kurrent/kurrentdb-client": "catalog:",
+    "std-env": "catalog:"
+  }
+}

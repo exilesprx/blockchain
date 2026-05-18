@@ -4,6 +4,8 @@ packages:
 catalog:
   kafkajs: ^2.2.4
   std-env: ^4.1.0
+  fast-json-stable-stringify: ^2.1.0
+  '@kurrent/kurrentdb-client': ~1.1.2
 
 injectWorkspacePackages: true
 

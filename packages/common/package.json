@@ -11,14 +11,15 @@
   },
   "scripts": {
     "test": "vitest run",
+    "test:watch": "vitest watch",
     "build": "tsup"
   },
   "dependencies": {
-    "@kurrent/kurrentdb-client": "~1.1.2",
+    "@kurrent/kurrentdb-client": "catalog:",
     "consola": "^3.4.2",
     "crypto-js": "^4.2.0",
     "destr": "^2.0.5",
-    "fast-json-stable-stringify": "^2.1.0",
+    "fast-json-stable-stringify": "catalog:",
     "kafkajs": "catalog:",
     "std-env": "catalog:",
     "uuid": "^14.0.0",
