@@ -1,0 +1,18 @@
+services:
+  bank:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: dev
+    volumes:
+      - .:/usr/src/app
+    entrypoint: pnpm run serve:bank
+
+  miner:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: dev
+    volumes:
+      - .:/usr/src/app
+    entrypoint: pnpm run serve:miner

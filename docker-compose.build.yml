@@ -1,6 +1,5 @@
 services:
   base:
-    image: exilesprx/blockchain:base
     build:
       context: .
       dockerfile: .docker/Dockerfile
