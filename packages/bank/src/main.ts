@@ -102,7 +102,9 @@ export default class Application {
     const action = new AddTransactionFromRequest(this.pool, repository);
     const transactionRoute = new TransactionRoute(action, this.logger);
 
-    this.server.post(TransactionRoute.getName(), [transactionRoute.getAction]);
+    this.server.post(TransactionRoute.getName(), [
+      (event) => transactionRoute.getAction(event)
+    ]);
   }
 
   private serverOptions(): ServerHooks {
