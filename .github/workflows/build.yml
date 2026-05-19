@@ -70,7 +70,7 @@ jobs:
         env:
           VERSION: main
         run: |
-          docker compose -f docker-compose.version.yml build bank
-          docker compose -f docker-compose.version.yml build miner
-          docker compose -f docker-compose.version.yml push bank
-          docker compose -f docker-compose.version.yml push miner
+          docker compose -f docker-compose.build.yml build bank
+          docker compose -f docker-compose.build.yml build miner
+          docker compose -f docker-compose.build.yml push bank
+          docker compose -f docker-compose.build.yml push miner

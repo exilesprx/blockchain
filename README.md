@@ -189,10 +189,10 @@ Production images run compiled JavaScript directly via `node`. No TypeScript too
 
 ### Building images
 
-Use `docker-compose.version.yml` to build versioned images for bank and miner:
+Use `docker-compose.build.yml` to build versioned images for bank and miner:
 
 ```bash
-VERSION=1.0.0 docker compose -f docker-compose.version.yml build
+VERSION=1.0.0 docker compose -f docker-compose.build.yml build
 ```
 
 This produces:
