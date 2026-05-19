@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: .docker/Dockerfile
       target: dev
-    command: pnpm run serve:bank
+    command: pnpm run watch:bank
     develop:
       watch:
         - action: sync
