@@ -1,6 +1,7 @@
 FROM node:26.1.0-bookworm-slim AS source
 FROM source AS base
 ENV NODE_ENV=development
+ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
 USER node
 WORKDIR /usr/app
 
@@ -17,15 +18,19 @@ RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(whic
 
 
 FROM base AS dev
-ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
 ENV CI=true
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /home/node/.local/share/pnpm
-RUN mkdir -p /usr/app/node_modules \
-  && chown -R node:node /usr/app/node_modules
+COPY --chmod=755 --chown=node:node package.json /usr/app/
+COPY --chmod=755 --chown=node:node pnpm-lock.yaml /usr/app/
+COPY --chmod=755 --chown=node:node pnpm-workspace.yaml /usr/app/
+COPY --chmod=755 --chown=node:node packages/bank/package.json /usr/app/packages/bank/
+COPY --chmod=755 --chown=node:node packages/miner/package.json /usr/app/packages/miner/
+COPY --chmod=755 --chown=node:node packages/common/package.json /usr/app/packages/common/
+RUN pnpm install --frozen-lockfile
+COPY --chmod=755 --chown=node:node . /usr/app/
 
 
 FROM base AS install
-ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
 ENV CI=true
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /home/node/.local/share/pnpm
 COPY --chmod=755 --chown=node:node . /usr/app/
@@ -33,7 +38,6 @@ RUN pnpm install --frozen-lockfile
 
 
 FROM base AS build
-ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
 ENV CI=true
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
 COPY --chmod=755 --chown=node:node . /usr/app/

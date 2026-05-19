@@ -4,20 +4,47 @@ services:
       context: .
       dockerfile: .docker/Dockerfile
       target: dev
-    volumes:
-      - .:/usr/app
-      - node_modules:/usr/app/node_modules
-    entrypoint: pnpm run serve:bank
+    command: pnpm run serve:bank
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /usr/app
+          initial_sync: true
+          ignore:
+            - node_modules
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: pnpm-lock.yaml
+        - action: rebuild
+          path: pnpm-workspace.yaml
+        - action: rebuild
+          path: packages/bank/package.json
+        - action: rebuild
+          path: packages/common/package.json
 
   miner:
     build:
       context: .
       dockerfile: .docker/Dockerfile
       target: dev
-    volumes:
-      - .:/usr/app
-      - node_modules:/usr/app/node_modules
-    entrypoint: pnpm run serve:miner
-
-volumes:
-  node_modules:
+    command: pnpm run serve:miner
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /usr/app
+          initial_sync: true
+          ignore:
+            - node_modules
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: pnpm-lock.yaml
+        - action: rebuild
+          path: pnpm-workspace.yaml
+        - action: rebuild
+          path: packages/miner/package.json
+        - action: rebuild
+          path: packages/common/package.json
