@@ -31,18 +31,20 @@ COPY --chmod=755 --chown=node:node . /usr/app/
 FROM base AS install
 ENV CI=true
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /home/node/.local/share/pnpm
+COPY pnpm-lock.yaml pnpm-workspace.yaml /usr/app/
 COPY --chmod=755 --chown=node:node . /usr/app/
-RUN pnpm install --frozen-lockfile
+RUN pnpm fetch \
+  && pnpm install -r --offline
 
 
 FROM base AS build
 ENV CI=true
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
-COPY --chmod=755 --chown=node:node . /usr/app/
 COPY --chmod=755 --chown=node:node --from=install /usr/app/node_modules /usr/app/node_modules
 COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/bank/node_modules /usr/app/packages/bank/node_modules
 COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/miner/node_modules /usr/app/packages/miner/node_modules
 COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/common/node_modules /usr/app/packages/common/node_modules
+COPY --chmod=755 --chown=node:node . /usr/app/
 RUN pnpm run build \
   && pnpm --filter @blockchain/bank deploy --prod /usr/app/deploy/bank \
   && pnpm --filter @blockchain/miner deploy --prod /usr/app/deploy/miner
