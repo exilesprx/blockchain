@@ -51,11 +51,6 @@ export default class Miner {
 
   private logTransports(): (Console | GelfTransport)[] {
     if (env.GRAYLOG_HOST == 'undefined' && env.GRAYLOG_PORT == 'undefined') {
-      console.log(
-        'Gelf settings: ',
-        String(env.GRAYLOG_HOST),
-        String(env.GRAYLOG_PORT)
-      );
       return [new GelfTransport()];
     }
 
