@@ -20,9 +20,7 @@ RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(whic
 FROM base AS dev
 ENV CI=true
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm /home/node/.local/share/pnpm
-COPY --chmod=755 --chown=node:node package.json /usr/app/
-COPY --chmod=755 --chown=node:node pnpm-lock.yaml /usr/app/
-COPY --chmod=755 --chown=node:node pnpm-workspace.yaml /usr/app/
+COPY --chmod=755 --chown=node:node package.json pnpm-lock.yaml pnpm-workspace.yaml /usr/app/
 COPY --chmod=755 --chown=node:node packages/bank/package.json /usr/app/packages/bank/
 COPY --chmod=755 --chown=node:node packages/miner/package.json /usr/app/packages/miner/
 COPY --chmod=755 --chown=node:node packages/common/package.json /usr/app/packages/common/
