@@ -33,7 +33,7 @@
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^25.9.2",
     "@vitest/coverage-v8": "^4.1.8",
-    "@vitest/ui": "^4.1.7",
+    "@vitest/ui": "^4.1.8",
     "globals": "^17.6.0",
     "oxfmt": "^0.52.0",
     "oxlint": "^1.68.0",
