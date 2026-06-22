@@ -1,4 +1,4 @@
-FROM node:26.3.0-bookworm-slim AS source
+FROM node:26.3.1-bookworm-slim AS source
 FROM source AS base
 ENV NODE_ENV=development
 ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
