@@ -50,7 +50,7 @@ export default class Miner {
   }
 
   private logTransports(): (Console | GelfTransport)[] {
-    if (env.GRAYLOG_HOST == 'undefined' && env.GRAYLOG_PORT == 'undefined') {
+    if (typeof env.GRAYLOG_HOST !== 'undefined' && typeof env.GRAYLOG_PORT !== 'undefined') {
       return [new GelfTransport()];
     }
 

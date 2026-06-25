@@ -3,7 +3,7 @@ import { Transaction as TransactionContract } from '@blockchain/common/infrastru
 import Event from '@blockchain/common/domain/events/event';
 
 export default class TransactionAdded extends Event {
-  private id: any;
+  private id: string;
   private to: string;
   private from: string;
   private amount: number;

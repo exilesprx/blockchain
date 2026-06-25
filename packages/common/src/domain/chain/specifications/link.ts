@@ -4,8 +4,8 @@ import Specification from '@blockchain/common/domain/chain/specifications/specif
 export default class Link implements Specification {
   private message = 'Incorrect block reference.';
 
-  public isSatisfiedBy(prevous: Block, current: Block): void {
-    if (prevous.getHash() !== current.getPreviousHash()) {
+  public isSatisfiedBy(previous: Block, current: Block): void {
+    if (previous.getHash() !== current.getPreviousHash()) {
       throw new Error(this.message);
     }
   }

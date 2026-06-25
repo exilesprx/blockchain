@@ -11,9 +11,9 @@ export default class AddBlockFromConsumer {
     this.repo = repo;
   }
 
-  public execute(block: Block): string {
+  public async execute(block: Block): Promise<string> {
     this.chain.addBlock(block);
-    this.repo.persist(this.chain);
+    await this.repo.persist(this.chain);
 
     return block.getHash();
   }

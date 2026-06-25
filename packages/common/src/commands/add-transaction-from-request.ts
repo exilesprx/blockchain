@@ -11,9 +11,9 @@ export default class AddTransactionFromRequest {
     this.repo = repo;
   }
 
-  public execute(transaction: Transaction): string {
+  public async execute(transaction: Transaction): Promise<string> {
     this.pool.fill(transaction);
-    this.repo.persist(this.pool);
+    await this.repo.persist(this.pool);
 
     return transaction.getHash();
   }

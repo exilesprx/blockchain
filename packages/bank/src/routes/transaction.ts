@@ -26,7 +26,7 @@ export default class Transaction {
         body.from,
         body.amount
       );
-      const hash = this.action.execute(transaction);
+      const hash = await this.action.execute(transaction);
 
       return { message: `Transaction ${hash} accepted.` };
     } catch (error) {

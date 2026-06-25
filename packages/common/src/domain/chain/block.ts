@@ -7,17 +7,17 @@ import Unmined from '@blockchain/common/domain/chain/state/unmined';
 import { Block as BlockContract } from '@blockchain/common/infrastructure/database/models/block';
 
 export default class Block {
+  private id: string;
+  private hash: string;
   private transactions: Transaction[];
-  private id: any;
   private nounce: number;
   private difficulty: number;
   private previousHash: string;
-  private hash: any;
   private date: number;
   private state: BlockState;
 
   constructor(
-    id: any,
+    id: string,
     nounce: number,
     difficulty: number,
     previousHash: string,
@@ -39,15 +39,20 @@ export default class Block {
   }
 
   public async mine(): Promise<void> {
+    let iterations = 0;
+
     while (
       !BlockMinedPolicy.containsSuccessiveChars(this.hash, this.difficulty)
     ) {
       this.nounce += 1;
       this.hash = this.generateHash();
+      iterations += 1;
+
+      if (iterations % 1000 === 0) {
+        await new Promise<void>((resolve) => setImmediate(resolve));
+      }
     }
     this.state = new Mined();
-
-    return Promise.resolve();
   }
 
   public getHash(): string {
@@ -58,7 +63,7 @@ export default class Block {
     return this.previousHash;
   }
 
-  public getKey(): any {
+  public getKey(): string {
     return this.id;
   }
 
@@ -79,7 +84,7 @@ export default class Block {
   }
 
   public isMined(): boolean {
-    return Mined.sameInstance(this.state);
+    return this.state.sameInstance(new Mined());
   }
 
   private generateHash(): string {

@@ -3,5 +3,9 @@ export default abstract class Event {
     return this.name;
   }
 
-  public abstract toJson(): any;
+  public toString(): string {
+    return this.constructor.name;
+  }
+
+  public abstract toJson(): Record<string, unknown>;
 }

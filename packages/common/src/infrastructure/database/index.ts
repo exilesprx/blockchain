@@ -19,7 +19,7 @@ export default class Database {
 
   public async persist(event: EventData) {
     if (!this.client) {
-      return;
+      throw new Error('Database not connected. Call connect() first.');
     }
     await this.client.appendToStream(event.type, event);
   }

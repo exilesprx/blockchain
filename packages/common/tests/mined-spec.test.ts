@@ -1,11 +1,12 @@
 import { describe, expect, vi, test } from 'vitest';
 
+import { v4 } from 'uuid';
 import Block from '@/domain/chain/block';
 import BlockMined from '@/domain/chain/specifications/mined';
 
 describe('Mined Specification', () => {
   test('it expects the specification is not satisfied', () => {
-    const block = new Block(1, 1, 1, 'test', [], 0);
+    const block = new Block(v4(), 1, 1, 'test', [], 0);
     const spec = new BlockMined();
     const fakeBlock = vi.mocked<Partial<Block>>({}) as Partial<Block>;
     vi.spyOn(block, 'isMined').mockImplementation(() => false);

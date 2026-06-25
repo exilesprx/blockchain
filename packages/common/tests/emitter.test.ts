@@ -1,5 +1,6 @@
 import { beforeAll, describe, expect, vi, test } from 'vitest';
 
+import { v4 } from 'uuid';
 import Events from 'events';
 import Block from '@/domain/chain/block';
 import Emitter from '@/events/emitter';
@@ -44,7 +45,8 @@ describe('Emitter', () => {
     const info = vi.spyOn(logger, 'info');
     const events = new Events();
     const emitter = new Emitter(events, producer, logger);
-    const block = new Block(1, 0, 0, 'test', [], 0);
+    const blockId = v4();
+    const block = new Block(blockId, 0, 0, 'test', [], 0);
     const event = new BlockAdded(block);
 
     emitter.blockAdded(event);
@@ -54,7 +56,7 @@ describe('Emitter', () => {
     );
     expect(sendBlock).toHaveBeenCalledWith(
       expect.objectContaining({
-        id: 1,
+        id: blockId,
         hash: block.getHash(),
         previousHash: 'test'
       })
@@ -67,13 +69,13 @@ describe('Emitter', () => {
     const producer = vi.mocked(Producer).mock.instances[0];
     const events = new Events();
     const emitter = new Emitter(events, producer, logger);
-    const block = new Block(1, 0, 0, 'test', [], 0);
+    const block = new Block(v4(), 0, 0, 'test', [], 0);
     const event = new BlockMined(block);
 
     emitter.blockMined(event);
 
     expect(info).toHaveBeenCalledWith(
-      expect.stringContaining(`${block.getKey()}`)
+      expect.stringContaining(`${block.getHash()}`)
     );
   });
 
@@ -83,8 +85,8 @@ describe('Emitter', () => {
     const err = vi.spyOn(logger, 'error');
     const events = new Events();
     const emitter = new Emitter(events, producer, logger);
-    const block = new Block(1, 0, 0, 'test', [], 0);
-    const event = new MineFailed(block, 'Failed to mine');
+    const block = new Block(v4(), 0, 0, 'test', [], 0);
+    const event = new MineFailed(block, new Error('Failed to mine'));
 
     emitter.mineFailed(event);
 

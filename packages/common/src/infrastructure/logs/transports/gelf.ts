@@ -14,7 +14,14 @@ enum GelfLogLevels {
 }
 
 export default class GelfTransport extends Transport {
-  public log(info: any, callback: () => void): void {
+  private client: dgram.Socket;
+
+  public constructor(options?: Transport.TransportStreamOptions) {
+    super(options);
+    this.client = dgram.createSocket('udp4');
+  }
+
+  public log(info: { message: string; level: string; extra?: Record<string, unknown> }, callback: () => void): void {
     setImmediate(() => {
       this.emit('logged', info);
     });
@@ -28,18 +35,14 @@ export default class GelfTransport extends Transport {
       ...info.extra
     });
 
-    const client = dgram.createSocket('udp4');
     const buf = Buffer.from(payload);
 
-    client.send(
+    this.client.send(
       buf,
       0,
       buf.length,
       Number(env.GRAYLOG_PORT),
-      env.GRAYLOG_HOST,
-      () => {
-        client.close();
-      }
+      env.GRAYLOG_HOST
     );
 
     callback();

@@ -3,7 +3,7 @@ import Transaction from '@blockchain/common/domain/wallet/transaction';
 import Event from '@blockchain/common/domain/events/event';
 
 export default class BlockAdded extends Event {
-  private id: any;
+  private id: string;
   private transactions: Transaction[];
   private nounce: number;
   private difficulty: number;
@@ -25,7 +25,9 @@ export default class BlockAdded extends Event {
   public toJson() {
     return {
       id: this.id,
-      transactions: this.transactions,
+      transactions: this.transactions.map((transaction: Transaction) =>
+        transaction.toJson()
+      ),
       nounce: this.nounce,
       difficulty: this.difficulty,
       previousHash: this.previousHash,

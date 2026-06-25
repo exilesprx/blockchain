@@ -12,8 +12,8 @@ export default class TransactionEventRepository {
     this.repo = repo;
   }
 
-  public persist(pool: TransactionPool): void {
-    this.repo.persist(pool);
+  public async persist(pool: TransactionPool): Promise<void> {
+    await this.repo.persist(pool);
     pool.flushEvents().forEach((event: Event) => {
       this.emitter.emit(event.toString(), event.toJson());
     });

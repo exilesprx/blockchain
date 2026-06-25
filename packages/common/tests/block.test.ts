@@ -42,7 +42,7 @@ describe('Block', () => {
     await block.mine();
     expect(BlockMinedPolicy.containsSuccessiveChars).toHaveBeenCalledWith(
       expect.any(String),
-      expect.any(Number)
+      1
     );
     expect(block.getHash()).not.toEqual(hash);
     expect(block.isMined()).toBe(true);
@@ -54,5 +54,16 @@ describe('Block', () => {
     expect(block.isMined()).toBe(false);
   });
 
-  test('it converts the data to an array', () => {});
+  test('it converts the data to a json object', () => {
+    const block = builder.withNoTransactions().build();
+    const json = block.toJson();
+
+    expect(json).toHaveProperty('id');
+    expect(json).toHaveProperty('transactions');
+    expect(json).toHaveProperty('nounce');
+    expect(json).toHaveProperty('difficulty');
+    expect(json).toHaveProperty('previousHash');
+    expect(json).toHaveProperty('hash');
+    expect(json).toHaveProperty('date');
+  });
 });

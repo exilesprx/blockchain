@@ -16,13 +16,13 @@ export default class KafkaLogger {
     this.logger = logger;
   }
 
-  public static toWinstonLogLevel(level: any): string {
+  public static toWinstonLogLevel(level: logLevel): string {
     return (
-      LogLevelDescriptions[level as keyof typeof LogLevelDescriptions] || 'info'
+      LogLevelDescriptions[level] ?? 'info'
     );
   }
 
-  public logCreator(info: any): void {
+  public logCreator(info: { level: logLevel; log: { message: string; [key: string]: unknown } }): void {
     const { level, log } = info;
     const { message, ...extra } = log;
     this.logger.log({

@@ -15,7 +15,7 @@ export default class TransactionConsumer extends Consumer {
   }
 
   public async run(): Promise<void> {
-    super.run(new TransactionTopic().toString());
+    await super.run(new TransactionTopic().toString());
   }
 
   protected async transformMessage(payload: EachMessagePayload): Promise<void> {

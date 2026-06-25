@@ -24,7 +24,7 @@ export default class Server {
     this.framework.use(this.router);
   }
 
-  public use(...handlers: any[]): void {
+  public use(...handlers: EventHandler[]): void {
     this.framework.use(handlers);
   }
 

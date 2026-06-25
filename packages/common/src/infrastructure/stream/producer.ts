@@ -14,18 +14,18 @@ export default class Producer {
   }
 
   public async connect(): Promise<void> {
-    this.producer.connect();
+    await this.producer.connect();
   }
 
-  public sendTransaction(transaction: TransactionContract): void {
-    this.producer.send({
+  public async sendTransaction(transaction: TransactionContract): Promise<void> {
+    await this.producer.send({
       topic: new TransactionTopic().toString(),
       messages: [{ key: transaction.id, value: stringify(transaction) }]
     });
   }
 
-  public sendBlock(block: BlockContract): void {
-    this.producer.send({
+  public async sendBlock(block: BlockContract): Promise<void> {
+    await this.producer.send({
       topic: new BlockTopic().toString(),
       messages: [{ key: block.id, value: stringify(block) }]
     });

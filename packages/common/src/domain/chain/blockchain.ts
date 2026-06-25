@@ -1,6 +1,5 @@
 import { v4 } from 'uuid';
 import BlockAdded from '@blockchain/common/domain/events/block-added';
-import MineFailed from '@blockchain/common/domain/events/mine-failed';
 import BlockMined from '@blockchain/common/domain/events/block-mined';
 import BlockLimitPolicy from '@blockchain/common/domain/policies/block-limit-policy';
 import Transaction from '@blockchain/common/domain/wallet/transaction';
@@ -32,18 +31,15 @@ export default class Blockchain implements BlockchainInterface {
       Date.now()
     );
 
-    try {
-      await block.mine();
-      this.addBlock(block);
-      this.events.push(new BlockMined(block));
-    } catch (error: any) {
-      this.events.push(new MineFailed(block, error));
-    }
+    await block.mine();
+    this.addBlock(block);
+    this.events.push(new BlockMined(block));
   }
 
   public addBlock(block: Block): void {
+    const previousBlock = this.getPreviousBlock();
     this.specifications.forEach((spec: Specification) => {
-      spec.isSatisfiedBy(this.getPreviousBlock(), block);
+      spec.isSatisfiedBy(previousBlock, block);
     });
 
     if (BlockLimitPolicy.reachedLimit(this)) {
@@ -73,7 +69,7 @@ export default class Blockchain implements BlockchainInterface {
     return this.getPreviousBlock().getHash();
   }
 
-  public flushEvents(): any[] {
+  public flushEvents(): Event[] {
     return this.events.splice(0, this.events.length);
   }
 }

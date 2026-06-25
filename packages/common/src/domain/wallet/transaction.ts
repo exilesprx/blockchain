@@ -5,7 +5,7 @@ export default class Transaction {
   private to: string;
   private from: string;
   private amount: number;
-  private id: any;
+  private id: string;
   private date: number;
   private hash: string;
 
@@ -34,7 +34,7 @@ export default class Transaction {
     return this.hash;
   }
 
-  public getKey(): any {
+  public getKey(): string {
     return this.id;
   }
 

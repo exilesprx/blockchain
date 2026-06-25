@@ -4,7 +4,7 @@ import Event from '@blockchain/common/domain/events/event';
 import { Block as BlockContract } from '@blockchain/common/infrastructure/database/models/block';
 
 export default class BlockMined extends Event {
-  private id: any;
+  private id: string;
   private transactions: Transaction[];
   private nounce: number;
   private difficulty: number;

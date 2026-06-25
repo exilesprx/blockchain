@@ -15,7 +15,7 @@ export default class BlockConsumer extends Consumer {
   }
 
   public async run(): Promise<void> {
-    super.run(new BlockTopic().toString());
+    await super.run(new BlockTopic().toString());
   }
 
   protected async transformMessage(payload: EachMessagePayload): Promise<void> {
@@ -25,6 +25,6 @@ export default class BlockConsumer extends Consumer {
     }
     const block = BlockTranslator.fromMessage(value);
 
-    this.action.execute(block);
+    await this.action.execute(block);
   }
 }

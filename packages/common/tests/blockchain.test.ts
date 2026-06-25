@@ -1,5 +1,6 @@
 import { beforeAll, describe, expect, vi, test } from 'vitest';
 
+import { v4 } from 'uuid';
 import Blockchain from '@/domain/chain/blockchain';
 import BlockLimitPolicy from '@/domain/policies/block-limit-policy';
 import Block from '@/domain/chain/block';
@@ -26,14 +27,14 @@ describe('Blockchain', () => {
     // The default is false, but we want to "fake" the chain being full
     vi.mocked(BlockLimitPolicy.reachedLimit).mockImplementationOnce(() => true);
 
-    chain.addBlock(new Block(1, 1, 1, 'test', [], 0));
+    chain.addBlock(new Block(v4(), 1, 1, 'test', [], 0));
 
     expect(chain.length()).toBe(1);
   });
 
   test('it expects to add a block', () => {
     const chain = new Blockchain();
-    chain.addBlock(new Block(1, 1, 1, 'test', [], 0));
+    chain.addBlock(new Block(v4(), 1, 1, 'test', [], 0));
 
     expect(chain.length()).toBe(2);
   });
@@ -41,7 +42,7 @@ describe('Blockchain', () => {
   test('it expects a specification to pass and add a new block', () => {
     const chain = new Blockchain();
     const link = new Link();
-    const block = new Block(1, 1, 1, 'test', [], 0);
+    const block = new Block(v4(), 1, 1, 'test', [], 0);
     vi.spyOn(link, 'isSatisfiedBy').mockImplementation(() => true);
 
     chain.addSpecification(link);
@@ -54,13 +55,13 @@ describe('Blockchain', () => {
     const chain = new Blockchain();
     chain.addSpecification(new Link());
 
-    expect(() => chain.addBlock(new Block(1, 1, 1, 'test', [], 0))).toThrow();
+    expect(() => chain.addBlock(new Block(v4(), 1, 1, 'test', [], 0))).toThrow();
     expect(chain.length()).toBe(1);
   });
 
   test('it expects an unmined block to be rejected from the chain', () => {
     const chain = new Blockchain();
-    const block = new Block(1, 1, 1, 'test', [], 0);
+    const block = new Block(v4(), 1, 1, 'test', [], 0);
     vi.spyOn(block, 'isMined').mockImplementation(() => false);
 
     chain.addSpecification(new BlockMined());
@@ -72,7 +73,7 @@ describe('Blockchain', () => {
   test('it expects the ability to add multiple specs at once', () => {
     const chain = new Blockchain();
     const link = new Link();
-    const block = new Block(1, 1, 1, 'test', [], 0);
+    const block = new Block(v4(), 1, 1, 'test', [], 0);
     const isSatisfiedBy = vi
       .spyOn(link, 'isSatisfiedBy')
       .mockImplementation(() => true);
@@ -85,7 +86,7 @@ describe('Blockchain', () => {
 
   test('it flushes the events', () => {
     const chain = new Blockchain();
-    const block = new Block(1, 1, 1, 'test', [], 0);
+    const block = new Block(v4(), 1, 1, 'test', [], 0);
     chain.addBlock(block);
 
     const events = chain.flushEvents();

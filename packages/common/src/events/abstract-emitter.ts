@@ -15,11 +15,11 @@ export default abstract class Emitter {
     this.logger = logger;
   }
 
-  public register(event: string, callback: any): void {
+  public register(event: string, callback: (...args: any[]) => void): void {
     this.emitter.on(event, callback);
   }
 
-  public emit(event: string, value: any): void {
+  public emit(event: string, value: unknown): void {
     this.emitter.emit(event, value);
   }
 
