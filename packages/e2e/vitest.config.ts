@@ -5,7 +5,7 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['src/**/*.test.ts'],
-    clearMocks: true,
+    clearMocks: true
   },
   resolve: {
     tsconfigPaths: true
