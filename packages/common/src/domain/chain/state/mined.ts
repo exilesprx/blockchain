@@ -1,7 +1,7 @@
 import BlockState from '@blockchain/common/domain/chain/state/block-state';
 
 export default class Mined implements BlockState {
-  public sameInstance(state: BlockState): boolean {
-    return state instanceof Mined;
+  public isMined(): boolean {
+    return true;
   }
 }

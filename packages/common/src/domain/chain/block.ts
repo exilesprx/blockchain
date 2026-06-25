@@ -84,7 +84,7 @@ export default class Block {
   }
 
   public isMined(): boolean {
-    return this.state.sameInstance(new Mined());
+    return this.state.isMined();
   }
 
   private generateHash(): string {
