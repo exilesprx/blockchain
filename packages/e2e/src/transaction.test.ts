@@ -32,7 +32,16 @@ describe('Transaction', () => {
     }
 
     expect(events.length).toBe(1);
-    const { amount, from, to } = events.at(0)?.event.data;
-    expect(amount).toBe(100);
+    const event = events.at(0)?.event;
+    if (event) {
+      const { amount } = event.data as {
+        amount: number;
+        from: string;
+        to: string;
+      };
+      expect(amount).toBe(100);
+    } else {
+      expect.fail('No event found in the transaction stream');
+    }
   });
 });
