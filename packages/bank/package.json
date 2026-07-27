@@ -17,7 +17,7 @@
   "dependencies": {
     "@blockchain/common": "workspace:*",
     "h3": "^1.15.11",
-    "listhen": "^1.10.0",
+    "listhen": "^1.10.1",
     "std-env": "catalog:"
   }
 }
