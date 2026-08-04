@@ -2,7 +2,7 @@ FROM node:26.5.1-bookworm-slim AS source
 FROM source AS base
 ENV NODE_ENV=development
 ENV PATH="/home/node/.local/share/pnpm/bin:$PATH"
-USER node
+USER 1000
 WORKDIR /usr/app
 
 
