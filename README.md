@@ -22,15 +22,15 @@ pnpm install
 To create the kafka topics, run the following command:
 
 ```bash
-pnpm run setup:topics
+pnpm setup
 ```
 
 To run the bank or miner locally, build first then start:
 
 ```bash
 pnpm build
-pnpm app:bank
-pnpm app:miner
+pnpm serve:bank
+pnpm serve:miner
 ```
 
 For fast local iteration without a build step, use the debug scripts:
@@ -42,7 +42,7 @@ pnpm debug:miner
 
 ## Workspace Structure
 
-This is a pnpm monorepo containing three packages:
+This is a pnpm monorepo containing four packages:
 
 ```
 packages/
@@ -66,12 +66,16 @@ Run all scripts from the workspace root.
 | `pnpm lint:fix`        | Lint and auto-fix                                          |
 | `pnpm fmt`             | Check formatting with oxfmt                                |
 | `pnpm fmt:fix`         | Auto-format source files                                   |
+| `pnpm typecheck`       | Type-check all packages                                    |
 | `pnpm typecheck:bank`  | Type-check the bank package                                |
 | `pnpm typecheck:miner` | Type-check the miner package                               |
 | `pnpm debug:bank`      | Start the bank via tsx against source with Node inspector  |
 | `pnpm debug:miner`     | Start the miner via tsx against source with Node inspector |
 | `pnpm serve:bank`      | Start the bank via tsx against source (no inspector)       |
 | `pnpm serve:miner`     | Start the miner via tsx against source (no inspector)      |
+| `pnpm watch:bank`      | Start the bank via tsx watch against source                |
+| `pnpm watch:miner`     | Start the miner via tsx watch against source               |
+| `pnpm setup`           | Create Kafka topics and other infrastructure               |
 
 ## Testing
 
@@ -101,22 +105,22 @@ All packages are compiled using [tsup](https://tsup.egoist.dev) (esbuild-based).
 pnpm build
 ```
 
-This compiles packages in order:
+Because `bank` and `miner` depend on `@blockchain/common`, pnpm compiles packages in topological order:
 
-1. **`bank`** — compiled as a single bundled ESM file to `dist/server.js`
-2. **`miner`** — compiled as a single bundled ESM file to `dist/index.js`
+1. **`common`** — compiled as unbundled ESM with `.d.ts` type declarations to `dist/`
+2. **`bank`** — compiled as a single bundled ESM file to `dist/server.js`
+3. **`miner`** — compiled as a single bundled ESM file to `dist/index.js`
 
 `bank` and `miner` bundle all dependencies including `@blockchain/common` into a single self-contained file. The only runtime requirement is Node.js — no `node_modules` directory is needed in production.
 
-It is also possible to compile `common` as an unbundled library with type declarations, which is useful for development and testing. This produces ESM output in `dist/` with accompanying `.d.ts` files, but does not bundle dependencies or produce a single file:
-
-1. **`common`** — compiled as unbundled ESM with `.d.ts` type declarations to `dist/`
+Individual packages can also be built on their own with `pnpm build:common`, `pnpm build:bank`, or `pnpm build:miner`. Building `bank` or `miner` automatically builds `common` first.
 
 Type checking is separate from compilation. Run `tsc` via the typecheck scripts to catch type errors — tsup strips types without checking them:
 
 ```bash
-pnpm typecheck:bank
-pnpm typecheck:miner
+pnpm typecheck           # all packages
+pnpm typecheck:bank      # bank only
+pnpm typecheck:miner     # miner only
 ```
 
 ## Common Workflows
