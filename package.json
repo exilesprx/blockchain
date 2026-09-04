@@ -32,15 +32,15 @@
     "@faker-js/faker": "^10.6.0",
     "@tsconfig/node24": "^24.0.5",
     "@types/crypto-js": "^4.2.2",
-    "@types/node": "^26.4.0",
-    "@vitest/coverage-v8": "^4.1.11",
-    "@vitest/ui": "^4.1.11",
-    "globals": "^17.11.0",
-    "oxfmt": "^0.65.0",
-    "oxlint": "^1.80.0",
+    "@types/node": "^26.4.1",
+    "@vitest/coverage-v8": "^5.0.0",
+    "@vitest/ui": "^5.0.0",
+    "globals": "^17.12.0",
+    "oxfmt": "^0.66.0",
+    "oxlint": "^1.81.0",
     "tsup": "^8.5.1",
-    "tsx": "^4.23.12",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.11"
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
   }
 }
