@@ -1,4 +1,4 @@
-import CryptoJS from 'crypto-js';
+import { createHash } from 'node:crypto';
 import BlockMinedPolicy from '@blockchain/common/domain/policies/block-mined-policy';
 import Transaction from '@blockchain/common/domain/wallet/transaction';
 import BlockState from '@blockchain/common/domain/chain/state/block-state';
@@ -93,9 +93,11 @@ export default class Block {
       transactionHashes += transaction.getHash();
     });
 
-    return CryptoJS.SHA256(
-      `${transactionHashes}${this.id}${this.nounce}${this.difficulty}${this.previousHash}${this.difficulty}${this.date}`
-    ).toString();
+    return createHash('sha256')
+      .update(
+        `${transactionHashes}${this.id}${this.nounce}${this.difficulty}${this.previousHash}${this.difficulty}${this.date}`
+      )
+      .digest('hex');
   }
 
   protected determineState(hash: string): BlockState {

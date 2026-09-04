@@ -17,7 +17,6 @@
   "dependencies": {
     "@kurrent/kurrentdb-client": "catalog:",
     "consola": "^3.4.2",
-    "crypto-js": "^4.2.0",
     "destr": "^2.0.5",
     "fast-json-stable-stringify": "catalog:",
     "kafkajs": "catalog:",

@@ -1,4 +1,4 @@
-import SHA256 from 'crypto-js/sha256.js';
+import { createHash } from 'node:crypto';
 import { Transaction as TransactionContract } from '@blockchain/common/infrastructure/database/models/transaction';
 
 export default class Transaction {
@@ -25,9 +25,9 @@ export default class Transaction {
   }
 
   private generateHash(): string {
-    return SHA256(
-      `${this.to}${this.from}${this.amount}${this.id}${this.date}`
-    ).toString();
+    return createHash('sha256')
+      .update(`${this.to}${this.from}${this.amount}${this.id}${this.date}`)
+      .digest('hex');
   }
 
   public getHash(): string {
