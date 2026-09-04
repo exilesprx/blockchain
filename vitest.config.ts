@@ -1,21 +1,8 @@
-import { defineConfig } from 'vitest/config';
+import { mergeConfig } from 'vitest/config';
+import shared from './vitest.shared.config';
 
-export default defineConfig({
+export default mergeConfig(shared, {
   test: {
-    globals: true,
-    environment: 'node',
-    include: ['tests/**/*.test.ts'],
-    coverage: {
-      enabled: true,
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-      include: ['src/**/*.ts'],
-      exclude: ['node_modules/**', 'tests/**', '**/*.test.ts', '**/*.d.ts']
-    },
-    clearMocks: true,
     projects: ['packages/common', 'packages/bank']
-  },
-  resolve: {
-    tsconfigPaths: true
   }
 });
