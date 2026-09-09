@@ -111,7 +111,7 @@ Because `bank` and `miner` depend on `@blockchain/common`, pnpm compiles package
 2. **`bank`** — compiled as a single bundled ESM file to `dist/server.js`
 3. **`miner`** — compiled as a single bundled ESM file to `dist/index.js`
 
-`bank` and `miner` bundle all dependencies including `@blockchain/common` into a single self-contained file. The only runtime requirement is Node.js — no `node_modules` directory is needed in production.
+`bank` and `miner` bundle third-party dependencies into a single file, but `@blockchain/common` is externalized as an import. In production, `@blockchain/common` must be present in `node_modules/` — the Docker build handles this via `pnpm deploy`.
 
 Individual packages can also be built on their own with `pnpm build:common`, `pnpm build:bank`, or `pnpm build:miner`. Building `bank` or `miner` automatically builds `common` first.
 
@@ -179,7 +179,7 @@ Images for this project can be found: https://hub.docker.com/r/exilesprx/blockch
 
 ### Stages
 
-- `source` — base Node image (`node:25.8.2-bookworm-slim`)
+- `source` — base Node image (`node:26.8.1-bookworm-slim`)
 - `base` — sets `NODE_ENV`, user, and working directory
 - `pnpm` — installs pnpm
 - `dev` — full install of all dependencies (used for local development and CI)

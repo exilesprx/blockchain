@@ -24,6 +24,8 @@ COPY --chmod=755 --chown=node:node package.json pnpm-lock.yaml pnpm-workspace.ya
 COPY --chmod=755 --chown=node:node packages/bank/package.json /usr/app/packages/bank/
 COPY --chmod=755 --chown=node:node packages/miner/package.json /usr/app/packages/miner/
 COPY --chmod=755 --chown=node:node packages/common/package.json /usr/app/packages/common/
+COPY --chmod=755 --chown=node:node packages/setup/package.json /usr/app/packages/setup/
+COPY --chmod=755 --chown=node:node packages/e2e/package.json /usr/app/packages/e2e/
 RUN pnpm install --frozen-lockfile
 COPY --chmod=755 --chown=node:node . /usr/app/
 
