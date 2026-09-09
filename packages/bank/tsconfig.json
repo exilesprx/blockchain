@@ -7,5 +7,5 @@
       "@blockchain/common/*": ["../common/src/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "tests/**/*"]
 }

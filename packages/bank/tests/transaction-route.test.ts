@@ -1,4 +1,5 @@
 import { describe, expect, vi, test, beforeAll } from 'vitest';
+import type { Mock } from 'vitest';
 
 import { H3Event, readBody } from 'h3';
 import TransactionRoute from '@/routes/transaction';
@@ -28,7 +29,7 @@ describe('Transaction route', () => {
     const execute = vi.spyOn(action, 'execute');
     const route = new TransactionRoute(action, {} as Logger);
     const event = { req: { method: 'POST' } } as H3Event;
-    (readBody as vi.Mock).mockImplementationOnce(() =>
+    (readBody as Mock).mockImplementationOnce(() =>
       Promise.resolve({ to: 'someone', from: 'someone-else', amount: 10 })
     );
 
@@ -48,7 +49,7 @@ describe('Transaction route', () => {
     const err = vi.spyOn(logger, 'error');
     const route = new TransactionRoute(action, logger);
     const event = { req: { method: 'POST' } } as H3Event;
-    (readBody as vi.Mock).mockImplementationOnce(() =>
+    (readBody as Mock).mockImplementationOnce(() =>
       Promise.resolve({ to: 'someone' })
     );
 

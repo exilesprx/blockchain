@@ -29,7 +29,7 @@ describe('Server', () => {
   });
 
   test('it expects to accept multiple handlers for post calls', () => {
-    const handlers: EventHandler[] = [vi.fn(), vi.fn()];
+    const handlers: EventHandler[] = [vi.fn<EventHandler>(), vi.fn<EventHandler>()];
     const server = new Server();
 
     server.post('test', [handlers.at(0)!, handlers.at(1)!]);
@@ -39,7 +39,7 @@ describe('Server', () => {
   });
 
   test('it expects to accept multiple handlers for get calls', () => {
-    const handlers: EventHandler[] = [vi.fn(), vi.fn()];
+    const handlers: EventHandler[] = [vi.fn<EventHandler>(), vi.fn<EventHandler>()];
     const server = new Server();
 
     server.get('test', [handlers.at(0)!, handlers.at(1)!]);
