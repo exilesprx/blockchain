@@ -8,6 +8,8 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "ignoreDeprecations": "6.0"
   }
 }

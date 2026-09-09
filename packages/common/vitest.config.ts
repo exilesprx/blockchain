@@ -1,1 +1,1 @@
-export { default } from '../../vitest.shared.config';
+export { default } from '../../vitest.shared.config.ts';

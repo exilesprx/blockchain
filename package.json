@@ -1,6 +1,7 @@
 {
   "name": "blockchain",
   "private": true,
+  "type": "module",
   "description": "Blockchain implementation for fun.",
   "scripts": {
     "test": "vitest run",
