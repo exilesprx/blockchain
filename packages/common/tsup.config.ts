@@ -5,7 +5,7 @@ export default defineConfig({
   format: ['esm'],
   platform: 'node',
   bundle: false,
-  dts: true, // needed since bank and miner import from it
+  dts: false,
   clean: true,
   minify: true
 });

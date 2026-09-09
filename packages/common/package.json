@@ -12,7 +12,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "build": "tsup"
+    "build": "tsup && tsc --emitDeclarationOnly --project tsconfig.build.json"
   },
   "dependencies": {
     "@kurrent/kurrentdb-client": "catalog:",
