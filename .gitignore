@@ -14,3 +14,5 @@ coverage/
 
 # Workspace dist directories (if we build in the future)
 packages/*/dist/
+
+.specs/plans
