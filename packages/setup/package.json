@@ -2,6 +2,7 @@
   "name": "@blockchain/setup",
   "type": "module",
   "scripts": {
+    "typecheck": "tsc --project tsconfig.json --noEmit",
     "setup:kafka": "tsx src/main.ts"
   },
   "dependencies": {

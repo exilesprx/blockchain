@@ -107,7 +107,7 @@ pnpm build
 
 Because `bank` and `miner` depend on `@blockchain/common`, pnpm compiles packages in topological order:
 
-1. **`common`** — compiled as unbundled ESM with `.d.ts` type declarations to `dist/`
+1. **`common`** — compiled as unbundled ESM with `.d.ts` type declarations emitted by `tsc --emitDeclarationOnly` to `dist/`
 2. **`bank`** — compiled as a single bundled ESM file to `dist/server.js`
 3. **`miner`** — compiled as a single bundled ESM file to `dist/index.js`
 
@@ -183,13 +183,14 @@ Images for this project can be found: https://hub.docker.com/r/exilesprx/blockch
 - `base` — sets `NODE_ENV`, user, and working directory
 - `pnpm` — installs pnpm
 - `dev` — full install of all dependencies (used for local development and CI)
+- `install` — offline install via `pnpm fetch` + `pnpm install -r --offline` (pnpm version pinned by `packageManager` in `package.json`)
 - `build` - compiles bank and miner packages via `pnpm build` (used for production builds)
 - `bank` — production image for the bank app
 - `miner` — production image for the miner app
 
 ### Run
 
-Production images run compiled JavaScript directly via `node`. No TypeScript tooling or `node_modules` directory is required in the production image — all dependencies are bundled into a single file at build time.
+Production images run compiled JavaScript directly via `node`. No TypeScript tooling is needed in the production image. Bank and miner bundles are self-contained except for `@blockchain/common`, which is externalized and shipped via the `pnpm deploy` pruned `node_modules/`.
 
 ### Building images
 

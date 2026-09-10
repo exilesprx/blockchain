@@ -42,6 +42,8 @@ RUN pnpm fetch \
 FROM base AS build
 ENV CI=true
 COPY --chmod=755 --chown=node:node --from=pnpm /root/.local/share/pnpm/ /home/node/.local/share/pnpm/
+COPY --chmod=755 --chown=node:node --from=install /home/node/.local/share/pnpm/ /home/node/.local/share/pnpm/
+COPY --chmod=755 --chown=node:node --from=install /home/node/.cache/pnpm/ /home/node/.cache/pnpm/
 COPY --chmod=755 --chown=node:node --from=install /usr/app/node_modules /usr/app/node_modules
 COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/bank/node_modules /usr/app/packages/bank/node_modules
 COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/miner/node_modules /usr/app/packages/miner/node_modules
@@ -49,16 +51,20 @@ COPY --chmod=755 --chown=node:node --from=install /usr/app/packages/common/node_
 COPY --chmod=755 --chown=node:node . /usr/app/
 RUN pnpm run build \
   && pnpm --filter @blockchain/bank deploy --prod /usr/app/deploy/bank \
-  && pnpm --filter @blockchain/miner deploy --prod /usr/app/deploy/miner
+  && pnpm --filter @blockchain/miner deploy --prod /usr/app/deploy/miner \
+  && mkdir -p /usr/app/runtime \
+  && cp -rL /usr/app/deploy/bank /usr/app/runtime/bank \
+  && cp -rL /usr/app/deploy/miner /usr/app/runtime/miner \
+  && test -z "$(find /usr/app/runtime -type l)"
 
 
 FROM base AS bank
 ENV NODE_ENV=production
-COPY --chmod=755 --chown=node:node --from=build /usr/app/deploy/bank/ /usr/app/
+COPY --chmod=755 --chown=node:node --from=build /usr/app/runtime/bank/ /usr/app/
 ENTRYPOINT ["node", "/usr/app/dist/server.js"]
 
 
 FROM base AS miner
 ENV NODE_ENV=production
-COPY --chmod=755 --chown=node:node --from=build /usr/app/deploy/miner/ /usr/app/
+COPY --chmod=755 --chown=node:node --from=build /usr/app/runtime/miner/ /usr/app/
 ENTRYPOINT ["node", "/usr/app/dist/index.js"]

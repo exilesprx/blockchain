@@ -44,7 +44,7 @@ describe('Kafka Logger', () => {
   });
 
   test('it expects the level to be info', () => {
-    const level = KafkaLogger.toWinstonLogLevel(null);
+    const level = KafkaLogger.toWinstonLogLevel(null as unknown as logLevel);
 
     expect(level).toBe('info');
   });
@@ -52,7 +52,7 @@ describe('Kafka Logger', () => {
   test('it expects', () => {
     const arg = {
       namespace: 'a',
-      level: 'info',
+      level: logLevel.INFO,
       label: 'test',
       log: {
         message: 'test',
