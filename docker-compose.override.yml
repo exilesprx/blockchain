@@ -13,6 +13,7 @@ services:
           initial_sync: true
           ignore:
             - node_modules
+            - coverage
         - action: rebuild
           path: package.json
         - action: rebuild
@@ -38,6 +39,7 @@ services:
           initial_sync: true
           ignore:
             - node_modules
+            - coverage
         - action: rebuild
           path: package.json
         - action: rebuild
