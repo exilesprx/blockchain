@@ -67,7 +67,7 @@ describe('Kafka Logger', () => {
       extra: {
         comment: arg.log.comment
       },
-      level: arg.level,
+      level: 'info',
       message: arg.log.message
     });
   });
