@@ -175,8 +175,8 @@ catalogs:
       specifier: ^2.2.4
       version: 2.2.4
     std-env:
-      specifier: ^4.2.0
-      version: 4.2.0
+      specifier: ^4.3.0
+      version: 4.3.0
 
 importers:
 
@@ -232,7 +232,7 @@ importers:
         version: 1.10.1
       std-env:
         specifier: 'catalog:'
-        version: 4.2.0
+        version: 4.3.0
 
   packages/common:
     dependencies:
@@ -253,7 +253,7 @@ importers:
         version: 2.2.4
       std-env:
         specifier: 'catalog:'
-        version: 4.2.0
+        version: 4.3.0
       uuid:
         specifier: ^14.0.2
         version: 14.0.2
@@ -274,7 +274,7 @@ importers:
         version: 2.1.0
       std-env:
         specifier: 'catalog:'
-        version: 4.2.0
+        version: 4.3.0
 
   packages/miner:
     dependencies:
@@ -283,7 +283,7 @@ importers:
         version: link:../common
       std-env:
         specifier: 'catalog:'
-        version: 4.2.0
+        version: 4.3.0
 
   packages/setup:
     dependencies:
@@ -295,7 +295,7 @@ importers:
         version: 2.2.4
       std-env:
         specifier: 'catalog:'
-        version: 4.2.0
+        version: 4.3.0
 
 packages:
 
@@ -1960,6 +1960,9 @@ packages:
   std-env@4.2.0:
     resolution: {integrity: sha512-oCUKSupKTHX53EyjDtuZQ64pjLJ6yYCtpmEw0goYxtjG9KpbRe8KAsl2tBUGU9DyMcJ0RwJ8GqJAFzMXcXW1Rw==}
 
+  std-env@4.3.0:
+    resolution: {integrity: sha512-OtU/EgQ1kIm5KwqQpBC6ZEMXrZRui11w8zgfTWp8cdO9B8OaPsbA8bTHO2P+HNo1VlUTGMVBwPhydu6poeXiag==}
+
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
     engines: {node: '>=8'}
@@ -3163,7 +3166,7 @@ snapshots:
       jiti: 2.7.0
       node-forge: 1.4.0
       pathe: 2.0.3
-      std-env: 4.2.0
+      std-env: 4.3.0
       tinyclip: 0.1.15
       ufo: 1.6.4
       untun: 0.2.2
@@ -3405,6 +3408,8 @@ snapshots:
   stack-trace@0.0.10: {}
 
   std-env@4.2.0: {}
+
+  std-env@4.3.0: {}
 
   string-width@4.2.3:
     dependencies:
