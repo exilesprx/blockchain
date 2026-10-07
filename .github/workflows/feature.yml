@@ -10,7 +10,7 @@ jobs:
   lint-docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Lint dockerfile
         run: docker run --rm -i -v "$PWD"/hadolint.yml:/.config/hadolint.yaml hadolint/hadolint < .docker/Dockerfile
 
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint-typescript
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Audit packages
         run: |
           docker compose -f docker-compose.build.yml build dev
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint-typescript
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Test code
         run: |
           docker compose -f docker-compose.build.yml build dev
@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Typecheck code
         run: |
           docker compose -f docker-compose.build.yml build dev
