@@ -1,6 +1,6 @@
 import {
-  App,
-  Router,
+  H3,
+  
   EventHandler,
   H3Event,
   createApp,
@@ -15,32 +15,32 @@ export type ServerHooks = {
 };
 
 export default class Server {
-  private framework: App;
-  private router: Router;
+  private framework: H3;
+  private router: H3;
 
   public constructor(options?: ServerHooks) {
     this.framework = createApp(options);
     this.router = createRouter();
-    this.framework.use(this.router);
+    this.framework.use(this.router.handler);
   }
 
   public use(...handlers: EventHandler[]): void {
-    this.framework.use(handlers);
+    this.framework.use(handlers as any);
   }
 
   public post(path: string, handlers: EventHandler[]): void {
-    handlers.map((handler) =>
-      this.router.post(path, defineEventHandler(handler))
-    );
+    handlers.forEach((handler) => {
+      this.router.post(path, defineEventHandler(handler));
+    });
   }
 
   public get(path: string, handlers: EventHandler[]): void {
-    handlers.map((handler) =>
-      this.router.get(path, defineEventHandler(handler))
-    );
+    handlers.forEach((handler) => {
+      this.router.get(path, defineEventHandler(handler));
+    });
   }
 
-  public instance(): App {
+  public instance(): H3 {
     return this.framework;
   }
 }

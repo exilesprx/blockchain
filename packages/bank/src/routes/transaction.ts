@@ -1,4 +1,4 @@
-import { H3Event, readBody, setResponseStatus } from 'h3';
+import { H3Event, readBody } from 'h3';
 import Logger from '@blockchain/common/infrastructure/logs/logger';
 import AddTransactionFromRequest from '@blockchain/common/commands/add-transaction-from-request';
 import TransactionRequestTranslator from '@blockchain/common/translators/transaction-request-translator';
@@ -18,20 +18,20 @@ export default class Transaction {
 
   public async getAction(event: H3Event): Promise<object> {
     try {
-      let body = await readBody(event);
+      let body: any = await readBody(event);
 
       // Create a new transaction, add it to the pool, and broadcast it
       const transaction = TransactionRequestTranslator.fromRequest(
-        body.to,
-        body.from,
-        body.amount
+        body?.to,
+        body?.from,
+        body?.amount
       );
       const hash = await this.action.execute(transaction);
 
       return { message: `Transaction ${hash} accepted.` };
     } catch (error) {
       this.logger.error(`Error occurred: ${error}`);
-      setResponseStatus(event, 400);
+      event.res.status = 400;
       return {};
     }
   }

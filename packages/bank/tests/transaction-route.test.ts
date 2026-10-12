@@ -10,7 +10,6 @@ import TransactionEventRepository from '@blockchain/common/infrastructure/reposi
 
 vi.mock('h3', () => ({
   readBody: vi.fn(),
-  setResponseStatus: vi.fn()
 }));
 vi.mock('@blockchain/common/infrastructure/database/index');
 vi.mock('@blockchain/common/infrastructure/logs/logger');
@@ -28,7 +27,7 @@ describe('Transaction route', () => {
     );
     const execute = vi.spyOn(action, 'execute');
     const route = new TransactionRoute(action, {} as Logger);
-    const event = { req: { method: 'POST' } } as H3Event;
+    const event = { req: { method: 'POST' }, res: {} } as any as H3Event;
     (readBody as Mock).mockImplementationOnce(() =>
       Promise.resolve({ to: 'someone', from: 'someone-else', amount: 10 })
     );
@@ -48,7 +47,7 @@ describe('Transaction route', () => {
     const logger = new Logger([]);
     const err = vi.spyOn(logger, 'error');
     const route = new TransactionRoute(action, logger);
-    const event = { req: { method: 'POST' } } as H3Event;
+    const event = { req: { method: 'POST' }, res: {} } as any as H3Event;
     (readBody as Mock).mockImplementationOnce(() =>
       Promise.resolve({ to: 'someone' })
     );
