@@ -1,4 +1,4 @@
-import { App, H3Event } from 'h3';
+import { H3, H3Event } from 'h3';
 import { env } from 'std-env';
 import Events from 'node:events';
 import Blockchain from '@blockchain/common/domain/chain/blockchain';
@@ -80,7 +80,7 @@ export default class Application {
     );
   }
 
-  public async boot(): Promise<App> {
+  public async boot(): Promise<H3> {
     this.database.connect();
     await this.producer.connect();
 
