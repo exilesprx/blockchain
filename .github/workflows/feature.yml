@@ -8,46 +8,46 @@ on:
 #I'm not a fan of redundant builds since it increases build times, but artifacts are also costly
 jobs:
   lint-docker:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Lint dockerfile
         run: docker run --rm -i -v "$PWD"/hadolint.yml:/.config/hadolint.yaml hadolint/hadolint < .docker/Dockerfile
 
   lint-typescript:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: lint-docker
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Lint code
         run: |
           docker compose -f docker-compose.build.yml build dev
           docker compose -f docker-compose.build.yml run dev sh -c "pnpm run lint"
 
   audit:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: lint-typescript
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Audit packages
         run: |
           docker compose -f docker-compose.build.yml build dev
           docker compose -f docker-compose.build.yml run dev sh -c "pnpm audit"
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: lint-typescript
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Test code
         run: |
           docker compose -f docker-compose.build.yml build dev
           docker compose -f docker-compose.build.yml run dev sh -c "pnpm run test"
 
   typecheck:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: test
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Typecheck code
         run: |
           docker compose -f docker-compose.build.yml build dev
